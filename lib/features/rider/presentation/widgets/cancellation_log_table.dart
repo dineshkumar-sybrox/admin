@@ -52,62 +52,68 @@ class CancellationLogTable extends StatelessWidget {
               ],
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: MediaQuery.of(context).size.width * 0.7 > 800
-                    ? 800
-                    : MediaQuery.of(context).size.width * 0.7,
-              ),
-              child: DataTable(
-                headingRowColor: WidgetStateProperty.resolveWith(
-                  (states) =>
-                      const Color(0xFFF8FAFC), // Very light cool grey header
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: constraints.maxWidth, // 👈 important
+                  ),
+                  child: DataTable(
+                    columnSpacing: 40,
+                    horizontalMargin: 16,
+                    dividerThickness: 1,
+                    headingRowHeight: 60,
+
+                    dataRowMinHeight: 60,
+                    dataRowMaxHeight: 60,
+                    headingRowColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 248, 248, 248),
+                    ),
+                    headingTextStyle: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.8,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('INCIDENT DATE/TIME')),
+                      DataColumn(label: Text('CANCELLED BY')),
+                      DataColumn(label: Text('CANCELLATION REASON')),
+                    ],
+                    rows: [
+                      _buildLogRow(
+                        date: 'Feb 15, 2026',
+                        time: '10:00 AM',
+                        cancelledBy: 'Driver',
+                        dotColor: AppColors.error,
+                        reason: '"Wrong Address shown."',
+                      ),
+                      _buildLogRow(
+                        date: 'Feb 12, 2026',
+                        time: '08:55 AM',
+                        cancelledBy: 'Customer',
+                        dotColor: AppColors.error,
+                        reason:
+                            '"I was 2 mins away, Customer\ncancelled before I arrived."',
+                      ),
+                      _buildLogRow(
+                        date: 'Feb 02, 2026',
+                        time: '07:42 PM',
+                        cancelledBy: 'Customer',
+                        dotColor: AppColors.error,
+                        reason:
+                            '"I was 2 mins away, user\ncancelled before I arrived."',
+                      ),
+                    ],
+                  ),
                 ),
-                headingTextStyle: const TextStyle(
-                  color: AppColors.textSecondary,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.8,
-                ),
-                horizontalMargin: 24, // Matches outer card padding
-                columnSpacing: 24,
-                columns: const [
-                  DataColumn(label: Text('INCIDENT DATE/TIME')),
-                  DataColumn(label: Text('CANCELLED BY')),
-                  DataColumn(label: Text('CANCELLATION REASON')),
-                ],
-                rows: [
-                  _buildLogRow(
-                    date: 'Feb 15, 2026',
-                    time: '10:00 AM',
-                    cancelledBy: 'Driver',
-                    dotColor: AppColors.error,
-                    reason: '"Wrong Address shown."',
-                  ),
-                  _buildLogRow(
-                    date: 'Feb 12, 2026',
-                    time: '08:55 AM',
-                    cancelledBy: 'Customer',
-                    dotColor: AppColors.error,
-                    reason:
-                        '"I was 2 mins away, Customer\ncancelled before I arrived."',
-                  ),
-                  _buildLogRow(
-                    date: 'Feb 02, 2026',
-                    time: '07:42 PM',
-                    cancelledBy: 'Customer',
-                    dotColor: AppColors.error,
-                    reason:
-                        '"I was 2 mins away, user\ncancelled before I arrived."',
-                  ),
-                ],
-              ),
-            ),
+              );
+            },
           ),
           const SizedBox(height: 16),
-          const Divider(height: 1),
+          // const Divider(height: 1),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Center(

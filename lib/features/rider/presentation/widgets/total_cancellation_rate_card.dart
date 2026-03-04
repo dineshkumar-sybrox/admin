@@ -37,8 +37,8 @@ class TotalCancellationRateCard extends StatelessWidget {
                 const Text(
                   '4.2',
                   style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.w900,
+                    fontSize: 55,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.error,
                     letterSpacing: -1,
                   ),

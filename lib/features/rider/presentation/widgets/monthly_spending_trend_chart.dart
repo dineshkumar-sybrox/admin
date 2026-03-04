@@ -2,8 +2,16 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-class MonthlySpendingTrendChart extends StatelessWidget {
+class MonthlySpendingTrendChart extends StatefulWidget {
   const MonthlySpendingTrendChart({super.key});
+
+  @override
+  State<MonthlySpendingTrendChart> createState() =>
+      _MonthlySpendingTrendChartState();
+}
+
+class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
+  String _selectedRange = '6 Months';
 
   @override
   Widget build(BuildContext context) {
@@ -43,55 +51,93 @@ class MonthlySpendingTrendChart extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.divider),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.divider.withValues(alpha: 0.5),
+                    border: Border.all(color: AppColors.divider),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedRange = '6 Months';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: _selectedRange == '6 Months'
+                                  ? Colors.white
+                                  : Colors.transparent,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              //border: Border.all(color: AppColors.divider),
+                              // borderRadius: const BorderRadius.only(
+                              //   topLeft: Radius.circular(8),
+                              //   bottomLeft: Radius.circular(8),
+                              // ),
+                            ),
+                            child: Text(
+                              '6 Months',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: _selectedRange == '6 Months'
+                                    ? AppColors.textPrimary
+                                    : AppColors.textSecondary,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        '6 Months',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedRange = '1 Year';
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: _selectedRange == '1 Year'
+                                  ? Colors.white
+                                  : Colors.transparent,
+                              // border: Border(
+                              //   top: BorderSide(color: AppColors.divider),
+                              //   bottom: BorderSide(color: AppColors.divider),
+                              //   right: BorderSide(color: AppColors.divider),
+                              // ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                              '1 Year',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: _selectedRange == '1 Year'
+                                    ? AppColors.textPrimary
+                                    : AppColors.textSecondary,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: AppColors.divider),
-                          bottom: BorderSide(color: AppColors.divider),
-                          right: BorderSide(color: AppColors.divider),
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        '1 Year',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

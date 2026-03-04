@@ -31,4 +31,14 @@ class AppColors {
   static const Color divider = Color(0xFFE5E7EB);
   static const Color activeTagBg = Color(0xFFD1FAE5); // Light mint
   static const Color activeTagText = Color(0xFF065F46); // Dark mint
+
+  static const Color activeGreen = Color(0xFF00A86B); // Light grey
+  static const Color inactiveGrey = Color(0xFF8E9BAB);
+
+  static const Color tableHeaderColor = Color(
+    0xFF8E9BAB,
+  ); // White cards with subtle shadow
+  static const Color tableHeaderBGColor = Color.fromARGB(255, 231, 233, 235);
+
+  static Color? get tableHeaderColornull => null; // Light grey
 }
