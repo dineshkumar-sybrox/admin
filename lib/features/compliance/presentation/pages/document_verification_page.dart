@@ -45,8 +45,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   String _getPageTitle() {
-    // Return "Rejected Documents" for Vehicle RC tab (index 1),
-    // and "New Documents" for others as per screenshots.
     if (_tabController.index == 1) {
       return 'Rejected Documents - ${widget.driverName}';
     }
@@ -64,8 +62,18 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                _buildDrivingLicenseTab(),
-                _buildVehicleRCTab(),
+                _buildVerificationTab(
+                  fileTag: 'DL_FRONT & Back_VIKRAM_SETH.JPG',
+                  fieldLabel: 'LICENSE NUMBER',
+                  fieldValue: 'DL-2023089421',
+                  isRejected: false,
+                ),
+                _buildVerificationTab(
+                  fileTag: 'RC_FRONT & Back_VIKRAM_SETH.JPG',
+                  fieldLabel: 'VEHICLE NUMBER',
+                  fieldValue: 'TN02 BY4447',
+                  isRejected: true,
+                ),
                 _buildPlaceholderTab('PAN Card'),
                 _buildPlaceholderTab('Aadhar Card'),
                 _buildPlaceholderTab('Bank Details'),
@@ -93,15 +101,16 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         labelColor: Colors.black,
         unselectedLabelColor: const Color(0xFF6F767E),
         labelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           fontSize: 14,
           fontFamily: 'Outfit',
         ),
         unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: 14,
           fontFamily: 'Outfit',
         ),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         tabs: const [
           Tab(text: 'Driving License'),
           Tab(text: 'Vehicle RC'),
@@ -114,82 +123,54 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     );
   }
 
-  Widget _buildDrivingLicenseTab() {
-    return _buildStandardVerificationLayout(
-      fileTag: 'DL_FRONT & Back_VIKRAM_SETH.JPG',
-      label1: 'FRONT VIEW',
-      label2: 'BACK VIEW',
-      panelTitle: 'Verify Document Details',
-      fieldLabel: 'LICENSE NUMBER',
-      fieldValue: 'DL-2023089421',
-      showVerificationPanel: true,
-    );
-  }
-
-  Widget _buildVehicleRCTab() {
-    return _buildStandardVerificationLayout(
-      fileTag: 'RC_FRONT & Back_VIKRAM_SETH.JPG',
-      label1: 'FRONT VIEW',
-      label2: 'BACK VIEW',
-      panelTitle: 'Verify Document Details',
-      fieldLabel: 'VEHICLE NUMBER',
-      fieldValue: 'TN02 BY4447',
-      showVerificationPanel: false,
-      extraPanelContent: _buildRejectedStatusCard(),
-    );
-  }
-
   Widget _buildPlaceholderTab(String name) {
     return Center(child: Text('$name content coming soon...'));
   }
 
-  Widget _buildStandardVerificationLayout({
+  Widget _buildVerificationTab({
     required String fileTag,
-    required String label1,
-    required String label2,
-    required String panelTitle,
     required String fieldLabel,
     required String fieldValue,
-    required bool showVerificationPanel,
-    Widget? extraPanelContent,
+    required bool isRejected,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // Left Side: Document Preview (Scrollable)
         Expanded(
-          flex: 3,
+          flex: 75, // Matching flex for approx 3:1 or similar
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(40),
+            padding: const EdgeInsets.all(56),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: Column(
                     children: [
-                      _buildImageBox(label1),
-                      const SizedBox(height: 40),
-                      _buildImageBox(label2),
+                      _buildImageBox(),
                       const SizedBox(height: 48),
+                      _buildImageBox(),
+                      const SizedBox(height: 64),
                       _buildFileNameTag(fileTag),
                     ],
                   ),
                 ),
-                const SizedBox(width: 32),
+                const SizedBox(width: 40),
                 _buildZoomControls(),
               ],
             ),
           ),
         ),
+        // Vertical Divider
         Container(width: 1, color: Colors.grey.shade200),
+        // Right Side: Panel (Scrollable)
         SizedBox(
-          width: 500,
+          width: 550,
           child: SingleChildScrollView(
             child: _buildPanel(
-              title: panelTitle,
               fieldLabel: fieldLabel,
               fieldValue: fieldValue,
-              showVerificationForm: showVerificationPanel,
-              extraContent: extraPanelContent,
+              isRejected: isRejected,
             ),
           ),
         ),
@@ -197,64 +178,47 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     );
   }
 
-  Widget _buildImageBox(String label) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8, bottom: 12),
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w900,
-              color: Color(0xFF6F767E),
-              letterSpacing: 1.2,
+  Widget _buildImageBox() {
+    return AspectRatio(
+      aspectRatio: 1.45,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(28),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 50,
+              offset: const Offset(0, 20),
+            ),
+          ],
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(28),
+          child: Center(
+            child: Icon(
+              Icons.image_outlined,
+              size: 96,
+              color: Colors.grey.shade100,
             ),
           ),
         ),
-        AspectRatio(
-          aspectRatio: 1.4,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 40,
-                  offset: const Offset(0, 15),
-                ),
-              ],
-              border: Border.all(color: Colors.grey.shade100),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Center(
-                child: Icon(
-                  Icons.image_outlined,
-                  size: 80,
-                  color: Colors.grey.shade200,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
   Widget _buildFileNameTag(String tag) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1D1F),
-        borderRadius: BorderRadius.circular(16),
+        color: const Color(0xFF33383F),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            blurRadius: 30,
+            offset: const Offset(0, 15),
           ),
         ],
       ),
@@ -263,8 +227,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 14,
-          letterSpacing: 1.0,
+          fontSize: 16,
+          letterSpacing: 1.2,
         ),
       ),
     );
@@ -272,20 +236,20 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
 
   Widget _buildZoomControls() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(40),
+        color: Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(48),
         border: Border.all(color: Colors.grey.shade100),
       ),
       child: Column(
         children: [
           _buildActionButton(Icons.zoom_in_outlined),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           _buildActionButton(Icons.zoom_out_outlined),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           _buildActionButton(Icons.refresh_rounded),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           _buildActionButton(Icons.fullscreen_rounded),
         ],
       ),
@@ -294,68 +258,65 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
 
   Widget _buildActionButton(IconData icon) {
     return Container(
-      width: 58,
-      height: 58,
+      width: 68,
+      height: 68,
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
         border: Border.all(color: Colors.grey.shade100),
       ),
-      child: Icon(icon, color: const Color(0xFF1A1D1F), size: 26),
+      child: Icon(icon, color: const Color(0xFF1A1D1F), size: 28),
     );
   }
 
   Widget _buildPanel({
-    required String title,
     required String fieldLabel,
     required String fieldValue,
-    required bool showVerificationForm,
-    Widget? extraContent,
+    required bool isRejected,
   }) {
     return Container(
-      padding: const EdgeInsets.all(48),
+      padding: const EdgeInsets.all(56),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 28,
+          const Text(
+            'Verify Document Details',
+            style: TextStyle(
+              fontSize: 32,
               fontWeight: FontWeight.w900,
               color: Color(0xFF1A1D1F),
-              letterSpacing: -1.0,
+              letterSpacing: -1.2,
             ),
           ),
-          const SizedBox(height: 56),
+          const SizedBox(height: 64),
           _buildFieldLabel(fieldLabel),
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
           _buildTextField(fieldValue),
-          if (extraContent != null) ...[
+          if (isRejected) ...[
             const SizedBox(height: 24),
-            extraContent,
-          ],
-          if (showVerificationForm) ...[
-            const SizedBox(height: 40),
+            _buildRejectedStatusView(),
+          ] else ...[
+            const SizedBox(height: 48),
             _buildFieldLabel('EVALUATION NOTES'),
-            const SizedBox(height: 16),
+            const SizedBox(height: 18),
             _buildTextArea('Enter your notes here...'),
-            const SizedBox(height: 48),
+            const SizedBox(height: 56),
             const Divider(height: 1, thickness: 1.5),
-            const SizedBox(height: 48),
+            const SizedBox(height: 56),
             _buildFieldLabel('REJECTION REASONS'),
-            const SizedBox(height: 28),
+            const SizedBox(height: 32),
             ..._rejectionReasons.keys.map(
               (reason) => _buildCheckboxItem(reason),
             ),
-            const SizedBox(height: 64),
+            const SizedBox(height: 80),
             Row(
               children: [
                 Expanded(
@@ -381,7 +342,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     );
   }
 
-  Widget _buildRejectedStatusCard() {
+  Widget _buildRejectedStatusView() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -389,18 +350,18 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           'This document expired 12 days ago.',
           style: TextStyle(
             color: Color(0xFFEF4444),
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 32),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(40),
           decoration: BoxDecoration(
             color: const Color(0xFFFEF2F2),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFFEE2E2)),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: const Color(0xFFFEE2E2), width: 1.5),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,62 +369,46 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
               Row(
                 children: [
                   Container(
-                    width: 8,
-                    height: 8,
+                    width: 10,
+                    height: 10,
                     decoration: const BoxDecoration(
                       color: Color(0xFFEF4444),
                       shape: BoxShape.circle,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 16),
                   const Text(
                     'CURRENT STATUS: REJECTED',
                     style: TextStyle(
                       color: Color(0xFFB91C1C),
                       fontWeight: FontWeight.w900,
-                      fontSize: 14,
-                      letterSpacing: 0.5,
+                      fontSize: 16,
+                      letterSpacing: 0.8,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'REASON',
-                style: TextStyle(
-                  color: Color(0xFF991B1B),
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
-                ),
-              ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 32),
+              const _RejectedLabel('REASON'),
+              const SizedBox(height: 12),
               const Text(
                 'Document Expired',
                 style: TextStyle(
                   color: Color(0xFF1F1F1F),
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'ADMIN NOTES',
-                style: TextStyle(
-                  color: Color(0xFF991B1B),
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
-                ),
-              ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 32),
+              const _RejectedLabel('ADMIN NOTES'),
+              const SizedBox(height: 12),
               const Text(
                 '"The vehicle registration has passed its validity date of Nov 12, 2025. Driver must upload a renewed RC or a valid extension certificate."',
                 style: TextStyle(
-                  color: Color(0xff5e0a0a),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  height: 1.5,
+                  color: Color(0xFF5E0A0A),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  height: 1.6,
                 ),
               ),
             ],
@@ -480,7 +425,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         fontSize: 14,
         fontWeight: FontWeight.w900,
         color: Color(0xFF1A1D1F),
-        letterSpacing: 1.2,
+        letterSpacing: 1.5,
       ),
     );
   }
@@ -490,24 +435,24 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       controller: TextEditingController(text: value),
       style: const TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 18,
+        fontSize: 20,
         color: Color(0xFF1A1D1F),
       ),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.all(24),
+        contentPadding: const EdgeInsets.all(28),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: AppColors.primary, width: 3),
         ),
       ),
     );
@@ -515,24 +460,24 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
 
   Widget _buildTextArea(String hint) {
     return TextField(
-      maxLines: 8,
+      maxLines: 10,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Color(0xFFBDC2C8), fontSize: 16),
+        hintStyle: const TextStyle(color: Color(0xFFBDC2C8), fontSize: 18),
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.all(24),
+        contentPadding: const EdgeInsets.all(28),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade100, width: 1.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade100, width: 1.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.primary, width: 2.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: AppColors.primary, width: 3),
         ),
       ),
     );
@@ -541,30 +486,39 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   Widget _buildCheckboxItem(String label) {
     final isSelected = _rejectionReasons[label] ?? false;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 24),
       child: InkWell(
         onTap: () {
           setState(() {
             _rejectionReasons[label] = !isSelected;
           });
         },
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           decoration: BoxDecoration(
             border: Border.all(
               color: isSelected ? AppColors.primary : Colors.grey.shade200,
-              width: isSelected ? 2.5 : 1.5,
+              width: isSelected ? 3 : 2,
             ),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
             color: isSelected
-                ? AppColors.primary.withOpacity(0.06)
+                ? AppColors.primary.withOpacity(0.08)
                 : Colors.white,
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.15),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ]
+                : null,
           ),
           child: Row(
             children: [
               Transform.scale(
-                scale: 1.2,
+                scale: 1.4,
                 child: Checkbox(
                   value: isSelected,
                   onChanged: (val) {
@@ -578,11 +532,11 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: isSelected ? FontWeight.w900 : FontWeight.w600,
                   color: isSelected ? Colors.black : const Color(0xFF6F767E),
                 ),
@@ -601,19 +555,37 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }) {
     return ElevatedButton.icon(
       onPressed: () {},
-      icon: Icon(icon, size: 26),
+      icon: Icon(icon, size: 30),
       label: Text(label),
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 28),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         elevation: 0,
         textStyle: const TextStyle(
           fontWeight: FontWeight.w900,
-          fontSize: 18,
-          letterSpacing: 1.2,
+          fontSize: 20,
+          letterSpacing: 1.5,
         ),
+      ),
+    );
+  }
+}
+
+class _RejectedLabel extends StatelessWidget {
+  final String text;
+  const _RejectedLabel(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Color(0xFF991B1B),
+        fontSize: 13,
+        fontWeight: FontWeight.w900,
+        letterSpacing: 1.2,
       ),
     );
   }
