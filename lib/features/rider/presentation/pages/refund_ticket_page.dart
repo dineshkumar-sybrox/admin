@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../widgets/refund_success_dialog.dart';
 
 class RefundTicketPage extends StatefulWidget {
   final String ticketId;
   final String rideId;
+  final bool wrapWithScaffold;
   final VoidCallback? onCancel;
+  final VoidCallback? onSuccess;
 
   const RefundTicketPage({
     super.key,
     required this.ticketId,
     required this.rideId,
+    this.wrapWithScaffold = true,
     this.onCancel,
+    this.onSuccess,
   });
 
   @override
@@ -38,7 +43,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final body = Column(
       children: [
         // Sub-header area
         Container(
@@ -179,6 +184,12 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
         _buildFooter(context),
       ],
     );
+
+    if (widget.wrapWithScaffold) {
+      return AdminScaffold(title: 'Refund Process', body: body);
+    }
+
+    return body;
   }
 
   Widget _buildFareBreakdownCard() {
@@ -792,6 +803,9 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ElevatedButton.icon(
                 onPressed: () {
                   // Process refund logic (API call would go here)
+                  if (widget.onSuccess != null) {
+                    widget.onSuccess!();
+                  }
 
                   showDialog(
                     context: context,

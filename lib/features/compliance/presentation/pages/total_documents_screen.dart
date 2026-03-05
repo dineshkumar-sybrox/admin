@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'ticket_detail_screen.dart';
 
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
-class TotalTicketsScreen extends StatelessWidget {
-  const TotalTicketsScreen({super.key});
+class TotalDocumentsScreen extends StatelessWidget {
+  const TotalDocumentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AdminScaffold(
-      title: 'Compliance - Total Tickets',
+      title: 'Compliance - Total Documents',
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(32.0),
         child: Column(
@@ -53,16 +52,16 @@ class TotalTicketsScreen extends StatelessWidget {
       children: [
         Expanded(
           child: _TopStatCard(
-            title: 'OPEN TICKETS',
-            value: '142',
-            trend: '-5.2%',
-            isPositive: false,
+            title: 'NEW DOCUMENTS',
+            value: '4.2K',
+            trend: '+2.2%',
+            isPositive: true,
           ),
         ),
         const SizedBox(width: 24),
         Expanded(
           child: _TopStatCard(
-            title: 'CLOSED TICKETS',
+            title: 'REJECTED DOCUMENTS',
             value: '100',
             trend: '+2.1%',
             isPositive: true,
@@ -71,10 +70,19 @@ class TotalTicketsScreen extends StatelessWidget {
         const SizedBox(width: 24),
         Expanded(
           child: _TopStatCard(
-            title: 'REFUND AMOUNT',
-            value: '₹4.2K',
-            trend: '-2.2%',
-            isPositive: false,
+            title: 'RESEND DOCUMENTS',
+            value: '140',
+            trend: '+5.2%',
+            isPositive: true,
+          ),
+        ),
+        const SizedBox(width: 24),
+        Expanded(
+          child: _TopStatCard(
+            title: 'VERIFIED DOCUMENTS',
+            value: '4.2K',
+            trend: '+2.2%',
+            isPositive: true,
           ),
         ),
       ],
@@ -87,21 +95,31 @@ class TotalTicketsScreen extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
-            child: _buildTextField(
-              'Search by Ticket ID or Name...',
-              Icons.search,
-            ),
+            flex: 3,
+            child: _buildTextField('Search Ticket ID or Name...', Icons.search),
           ),
           const SizedBox(width: 24),
-          Expanded(flex: 1, child: _buildDropdown('All Categories')),
-          const SizedBox(width: 16),
-          Expanded(flex: 1, child: _buildDropdown('issue category')),
+          const Spacer(),
+          SizedBox(width: 180, child: _buildDropdown('All Categories')),
           const SizedBox(width: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFEFEFEF)),
+            ),
+            child: const Icon(
+              Icons.calendar_today_outlined,
+              color: Color(0xFF6F767E),
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF4F6F9).withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: const Color(0xFFEFEFEF)),
             ),
@@ -182,18 +200,16 @@ class TotalTicketsScreen extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth:
-              MediaQuery.of(context).size.width -
-              64, // Subtracting outer padding
+          minWidth: MediaQuery.of(context).size.width - 64,
         ),
         child: DataTable(
           headingRowColor: WidgetStateProperty.all(
             const Color(0xFFF4F6F9).withValues(alpha: 0.5),
           ),
-          dataRowMaxHeight: 80,
-          dataRowMinHeight: 80,
+          dataRowMaxHeight: 70,
+          dataRowMinHeight: 70,
           horizontalMargin: 24,
-          columnSpacing: 40, // Increased spacing
+          columnSpacing: 24,
           dividerThickness: 1,
           headingTextStyle: const TextStyle(
             fontSize: 11,
@@ -202,50 +218,69 @@ class TotalTicketsScreen extends StatelessWidget {
             letterSpacing: 0.5,
           ),
           columns: const [
-            DataColumn(label: Text('TICKET ID')),
-            DataColumn(label: Text('CUSTOMER/DRIVER')),
-            DataColumn(label: Text('ISSUE CATEGORY')),
+            DataColumn(label: Text('DOCUMENT ID')),
+            DataColumn(label: Text('DRIVER NAME')),
+            DataColumn(label: Text('DOCUMENTS')),
+            DataColumn(label: Text('CATEGORY')),
             DataColumn(label: Text('STATUS')),
-            DataColumn(label: Text('ACTIONS')),
+            DataColumn(label: Text('CLOSED DATE & TIME')),
+            DataColumn(label: Text('ACTION')),
           ],
           rows: [
             _buildDataRow(
-              context: context,
-              id: '#TK-8842',
-              personName: 'Vikram Seth',
-              personType: 'Driver',
-              category: 'BILLING ISSUE',
-              status: 'IN-PROGRESS',
-              statusColor: const Color(
-                0xFFF2C94C,
-              ), // Assuming yellow for in-progress based on generic UI
+              id: '#DOC-8801',
+              driverName: 'Vikram Seth',
+              documents: 'DRIVING LICENSE',
+              category: 'RESEND',
+              categoryColor: const Color(0xFFFFF7ED),
+              categoryTextColor: const Color(0xFFC2410C),
+              status: 'Pending',
+              statusColor: const Color(0xFFF97316),
+              dateTime: '04 Nov 2025\n05:20 PM',
             ),
             _buildDataRow(
-              context: context,
-              id: '#TK-8839',
-              personName: 'Anita Mehra',
-              personType: 'Customer',
-              category: 'SAFETY',
-              status: 'OPEN',
-              statusColor: const Color(0xFF2F80ED), // Assuming blue
+              id: '#DOC-8798',
+              driverName: 'Anita Mehra',
+              documents: 'ALL DOCUMENTS',
+              category: 'NEW DRIVER',
+              categoryColor: const Color(0xFFEFF6FF),
+              categoryTextColor: const Color(0xFF1D4ED8),
+              status: 'Pending',
+              statusColor: const Color(0xFFF97316),
+              dateTime: '04 Nov 2025\n04:15 PM',
             ),
             _buildDataRow(
-              context: context,
-              id: '#TK-8835',
-              personName: 'Sam Yogi',
-              personType: 'Driver',
-              category: 'APP GLITCH',
-              status: 'CLOSED',
-              statusColor: const Color(0xFF00A86B), // Assuming Green
+              id: '#DOC-8795',
+              driverName: 'Sam Yogi',
+              documents: 'VEHICLE RC',
+              category: 'REJECTED',
+              categoryColor: const Color(0xFFFEF2F2),
+              categoryTextColor: const Color(0xFFB91C1C),
+              status: 'Rejected',
+              statusColor: const Color(0xFFEF4444),
+              dateTime: '04 Nov 2025\n03:45 PM',
             ),
             _buildDataRow(
-              context: context,
-              id: '#TK-8831',
-              personName: 'Kabir Singh',
-              personType: 'Customer',
-              category: 'PAYMENT ERROR',
-              status: 'OPEN',
-              statusColor: const Color(0xFF2F80ED),
+              id: '#DOC-8792',
+              driverName: 'Kabir Singh',
+              documents: 'ALL DOCUMENTS',
+              category: 'VERIFIED',
+              categoryColor: const Color(0xFFF0FDF4),
+              categoryTextColor: const Color(0xFF15803D),
+              status: 'Approved',
+              statusColor: const Color(0xFF22C55E),
+              dateTime: '04 Nov 2025\n02:10 PM',
+            ),
+            _buildDataRow(
+              id: '#DOC-8789',
+              driverName: 'Zara Khan',
+              documents: 'ALL DOCUMENTS',
+              category: 'VERIFIED',
+              categoryColor: const Color(0xFFF0FDF4),
+              categoryTextColor: const Color(0xFF15803D),
+              status: 'Approved',
+              statusColor: const Color(0xFF22C55E),
+              dateTime: '04 Nov 2025\n01:30 PM',
             ),
           ],
         ),
@@ -254,33 +289,17 @@ class TotalTicketsScreen extends StatelessWidget {
   }
 
   DataRow _buildDataRow({
-    required BuildContext context,
     required String id,
-    required String personName,
-    required String personType,
+    required String driverName,
+    required String documents,
     required String category,
+    required Color categoryColor,
+    required Color categoryTextColor,
     required String status,
     required Color statusColor,
+    required String dateTime,
   }) {
     return DataRow(
-      onSelectChanged: (selected) {
-        if (selected != null && selected) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TicketDetailScreen(
-                ticketData: {
-                  'id': id,
-                  'personName': personName,
-                  'personType': personType,
-                  'category': category,
-                  'status': status,
-                },
-              ),
-            ),
-          );
-        }
-      },
       cells: [
         DataCell(
           Text(
@@ -293,43 +312,38 @@ class TotalTicketsScreen extends StatelessWidget {
           ),
         ),
         DataCell(
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                personName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
-                  color: Color(0xFF1A1D1F),
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                personType,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11,
-                  color: Color(0xFF6F767E),
-                ),
-              ),
-            ],
+          Text(
+            driverName,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              color: Color(0xFF1A1D1F),
+            ),
+          ),
+        ),
+        DataCell(
+          Text(
+            documents,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 11,
+              color: Color(0xFF6F767E),
+            ),
           ),
         ),
         DataCell(
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: const Color(0xFFF0F2F5),
-              borderRadius: BorderRadius.circular(8),
+              color: categoryColor,
+              borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               category,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
                 fontSize: 10,
-                color: Color(0xFF1A1D1F),
+                color: categoryTextColor,
                 letterSpacing: 0.2,
               ),
             ),
@@ -351,20 +365,26 @@ class TotalTicketsScreen extends StatelessWidget {
               Text(
                 status,
                 style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 12,
-                  color:
-                      statusColor, // Match text color to dot color as per mockup design style
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                  color: const Color(0xFF1A1D1F),
                 ),
               ),
             ],
           ),
         ),
         DataCell(
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert, color: Color(0xFF6F767E)),
+          Text(
+            dateTime,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: Color(0xFF6F767E),
+            ),
           ),
+        ),
+        DataCell(
+          Icon(Icons.visibility_outlined, color: Color(0xFF6F767E), size: 20),
         ),
       ],
     );
@@ -377,7 +397,7 @@ class TotalTicketsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'Showing 1-10 of 142 tickets',
+            'Showing 1-10 of 4,842 documents',
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -440,8 +460,8 @@ class _TopStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final trendColor = isPositive ? AppColors.primary : AppColors.error;
-    final trendIcon = isPositive ? Icons.trending_up : Icons.trending_down;
+    final trendColor = const Color(0xFF22C55E); // Green from mockup
+    const trendIcon = Icons.trending_up;
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -459,6 +479,7 @@ class _TopStatCard extends StatelessWidget {
               color: AppColors.textSecondary,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
+              fontSize: 11,
             ),
           ),
           const SizedBox(height: 16),
@@ -478,12 +499,12 @@ class _TopStatCard extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(trendIcon, size: 16, color: trendColor),
+                  const Icon(trendIcon, size: 14, color: Color(0xFF22C55E)),
                   const SizedBox(width: 4),
                   Text(
                     trend,
                     style: AppTypography.bodySmall.copyWith(
-                      color: trendColor,
+                      color: const Color(0xFF22C55E),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
