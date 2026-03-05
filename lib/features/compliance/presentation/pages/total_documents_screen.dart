@@ -254,6 +254,18 @@ class TotalDocumentsScreen extends StatelessWidget {
             ),
             _buildDataRow(
               context: context,
+              id: '#DOC-8797',
+              driverName: 'Vikram Seth',
+              documents: 'BANK DETAILS',
+              category: 'NEW DRIVER',
+              categoryColor: const Color(0xFFEFF6FF),
+              categoryTextColor: const Color(0xFF1D4ED8),
+              status: 'Pending',
+              statusColor: const Color(0xFFF97316),
+              dateTime: '04 Nov 2025\n03:55 PM',
+            ),
+            _buildDataRow(
+              context: context,
               id: '#DOC-8795',
               driverName: 'Sam Yogi',
               documents: 'VEHICLE RC',
@@ -393,12 +405,27 @@ class TotalDocumentsScreen extends StatelessWidget {
         DataCell(
           IconButton(
             onPressed: () {
+              int initialIndex = 0;
+              final String docType = documents.toUpperCase();
+              if (docType.contains('DRIVING LICENSE')) {
+                initialIndex = 0;
+              } else if (docType.contains('VEHICLE RC')) {
+                initialIndex = 1;
+              } else if (docType.contains('PAN CARD')) {
+                initialIndex = 2;
+              } else if (docType.contains('AADHAR CARD')) {
+                initialIndex = 3;
+              } else if (docType.contains('BANK DETAILS')) {
+                initialIndex = 4;
+              }
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => DocumentVerificationPage(
                     driverName: driverName,
                     documentId: id,
+                    initialIndex: initialIndex,
                   ),
                 ),
               );

@@ -5,11 +5,13 @@ import '../../../../presentation/widgets/admin_scaffold.dart';
 class DocumentVerificationPage extends StatefulWidget {
   final String driverName;
   final String documentId;
+  final int initialIndex;
 
   const DocumentVerificationPage({
     super.key,
-    this.driverName = 'Vikram Seth',
-    this.documentId = '#DOC-8801',
+    required this.driverName,
+    required this.documentId,
+    this.initialIndex = 0,
   });
 
   @override
@@ -33,8 +35,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 4,
-    ); // Bank Details is index 4
+      initialIndex: widget.initialIndex,
+    );
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
