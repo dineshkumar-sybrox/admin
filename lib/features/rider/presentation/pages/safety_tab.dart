@@ -159,10 +159,12 @@ class SafetyTab extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.4)),
+          //const Divider(height: 1, color: AppColors.divider),
 
           // Table Header
-          Padding(
+          Container(
+            color: AppColors.divider.withValues(alpha: 0.4),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             child: Row(
               children: const [
@@ -346,13 +348,13 @@ class SafetyTab extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.4)),
           _buildLiveLocationRow(
             'Shared with: Ananya Sharma (Wife)',
             'Duration: 42 minutes • Status: Session Ended',
             '07:46 PM',
           ),
-          const Divider(height: 1, color: AppColors.divider),
+
           _buildLiveLocationRow(
             'Shared with: Rajesh Sharma (Brother)',
             'Duration: 38 minutes • Status: Session Ended',
@@ -751,12 +753,10 @@ class SafetyTab extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.4)),
 
           _buildDriverDetailRow('Ananya Sharma (Wife)', '07:46 PM'),
-          const Divider(height: 1, color: AppColors.divider),
           _buildDriverDetailRow('Aruna (Sister)', '07:46 PM'),
-          const Divider(height: 1, color: AppColors.divider),
           _buildDriverDetailRow('Arun (Brother)', '07:46 PM'),
         ],
       ),

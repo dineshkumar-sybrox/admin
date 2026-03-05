@@ -31,28 +31,28 @@ class RideOutcomeDistribution extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildOutcomeItem(
-                        label: 'COMPLETED',
-                        count: '136 RIDES', // Screenshot shows "136 RIDES"
-                        color: AppColors.success,
-                        isFullWidth: true,
+                        label: "COMPLETED",
+                        count: 136,
+                        total: 142, // total rides
+                        color: AppColors.success
                       ),
-                      const SizedBox(height: 20),
                       _buildOutcomeItem(
-                        label: 'CANCELLED BY USER',
-                        count: '4 RIDES',
-                        color: const Color(0xFFE5E7EB), // Grey
-                        isFullWidth: false, // shorter bar visual
+                        label: "CANCELLED BY USER",
+                        count: 4,
+                        total: 142,
+                        color: Colors.red,
                       ),
-                      const SizedBox(height: 20),
                       _buildOutcomeItem(
-                        label: 'CANCELLED BY\nDRIVER',
-                        count: '2\nRIDES',
-                        color: AppColors.warning,
-                        isFullWidth: false,
+                        label: "CANCELLED BY DRIVER",
+                        count: 2,
+                        total: 142,
+                        color: Colors.orange,
                       ),
                     ],
                   ),
                 ),
+
+                SizedBox(width: 40),
 
                 // Donut Chart (Right side)
                 SizedBox(
@@ -126,34 +126,60 @@ class RideOutcomeDistribution extends StatelessWidget {
 
   Widget _buildOutcomeItem({
     required String label,
-    required String count,
+    required int count,
+    required int total,
     required Color color,
-    required bool isFullWidth,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final double percentage = total == 0 ? 0 : count / total;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 140,
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textSecondary,
-              letterSpacing: 0.5,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 0.5,
+                ),
+              ),
             ),
+            Text(
+              "$count RIDES",
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+
+        // 🔥 Progress Bar
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Stack(
+            children: [
+              // Background
+              Container(
+                height: 15,
+                width: double.infinity,
+                color: AppColors.divider.withValues(alpha: 0.4),
+              ),
+
+              // Filled Part
+              FractionallySizedBox(
+                widthFactor: percentage, // 👈 dynamic width
+                child: Container(height: 15, color: color),
+              ),
+            ],
           ),
         ),
-        Text(
-          count,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          textAlign: TextAlign.end,
-        ),
+
+        const SizedBox(height: 20),
       ],
     );
-    // Note: The screenshot shows bars UNDER the text row.
-    // For simplicity and preventing overflow, I'm just listing them,
-    // but let's add the progress bar below cleanly.
   }
 }

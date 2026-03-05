@@ -42,7 +42,7 @@ class TrustSafetyPanel extends StatelessWidget {
               icon: Icons.credit_card,
               color: AppColors.textPrimary,
               title: 'Default Payment',
-              subtitle: 'VISA **** 4492',
+              subtitle: 'CASH ON PAY',
             ),
           ],
         ),
@@ -61,11 +61,12 @@ class TrustSafetyPanel extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.background,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.divider, width: 1),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 24),
+          Icon(icon, color: color, size: 26),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -75,7 +76,7 @@ class TrustSafetyPanel extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 15,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -83,7 +84,7 @@ class TrustSafetyPanel extends StatelessWidget {
                   subtitle,
                   style: TextStyle(
                     color: AppColors.textSecondary,
-                    fontSize: 12,
+                    fontSize: 13,
                   ),
                 ),
               ],

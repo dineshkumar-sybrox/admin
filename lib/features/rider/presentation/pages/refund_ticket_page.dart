@@ -66,7 +66,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                         ),
                         SizedBox(width: 4),
                         Text(
-                          'Back to Ticket',
+                          ' Back to Ticket',
                           style: TextStyle(
                             color: AppColors.textSecondary,
                             fontSize: 14,
@@ -202,7 +202,8 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          Container(
+            color: AppColors.divider.withValues(alpha: 0.4),
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: const [

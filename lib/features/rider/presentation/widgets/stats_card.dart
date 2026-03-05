@@ -27,98 +27,206 @@ class StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: isSelected ? 4 : 0,
-      shadowColor: AppColors.primary.withValues(alpha: 0.1),
-      margin: EdgeInsets.zero,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: AppColors.divider, width: 1),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (isSelected)
-                Container(width: 4, color: activeColor ?? AppColors.primary),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.8,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        value,
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: title == 'Cancellation'
-                              ? AppColors.error
-                              : AppColors
-                                    .textPrimary, // Special case for cancellation
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      if (trend != null)
-                        Row(
-                          children: [
-                            Icon(
-                              Icons
-                                  .trending_up, // Use trending up for both, just change color/rotation if needed
-                              size: 20,
-                              color: isPositiveTrend
-                                  ? AppColors.success
-                                  : AppColors.textSecondary,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              trend!,
-                              style: TextStyle(
-                                color: isPositiveTrend
-                                    ? AppColors.success
-                                    : AppColors.textSecondary,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      if (subtitle != null)
-                        Text(
-                          subtitle!,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                      if (extraContent != null) ...[
-                        const SizedBox(height: 4),
-                        extraContent!,
-                      ],
-                    ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border(
+            left: BorderSide(
+              color: isSelected
+                  ? (activeColor ?? AppColors.primary)
+                  : Colors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 12),
+            Text(
+              title.toUpperCase(),
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF8E9BAB),
+                letterSpacing: 0.4,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: title == 'Cancellation'
+                    ? AppColors.error
+                    : AppColors.textPrimary, // Special case for cancellation
+                height: 1,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (trend != null)
+              Row(
+                children: [
+                  Icon(
+                    Icons
+                        .trending_up, // Use trending up for both, just change color/rotation if needed
+                    size: 20,
+                    color: isPositiveTrend
+                        ? AppColors.success
+                        : AppColors.textSecondary,
                   ),
+                  const SizedBox(width: 4),
+                  Text(
+                    trend!,
+                    style: TextStyle(
+                      color: isPositiveTrend
+                          ? AppColors.success
+                          : AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            const SizedBox(height: 10),
+            if (subtitle != null)
+              Text(
+                subtitle!,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textSecondary,
                 ),
               ),
+            if (extraContent != null) ...[
+              const SizedBox(height: 4),
+              extraContent!,
             ],
-          ),
+            SizedBox(height: 12),
+          ],
         ),
       ),
     );
   }
 }
+
+
+
+
+// Card(
+    //   elevation: isSelected ? 4 : 0,
+    //   shadowColor: AppColors.primary.withValues(alpha: 0.5),
+    //   margin: EdgeInsets.zero,
+    //   color: Colors.white,
+    //   shape: RoundedRectangleBorder(
+    //     borderRadius: BorderRadius.circular(16),
+    //     //side: BorderSide(color: AppColors.divider, width: 1),
+    //   ),
+    //   clipBehavior: Clip.antiAlias,
+    //   child: InkWell(
+    //     onTap: onTap,
+    //     child: IntrinsicHeight(
+    //       child: Row(
+    //         crossAxisAlignment: CrossAxisAlignment.stretch,
+    //         children: [
+    //           if (isSelected)
+    //             Container(
+    //               width: 6,
+    //               decoration: BoxDecoration(
+    //                 color: activeColor ?? AppColors.primary,
+    //                 borderRadius: const BorderRadius.only(
+    //                   topLeft: Radius.circular(16),
+    //                   bottomLeft: Radius.circular(16),
+    //                 ),
+    //               ),
+    //               //width: 4,
+    //               //color: activeColor ?? AppColors.primary,
+    //             ),
+    //           Expanded(
+    //             child: Padding(
+    //               padding: const EdgeInsets.all(24.0),
+    //               child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 mainAxisAlignment: MainAxisAlignment.center,
+    //                 children: [
+    //                   Text(
+    //                     title.toUpperCase(),
+    //                     style: TextStyle(
+    //                       fontSize: 11,
+    //                       fontWeight: FontWeight.bold,
+    //                       letterSpacing: 0.8,
+    //                       color: AppColors.textSecondary,
+    //                     ),
+    //                   ),
+    //                   const SizedBox(height: 16),
+    //                   Text(
+    //                     value,
+    //                     style: TextStyle(
+    //                       fontSize: 28,
+    //                       fontWeight: FontWeight.bold,
+    // color: title == 'Cancellation'
+    //     ? AppColors.error
+    //     : AppColors
+    //           .textPrimary, // Special case for cancellation
+    //                     ),
+    //                   ),
+    //                   const SizedBox(height: 8),
+    //   if (trend != null)
+    //     Row(
+    //       children: [
+    //         Icon(
+    //           Icons
+    //               .trending_up, // Use trending up for both, just change color/rotation if needed
+    //           size: 20,
+    //           color: isPositiveTrend
+    //               ? AppColors.success
+    //               : AppColors.textSecondary,
+    //         ),
+    //         const SizedBox(width: 4),
+    //         Text(
+    //           trend!,
+    //           style: TextStyle(
+    //             color: isPositiveTrend
+    //                 ? AppColors.success
+    //                 : AppColors.textSecondary,
+    //             fontWeight: FontWeight.w600,
+    //             fontSize: 14,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   if (subtitle != null)
+    //     Text(
+    //       subtitle!,
+    //       style: const TextStyle(
+    //         fontSize: 14,
+    //         fontWeight: FontWeight.w500,
+    //         color: AppColors.textSecondary,
+    //       ),
+    //     ),
+    //   if (extraContent != null) ...[
+    //     const SizedBox(height: 4),
+    //     extraContent!,
+    //   ],
+    // ],
+    //               ),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );

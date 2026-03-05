@@ -52,8 +52,11 @@ class WalletCoinsTab extends StatelessWidget {
                 ),
               ),
               const Spacer(),
+
+              /// SEARCH FIELD
               SizedBox(
                 width: 300,
+                height: 44, // 👈 FIXED HEIGHT
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search transactions...',
@@ -72,25 +75,31 @@ class WalletCoinsTab extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(color: AppColors.divider),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 12,
+                    ),
                   ),
                 ),
               ),
+
               const SizedBox(width: 16),
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.download, size: 18),
-                label: const Text('Export'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.textPrimary,
-                  side: const BorderSide(color: AppColors.divider),
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 18,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+
+              /// EXPORT BUTTON
+              SizedBox(
+                height: 44, // 👈 SAME HEIGHT
+                child: OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.download, size: 18),
+                  label: const Text('Export'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.textPrimary,
+                    side: const BorderSide(color: AppColors.divider),
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
               ),
@@ -155,6 +164,39 @@ class WalletCoinsTab extends StatelessWidget {
                   isPositive: false,
                   remarks: 'Payment for ride #RD-10294',
                 ),
+                Divider(height: 1, color: AppColors.divider),
+                Container(
+                  color: AppColors.divider.withValues(alpha: 0.4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 12,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'SHOWING 1-10 OF 42 TRANSACTIONS',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          _buildPageButton('<', false),
+                          const SizedBox(width: 8),
+                          _buildPageButton('1', true),
+                          const SizedBox(width: 8),
+                          _buildPageButton('2', false),
+                          const SizedBox(width: 8),
+                          _buildPageButton('>', false),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -162,46 +204,24 @@ class WalletCoinsTab extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Pagination
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'SHOWING 1-10 OF 42 TRANSACTIONS',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              Row(
-                children: [
-                  _buildPageButton('<', false),
-                  const SizedBox(width: 8),
-                  _buildPageButton('1', true),
-                  const SizedBox(width: 8),
-                  _buildPageButton('2', false),
-                  const SizedBox(width: 8),
-                  _buildPageButton('>', false),
-                ],
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
   Widget _buildTableHeader() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        children: [
-          _buildHeaderCell('DATE & TIME', flex: 2),
-          _buildHeaderCell('TRANSACTION TYPE', flex: 3),
-          _buildHeaderCell('AMOUNT', flex: 2),
-          _buildHeaderCell('REMARKS', flex: 4),
-        ],
+    return Container(
+      color: AppColors.divider.withValues(alpha: 0.4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          children: [
+            _buildHeaderCell('DATE & TIME', flex: 2),
+            _buildHeaderCell('TRANSACTION TYPE', flex: 3),
+            _buildHeaderCell('AMOUNT', flex: 2),
+            _buildHeaderCell('REMARKS', flex: 4),
+          ],
+        ),
       ),
     );
   }

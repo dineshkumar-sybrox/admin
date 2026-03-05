@@ -25,8 +25,8 @@ class ServiceTypeBreakdown extends StatelessWidget {
           const Text(
             'SERVICE TYPE BREAKDOWN',
             style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
               color: Color(0xFF1A1D1F),
               letterSpacing: 0.5,
             ),
