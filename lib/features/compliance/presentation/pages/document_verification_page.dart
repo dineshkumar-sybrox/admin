@@ -33,8 +33,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 1,
-    ); // Vehicle RC is index 1
+      initialIndex: 0,
+    ); // Driving License is index 0
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
@@ -63,8 +63,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                _buildPlaceholderTab('Driving License'),
-                _buildVerificationContent(),
+                _buildDynamicTabContent(), // index 0: Driving License
+                _buildDynamicTabContent(), // index 1: Vehicle RC
                 _buildPlaceholderTab('PAN Card'),
                 _buildPlaceholderTab('Aadhar Card'),
                 _buildPlaceholderTab('Bank Details'),
@@ -74,6 +74,17 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDynamicTabContent() {
+    final bool isDL = _tabController.index == 0;
+    return _buildVerificationContent(
+      fileTag: isDL
+          ? 'DL_FRONT & Back_VIKRAM_SETH.JPG'
+          : 'RC_FRONT & Back_VIKRAM_SETH.JPG',
+      fieldLabel: isDL ? 'LICENSE NUMBER' : 'VEHICLE NUMBER',
+      fieldValue: isDL ? 'DL-2023089421' : 'TN02 BY4447',
     );
   }
 
@@ -120,7 +131,11 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     return Center(child: Text('$name content coming soon...'));
   }
 
-  Widget _buildVerificationContent() {
+  Widget _buildVerificationContent({
+    required String fileTag,
+    required String fieldLabel,
+    required String fieldValue,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -139,7 +154,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                       const SizedBox(height: 32),
                       _buildImageBox(),
                       const SizedBox(height: 48),
-                      _buildFileNameTag('RC_FRONT & Back_VIKRAM_SETH.JPG'),
+                      _buildFileNameTag(fileTag),
                     ],
                   ),
                 ),
@@ -157,7 +172,10 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
             color: Colors.white,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(40),
-              child: _buildVerificationPanel(),
+              child: _buildVerificationPanel(
+                fieldLabel: fieldLabel,
+                fieldValue: fieldValue,
+              ),
             ),
           ),
         ),
@@ -210,7 +228,10 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     );
   }
 
-  Widget _buildVerificationPanel() {
+  Widget _buildVerificationPanel({
+    required String fieldLabel,
+    required String fieldValue,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -223,9 +244,9 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           ),
         ),
         const SizedBox(height: 40),
-        _buildSectionLabel('VEHICLE NUMBER'),
+        _buildSectionLabel(fieldLabel),
         const SizedBox(height: 12),
-        _buildTextField('TN02 BY4447'),
+        _buildTextField(fieldValue),
         const SizedBox(height: 32),
         _buildSectionLabel('EVALUATION NOTES'),
         const SizedBox(height: 12),
