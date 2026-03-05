@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import 'document_verification_page.dart';
 
 class TotalDocumentsScreen extends StatelessWidget {
   const TotalDocumentsScreen({super.key});
@@ -391,7 +392,17 @@ class TotalDocumentsScreen extends StatelessWidget {
         ),
         DataCell(
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DocumentVerificationPage(
+                    driverName: driverName,
+                    documentId: id,
+                  ),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.visibility_outlined,
               color: Color(0xFF6F767E),
