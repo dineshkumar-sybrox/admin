@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import 'document_verification_page.dart';
 
 class TotalDocumentsScreen extends StatelessWidget {
   const TotalDocumentsScreen({super.key});
@@ -228,6 +229,7 @@ class TotalDocumentsScreen extends StatelessWidget {
           ],
           rows: [
             _buildDataRow(
+              context: context,
               id: '#DOC-8801',
               driverName: 'Vikram Seth',
               documents: 'DRIVING LICENSE',
@@ -239,6 +241,7 @@ class TotalDocumentsScreen extends StatelessWidget {
               dateTime: '04 Nov 2025\n05:20 PM',
             ),
             _buildDataRow(
+              context: context,
               id: '#DOC-8798',
               driverName: 'Anita Mehra',
               documents: 'ALL DOCUMENTS',
@@ -250,6 +253,7 @@ class TotalDocumentsScreen extends StatelessWidget {
               dateTime: '04 Nov 2025\n04:15 PM',
             ),
             _buildDataRow(
+              context: context,
               id: '#DOC-8795',
               driverName: 'Sam Yogi',
               documents: 'VEHICLE RC',
@@ -261,6 +265,7 @@ class TotalDocumentsScreen extends StatelessWidget {
               dateTime: '04 Nov 2025\n03:45 PM',
             ),
             _buildDataRow(
+              context: context,
               id: '#DOC-8792',
               driverName: 'Kabir Singh',
               documents: 'ALL DOCUMENTS',
@@ -272,6 +277,7 @@ class TotalDocumentsScreen extends StatelessWidget {
               dateTime: '04 Nov 2025\n02:10 PM',
             ),
             _buildDataRow(
+              context: context,
               id: '#DOC-8789',
               driverName: 'Zara Khan',
               documents: 'ALL DOCUMENTS',
@@ -289,6 +295,7 @@ class TotalDocumentsScreen extends StatelessWidget {
   }
 
   DataRow _buildDataRow({
+    required BuildContext context,
     required String id,
     required String driverName,
     required String documents,
@@ -384,7 +391,24 @@ class TotalDocumentsScreen extends StatelessWidget {
           ),
         ),
         DataCell(
-          Icon(Icons.visibility_outlined, color: Color(0xFF6F767E), size: 20),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DocumentVerificationPage(
+                    driverName: driverName,
+                    documentId: id,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.visibility_outlined,
+              color: Color(0xFF6F767E),
+              size: 20,
+            ),
+          ),
         ),
       ],
     );
