@@ -291,7 +291,10 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   Widget _buildSourceBadge(String title, String label, Color bg, Color text) {
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 12,
+      runSpacing: 8,
       children: [
         Text(
           title,
@@ -302,7 +305,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
             letterSpacing: 0.5,
           ),
         ),
-        const SizedBox(width: 12),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
