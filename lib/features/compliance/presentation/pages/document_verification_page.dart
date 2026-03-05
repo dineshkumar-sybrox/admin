@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 
-class DocumentVerificationPage extends StatelessWidget {
+class DocumentVerificationPage extends StatefulWidget {
   final String driverName;
   final String documentId;
 
@@ -13,9 +13,22 @@ class DocumentVerificationPage extends StatelessWidget {
   });
 
   @override
+  State<DocumentVerificationPage> createState() =>
+      _DocumentVerificationPageState();
+}
+
+class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
+  final Map<String, bool> _rejectionReasons = {
+    'Expired Document': false,
+    'Blurry Image / Unreadable': false,
+    'Name Mismatch': false,
+    'Incorrect Document Type': false,
+  };
+
+  @override
   Widget build(BuildContext context) {
     return AdminScaffold(
-      title: 'New Documents - $driverName',
+      title: 'New Documents - ${widget.driverName}',
       body: DefaultTabController(
         length: 6,
         child: Column(
@@ -37,7 +50,10 @@ class DocumentVerificationPage extends StatelessWidget {
 
   Widget _buildTabBar() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: Colors.grey.shade100)),
+      ),
       width: double.infinity,
       child: const TabBar(
         isScrollable: true,
@@ -45,10 +61,15 @@ class DocumentVerificationPage extends StatelessWidget {
         indicatorWeight: 4,
         labelColor: Colors.black,
         unselectedLabelColor: Color(0xFF6F767E),
-        labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+          fontFamily: 'Outfit',
+        ),
         unselectedLabelStyle: TextStyle(
           fontWeight: FontWeight.w500,
-          fontSize: 13,
+          fontSize: 14,
+          fontFamily: 'Outfit',
         ),
         tabs: [
           Tab(text: 'Driving License'),
@@ -67,72 +88,86 @@ class DocumentVerificationPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Left Side: Document Preview
-        Expanded(flex: 2, child: _buildDocumentPreview()),
+        Expanded(flex: 3, child: _buildDocumentPreview()),
         // Vertical Divider
         Container(width: 1, color: Colors.grey.shade200),
         // Right Side: Verification Panel
-        SizedBox(width: 400, child: _buildVerificationPanel()),
+        SizedBox(width: 450, child: _buildVerificationPanel()),
       ],
     );
   }
 
   Widget _buildDocumentPreview() {
     return Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(40),
       color: const Color(0xFFF8F9FD),
-      child: Stack(
+      child: Row(
         children: [
-          Column(
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade200),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: 1.6,
+                      child: _buildImageBox(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade200),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+                const SizedBox(height: 32),
+                Expanded(
+                  child: Center(
+                    child: AspectRatio(
+                      aspectRatio: 1.6,
+                      child: _buildImageBox(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              _buildFileNameTag(),
-            ],
+                const SizedBox(height: 32),
+                _buildFileNameTag(),
+              ],
+            ),
           ),
-          Positioned(right: 0, top: 0, child: _buildZoomControls()),
+          const SizedBox(width: 32),
+          _buildZoomControls(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildImageBox() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Center(
+          child: Icon(
+            Icons.image_outlined,
+            size: 64,
+            color: Colors.grey.shade200,
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildFileNameTag() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
       decoration: BoxDecoration(
         color: const Color(0xFF33383F),
-        borderRadius: BorderRadius.circular(32),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: const Text(
         'DL_FRONT & Back_VIKRAM_SETH.JPG',
@@ -140,6 +175,7 @@ class DocumentVerificationPage extends StatelessWidget {
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 14,
+          letterSpacing: 0.5,
         ),
       ),
     );
@@ -147,32 +183,35 @@ class DocumentVerificationPage extends StatelessWidget {
 
   Widget _buildZoomControls() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        const SizedBox(height: 20),
         _buildActionButton(Icons.zoom_in_outlined),
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
         _buildActionButton(Icons.zoom_out_outlined),
-        const SizedBox(height: 12),
-        _buildActionButton(Icons.rotate_right_outlined),
-        const SizedBox(height: 12),
-        _buildActionButton(Icons.fullscreen_outlined),
+        const SizedBox(height: 16),
+        _buildActionButton(Icons.refresh_rounded),
+        const SizedBox(height: 16),
+        _buildActionButton(Icons.fullscreen_rounded),
       ],
     );
   }
 
   Widget _buildActionButton(IconData icon) {
     return Container(
-      width: 48,
-      height: 48,
+      width: 54,
+      height: 54,
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
           ),
         ],
+        border: Border.all(color: Colors.grey.shade100),
       ),
       child: Icon(icon, color: const Color(0xFF6F767E), size: 24),
     );
@@ -180,7 +219,7 @@ class DocumentVerificationPage extends StatelessWidget {
 
   Widget _buildVerificationPanel() {
     return Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(40),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,12 +227,13 @@ class DocumentVerificationPage extends StatelessWidget {
           const Text(
             'Verify Document Details',
             style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF1A1D1F),
+              letterSpacing: -0.8,
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 48),
           _buildFieldLabel('LICENSE NUMBER'),
           const SizedBox(height: 12),
           _buildTextField('DL-2023089421'),
@@ -201,15 +241,12 @@ class DocumentVerificationPage extends StatelessWidget {
           _buildFieldLabel('EVALUATION NOTES'),
           const SizedBox(height: 12),
           _buildTextArea('Enter your notes here...'),
-          const SizedBox(height: 32),
-          const Divider(),
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
+          const Divider(height: 1, thickness: 1),
+          const SizedBox(height: 40),
           _buildFieldLabel('REJECTION REASONS'),
-          const SizedBox(height: 16),
-          _buildCheckboxItem('Expired Document'),
-          _buildCheckboxItem('Blurry Image / Unreadable'),
-          _buildCheckboxItem('Name Mismatch'),
-          _buildCheckboxItem('Incorrect Document Type'),
+          const SizedBox(height: 24),
+          ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
           const Spacer(),
           Row(
             children: [
@@ -220,7 +257,7 @@ class DocumentVerificationPage extends StatelessWidget {
                   icon: Icons.cancel_outlined,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 20),
               Expanded(
                 child: _buildActionBtn(
                   label: 'APPROVE',
@@ -239,10 +276,10 @@ class DocumentVerificationPage extends StatelessWidget {
     return Text(
       label,
       style: const TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w800,
+        fontSize: 13,
+        fontWeight: FontWeight.w900,
         color: Color(0xFF1A1D1F),
-        letterSpacing: 0.5,
+        letterSpacing: 1.0,
       ),
     );
   }
@@ -250,16 +287,26 @@ class DocumentVerificationPage extends StatelessWidget {
   Widget _buildTextField(String value) {
     return TextField(
       controller: TextEditingController(text: value),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        color: Color(0xFF1A1D1F),
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
+        contentPadding: const EdgeInsets.all(20),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade200),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade200),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
       ),
     );
@@ -267,51 +314,77 @@ class DocumentVerificationPage extends StatelessWidget {
 
   Widget _buildTextArea(String hint) {
     return TextField(
-      maxLines: 5,
+      maxLines: 7,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Color(0xFF9EA5AD)),
+        hintStyle: const TextStyle(color: Color(0xFFBDC2C8), fontSize: 16),
         filled: true,
         fillColor: Colors.white,
+        contentPadding: const EdgeInsets.all(20),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade200),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: Colors.grey.shade200),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.primary, width: 2),
         ),
       ),
     );
   }
 
   Widget _buildCheckboxItem(String label) {
+    final isSelected = _rejectionReasons[label] ?? false;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade200),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Checkbox(
-              value: false,
-              onChanged: (val) {},
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
+      padding: const EdgeInsets.only(bottom: 16),
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _rejectionReasons[label] = !isSelected;
+          });
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: isSelected ? AppColors.primary : Colors.grey.shade200,
+              width: isSelected ? 2 : 1,
             ),
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF6F767E),
+            borderRadius: BorderRadius.circular(12),
+            color: isSelected
+                ? AppColors.primary.withOpacity(0.04)
+                : Colors.white,
+          ),
+          child: Row(
+            children: [
+              Checkbox(
+                value: isSelected,
+                onChanged: (val) {
+                  setState(() {
+                    _rejectionReasons[label] = val ?? false;
+                  });
+                },
+                activeColor: AppColors.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                  color: isSelected ? Colors.black : const Color(0xFF6F767E),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -324,15 +397,19 @@ class DocumentVerificationPage extends StatelessWidget {
   }) {
     return ElevatedButton.icon(
       onPressed: () {},
-      icon: Icon(icon, size: 20),
+      icon: Icon(icon, size: 24),
       label: Text(label),
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         elevation: 0,
-        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w900,
+          fontSize: 16,
+          letterSpacing: 1.0,
+        ),
       ),
     );
   }
