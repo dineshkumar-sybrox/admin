@@ -33,8 +33,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 0,
-    ); // Driving License is index 0
+      initialIndex: 2,
+    ); // PAN Card is index 2
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
@@ -65,7 +65,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
               children: [
                 _buildDynamicTabContent(), // index 0: Driving License
                 _buildDynamicTabContent(), // index 1: Vehicle RC
-                _buildPlaceholderTab('PAN Card'),
+                _buildDynamicTabContent(), // index 2: PAN Card
                 _buildPlaceholderTab('Aadhar Card'),
                 _buildPlaceholderTab('Bank Details'),
                 _buildPlaceholderTab('Identity Verification'),
@@ -78,13 +78,29 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   Widget _buildDynamicTabContent() {
-    final bool isDL = _tabController.index == 0;
+    final int index = _tabController.index;
+    String fileTag = '';
+    String fieldLabel = '';
+    String fieldValue = '';
+
+    if (index == 0) {
+      fileTag = 'DL_FRONT & Back_VIKRAM_SETH.JPG';
+      fieldLabel = 'LICENSE NUMBER';
+      fieldValue = 'DL-2023089421';
+    } else if (index == 1) {
+      fileTag = 'RC_FRONT & Back_VIKRAM_SETH.JPG';
+      fieldLabel = 'VEHICLE NUMBER';
+      fieldValue = 'TN02 BY4447';
+    } else if (index == 2) {
+      fileTag = 'Pan_FRONT & Back_VIKRAM_SETH.JPG';
+      fieldLabel = 'PAN NUMBER';
+      fieldValue = 'TN02 BY4447';
+    }
+
     return _buildVerificationContent(
-      fileTag: isDL
-          ? 'DL_FRONT & Back_VIKRAM_SETH.JPG'
-          : 'RC_FRONT & Back_VIKRAM_SETH.JPG',
-      fieldLabel: isDL ? 'LICENSE NUMBER' : 'VEHICLE NUMBER',
-      fieldValue: isDL ? 'DL-2023089421' : 'TN02 BY4447',
+      fileTag: fileTag,
+      fieldLabel: fieldLabel,
+      fieldValue: fieldValue,
     );
   }
 
