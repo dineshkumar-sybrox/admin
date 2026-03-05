@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 
@@ -70,7 +71,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 _buildDynamicTabContent(), // index 2: PAN Card
                 _buildDynamicTabContent(), // index 3: Aadhar Card
                 _buildBankDetailsTab(), // index 4: Bank Details
-                _buildPlaceholderTab('Identity Verification'),
+                _buildIdentityVerificationTab(), // index 5: Identity Verification
               ],
             ),
           ),
@@ -220,6 +221,210 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
               child: _buildBankVerificationPanel(),
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIdentityVerificationTab() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Left Side: Identity Previews
+        Expanded(
+          flex: 7,
+          child: Container(
+            color: const Color(0xFFF8F9FD),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(40),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Live Selfie
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSourceBadge(
+                          'LIVE SELFIE (REAL-TIME)',
+                          'Liveness Passed',
+                          const Color(0xFFE9FBF3),
+                          const Color(0xFF10B981),
+                        ),
+                        const SizedBox(height: 24),
+                        _buildIdentityPreviewBox(isCamera: true),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 32),
+                  // Document Extraction
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSourceBadge(
+                          'DOCUMENT EXTRACTION (DL)',
+                          'Source: DL_Front.jpg',
+                          const Color(0xFFF1F5F9),
+                          const Color(0xFF64748B),
+                        ),
+                        const SizedBox(height: 24),
+                        _buildIdentityPreviewBox(isCamera: false),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Vertical Divider
+        Container(width: 1, color: Colors.grey.shade200),
+        // Right Side: Verification Panel
+        SizedBox(
+          width: 450,
+          child: Container(
+            color: Colors.white,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(40),
+              child: _buildIdentityVerificationPanel(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSourceBadge(String title, String label, Color bg, Color text) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF1A1D1F),
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: bg,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: text,
+              fontSize: 10,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIdentityPreviewBox({bool isCamera = false}) {
+    return Container(
+      height: 600,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Center(
+        child: isCamera
+            ? Container(
+                margin: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color(0xFF10B981).withOpacity(0.35),
+                    width: 3,
+                    style: BorderStyle.none, // Placeholder for dash effect
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: CustomPaint(
+                    painter: _DashPainter(
+                      color: const Color(0xFF10B981).withOpacity(0.5),
+                    ),
+                    child: Container(),
+                  ),
+                ),
+              )
+            : Container(),
+      ),
+    );
+  }
+
+  Widget _buildIdentityVerificationPanel() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Verify Document Details',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF1A1D1F),
+          ),
+        ),
+        const SizedBox(height: 44),
+        _buildSectionLabel('NAME'),
+        const SizedBox(height: 12),
+        _buildTextField('Vikram Seth'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('AGE'),
+        const SizedBox(height: 12),
+        _buildTextField('24'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('GENDER'),
+        const SizedBox(height: 12),
+        _buildTextField('Male'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('IFSC CODE'),
+        const SizedBox(height: 12),
+        _buildTextField('HDFC0001245'),
+        const SizedBox(height: 48),
+        _buildSectionLabel('EVALUATION NOTES'),
+        const SizedBox(height: 12),
+        _buildTextArea('Enter your notes here...'),
+        const SizedBox(height: 32),
+        const Divider(height: 1),
+        const SizedBox(height: 32),
+        _buildSectionLabel('REJECTION REASONS'),
+        const SizedBox(height: 24),
+        ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
+        const SizedBox(height: 40),
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionBtn(
+                label: 'REJECT',
+                color: const Color(0xFFEF4444),
+                icon: Icons.cancel_outlined,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildActionBtn(
+                label: 'APPROVE',
+                color: const Color(0xFF10B981),
+                icon: Icons.check_circle_outline,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -777,4 +982,39 @@ class _ZoomControls extends StatelessWidget {
       child: Icon(icon, color: const Color(0xFF1A1D1F), size: 20),
     );
   }
+}
+
+class _DashPainter extends CustomPainter {
+  final Color color;
+  _DashPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = color
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
+    const double dashWidth = 8;
+    const double dashSpace = 4;
+    final rrect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      const Radius.circular(12),
+    );
+    final path = Path()..addRRect(rrect);
+
+    for (final measure in path.computeMetrics()) {
+      double distance = 0;
+      while (distance < measure.length) {
+        canvas.drawPath(
+          measure.extractPath(distance, distance + dashWidth),
+          paint,
+        );
+        distance += dashWidth + dashSpace;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

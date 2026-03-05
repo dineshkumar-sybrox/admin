@@ -266,6 +266,18 @@ class TotalDocumentsScreen extends StatelessWidget {
             ),
             _buildDataRow(
               context: context,
+              id: '#DOC-8796',
+              driverName: 'Vikram Seth',
+              documents: 'IDENTITY VERIFICATION',
+              category: 'NEW DRIVER',
+              categoryColor: const Color(0xFFEFF6FF),
+              categoryTextColor: const Color(0xFF1D4ED8),
+              status: 'Pending',
+              statusColor: const Color(0xFFF97316),
+              dateTime: '04 Nov 2025\n03:50 PM',
+            ),
+            _buildDataRow(
+              context: context,
               id: '#DOC-8795',
               driverName: 'Sam Yogi',
               documents: 'VEHICLE RC',
@@ -417,6 +429,8 @@ class TotalDocumentsScreen extends StatelessWidget {
                 initialIndex = 3;
               } else if (docType.contains('BANK DETAILS')) {
                 initialIndex = 4;
+              } else if (docType.contains('IDENTITY VERIFICATION')) {
+                initialIndex = 5;
               }
 
               Navigator.push(
