@@ -17,7 +17,9 @@ class DocumentVerificationPage extends StatefulWidget {
       _DocumentVerificationPageState();
 }
 
-class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
+class _DocumentVerificationPageState extends State<DocumentVerificationPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   final Map<String, bool> _rejectionReasons = {
     'Expired Document': false,
     'Blurry Image / Unreadable': false,
@@ -26,32 +28,52 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
   };
 
   @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 6, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  String _getPageTitle() {
+    // Return "Rejected Documents" for Vehicle RC tab (index 1),
+    // and "New Documents" for others as per screenshots.
+    if (_tabController.index == 1) {
+      return 'Rejected Documents - ${widget.driverName}';
+    }
+    return 'New Documents - ${widget.driverName}';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AdminScaffold(
-      // The screenshot shows "Rejected Documents - Vikram Seth" for the RC tab.
-      // For now, I'll keep it as "New Documents" or "Rejected Documents" based on some logic if needed,
-      // but the user asked for this specific UI, so I'll make the title more flexible.
-      title: 'Document Verification - ${widget.driverName}',
-      body: DefaultTabController(
-        length: 6,
-        initialIndex: 0,
-        child: Column(
-          children: [
-            _buildTabBar(),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  _buildDrivingLicenseTab(),
-                  _buildVehicleRCTab(),
-                  _buildPlaceholderTab('PAN Card'),
-                  _buildPlaceholderTab('Aadhar Card'),
-                  _buildPlaceholderTab('Bank Details'),
-                  _buildPlaceholderTab('Identity Verification'),
-                ],
-              ),
+      title: _getPageTitle(),
+      body: Column(
+        children: [
+          _buildTabBar(),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildDrivingLicenseTab(),
+                _buildVehicleRCTab(),
+                _buildPlaceholderTab('PAN Card'),
+                _buildPlaceholderTab('Aadhar Card'),
+                _buildPlaceholderTab('Bank Details'),
+                _buildPlaceholderTab('Identity Verification'),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -63,23 +85,24 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
         border: Border(bottom: BorderSide(color: Colors.grey.shade100)),
       ),
       width: double.infinity,
-      child: const TabBar(
+      child: TabBar(
+        controller: _tabController,
         isScrollable: true,
         indicatorColor: AppColors.primary,
         indicatorWeight: 4,
         labelColor: Colors.black,
-        unselectedLabelColor: Color(0xFF6F767E),
-        labelStyle: TextStyle(
+        unselectedLabelColor: const Color(0xFF6F767E),
+        labelStyle: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 14,
           fontFamily: 'Outfit',
         ),
-        unselectedLabelStyle: TextStyle(
+        unselectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 14,
           fontFamily: 'Outfit',
         ),
-        tabs: [
+        tabs: const [
           Tab(text: 'Driving License'),
           Tab(text: 'Vehicle RC'),
           Tab(text: 'PAN Card'),
@@ -111,7 +134,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
       panelTitle: 'Verify Document Details',
       fieldLabel: 'VEHICLE NUMBER',
       fieldValue: 'TN02 BY4447',
-      showVerificationPanel: false, // Showing rejected status instead
+      showVerificationPanel: false,
       extraPanelContent: _buildRejectedStatusCard(),
     );
   }
@@ -133,7 +156,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Left Side: Document Preview (Scrollable)
         Expanded(
           flex: 3,
           child: SingleChildScrollView(
@@ -158,11 +180,9 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
             ),
           ),
         ),
-        // Vertical Divider
         Container(width: 1, color: Colors.grey.shade200),
-        // Right Side: Panel (Scrollable)
         SizedBox(
-          width: 500, // Slightly wider for the status card
+          width: 500,
           child: SingleChildScrollView(
             child: _buildPanel(
               title: panelTitle,
@@ -504,11 +524,11 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
         contentPadding: const EdgeInsets.all(24),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1.5),
+          borderSide: BorderSide(color: Colors.grey.shade100, width: 1.5),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 1.5),
+          borderSide: BorderSide(color: Colors.grey.shade100, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
@@ -540,15 +560,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage> {
             color: isSelected
                 ? AppColors.primary.withOpacity(0.06)
                 : Colors.white,
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.1),
-                      blurRadius: 15,
-                      offset: const Offset(0, 5),
-                    ),
-                  ]
-                : null,
           ),
           child: Row(
             children: [
