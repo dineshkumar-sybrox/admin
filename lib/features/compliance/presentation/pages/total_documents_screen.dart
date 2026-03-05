@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
-import 'document_verification_page.dart';
 
 class TotalDocumentsScreen extends StatelessWidget {
   const TotalDocumentsScreen({super.key});
@@ -233,11 +232,11 @@ class TotalDocumentsScreen extends StatelessWidget {
               id: '#DOC-8801',
               driverName: 'Vikram Seth',
               documents: 'DRIVING LICENSE',
-              category: 'REJECTED',
-              categoryColor: const Color(0xFFFEF2F2),
-              categoryTextColor: const Color(0xFFB91C1C),
-              status: 'Rejected',
-              statusColor: const Color(0xFFEF4444),
+              category: 'RESEND',
+              categoryColor: const Color(0xFFFFF7ED),
+              categoryTextColor: const Color(0xFFC2410C),
+              status: 'Pending',
+              statusColor: const Color(0xFFF97316),
               dateTime: '04 Nov 2025\n05:20 PM',
             ),
             _buildDataRow(
@@ -392,17 +391,7 @@ class TotalDocumentsScreen extends StatelessWidget {
         ),
         DataCell(
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DocumentVerificationPage(
-                    driverName: driverName,
-                    documentId: id,
-                  ),
-                ),
-              );
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.visibility_outlined,
               color: Color(0xFF6F767E),
