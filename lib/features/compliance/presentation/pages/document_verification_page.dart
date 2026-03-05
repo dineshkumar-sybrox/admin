@@ -33,8 +33,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 2,
-    ); // PAN Card is index 2
+      initialIndex: 3,
+    ); // Aadhar Card is index 3
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
@@ -66,7 +66,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 _buildDynamicTabContent(), // index 0: Driving License
                 _buildDynamicTabContent(), // index 1: Vehicle RC
                 _buildDynamicTabContent(), // index 2: PAN Card
-                _buildPlaceholderTab('Aadhar Card'),
+                _buildDynamicTabContent(), // index 3: Aadhar Card
                 _buildPlaceholderTab('Bank Details'),
                 _buildPlaceholderTab('Identity Verification'),
               ],
@@ -94,6 +94,10 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     } else if (index == 2) {
       fileTag = 'Pan_FRONT & Back_VIKRAM_SETH.JPG';
       fieldLabel = 'PAN NUMBER';
+      fieldValue = 'TN02 BY4447';
+    } else if (index == 3) {
+      fileTag = 'Aadhar_FRONT & Back_VIKRAM_SETH.JPG';
+      fieldLabel = 'PAN NUMBER'; // Matching screenshot for Aadhar tab
       fieldValue = 'TN02 BY4447';
     }
 
