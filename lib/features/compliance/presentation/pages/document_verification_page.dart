@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 
 class DocumentVerificationPage extends StatefulWidget {
@@ -148,10 +147,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         ],
       ),
     );
-  }
-
-  Widget _buildPlaceholderTab(String name) {
-    return Center(child: Text('$name content coming soon...'));
   }
 
   Widget _buildBankDetailsTab() {
