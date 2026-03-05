@@ -33,8 +33,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     _tabController = TabController(
       length: 6,
       vsync: this,
-      initialIndex: 3,
-    ); // Aadhar Card is index 3
+      initialIndex: 4,
+    ); // Bank Details is index 4
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         setState(() {});
@@ -67,7 +67,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 _buildDynamicTabContent(), // index 1: Vehicle RC
                 _buildDynamicTabContent(), // index 2: PAN Card
                 _buildDynamicTabContent(), // index 3: Aadhar Card
-                _buildPlaceholderTab('Bank Details'),
+                _buildBankDetailsTab(), // index 4: Bank Details
                 _buildPlaceholderTab('Identity Verification'),
               ],
             ),
@@ -97,7 +97,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       fieldValue = 'TN02 BY4447';
     } else if (index == 3) {
       fileTag = 'Aadhar_FRONT & Back_VIKRAM_SETH.JPG';
-      fieldLabel = 'PAN NUMBER'; // Matching screenshot for Aadhar tab
+      fieldLabel = 'AADHAR NUMBER'; // Matching screenshot for Aadhar tab
       fieldValue = 'TN02 BY4447';
     }
 
@@ -149,6 +149,331 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
 
   Widget _buildPlaceholderTab(String name) {
     return Center(child: Text('$name content coming soon...'));
+  }
+
+  Widget _buildBankDetailsTab() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Left Side: Identity Verification Summary
+        Expanded(
+          flex: 7,
+          child: Container(
+            color: const Color(0xFFF8F9FD),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(56),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Identity Verification Summary',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF1A1D1F),
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Cross-verify the bank account holder name with previously verified identity documents.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF6F767E),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 48),
+                  _buildVerificationCard(
+                    icon: Icons.contact_mail_outlined,
+                    label: 'NAME ON PAN CARD',
+                    name: widget.driverName.toUpperCase(),
+                    iconBg: const Color(0xFFE9FBF3),
+                    iconColor: const Color(0xFF10B981),
+                  ),
+                  const SizedBox(height: 24),
+                  _buildVerificationCard(
+                    icon: Icons.fingerprint_rounded,
+                    label: 'NAME ON AADHAR CARD',
+                    name: widget.driverName.toUpperCase(),
+                    iconBg: const Color(0xFFE9FBF3),
+                    iconColor: const Color(0xFF10B981),
+                  ),
+                  const SizedBox(height: 48),
+                  _buildGuidelinesBox(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        // Vertical Divider
+        Container(width: 1, color: Colors.grey.shade200),
+        // Right Side: Verification Panel
+        SizedBox(
+          width: 450,
+          child: Container(
+            color: Colors.white,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(40),
+              child: _buildBankVerificationPanel(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVerificationCard({
+    required IconData icon,
+    required String label,
+    required String name,
+    required Color iconBg,
+    required Color iconColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 28),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
+            child: Icon(icon, color: iconColor, size: 28),
+          ),
+          const SizedBox(width: 24),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF6F767E),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF1A1D1F),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: const Color(0xFFE9FBF3),
+              borderRadius: BorderRadius.circular(32),
+              border: Border.all(color: const Color(0xFFD1FAE5)),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(
+                  Icons.check_circle_rounded,
+                  color: Color(0xFF10B981),
+                  size: 16,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  'VERIFIED',
+                  style: TextStyle(
+                    color: Color(0xFF065F46),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGuidelinesBox() {
+    return Container(
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: const Color(0xFFEFF6FF),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFDBEAFE)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.info_outline_rounded,
+                color: Color(0xFF2563EB),
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Verification Guidelines',
+                style: TextStyle(
+                  color: Color(0xFF1E40AF),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          ...[
+            'The Account Holder Name must exactly match the verified names above.',
+            'Small spelling variations may be accepted as per local compliance rules.',
+            'Ensure the IFSC Code matches the branch location if applicable.',
+          ].map(
+            (text) => Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      text,
+                      style: const TextStyle(
+                        color: Color(0xFF3B82F6),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImageBox() {
+    return AspectRatio(
+      aspectRatio: 1.5,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+          border: Border.all(color: Colors.grey.shade100),
+        ),
+        child: Center(
+          child: Icon(
+            Icons.image_outlined,
+            size: 80,
+            color: Colors.grey.shade100,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFileNameTag(String tag) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+      decoration: BoxDecoration(
+        color: const Color(0xFF33383F),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        tag,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBankVerificationPanel() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Verify Document Details',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF1A1D1F),
+          ),
+        ),
+        const SizedBox(height: 44),
+        _buildSectionLabel('NAME'),
+        const SizedBox(height: 12),
+        _buildTextField('Vikram Seth'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('BANK NAME'),
+        const SizedBox(height: 12),
+        _buildTextField('HDFC Bank'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('ACCOUNT NUMBER'),
+        const SizedBox(height: 12),
+        _buildTextField('50100422938104'),
+        const SizedBox(height: 32),
+        _buildSectionLabel('IFSC CODE'),
+        const SizedBox(height: 12),
+        _buildTextField('HDFC0001245'),
+        const SizedBox(height: 48),
+        _buildSectionLabel('EVALUATION NOTES'),
+        const SizedBox(height: 12),
+        _buildTextArea('Enter your notes here...'),
+        const SizedBox(height: 32),
+        const Divider(height: 1),
+        const SizedBox(height: 32),
+        _buildSectionLabel('REJECTION REASONS'),
+        const SizedBox(height: 24),
+        ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
+        const SizedBox(height: 40),
+        Row(
+          children: [
+            Expanded(
+              child: _buildActionBtn(
+                label: 'REJECT',
+                color: const Color(0xFFEF4444),
+                icon: Icons.cancel_outlined,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: _buildActionBtn(
+                label: 'APPROVE',
+                color: const Color(0xFF10B981),
+                icon: Icons.check_circle_outline,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildVerificationContent({
@@ -203,51 +528,6 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     );
   }
 
-  Widget _buildImageBox() {
-    return AspectRatio(
-      aspectRatio: 1.5,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 20,
-              offset: const Offset(0, 10),
-            ),
-          ],
-          border: Border.all(color: Colors.grey.shade100),
-        ),
-        child: Center(
-          child: Icon(
-            Icons.image_outlined,
-            size: 80,
-            color: Colors.grey.shade100,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFileNameTag(String tag) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-      decoration: BoxDecoration(
-        color: const Color(0xFF33383F),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        tag,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w700,
-          fontSize: 14,
-        ),
-      ),
-    );
-  }
-
   Widget _buildVerificationPanel({
     required String fieldLabel,
     required String fieldValue,
@@ -267,6 +547,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         _buildSectionLabel(fieldLabel),
         const SizedBox(height: 12),
         _buildTextField(fieldValue),
+        const SizedBox(height: 40),
         const SizedBox(height: 32),
         _buildSectionLabel('EVALUATION NOTES'),
         const SizedBox(height: 12),
