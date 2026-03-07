@@ -80,7 +80,11 @@ class Sidebar extends StatelessWidget {
               _buildMenuItem(
                 icon: Icons.person_outline,
                 label: 'Drivers',
-                onTap: () {},
+                isActive: state.selectedNav == NavItem.drivers,
+                onTap: () {
+                  context.read<DashboardCubit>().selectNav(NavItem.drivers);
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
               ),
               _buildMenuItem(
                 icon: Icons.account_balance_wallet_outlined,

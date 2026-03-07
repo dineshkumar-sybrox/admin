@@ -27,8 +27,16 @@ class StatCardsRow extends StatelessWidget {
                     .map(
                       (e) => _StatCard(
                         card: e.value,
-                        isClickable: e.key == 0 || e.key == 2 || e.key == 3,
+                        isClickable:
+                            e.key == 0 ||
+                            e.key == 1 ||
+                            e.key == 2 ||
+                            e.key == 3,
                         onTap: e.key == 0
+                            ? () => context.read<DashboardCubit>().selectNav(
+                                NavItem.drivers,
+                              )
+                            : e.key == 1
                             ? () => context.read<DashboardCubit>().selectNav(
                                 NavItem.rider,
                               )
@@ -55,8 +63,13 @@ class StatCardsRow extends StatelessWidget {
                     ),
                     child: _StatCard(
                       card: e.value,
-                      isClickable: e.key == 0 || e.key == 2 || e.key == 3,
+                      isClickable:
+                          e.key == 0 || e.key == 1 || e.key == 2 || e.key == 3,
                       onTap: e.key == 0
+                          ? () => context.read<DashboardCubit>().selectNav(
+                              NavItem.drivers,
+                            )
+                          : e.key == 1
                           ? () => context.read<DashboardCubit>().selectNav(
                               NavItem.rider,
                             )

@@ -58,7 +58,8 @@ class RiderCubit extends Cubit<RiderState> {
       totalRides: 0,
       walletBalance: 0.00,
       coins: 0,
-      status: 'Active',
+      status: 'Suspend',
+      reasonForSuspend: 'FRAUD',
     ),
     Rider(
       id: '#CUST-90840',
@@ -81,6 +82,7 @@ class RiderCubit extends Cubit<RiderState> {
       walletBalance: 0.00,
       coins: 50,
       status: 'Banned',
+      reasonForSuspend: 'SAFETY VIOLATION',
     ),
     Rider(
       id: '#CUST-90847',
@@ -91,58 +93,105 @@ class RiderCubit extends Cubit<RiderState> {
       totalRides: 78,
       walletBalance: 450.00,
       coins: 900,
-      status: 'Active',
+      status: 'Suspended',
+      reasonForSuspend: 'PAYMENT ISSUE',
     ),
   ];
 
   Future<void> loadRiders() async {
     emit(state.copyWith(isLoading: true));
     await Future.delayed(const Duration(milliseconds: 600));
-    emit(state.copyWith(
-      isLoading: false,
-      riders: _allRiders,
-      filteredRiders: _allRiders,
-      totalCount: 12482,
-      totalRiders: 48921,
-      activeToday: 12402,
-      newRegistrations: 428,
-      bannedRiders: 152,
-    ));
+    emit(
+      state.copyWith(
+        isLoading: false,
+        riders: _allRiders,
+        filteredRiders: _allRiders,
+        totalCount: 12482,
+        totalRiders: 48921,
+        activeToday: 12402,
+        newRegistrations: 428,
+        bannedRiders: 152,
+      ),
+    );
   }
 
   void search(String query) {
-    final filtered = _filterRiders(query, state.statusFilter);
-    emit(state.copyWith(
-      searchQuery: query,
-      filteredRiders: filtered,
-      currentPage: 1,
-    ));
+    final filtered = _filterRiders(
+      query,
+      state.statusFilter,
+      state.selectedTab,
+    );
+    emit(
+      state.copyWith(
+        searchQuery: query,
+        filteredRiders: filtered,
+        currentPage: 1,
+      ),
+    );
   }
 
   void setStatusFilter(RiderStatusFilter filter) {
-    final filtered = _filterRiders(state.searchQuery, filter);
-    emit(state.copyWith(
-      statusFilter: filter,
-      filteredRiders: filtered,
-      currentPage: 1,
-    ));
+    final filtered = _filterRiders(
+      state.searchQuery,
+      filter,
+      state.selectedTab,
+    );
+    emit(
+      state.copyWith(
+        statusFilter: filter,
+        filteredRiders: filtered,
+        currentPage: 1,
+      ),
+    );
   }
 
   void goToPage(int page) {
     emit(state.copyWith(currentPage: page));
   }
 
-  List<Rider> _filterRiders(String query, RiderStatusFilter filter) {
+  void setTab(RiderTab tab) {
+    final filtered = _filterRiders(state.searchQuery, state.statusFilter, tab);
+    emit(
+      state.copyWith(
+        selectedTab: tab,
+        filteredRiders: filtered,
+        currentPage: 1,
+      ),
+    );
+  }
+
+  List<Rider> _filterRiders(
+    String query,
+    RiderStatusFilter filter,
+    RiderTab tab,
+  ) {
     return _allRiders.where((r) {
-      final matchesQuery = query.isEmpty ||
+      final matchesQuery =
+          query.isEmpty ||
           r.name.toLowerCase().contains(query.toLowerCase()) ||
           r.email.toLowerCase().contains(query.toLowerCase()) ||
           r.phone.contains(query);
-      final matchesStatus = filter == RiderStatusFilter.all ||
+      bool matchesStatus =
+          filter == RiderStatusFilter.all ||
           (filter == RiderStatusFilter.active && r.status == 'Active') ||
           (filter == RiderStatusFilter.inactive && r.status == 'Inactive') ||
-          (filter == RiderStatusFilter.banned && r.status == 'Banned');
-      return matchesQuery && matchesStatus;
+          (filter == RiderStatusFilter.banned &&
+              (r.status == 'Banned' ||
+                  r.status == 'Suspend' ||
+                  r.status == 'Suspended'));
+
+      bool matchesTab = true;
+      if (tab == RiderTab.active) {
+        matchesTab = r.status == 'Active';
+      } else if (tab == RiderTab.suspended) {
+        matchesTab =
+            r.status == 'Banned' ||
+            r.status == 'Suspended' ||
+            r.status == 'Suspend';
+      }
+      // Note: newRiders would check account creation date, mock only requests active
+
+      return matchesQuery && matchesStatus && matchesTab;
     }).toList();
   }
 }
