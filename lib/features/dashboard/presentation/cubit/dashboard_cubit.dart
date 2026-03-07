@@ -16,13 +16,13 @@ class DashboardCubit extends Cubit<DashboardState> {
       newTickets: 4,
       statCards: const [
         StatCard(
-          title: 'TOTAL ACTIVE DRIVERS',
+          title: 'TOTAL DRIVERS',
           value: '24k',
           trend: '+5.2%',
           isPositive: true,
         ),
         StatCard(
-          title: 'ACTIVE RIDES',
+          title: 'TOTAL RIDES',
           value: '8.2k',
           trend: '-2.1%',
           isPositive: false,

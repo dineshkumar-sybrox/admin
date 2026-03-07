@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'total_tickets_screen.dart';
+import 'total_documents_screen.dart';
+import 'compliance_score_details_screen.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
@@ -64,6 +66,14 @@ class _StatCardsSection extends StatelessWidget {
             trend: '-5.2%',
             isPositive: false,
             isPrimary: true,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const TotalDocumentsScreen(),
+                ),
+              );
+            },
           ),
         ),
         const SizedBox(width: 24),
@@ -92,6 +102,14 @@ class _StatCardsSection extends StatelessWidget {
             trend: 'High',
             isPositive: true,
             isPrimary: false,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ComplianceScoreDetailsScreen(),
+                ),
+              );
+            },
           ),
         ),
       ],

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-class TransactionsList extends StatelessWidget {
+class TransactionsList extends StatefulWidget {
   const TransactionsList({super.key});
 
+  @override
+  State<TransactionsList> createState() => _TransactionsListState();
+}
+
+class _TransactionsListState extends State<TransactionsList> {
+  String _selectedFilter = 'ALL VEHICLE';
+
+  
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.background,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
@@ -42,94 +50,194 @@ class TransactionsList extends StatelessWidget {
                     ),
                   ],
                 ),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(color: AppColors.divider),
+
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: const Color(0xFFEFEFEF)),
+                      ),
+                      child: PopupMenuButton<String>(
+                        offset: const Offset(0, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Color(0xFFEFEFEF)),
+                        ),
+                        color: Colors.white,
+                        elevation: 6,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              _selectedFilter,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF1A1D1F),
+                              ),
+                            ),
+                            const SizedBox(width: 32),
+                            const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 16,
+                              color: Color(0xFF6F767E),
+                            ),
+                          ],
+                        ),
+                        onSelected: (val) {
+                          setState(() {
+                            _selectedFilter = val;
+                          });
+                        },
+                        itemBuilder: (context) => [
+                          _buildPopupItem('CAB', _selectedFilter == 'CAB'),
+                          _buildPopupItem(
+                            'BIKE/SCOOTER',
+                            _selectedFilter == 'BIKE/SCOOTER',
+                          ),
+                          _buildPopupItem('AUTO', _selectedFilter == 'AUTO'),
+                        ],
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
+                    SizedBox(width: 10),
+                    TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: BorderSide(color: AppColors.divider),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: const Text(
+                        'View All Rides',
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
-                  child: const Text(
-                    'View All Rides',
-                    style: TextStyle(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  ],
                 ),
               ],
             ),
             const SizedBox(height: 24),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: MediaQuery.of(context).size.width * 0.7 > 800
-                      ? 800
-                      : MediaQuery.of(context).size.width * 0.7,
-                ),
-                child: DataTable(
-                  horizontalMargin: 0,
-                  columnSpacing: 24,
-                  headingTextStyle: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.8,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: constraints.maxWidth, // 👈 important
+                    ),
+                    child: DataTable(
+                      columnSpacing: 40,
+                      horizontalMargin: 16,
+
+                      headingRowHeight: 60,
+
+                      dataRowMinHeight: 60,
+                      dataRowMaxHeight: 60,
+                      headingRowColor: MaterialStateProperty.all(
+                        Color.fromARGB(255, 248, 248, 248),
+                      ),
+                      headingTextStyle: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                      ),
+                      columns: const [
+                        DataColumn(label: Text('TRANSACTION DATE')),
+                        DataColumn(label: Text('ROUTE DETAIL')),
+                        DataColumn(label: Text('CATEGORY')),
+                        DataColumn(label: Text('PAYMENT')),
+                        DataColumn(label: Text('AMOUNT')),
+                      ],
+                      rows: [
+                        _buildTransactionRow(
+                          date: 'Feb 15, 2026',
+                          time: '06:42 PM',
+                          route: 'Vadapalani Bus-Stand →VR Mall...',
+                          category: 'CAB',
+                          paymentMethod: 'G-Pay',
+                          amount: '₹452.00',
+                          textColor: AppColors.textPrimary,
+                          badgeColor: const Color(0xFFE8F0FE), // Light blue
+                          badgeTextColor: const Color(0xFF1967D2), // Dark blue
+                          icon: Icons.account_balance_wallet_outlined,
+                        ),
+                        _buildTransactionRow(
+                          date: 'Feb 10, 2026',
+                          time: '09:15 AM',
+                          route: 'Vadapalani Bus-Stand →VR Mall...',
+                          category: 'BIKE/SCOOTER',
+                          paymentMethod: 'Wallet Credits',
+                          amount: '₹1,180.00',
+                          textColor: AppColors.textPrimary,
+                          badgeColor: const Color(0xFFFEF3C7), // Light amber
+                          badgeTextColor: const Color(0xFFD97706), // Dark amber
+                          icon: Icons.account_balance_wallet_outlined,
+                        ),
+                        _buildTransactionRow(
+                          date: 'Feb 02, 2026',
+                          time: '11:30 PM',
+                          route: 'Vadapalani Bus-Stand →VR Mall...',
+                          category: 'AUTO',
+                          paymentMethod: 'G-Pay',
+                          amount: '₹624.50',
+                          textColor: AppColors.textPrimary,
+                          badgeColor: const Color(0xFFD1FAE5), // Light emerald
+                          badgeTextColor: const Color(
+                            0xFF047857,
+                          ), // Dark emerald
+                          icon: Icons.account_balance_wallet_outlined,
+                        ),
+                      ],
+                    ),
                   ),
-                  columns: const [
-                    DataColumn(label: Text('TRANSACTION DATE')),
-                    DataColumn(label: Text('ROUTE DETAIL')),
-                    DataColumn(label: Text('CATEGORY')),
-                    DataColumn(label: Text('PAYMENT')),
-                    DataColumn(label: Text('AMOUNT')),
-                  ],
-                  rows: [
-                    _buildTransactionRow(
-                      date: 'Feb 15, 2026',
-                      time: '06:42 PM',
-                      route: 'Vadapalani Bus-Stand →VR Mall...',
-                      category: 'CAB',
-                      paymentMethod: 'G-Pay',
-                      amount: '₹452.00',
-                      textColor: AppColors.textPrimary,
-                      badgeColor: const Color(0xFFE8F0FE), // Light blue
-                      badgeTextColor: const Color(0xFF1967D2), // Dark blue
-                      icon: Icons.account_balance_wallet_outlined,
-                    ),
-                    _buildTransactionRow(
-                      date: 'Feb 10, 2026',
-                      time: '09:15 AM',
-                      route: 'Vadapalani Bus-Stand →VR Mall...',
-                      category: 'BIKE/SCOOTER',
-                      paymentMethod: 'Wallet Credits',
-                      amount: '₹1,180.00',
-                      textColor: AppColors.textPrimary,
-                      badgeColor: const Color(0xFFFEF3C7), // Light amber
-                      badgeTextColor: const Color(0xFFD97706), // Dark amber
-                      icon: Icons.account_balance_wallet_outlined,
-                    ),
-                    _buildTransactionRow(
-                      date: 'Feb 02, 2026',
-                      time: '11:30 PM',
-                      route: 'Vadapalani Bus-Stand →VR Mall...',
-                      category: 'AUTO',
-                      paymentMethod: 'G-Pay',
-                      amount: '₹624.50',
-                      textColor: AppColors.textPrimary,
-                      badgeColor: const Color(0xFFD1FAE5), // Light emerald
-                      badgeTextColor: const Color(0xFF047857), // Dark emerald
-                      icon: Icons.account_balance_wallet_outlined,
-                    ),
-                  ],
-                ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+    return PopupMenuItem<String>(
+      value: text,
+      height: 44,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: const Color(0xFF1A1D1F),
               ),
             ),
+            if (isSelected)
+              const Icon(
+                Icons.check_circle_outline_rounded,
+                color: Color(0xFF00A86B),
+                size: 18,
+              ),
           ],
         ),
       ),
@@ -201,6 +309,7 @@ class TransactionsList extends StatelessWidget {
             ),
           ),
         ),
+
         DataCell(
           Row(
             children: [

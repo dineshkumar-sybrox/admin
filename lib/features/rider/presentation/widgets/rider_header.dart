@@ -228,20 +228,19 @@ class RiderHeader extends StatelessWidget {
         TabBar(
           controller: tabController,
           isScrollable: true,
+          tabAlignment: TabAlignment.start,
           labelColor: AppColors.primary,
-          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
           unselectedLabelColor: AppColors.textSecondary,
-          unselectedLabelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
           indicatorColor: AppColors.primary,
-          indicatorSize: TabBarIndicatorSize.tab, // Full tab width indicator
+          indicatorSize: TabBarIndicatorSize.label, // 👈 Important
           indicatorWeight: 3,
-          labelPadding: EdgeInsets.only(right: 32),
+          labelPadding: const EdgeInsets.symmetric(horizontal: 16),
           dividerColor: Colors.transparent,
-          tabAlignment: TabAlignment.start, // Align tabs to start
-          tabs: [
+          tabs: const [
             Tab(text: 'OVERVIEW'),
             Tab(text: 'RIDE HISTORY'),
             Tab(text: 'WALLET & COINS'),

@@ -43,6 +43,7 @@ class _RiderOverviewPageState extends State<RiderOverviewPage>
           ? RefundTicketPage(
               ticketId: '#TC-8821',
               rideId: 'RD-1205',
+              wrapWithScaffold: false,
               onCancel: () {
                 setState(() {
                   _isRefunding = false;

@@ -1,3 +1,4 @@
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/rider_cubit.dart';
@@ -38,7 +39,7 @@ class _RiderScreenBodyState extends State<_RiderScreenBody> {
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(color: Color(0xFF00A86B)),
+            child: CircularProgressIndicator(color: AppColors.primary),
           );
         }
         return DefaultTextStyle.merge(
@@ -77,14 +78,16 @@ class _StatCardsRow extends StatelessWidget {
             title: 'TOTAL RIDERS',
             value: '48,921',
             sub: '+2.4%',
-            subColor: const Color(0xFF00A86B),
+            subColor: AppColors.activeGreen,
             subIcon: Icons.arrow_upward,
+            borderColor: AppColors.activeGreen,
           ),
           _StatData(
             title: 'ACTIVE TODAY',
             value: '12,402',
             sub: 'Peak: 14k',
             subColor: const Color(0xFF8E9BAB),
+            borderColor: AppColors.inactiveGrey,
           ),
           _StatData(
             title: 'NEW REGISTRATIONS',
@@ -92,12 +95,14 @@ class _StatCardsRow extends StatelessWidget {
             sub: '+12%',
             subColor: const Color(0xFF00A86B),
             subIcon: Icons.arrow_upward,
+            borderColor: AppColors.inactiveGrey,
           ),
           _StatData(
             title: 'BANNED RIDERS',
             value: '152',
             sub: 'Flagged for review',
             subColor: const Color(0xFFFF4757),
+            borderColor: AppColors.inactiveGrey,
           ),
         ];
 
@@ -134,12 +139,14 @@ class _StatData {
   final String value;
   final String sub;
   final Color subColor;
+  final Color borderColor;
   final IconData? subIcon;
   const _StatData({
     required this.title,
     required this.value,
     required this.sub,
     required this.subColor,
+    required this.borderColor,
     this.subIcon,
   });
 }
@@ -151,13 +158,19 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border(
+          left: BorderSide(
+            color: data.borderColor, // Green color
+            width: 3, // Thickness of left border
+          ),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -176,7 +189,7 @@ class _StatCard extends StatelessWidget {
               letterSpacing: 0.4,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -221,118 +234,209 @@ class _SearchFilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: 44,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFFF1F5F9)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.03),
-                  blurRadius: 4,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: AppColors.divider),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 4),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color(0xFFF1F5F9)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.03),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: TextField(
-              controller: searchController,
-              onChanged: (v) => context.read<RiderCubit>().search(v),
-              style: const TextStyle(fontSize: 13, color: Color(0xFF1A2332)),
-              decoration: const InputDecoration(
-                hintText: 'Search by name, email or phone...',
-                hintStyle: TextStyle(fontSize: 13, color: Color(0xFFB0BAC8)),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Color(0xFFB0BAC8),
-                  size: 18,
-                ),
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 12),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-
-        BlocBuilder<RiderCubit, RiderState>(
-          builder: (context, state) {
-            return Container(
-              height: 44,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFF1F5F9)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.03),
-                    blurRadius: 4,
-                  ),
-                ],
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<RiderStatusFilter>(
-                  value: state.statusFilter,
+                child: TextField(
+                  controller: searchController,
+                  onChanged: (v) => context.read<RiderCubit>().search(v),
                   style: const TextStyle(
                     fontSize: 13,
                     color: Color(0xFF1A2332),
                   ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: RiderStatusFilter.all,
-                      child: Text('All Status'),
+                  decoration: const InputDecoration(
+                    hintText: 'Search by name, email or phone...',
+                    hintStyle: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textSecondary,
                     ),
-                    DropdownMenuItem(
-                      value: RiderStatusFilter.active,
-                      child: Text('Active'),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColors.textSecondary,
+                      size: 18,
                     ),
-                    DropdownMenuItem(
-                      value: RiderStatusFilter.inactive,
-                      child: Text('Inactive'),
-                    ),
-                    DropdownMenuItem(
-                      value: RiderStatusFilter.banned,
-                      child: Text('Banned'),
-                    ),
-                  ],
-                  onChanged: (v) {
-                    if (v != null) {
-                      context.read<RiderCubit>().setStatusFilter(v);
-                    }
-                  },
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 12),
+                  ),
                 ),
               ),
-            );
-          },
-        ),
-        const SizedBox(width: 12),
+            ),
+            SizedBox(width: 500),
 
-        ElevatedButton.icon(
-          onPressed: () {},
-          icon: const Icon(Icons.download, size: 16, color: Colors.white),
-          label: const Text(
-            'Export Data',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+            BlocBuilder<RiderCubit, RiderState>(
+              builder: (context, state) {
+                return Container(
+                  height: 44,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFEFEFEF)),
+                  ),
+                  child: PopupMenuButton<RiderStatusFilter>(
+                    offset: const Offset(0, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(color: Color(0xFFEFEFEF)),
+                    ),
+                    color: Colors.white,
+                    elevation: 6,
+                    onSelected: (val) {
+                      context.read<RiderCubit>().setStatusFilter(val);
+                    },
+                    itemBuilder: (context) => [
+                      _buildStatusItem(
+                        RiderStatusFilter.all,
+                        'All Status',
+                        state.statusFilter == RiderStatusFilter.all,
+                      ),
+                      _buildStatusItem(
+                        RiderStatusFilter.active,
+                        'Active',
+                        state.statusFilter == RiderStatusFilter.active,
+                      ),
+                      _buildStatusItem(
+                        RiderStatusFilter.inactive,
+                        'Inactive',
+                        state.statusFilter == RiderStatusFilter.inactive,
+                      ),
+                      _buildStatusItem(
+                        RiderStatusFilter.banned,
+                        'Banned',
+                        state.statusFilter == RiderStatusFilter.banned,
+                      ),
+                    ],
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          _getStatusText(state.statusFilter),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF1A1D1F),
+                          ),
+                        ),
+                        const SizedBox(width: 32),
+                        const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 16,
+                          color: Color(0xFF6F767E),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF00A86B),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+            const SizedBox(width: 12),
+
+            SizedBox(
+              height: 44,
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.download, size: 16, color: Colors.white),
+                label: const Text(
+                  'Export Data',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF00A86B),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
+}
+
+String _getStatusText(RiderStatusFilter filter) {
+  switch (filter) {
+    case RiderStatusFilter.all:
+      return 'All Status';
+    case RiderStatusFilter.active:
+      return 'Active';
+    case RiderStatusFilter.inactive:
+      return 'Inactive';
+    case RiderStatusFilter.banned:
+      return 'Banned';
+  }
+}
+
+PopupMenuItem<RiderStatusFilter> _buildStatusItem(
+  RiderStatusFilter value,
+  String text,
+  bool isSelected,
+) {
+  return PopupMenuItem<RiderStatusFilter>(
+    value: value,
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: isSelected
+                  ? AppColors.activeGreen
+                  : const Color(0xFF1A1D1F),
+            ),
+          ),
+          SizedBox(width: 15),
+          if (isSelected)
+            const Icon(
+              Icons.check_circle_outline_rounded,
+              size: 14,
+              color: AppColors.activeGreen,
+            ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _RiderTable extends StatelessWidget {
@@ -341,48 +445,47 @@ class _RiderTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          _TableHeader(),
-          const Divider(height: 1, color: Color(0xFFF0F2F5)),
+    return Column(
+      children: [
+        _TableHeader(),
 
-          if (state.filteredRiders.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(40),
-              child: Center(
-                child: Text(
-                  'No riders found',
-                  style: TextStyle(color: Color(0xFF8E9BAB), fontSize: 14),
-                ),
+        //const Divider(height: 1, color: Color(0xFFF0F2F5)),
+        if (state.filteredRiders.isEmpty)
+          const Padding(
+            padding: EdgeInsets.all(40),
+            child: Center(
+              child: Text(
+                'No riders found',
+                style: TextStyle(color: Color(0xFF8E9BAB), fontSize: 14),
               ),
-            )
-          else
-            ...state.filteredRiders.asMap().entries.map((e) {
-              return Column(
-                children: [
-                  _RiderRow(rider: e.value, isEven: e.key.isEven),
-                  if (e.key < state.filteredRiders.length - 1)
-                    const Divider(height: 1, color: Color(0xFFF0F2F5)),
-                ],
-              );
-            }),
-          // Pagination
-          const Divider(height: 1, color: Color(0xFFF0F2F5)),
-          _Pagination(state: state),
-        ],
-      ),
+            ),
+          )
+        else
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: AppColors.divider),
+              // borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              children: state.filteredRiders
+                  .asMap()
+                  .entries
+                  .map((e) => _RiderRow(rider: e.value, isEven: e.key.isEven))
+                  .toList(),
+            ),
+          ),
+        // Pagination
+        const Divider(height: 1, color: Color(0xFFF0F2F5)),
+        _Pagination(state: state),
+      ],
     );
   }
 }
@@ -390,54 +493,67 @@ class _RiderTable extends StatelessWidget {
 class _TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const headerStyle = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w700,
-      color: Color(0xFF8E9BAB),
+    final headerStyle = TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.bold,
+      color: AppColors.textSecondary,
       letterSpacing: 0.5,
     );
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      child: Row(
-        children: [
-          const Expanded(flex: 3, child: Text('CUSTOMER', style: headerStyle)),
-          const Expanded(
-            flex: 3,
-            child: Text('CONTACT INFORMATION', style: headerStyle),
-          ),
-          const Expanded(
-            flex: 2,
-            child: Text(
-              'TOTAL RIDES',
-              style: headerStyle,
-              textAlign: TextAlign.center,
+    return Container(
+      color: const Color.fromARGB(255, 248, 248, 248),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Text('CUSTOMER', style: headerStyle),
+              ),
             ),
-          ),
-          const Expanded(
-            flex: 2,
-            child: Text(
-              'WALLET BALANCE (₹)',
-              style: headerStyle,
-              textAlign: TextAlign.center,
+            Expanded(
+              flex: 4,
+              child: Text(
+                'CONTACT INFORMATION',
+                style: headerStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          const Expanded(
-            flex: 1,
-            child: Text(
-              'COINS',
-              style: headerStyle,
-              textAlign: TextAlign.center,
+            Expanded(
+              flex: 3,
+              child: Text(
+                'TOTAL RIDES',
+                style: headerStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          const Expanded(
-            flex: 1,
-            child: Text(
-              'STATUS',
-              style: headerStyle,
-              textAlign: TextAlign.center,
+            Expanded(
+              flex: 3,
+              child: Text(
+                'WALLET BALANCE (₹)',
+                style: headerStyle,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Text(
+                'COINS',
+                style: headerStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(
+                'STATUS',
+                style: headerStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -485,50 +601,52 @@ class _RiderRowState extends State<_RiderRow> {
           child: Row(
             children: [
               Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: _avatarBg(widget.rider.name),
-                      child: Text(
-                        widget.rider.avatarInitials,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: _avatarFg(widget.rider.name),
+                flex: 4,
+                child: Center(
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: _avatarBg(widget.rider.name),
+                        child: Text(
+                          widget.rider.avatarInitials,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: _avatarFg(widget.rider.name),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.rider.name,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF1A2332),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.rider.name,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF1A2332),
+                            ),
                           ),
-                        ),
-                        Text(
-                          'ID: ${widget.rider.id}',
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Color(0xFF8E9BAB),
+                          Text(
+                            'ID: ${widget.rider.id}',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Color(0xFF8E9BAB),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       widget.rider.phone,
@@ -549,7 +667,7 @@ class _RiderRowState extends State<_RiderRow> {
               ),
 
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   '${widget.rider.totalRides}',
                   textAlign: TextAlign.center,
@@ -562,7 +680,7 @@ class _RiderRowState extends State<_RiderRow> {
               ),
 
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Text(
                   '₹${widget.rider.walletBalance.toStringAsFixed(2)}',
                   textAlign: TextAlign.center,
@@ -575,7 +693,7 @@ class _RiderRowState extends State<_RiderRow> {
               ),
 
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Text(
                   widget.rider.coins == 0
                       ? '0'
@@ -592,7 +710,7 @@ class _RiderRowState extends State<_RiderRow> {
               ),
 
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -671,7 +789,8 @@ class _Pagination extends StatelessWidget {
     final totalPages = (state.totalCount / 5).ceil();
     final currentPage = state.currentPage;
 
-    return Padding(
+    return Container(
+      color: const Color.fromARGB(255, 248, 248, 248),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
         children: [
@@ -807,11 +926,13 @@ class _PageNum extends StatelessWidget {
         width: 30,
         height: 32,
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF1A2332) : Colors.white,
+          color: isSelected
+              ? const Color(0xFF1A2332)
+              : Color.fromARGB(255, 248, 248, 248),
           border: Border.all(
             color: isSelected
                 ? const Color(0xFF1A2332)
-                : const Color(0xFFDDE1E7),
+                : Color.fromARGB(255, 248, 248, 248),
           ),
           borderRadius: BorderRadius.circular(6),
         ),

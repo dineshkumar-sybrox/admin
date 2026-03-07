@@ -270,25 +270,43 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                           ),
                         ],
                       ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          if (widget.onIssueRefund != null) {
-                            widget.onIssueRefund!();
-                          }
-                        },
-                        icon: const Icon(Icons.money, size: 16),
-                        label: const Text('Issue Refund'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
+                      Row(
+                        children: [
+                          OutlinedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.check_circle_outline_sharp,
+                              size: 16,
+                            ),
+                            label: const Text('ClOSE TICKET'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.textPrimary,
+                              side: const BorderSide(color: AppColors.divider),
+                              backgroundColor: AppColors.background,
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                          const SizedBox(width: 12),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              if (widget.onIssueRefund != null) {
+                                widget.onIssueRefund!();
+                              }
+                            },
+                            icon: const Icon(Icons.money, size: 16),
+                            label: const Text('Issue Refund'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),

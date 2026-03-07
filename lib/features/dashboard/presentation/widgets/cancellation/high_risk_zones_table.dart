@@ -1,3 +1,4 @@
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:admin/features/dashboard/presentation/pages/cancellation_zone_details_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -73,124 +74,252 @@ class HighRiskZonesTable extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              headingRowColor: WidgetStateProperty.all(
-                const Color(0xFFF4F6F9).withValues(alpha: 0.5),
-              ),
-              dataRowMaxHeight: 80,
-              dataRowMinHeight: 80,
-              horizontalMargin: 24,
-              columnSpacing: 40,
-              dividerThickness: 1,
-              headingTextStyle: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF6F767E),
-                letterSpacing: 0.5,
-              ),
-              columns: const [
-                DataColumn(label: Text('AREA NAME')),
-                DataColumn(label: Text('REQUESTS')),
-                DataColumn(label: Text('CANCELLATIONS')),
-                DataColumn(label: Text('RATE')),
-                DataColumn(label: Text('STATUS')),
-                DataColumn(label: Text('ACTION')),
-              ],
-              rows: [
-                _buildRow(
-                  areaName: 'Anna Nagar, Chennai',
-                  areaDesc: 'Primary Transit Hub',
-                  requests: '12,400',
-                  cancellations: '1,116',
-                  rate: '9.0%',
-                  rateBgColor: const Color(0xFFFFECEE),
-                  rateTextColor: const Color(0xFFEA3546),
-                  status: 'Critical High',
-                  statusColor: const Color(0xFFEA3546),
-                  onViewDetails: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const CancellationZoneDetailsScreen(
-                              zoneName: 'Anna Nagar',
+          //const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: constraints.maxWidth, // 👈 important
+                  ),
+                  child: DataTable(
+                    columnSpacing: 40,
+                    horizontalMargin: 16,
+
+                    headingRowHeight: 60,
+
+                    dataRowMinHeight: 60,
+                    dataRowMaxHeight: 60,
+                    headingRowColor: MaterialStateProperty.all(
+                      Color.fromARGB(255, 248, 248, 248),
+                    ),
+                    headingTextStyle: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.8,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('AREA NAME')),
+                      DataColumn(label: Text('REQUESTS')),
+                      DataColumn(label: Text('CANCELLATIONS')),
+                      DataColumn(label: Text('RATE')),
+                      DataColumn(label: Text('STATUS')),
+                      DataColumn(label: Text('ACTION')),
+                    ],
+                    rows: [
+                      _buildRow(
+                        areaName: 'Anna Nagar, Chennai',
+                        areaDesc: 'Primary Transit Hub',
+                        requests: '12,400',
+                        cancellations: '1,116',
+                        rate: '9.0%',
+                        rateBgColor: const Color(0xFFFFECEE),
+                        rateTextColor: const Color(0xFFEA3546),
+                        status: 'Critical High',
+                        statusColor: const Color(0xFFEA3546),
+                        onViewDetails: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CancellationZoneDetailsScreen(
+                                    zoneName: 'Anna Nagar',
+                                  ),
                             ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-                _buildRow(
-                  areaName: 'Adyar, Chennai',
-                  areaDesc: 'Residential Area',
-                  requests: '8,200',
-                  cancellations: '508',
-                  rate: '6.2%',
-                  rateBgColor: const Color(0xFFFFF7DB),
-                  rateTextColor: const Color(0xFFD4A000),
-                  status: 'Elevated',
-                  statusColor: const Color(0xFFD4A000),
-                  onViewDetails: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const CancellationZoneDetailsScreen(
-                              zoneName: 'Adyar',
+                      _buildRow(
+                        areaName: 'Adyar, Chennai',
+                        areaDesc: 'Residential Area',
+                        requests: '8,200',
+                        cancellations: '508',
+                        rate: '6.2%',
+                        rateBgColor: const Color(0xFFFFF7DB),
+                        rateTextColor: const Color(0xFFD4A000),
+                        status: 'Elevated',
+                        statusColor: const Color(0xFFD4A000),
+                        onViewDetails: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CancellationZoneDetailsScreen(
+                                    zoneName: 'Adyar',
+                                  ),
                             ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-                _buildRow(
-                  areaName: 'Velachery, Chennai',
-                  areaDesc: 'IT Park Corridor',
-                  requests: '15,600',
-                  cancellations: '702',
-                  rate: '4.5%',
-                  rateBgColor: const Color(0xFFE8FDF2),
-                  rateTextColor: const Color(0xFF00C46B),
-                  status: 'Normal',
-                  statusColor: const Color(0xFF00C46B),
-                  onViewDetails: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const CancellationZoneDetailsScreen(
-                              zoneName: 'Velachery',
+                      _buildRow(
+                        areaName: 'Velachery, Chennai',
+                        areaDesc: 'IT Park Corridor',
+                        requests: '15,600',
+                        cancellations: '702',
+                        rate: '4.5%',
+                        rateBgColor: const Color(0xFFE8FDF2),
+                        rateTextColor: const Color(0xFF00C46B),
+                        status: 'Normal',
+                        statusColor: const Color(0xFF00C46B),
+                        onViewDetails: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CancellationZoneDetailsScreen(
+                                    zoneName: 'Velachery',
+                                  ),
                             ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-                _buildRow(
-                  areaName: 'T-Nagar, Chennai',
-                  areaDesc: 'Commercial Zone',
-                  requests: '10,100',
-                  cancellations: '858',
-                  rate: '8.5%',
-                  rateBgColor: const Color(0xFFFFECEE),
-                  rateTextColor: const Color(0xFFEA3546),
-                  status: 'High Risk',
-                  statusColor: const Color(0xFFEA3546),
-                  onViewDetails: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const CancellationZoneDetailsScreen(
-                              zoneName: 'T-Nagar',
+                      _buildRow(
+                        areaName: 'T-Nagar, Chennai',
+                        areaDesc: 'Commercial Zone',
+                        requests: '10,100',
+                        cancellations: '858',
+                        rate: '8.5%',
+                        rateBgColor: const Color(0xFFFFECEE),
+                        rateTextColor: const Color(0xFFEA3546),
+                        status: 'High Risk',
+                        statusColor: const Color(0xFFEA3546),
+                        onViewDetails: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CancellationZoneDetailsScreen(
+                                    zoneName: 'T-Nagar',
+                                  ),
                             ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
+          // SingleChildScrollView(
+          //   scrollDirection: Axis.horizontal,
+          //   child: DataTable(
+          //     headingRowColor: WidgetStateProperty.all(
+          //       const Color(0xFFF4F6F9).withValues(alpha: 0.5),
+          //     ),
+          //     dataRowMaxHeight: 80,
+          //     dataRowMinHeight: 80,
+          //     horizontalMargin: 24,
+          //     columnSpacing: 40,
+          //     dividerThickness: 1,
+          //     headingTextStyle: const TextStyle(
+          //       fontSize: 11,
+          //       fontWeight: FontWeight.w700,
+          //       color: Color(0xFF6F767E),
+          //       letterSpacing: 0.5,
+          //     ),
+          //     columns: const [
+          // DataColumn(label: Text('AREA NAME')),
+          // DataColumn(label: Text('REQUESTS')),
+          // DataColumn(label: Text('CANCELLATIONS')),
+          // DataColumn(label: Text('RATE')),
+          // DataColumn(label: Text('STATUS')),
+          // DataColumn(label: Text('ACTION')),
+          //     ],
+          // rows: [
+          //   _buildRow(
+          //     areaName: 'Anna Nagar, Chennai',
+          //     areaDesc: 'Primary Transit Hub',
+          //     requests: '12,400',
+          //     cancellations: '1,116',
+          //     rate: '9.0%',
+          //     rateBgColor: const Color(0xFFFFECEE),
+          //     rateTextColor: const Color(0xFFEA3546),
+          //     status: 'Critical High',
+          //     statusColor: const Color(0xFFEA3546),
+          //     onViewDetails: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) =>
+          //               const CancellationZoneDetailsScreen(
+          //                 zoneName: 'Anna Nagar',
+          //               ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          //   _buildRow(
+          //     areaName: 'Adyar, Chennai',
+          //     areaDesc: 'Residential Area',
+          //     requests: '8,200',
+          //     cancellations: '508',
+          //     rate: '6.2%',
+          //     rateBgColor: const Color(0xFFFFF7DB),
+          //     rateTextColor: const Color(0xFFD4A000),
+          //     status: 'Elevated',
+          //     statusColor: const Color(0xFFD4A000),
+          //     onViewDetails: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) =>
+          //               const CancellationZoneDetailsScreen(
+          //                 zoneName: 'Adyar',
+          //               ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          //   _buildRow(
+          //     areaName: 'Velachery, Chennai',
+          //     areaDesc: 'IT Park Corridor',
+          //     requests: '15,600',
+          //     cancellations: '702',
+          //     rate: '4.5%',
+          //     rateBgColor: const Color(0xFFE8FDF2),
+          //     rateTextColor: const Color(0xFF00C46B),
+          //     status: 'Normal',
+          //     statusColor: const Color(0xFF00C46B),
+          //     onViewDetails: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) =>
+          //               const CancellationZoneDetailsScreen(
+          //                 zoneName: 'Velachery',
+          //               ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          //   _buildRow(
+          //     areaName: 'T-Nagar, Chennai',
+          //     areaDesc: 'Commercial Zone',
+          //     requests: '10,100',
+          //     cancellations: '858',
+          //     rate: '8.5%',
+          //     rateBgColor: const Color(0xFFFFECEE),
+          //     rateTextColor: const Color(0xFFEA3546),
+          //     status: 'High Risk',
+          //     statusColor: const Color(0xFFEA3546),
+          //     onViewDetails: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (context) =>
+          //               const CancellationZoneDetailsScreen(
+          //                 zoneName: 'T-Nagar',
+          //               ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ],
+          //   ),
+          // ),
           const Divider(height: 1, color: Color(0xFFF0F1F3)),
           Padding(
             padding: const EdgeInsets.all(24),
