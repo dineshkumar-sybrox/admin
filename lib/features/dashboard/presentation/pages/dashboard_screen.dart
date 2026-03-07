@@ -17,6 +17,7 @@ import '../../../../features/incentives/presentation/pages/create_incentive_scre
 import '../../../../features/incentives/presentation/pages/incentive_historical_screen.dart';
 import '../../../../features/incentives/presentation/pages/incentive_detail_screen.dart';
 import '../../../../features/compliance/presentation/pages/compliance_screen.dart';
+import '../../../../features/drivers/presentation/pages/drivers_management_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -51,7 +52,7 @@ class DashboardScreen extends StatelessWidget {
       case NavItem.rider:
         return 'Rider Management';
       case NavItem.drivers:
-        return 'Driver Management';
+        return 'Drivers Management - Total Drivers';
       case NavItem.payments:
         return 'Payment Management';
       case NavItem.analytics:
@@ -97,6 +98,8 @@ class DashboardScreen extends StatelessWidget {
         return const IncentiveDetailScreen();
       case NavItem.compliance:
         return const ComplianceScreen();
+      case NavItem.drivers:
+        return const DriversManagementScreen();
       default:
         return _DashboardBody(isTablet: isTablet);
     }

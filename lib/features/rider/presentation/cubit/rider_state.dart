@@ -10,6 +10,7 @@ class Rider {
   final double walletBalance;
   final int coins;
   final String status;
+  final String? reasonForSuspend;
 
   const Rider({
     required this.id,
@@ -21,10 +22,13 @@ class Rider {
     required this.walletBalance,
     required this.coins,
     required this.status,
+    this.reasonForSuspend,
   });
 }
 
 enum RiderStatusFilter { all, active, inactive, banned }
+
+enum RiderTab { total, active, newRiders, suspended }
 
 class RiderState extends Equatable {
   final bool isLoading;
@@ -32,6 +36,7 @@ class RiderState extends Equatable {
   final List<Rider> filteredRiders;
   final String searchQuery;
   final RiderStatusFilter statusFilter;
+  final RiderTab selectedTab;
   final int currentPage;
   final int totalCount;
   final int totalRiders;
@@ -45,6 +50,7 @@ class RiderState extends Equatable {
     this.filteredRiders = const [],
     this.searchQuery = '',
     this.statusFilter = RiderStatusFilter.all,
+    this.selectedTab = RiderTab.total,
     this.currentPage = 1,
     this.totalCount = 0,
     this.totalRiders = 0,
@@ -59,6 +65,7 @@ class RiderState extends Equatable {
     List<Rider>? filteredRiders,
     String? searchQuery,
     RiderStatusFilter? statusFilter,
+    RiderTab? selectedTab,
     int? currentPage,
     int? totalCount,
     int? totalRiders,
@@ -72,6 +79,7 @@ class RiderState extends Equatable {
       filteredRiders: filteredRiders ?? this.filteredRiders,
       searchQuery: searchQuery ?? this.searchQuery,
       statusFilter: statusFilter ?? this.statusFilter,
+      selectedTab: selectedTab ?? this.selectedTab,
       currentPage: currentPage ?? this.currentPage,
       totalCount: totalCount ?? this.totalCount,
       totalRiders: totalRiders ?? this.totalRiders,
@@ -83,16 +91,17 @@ class RiderState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        riders,
-        filteredRiders,
-        searchQuery,
-        statusFilter,
-        currentPage,
-        totalCount,
-        totalRiders,
-        activeToday,
-        newRegistrations,
-        bannedRiders,
-      ];
+    isLoading,
+    riders,
+    filteredRiders,
+    searchQuery,
+    statusFilter,
+    selectedTab,
+    currentPage,
+    totalCount,
+    totalRiders,
+    activeToday,
+    newRegistrations,
+    bannedRiders,
+  ];
 }
