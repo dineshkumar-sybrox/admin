@@ -8,8 +8,9 @@ class DriverStatCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DriversManagementCubit, DriverTab>(
-      builder: (context, selectedTab) {
+    return BlocBuilder<DriversManagementCubit, DriversManagementState>(
+      builder: (context, state) {
+        final selectedTab = state.selectedTab;
         return Row(
           children: [
             Expanded(
@@ -113,16 +114,10 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      // Set to 110px approximately based on standard stat lines, but min box works well
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        // If it's primary, adding a subtle green background tint matching the Active state
-        border: Border.all(
-          color: isPrimary ? AppColors.primary : const Color(0xFFE5E7EB),
-          width: isPrimary ? 1.5 : 1.0,
-        ),
+        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.0),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -131,62 +126,86 @@ class _StatCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF6B7280),
-              letterSpacing: 1.0,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(11),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimary,
+              if (isPrimary) Container(width: 3, color: AppColors.primary),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6B7280),
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            value,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          if (trend != null)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: Text(
+                                trend!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: trendIsPositive
+                                      ? AppColors.primary
+                                      : AppColors.error,
+                                ),
+                              ),
+                            ),
+                          if (trendText != null)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: 6,
+                                left: 4,
+                              ),
+                              child: Text(
+                                trendText!,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: isWarning
+                                      ? AppColors.error
+                                      : const Color(
+                                          0xFF6B7280,
+                                        ).withOpacity(0.7),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(width: 8),
-              if (trend != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    trend!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: trendIsPositive
-                          ? AppColors.primary
-                          : AppColors.error,
-                    ),
-                  ),
-                ),
-              if (trendText != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 6, left: 4),
-                  child: Text(
-                    trendText!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: isWarning
-                          ? AppColors.error
-                          : const Color(0xFF6B7280).withOpacity(0.7),
-                    ),
-                  ),
-                ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

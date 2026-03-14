@@ -81,7 +81,6 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -94,55 +93,50 @@ class _StatCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          if (isPrimary)
-            Positioned(
-              left: -24,
-              top: -6,
-              bottom: -6,
-              child: Container(
-                width: 4,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(4),
-                    bottomRight: Radius.circular(4),
-                  ),
-                ),
-              ),
-            ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(11),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                title,
-                style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                value,
-                style: AppTypography.h1.copyWith(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 32,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                subtitle,
-                style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w500,
+              if (isPrimary) Container(width: 3, color: AppColors.primary),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        value,
+                        style: AppTypography.h1.copyWith(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 32,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        subtitle,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

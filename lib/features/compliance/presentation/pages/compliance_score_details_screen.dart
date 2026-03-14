@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../../../../presentation/widgets/admin_scaffold.dart';
+
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
@@ -9,35 +9,32 @@ class ComplianceScoreDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AdminScaffold(
-      title: 'Complaiance Score',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          children: [
-            const _ScoreOverviewCard(),
-            const SizedBox(height: 32),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(flex: 12, child: _ComplianceBreakdownCard()),
-                const SizedBox(width: 24),
-                const Expanded(flex: 8, child: _RejectionReasonsCard()),
-              ],
-            ),
-            const SizedBox(height: 32),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(flex: 12, child: _RegionalHeatmapCard()),
-                const SizedBox(width: 24),
-                const Expanded(flex: 8, child: _TopCitiesCard()),
-              ],
-            ),
-            const SizedBox(height: 32),
-            const _RecentLogsCard(),
-          ],
-        ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: [
+          const _ScoreOverviewCard(),
+          const SizedBox(height: 32),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(flex: 12, child: _ComplianceBreakdownCard()),
+              const SizedBox(width: 24),
+              const Expanded(flex: 8, child: _RejectionReasonsCard()),
+            ],
+          ),
+          const SizedBox(height: 32),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(flex: 12, child: _RegionalHeatmapCard()),
+              const SizedBox(width: 24),
+              const Expanded(flex: 8, child: _TopCitiesCard()),
+            ],
+          ),
+          const SizedBox(height: 32),
+          const _RecentLogsCard(),
+        ],
       ),
     );
   }
@@ -631,37 +628,45 @@ class _RecentLogsCard extends StatelessWidget {
   }
 
   Widget _buildLogsTable(BuildContext context) {
-    return DataTable(
-      headingRowHeight: 60,
-      dataRowMaxHeight: 80,
-      dataRowMinHeight: 80,
-      columns: const [
-        DataColumn(label: Text('DOCUMENT ID')),
-        DataColumn(label: Text('DRIVER NAME')),
-        DataColumn(label: Text('DOCUMENTS')),
-        DataColumn(label: Text('CATEGORY')),
-        DataColumn(label: Text('STATUS')),
-        DataColumn(label: Text('CLOSED DATE & TIME')),
-        DataColumn(label: Text('ACTION')),
-      ],
-      rows: [
-        _buildDataRow(
-          id: '#DOC-8801',
-          driverName: 'Vikram Seth',
-          documents: 'DRIVING LICENSE',
-          category: 'REJECTED',
-          status: 'Rejected',
-          dateTime: '04 Nov 2025\n05:20 PM',
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width - 64,
         ),
-        _buildDataRow(
-          id: '#DOC-8798',
-          driverName: 'Anita Mehra',
-          documents: 'ALL DOCUMENTS',
-          category: 'VERIFIED',
-          status: 'Approved',
-          dateTime: '04 Nov 2025\n04:15 PM',
+        child: DataTable(
+          headingRowHeight: 60,
+          dataRowMaxHeight: 80,
+          dataRowMinHeight: 80,
+          columns: const [
+            DataColumn(label: Text('DOCUMENT ID')),
+            DataColumn(label: Text('DRIVER NAME')),
+            DataColumn(label: Text('DOCUMENTS')),
+            DataColumn(label: Text('CATEGORY')),
+            DataColumn(label: Text('STATUS')),
+            DataColumn(label: Text('CLOSED DATE & TIME')),
+            DataColumn(label: Text('ACTION')),
+          ],
+          rows: [
+            _buildDataRow(
+              id: '#DOC-8801',
+              driverName: 'Vikram Seth',
+              documents: 'DRIVING LICENSE',
+              category: 'REJECTED',
+              status: 'Rejected',
+              dateTime: '04 Nov 2025\n05:20 PM',
+            ),
+            _buildDataRow(
+              id: '#DOC-8798',
+              driverName: 'Anita Mehra',
+              documents: 'ALL DOCUMENTS',
+              category: 'VERIFIED',
+              status: 'Approved',
+              dateTime: '04 Nov 2025\n04:15 PM',
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

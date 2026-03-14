@@ -78,9 +78,10 @@ class RegionalPerformanceTable extends StatelessWidget {
             ),
           ),
           const Divider(height: 1, color: Color(0xFFF0F1F3)),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+          SizedBox(
+            width: double.infinity,
             child: DataTable(
+              showCheckboxColumn: false,
               headingRowColor: WidgetStateProperty.all(Colors.white),
               dataRowMaxHeight: 80,
               dataRowMinHeight: 80,

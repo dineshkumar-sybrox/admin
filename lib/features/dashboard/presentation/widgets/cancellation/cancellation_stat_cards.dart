@@ -172,25 +172,7 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (widget.isSelected)
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border(
-                          left: BorderSide(
-                            color: AppColors.activeGreen, // Green color
-                            width: 3, // Thickness of left border
-                          ),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                    ),
+                    Container(width: 3, color: AppColors.primary),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

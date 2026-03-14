@@ -8,7 +8,10 @@ class RevenueTrendChart extends StatefulWidget {
 }
 
 class _RevenueTrendChartState extends State<RevenueTrendChart> {
-  static const List<double> _todayPoints = [
+  // --- Data Profiles ---
+
+  // Hourly / Today
+  static const List<double> _hourlyToday = [
     0.1,
     0.15,
     0.25,
@@ -21,7 +24,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     0.7,
     1.0,
   ];
-  static const List<double> _yesterdayPoints = [
+  static const List<double> _hourlyPrev = [
     0.3,
     0.32,
     0.28,
@@ -34,7 +37,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     0.35,
     0.15,
   ];
-  static const List<String> _timeLabels = [
+  static const List<String> _hourlyLabels = [
     '00:00',
     '02:00',
     '04:00',
@@ -48,17 +51,206 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     '23:59',
   ];
 
+  // Last Week
+  static const List<double> _weekToday = [0.4, 0.6, 0.3, 0.8, 0.7, 0.9, 0.5];
+  static const List<double> _weekPrev = [0.3, 0.4, 0.5, 0.4, 0.6, 0.5, 0.4];
+  static const List<String> _weekLabels = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+
+  // Last 30 Months (keeping the original name if requested, but assuming days for logic)
+  static const List<double> _monthsToday = [
+    0.2,
+    0.4,
+    0.3,
+    0.6,
+    0.5,
+  ]; // 5 weeks approx
+  static const List<double> _monthsPrev = [0.3, 0.2, 0.4, 0.3, 0.5];
+  static const List<String> _monthsLabels = ['W1', 'W2', 'W3', 'W4', 'W5'];
+
+  // Last 6 Months
+  static const List<double> _sixMonthsToday = [0.4, 0.5, 0.7, 0.6, 0.8, 0.9];
+  static const List<double> _sixMonthsPrev = [0.3, 0.4, 0.5, 0.5, 0.6, 0.7];
+  static const List<String> _sixMonthsLabels = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+  ];
+
+  // Last 1 Year
+  static const List<double> _yearToday = [
+    0.3,
+    0.4,
+    0.5,
+    0.4,
+    0.6,
+    0.7,
+    0.8,
+    0.7,
+    0.9,
+    0.8,
+    1.0,
+    0.9,
+  ];
+  static const List<double> _yearPrev = [
+    0.2,
+    0.3,
+    0.4,
+    0.3,
+    0.5,
+    0.6,
+    0.7,
+    0.6,
+    0.8,
+    0.7,
+    0.9,
+    0.8,
+  ];
+  static const List<String> _yearLabels = [
+    'J',
+    'F',
+    'M',
+    'A',
+    'M',
+    'J',
+    'J',
+    'A',
+    'S',
+    'O',
+    'N',
+    'D',
+  ];
+
   int? _hoverIndex;
   Offset? _hoverPos;
   Size _chartSize = Size.zero;
   String _selectedFilter = 'Hourly';
+  DateTimeRange? _selectedCustomRange;
+
+  List<double> get _currentPoints => _getPoints(_selectedFilter);
+  List<double> get _prevPoints => _getPrevPoints(_selectedFilter);
+  List<String> get _currentLabels => _getLabels(_selectedFilter);
+
+  List<double> _getPoints(String filter) {
+    if (filter == 'Last Week') return _weekToday;
+    if (filter == 'Last 30 Months') return _monthsToday;
+    if (filter == 'Last 6 Months') return _sixMonthsToday;
+    if (filter == 'Last 1 Year') return _yearToday;
+    if (filter.contains(' - ') || filter == 'Custom Date')
+      return _weekToday; // Mock for custom
+    return _hourlyToday;
+  }
+
+  List<double> _getPrevPoints(String filter) {
+    if (filter == 'Last Week') return _weekPrev;
+    if (filter == 'Last 30 Months') return _monthsPrev;
+    if (filter == 'Last 6 Months') return _sixMonthsPrev;
+    if (filter == 'Last 1 Year') return _yearPrev;
+    if (filter.contains(' - ') || filter == 'Custom Date')
+      return _weekPrev; // Mock for custom
+    return _hourlyPrev;
+  }
+
+  List<String> _getLabels(String filter) {
+    if (filter == 'Last Week') return _weekLabels;
+    if (filter == 'Last 30 Months') return _monthsLabels;
+    if (filter == 'Last 6 Months') return _sixMonthsLabels;
+    if (filter == 'Last 1 Year') return _yearLabels;
+    if (_selectedCustomRange != null ||
+        filter.contains(' - ') ||
+        filter == 'Custom Date') {
+      // Return a list of labels matching the length of _weekToday (7 points)
+      return ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7'];
+    }
+    return _hourlyLabels;
+  }
+
+  Future<void> _selectCustomDateRange() async {
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now(),
+      initialDateRange: _selectedCustomRange,
+      initialEntryMode: DatePickerEntryMode.calendar,
+      builder: (context, child) {
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 24,
+          ),
+          backgroundColor: Colors.transparent,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 400, maxHeight: 560),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: Color(0xFF00A86B),
+                    onPrimary: Colors.white,
+                    onSurface: Color(0xFF1A1D1F),
+                  ),
+                ),
+                child: child!,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (picked != null) {
+      setState(() {
+        _selectedCustomRange = picked;
+        final start =
+            "${_getMonthName(picked.start.month)} ${picked.start.day}";
+        final end = "${_getMonthName(picked.end.month)} ${picked.end.day}";
+        _selectedFilter = "$start - $end";
+        _hoverIndex = null;
+        _hoverPos = null;
+      });
+    }
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return months[month - 1];
+  }
 
   void _updateHover(Offset localPos) {
     if (_chartSize.width <= 0 || _chartSize.height <= 0) return;
+    final points = _currentPoints;
     final x = localPos.dx.clamp(0.0, _chartSize.width);
-    final idx = (x / _chartSize.width * (_todayPoints.length - 1)).round();
+    final idx = (x / _chartSize.width * (points.length - 1)).round();
     setState(() {
-      _hoverIndex = idx.clamp(0, _todayPoints.length - 1);
+      _hoverIndex = idx.clamp(0, points.length - 1);
       _hoverPos = Offset(x, localPos.dy.clamp(0.0, _chartSize.height));
     });
   }
@@ -138,22 +330,25 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
                         onTapCancel: _clearHover,
                         child: CustomPaint(
                           painter: _TrendChartPainter(
-                            todayPoints: _todayPoints,
-                            yesterdayPoints: _yesterdayPoints,
+                            todayPoints: _currentPoints,
+                            yesterdayPoints: _prevPoints,
                             hoverIndex: _hoverIndex,
                           ),
                           size: Size.infinite,
                         ),
                       ),
                     ),
-                    if (_hoverIndex != null && _hoverPos != null)
+                    if (_hoverIndex != null &&
+                        _hoverPos != null &&
+                        _hoverIndex! < _currentPoints.length &&
+                        _hoverIndex! < _currentLabels.length)
                       _HoverTooltip(
                         index: _hoverIndex!,
                         pos: _hoverPos!,
                         size: _chartSize,
-                        time: _timeLabels[_hoverIndex!],
-                        todayValue: _todayPoints[_hoverIndex!],
-                        yesterdayValue: _yesterdayPoints[_hoverIndex!],
+                        time: _currentLabels[_hoverIndex!],
+                        todayValue: _currentPoints[_hoverIndex!],
+                        yesterdayValue: _prevPoints[_hoverIndex!],
                       ),
                   ],
                 );
@@ -163,7 +358,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: ['00:00', '06:00', '12:00', '18:00', '23:59']
+            children: _currentLabels
                 .map(
                   (t) => Text(
                     t,
@@ -217,9 +412,17 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
           ],
         ),
         onSelected: (val) {
-          setState(() {
-            _selectedFilter = val;
-          });
+          if (val == 'Custom Date') {
+            _selectCustomDateRange();
+          } else {
+            setState(() {
+              _selectedFilter = val;
+              _selectedCustomRange =
+                  null; // Clear custom range if preset selected
+              _hoverIndex = null;
+              _hoverPos = null;
+            });
+          }
         },
         itemBuilder: (context) => [
           _buildPopupItem('Hourly', _selectedFilter == 'Hourly'),
@@ -231,6 +434,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
           ),
           _buildPopupItem('Last 6 Months', _selectedFilter == 'Last 6 Months'),
           _buildPopupItem('Last 1 Year', _selectedFilter == 'Last 1 Year'),
+          _buildPopupItem('Custom Date', _selectedFilter.contains(' - ')),
         ],
       ),
     );
@@ -290,7 +494,7 @@ class _TrendChartPainter extends CustomPainter {
     );
     _drawLine(canvas, size, todayPoints, const Color(0xFF00A86B), 3.0);
 
-    if (hoverIndex != null) {
+    if (hoverIndex != null && hoverIndex! < todayPoints.length) {
       final i = hoverIndex!;
       final x = i / (todayPoints.length - 1) * size.width;
       final y = (1 - todayPoints[i]) * size.height;

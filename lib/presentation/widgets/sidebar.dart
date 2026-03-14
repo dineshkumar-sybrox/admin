@@ -107,7 +107,11 @@ class Sidebar extends StatelessWidget {
               _buildMenuItem(
                 icon: Icons.edit_document,
                 label: 'Compliance',
-                isActive: state.selectedNav == NavItem.compliance,
+                isActive:
+                    state.selectedNav == NavItem.compliance ||
+                    state.selectedNav == NavItem.totalDocuments ||
+                    state.selectedNav == NavItem.totalTickets ||
+                    state.selectedNav == NavItem.complianceScoreDetails,
                 onTap: () {
                   context.read<DashboardCubit>().selectNav(NavItem.compliance);
                   Navigator.popUntil(context, (route) => route.isFirst);

@@ -1,8 +1,52 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'rider_state.dart';
+import '../../../../core/utils/excel_export_helper.dart';
 
 class RiderCubit extends Cubit<RiderState> {
   RiderCubit() : super(const RiderState());
+
+  // ... rest of the class ...
+
+  Future<void> exportToExcel() async {
+    if (state.isExporting) return;
+    emit(state.copyWith(isExporting: true));
+
+    try {
+      final riders = state.filteredRiders;
+      final headers = [
+        'RIDER ID',
+        'RIDER NAME',
+        'PHONE',
+        'EMAIL',
+        'TOTAL RIDES',
+        'WALLET BALANCE',
+        'COINS',
+        'STATUS',
+      ];
+      final rows = riders
+          .map(
+            (r) => [
+              r.id,
+              r.name,
+              r.phone,
+              r.email,
+              r.totalRides,
+              r.walletBalance,
+              r.coins,
+              r.status,
+            ],
+          )
+          .toList();
+
+      await ExcelExportHelper.exportToExcel(
+        headers: headers,
+        rows: rows,
+        fileName: 'Riders_Data_${DateTime.now().millisecondsSinceEpoch}',
+      );
+    } finally {
+      emit(state.copyWith(isExporting: false));
+    }
+  }
 
   static const List<Rider> _allRiders = [
     Rider(
@@ -130,7 +174,7 @@ class RiderCubit extends Cubit<RiderState> {
     );
   }
 
-  void setStatusFilter(RiderStatusFilter filter) {
+  void setStatusFilter(String filter) {
     final filtered = _filterRiders(
       state.searchQuery,
       filter,
@@ -160,25 +204,25 @@ class RiderCubit extends Cubit<RiderState> {
     );
   }
 
-  List<Rider> _filterRiders(
-    String query,
-    RiderStatusFilter filter,
-    RiderTab tab,
-  ) {
+  List<Rider> _filterRiders(String query, String statusFilter, RiderTab tab) {
     return _allRiders.where((r) {
       final matchesQuery =
           query.isEmpty ||
           r.name.toLowerCase().contains(query.toLowerCase()) ||
           r.email.toLowerCase().contains(query.toLowerCase()) ||
           r.phone.contains(query);
-      bool matchesStatus =
-          filter == RiderStatusFilter.all ||
-          (filter == RiderStatusFilter.active && r.status == 'Active') ||
-          (filter == RiderStatusFilter.inactive && r.status == 'Inactive') ||
-          (filter == RiderStatusFilter.banned &&
-              (r.status == 'Banned' ||
-                  r.status == 'Suspend' ||
-                  r.status == 'Suspended'));
+
+      bool matchesStatus = true;
+      if (statusFilter == 'Active') {
+        matchesStatus = r.status == 'Active';
+      } else if (statusFilter == 'Inactive') {
+        matchesStatus = r.status == 'Inactive';
+      } else if (statusFilter == 'Suspended') {
+        matchesStatus =
+            r.status == 'Suspended' ||
+            r.status == 'Banned' ||
+            r.status == 'Suspend';
+      }
 
       bool matchesTab = true;
       if (tab == RiderTab.active) {
