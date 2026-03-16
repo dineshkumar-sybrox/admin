@@ -1,194 +1,151 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/payments_cubit.dart';
+import '../cubit/payments_state.dart';
+import '../pages/driver_payout_details_screen.dart';
 
-class DriverPayoutList extends StatefulWidget {
+class DriverPayoutList extends StatelessWidget {
   const DriverPayoutList({super.key});
 
   @override
-  State<DriverPayoutList> createState() => _DriverPayoutListState();
-}
-
-class _DriverPayoutListState extends State<DriverPayoutList> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Driver Payout List',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1D1F),
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  'Settlements for drivers',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF9EA5AD),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          _buildFilterBar(),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              headingRowColor: WidgetStateProperty.all(Colors.white),
-              dataRowMaxHeight: 80,
-              dataRowMinHeight: 80,
-              horizontalMargin: 24,
-              columnSpacing: 24,
-              dividerThickness: 1,
-              headingTextStyle: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF6F767E),
-                letterSpacing: 0.5,
+    return BlocBuilder<PaymentsCubit, PaymentsState>(
+      builder: (context, state) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.02),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
               ),
-              columns: const [
-                DataColumn(label: Text('REQUEST ID')),
-                DataColumn(label: Text('VEHICLE TYPE')),
-                DataColumn(label: Text('DATE & TIME')),
-                DataColumn(label: Text('DRIVER NAME')),
-                DataColumn(label: Text('AMOUNT')),
-                DataColumn(label: Text('PAYMENT\nTRANSFER')),
-                DataColumn(label: Text('STATUS')),
-                DataColumn(label: Text('ACTION')),
-              ],
-              rows: [
-                _buildRow(
-                  id: '#PAY-99210',
-                  vehicleType: 'CAB',
-                  vehicleColor: const Color(0xFFFFA629),
-                  vehicleBgColor: const Color(0xFFFFF7DB),
-                  dateAndTime: '24 Feb 2026,\n08:45 PM',
-                  driverName: 'Rahul Jaiswal',
-                  driverDesc: 'Driver',
-                  amount: '₹24,500.00',
-                  paymentTransfer: 'UPI',
-                  paymentIcon: Icons.account_balance_wallet_outlined,
-                  status: 'SUCCESSFUL',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
-                ),
-                _buildRow(
-                  id: '#PAY-99210',
-                  vehicleType: 'BIKE/SCOOTER',
-                  vehicleColor: const Color(0xFF00A86B),
-                  vehicleBgColor: const Color(0xFFE8FDF2),
-                  dateAndTime: '24 Feb 2026,\n08:45 PM',
-                  driverName: 'Sam Yogi',
-                  driverDesc: 'Driver',
-                  amount: '₹24,500.00',
-                  paymentTransfer: 'Bank',
-                  paymentIcon: Icons.account_balance_outlined,
-                  status: 'PENDING',
-                  statusColor: const Color(0xFFD4A000),
-                  statusBgColor: const Color(0xFFFFF7DB),
-                ),
-                _buildRow(
-                  id: '#PAY-99210',
-                  vehicleType: 'CAB',
-                  vehicleColor: const Color(0xFFFFA629),
-                  vehicleBgColor: const Color(0xFFFFF7DB),
-                  dateAndTime: '24 Feb 2026,\n08:45 PM',
-                  driverName: 'Rahul Singh',
-                  driverDesc: 'Driver',
-                  amount: '₹24,500.00',
-                  paymentTransfer: 'Bank',
-                  paymentIcon: Icons.account_balance_outlined,
-                  status: 'REJECTED',
-                  statusColor: const Color(0xFFEA3546),
-                  statusBgColor: const Color(0xFFFFECEE),
-                ),
-                _buildRow(
-                  id: '#PAY-99210',
-                  vehicleType: 'AUTO',
-                  vehicleColor: const Color(0xFF2E5BFF),
-                  vehicleBgColor: const Color(0xFFEAF0FF),
-                  dateAndTime: '24 Feb 2026,\n08:45 PM',
-                  driverName: 'Aruk Kumar',
-                  driverDesc: 'Driver',
-                  amount: '₹24,500.00',
-                  paymentTransfer: 'UPI',
-                  paymentIcon: Icons.account_balance_wallet_outlined,
-                  status: 'SUCCESSFUL',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
-                ),
-              ],
-            ),
+            ],
+            border: Border.all(color: const Color(0xFFF0F1F3)),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Showing 4 of 12 payout requests',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF6F767E),
-                  ),
-                ),
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildPaginator('<', isActive: false),
-                    const SizedBox(width: 8),
-                    _buildPaginator('1', isActive: true),
-                    const SizedBox(width: 8),
-                    _buildPaginator('2', isActive: false),
-                    const SizedBox(width: 8),
-                    _buildPaginator('3', isActive: false),
-                    const SizedBox(width: 8),
-                    _buildPaginator('>', isActive: false),
+                    Text(
+                      'Driver Payout List',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1A1D1F),
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Settlements for drivers',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF9EA5AD),
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              _buildFilterBar(context, state),
+              const Divider(height: 1, color: Color(0xFFF0F1F3)),
+              SizedBox(
+                width: double.infinity,
+                child: DataTable(
+                  showCheckboxColumn: false,
+                  headingRowColor: WidgetStateProperty.all(Colors.white),
+                  dataRowMaxHeight: 80,
+                  dataRowMinHeight: 80,
+                  horizontalMargin: 24,
+                  columnSpacing: 24,
+                  dividerThickness: 1,
+                  headingTextStyle: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF6F767E),
+                    letterSpacing: 0.5,
+                  ),
+                  columns: const [
+                    DataColumn(label: Text('REQUEST ID')),
+                    DataColumn(label: Text('VEHICLE TYPE')),
+                    DataColumn(label: Text('DATE & TIME')),
+                    DataColumn(label: Text('DRIVER NAME')),
+                    DataColumn(label: Text('AMOUNT')),
+                    DataColumn(label: Text('PAYMENT\nTRANSFER')),
+                    DataColumn(label: Text('STATUS')),
+                    DataColumn(label: Text('ACTION')),
+                  ],
+                  rows: state.filteredPayouts.map((payout) {
+                    return _buildRow(
+                      context,
+                      id: payout['id'],
+                      vehicleType: payout['vehicleType'],
+                      vehicleColor: payout['vehicleColor'],
+                      vehicleBgColor: payout['vehicleBgColor'],
+                      dateAndTime: payout['dateAndTime'],
+                      driverName: payout['driverName'],
+                      driverDesc: payout['driverDesc'],
+                      amount: payout['amount'],
+                      paymentTransfer: payout['paymentTransfer'],
+                      paymentIcon: payout['paymentIcon'],
+                      status: payout['status'],
+                      statusColor: payout['statusColor'],
+                      statusBgColor: payout['statusBgColor'],
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFF0F1F3)),
+              _buildPagination(state.filteredPayouts.length),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildFilterBar() {
+  Widget _buildFilterBar(BuildContext context, PaymentsState state) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
       child: Row(
         children: [
-          Expanded(flex: 1, child: _buildDropdown('Payment Methods')),
+          Expanded(
+            flex: 1,
+            child: _buildDropdown(
+              'Payment Methods',
+              state.payoutMethodFilter,
+              (val) => context.read<PaymentsCubit>().filterPayoutByMethod(val!),
+              ['Payment Methods', 'UPI', 'Bank'],
+            ),
+          ),
           const SizedBox(width: 16),
-          Expanded(flex: 1, child: _buildDropdown('All Status')),
+          Expanded(
+            flex: 1,
+            child: _buildDropdown(
+              'All Status',
+              state.payoutStatusFilter,
+              (val) => context.read<PaymentsCubit>().filterPayoutByStatus(val!),
+              ['All Status', 'Successful', 'Pending', 'Rejected'],
+            ),
+          ),
           const SizedBox(width: 16),
           Expanded(flex: 1, child: _buildTextField('mm/dd/yyyy', null)),
           const SizedBox(width: 16),
-          Expanded(flex: 1, child: _buildDropdown('Vehicle')),
+          Expanded(
+            flex: 1,
+            child: _buildDropdown(
+              'Vehicle',
+              state.payoutVehicleFilter,
+              (val) =>
+                  context.read<PaymentsCubit>().filterPayoutByVehicle(val!),
+              ['Vehicle', 'Cab', 'Bike/Scooter', 'Auto'],
+            ),
+          ),
           const SizedBox(width: 16),
           ElevatedButton.icon(
             onPressed: () {},
@@ -242,7 +199,12 @@ class _DriverPayoutListState extends State<DriverPayoutList> {
     );
   }
 
-  Widget _buildDropdown(String hint) {
+  Widget _buildDropdown(
+    String hint,
+    String? value,
+    void Function(String?)? onChanged,
+    List<String> items,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -255,6 +217,7 @@ class _DriverPayoutListState extends State<DriverPayoutList> {
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
+          value: items.contains(value) ? value : null,
           isExpanded: true,
           hint: Text(
             hint,
@@ -269,9 +232,43 @@ class _DriverPayoutListState extends State<DriverPayoutList> {
             color: Color(0xFF6F767E),
             size: 20,
           ),
-          items: const [],
-          onChanged: (val) {},
+          items: items.map((String item) {
+            return DropdownMenuItem<String>(value: item, child: Text(item));
+          }).toList(),
+          onChanged: onChanged,
         ),
+      ),
+    );
+  }
+
+  Widget _buildPagination(int total) {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Showing 1-${total > 10 ? 10 : total} of $total payout requests',
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF6F767E),
+            ),
+          ),
+          Row(
+            children: [
+              _buildPaginator('<', isActive: false),
+              const SizedBox(width: 8),
+              _buildPaginator('1', isActive: true),
+              const SizedBox(width: 8),
+              _buildPaginator('2', isActive: false),
+              const SizedBox(width: 8),
+              _buildPaginator('3', isActive: false),
+              const SizedBox(width: 8),
+              _buildPaginator('>', isActive: false),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -298,7 +295,8 @@ class _DriverPayoutListState extends State<DriverPayoutList> {
     );
   }
 
-  DataRow _buildRow({
+  DataRow _buildRow(
+    BuildContext context, {
     required String id,
     required String vehicleType,
     required Color vehicleColor,
@@ -315,13 +313,13 @@ class _DriverPayoutListState extends State<DriverPayoutList> {
   }) {
     return DataRow(
       onSelectChanged: (_) {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) =>
-        //         DriverPayoutDetailsScreen(driverName: driverName),
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DriverPayoutDetailsScreen(driverName: driverName),
+          ),
+        );
       },
       cells: [
         DataCell(

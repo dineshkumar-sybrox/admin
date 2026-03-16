@@ -39,12 +39,6 @@ class _RiderScreenBodyState extends State<_RiderScreenBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<RiderCubit, RiderState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primary),
-          );
-        }
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -134,73 +128,96 @@ class _SearchFilterBar extends StatelessWidget {
 
           Row(
             children: [
-              // Default Dropdown for "All Status" mock
+              // Status Dropdown
               Container(
                 height: 44,
                 width: 140,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9), // Very light grey bg
+                  color: const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
                 ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: 'All Status',
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: AppColors.textSecondary,
-                    ),
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    items: ['All Status', 'Active', 'Inactive', 'Suspended']
-                        .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        })
-                        .toList(),
-                    onChanged: (String? newValue) {
-                      // Note: Mock purpose only based on the image
-                      if (newValue != null) {
-                        // Add logic if actual filtering is needed
-                      }
-                    },
-                  ),
+                child: BlocBuilder<RiderCubit, RiderState>(
+                  buildWhen: (p, c) => p.statusFilter != c.statusFilter,
+                  builder: (context, state) {
+                    return DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: state.statusFilter,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: AppColors.textSecondary,
+                          size: 20,
+                        ),
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        items: ['All Status', 'Active', 'Inactive', 'Suspended']
+                            .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            })
+                            .toList(),
+                        onChanged: (String? newValue) {
+                          if (newValue != null) {
+                            context.read<RiderCubit>().setStatusFilter(
+                              newValue,
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 16),
 
               // Export Button
-              SizedBox(
-                height: 44,
-                child: ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.download,
-                    size: 18,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Export Data',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+              BlocBuilder<RiderCubit, RiderState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    height: 44,
+                    child: ElevatedButton.icon(
+                      onPressed: state.isExporting
+                          ? null
+                          : () => context.read<RiderCubit>().exportToExcel(),
+                      icon: state.isExporting
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.download,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                      label: Text(
+                        state.isExporting ? 'Exporting...' : 'Export Data',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.success, // Green as per mock
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.success, // Green as per mock
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),

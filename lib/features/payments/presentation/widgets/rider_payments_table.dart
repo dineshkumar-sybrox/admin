@@ -10,6 +10,81 @@ class RiderPaymentsTable extends StatefulWidget {
 class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
   String _selectedMethod = 'All Payment Methods';
   String _selectedStatus = 'All Status';
+  String _searchQuery = '';
+
+  final List<Map<String, dynamic>> _allData = [
+    {
+      'txId': '#TXN-88291',
+      'riderName': 'Vikram Malhotra',
+      'riderType': 'Regular Rider',
+      'date': '24 Oct 2023,',
+      'time': '08:45 PM',
+      'tripId': '#TRP-44201',
+      'amount': '₹842.00',
+      'method': 'UPI',
+      'methodIcon': Icons.account_balance_wallet_outlined,
+      'status': 'COMPLETED',
+      'statusColor': const Color(0xFF00C46B),
+      'statusBgColor': const Color(0xFFE8Fdf2),
+    },
+    {
+      'txId': '#TXN-88289',
+      'riderName': 'Priya Singh',
+      'riderType': 'Gold Member',
+      'date': '24 Oct 2023,',
+      'time': '08:45 PM',
+      'tripId': '#TRP-44198',
+      'amount': '₹1,240.00',
+      'method': 'Card',
+      'methodIcon': Icons.credit_card_outlined,
+      'status': 'FAILED',
+      'statusColor': const Color(0xFFEA3546),
+      'statusBgColor': const Color(0xFFFFECEE),
+    },
+    {
+      'txId': '#TXN-88285',
+      'riderName': 'Arjun Verma',
+      'riderType': 'New User',
+      'date': '24 Oct 2023,',
+      'time': '08:45 PM',
+      'tripId': '#TRP-44195',
+      'amount': '₹350.00',
+      'method': 'Cash',
+      'methodIcon': Icons.payments_outlined,
+      'status': 'PROCESSING',
+      'statusColor': const Color(0xFF0066FF),
+      'statusBgColor': const Color(0xFFE5F0FF),
+    },
+    {
+      'txId': '#TXN-88282',
+      'riderName': 'Sonia Kapoor',
+      'riderType': 'Frequent Rider',
+      'date': '24 Oct 2023,',
+      'time': '08:45 PM',
+      'tripId': '#TRP-44182',
+      'amount': '₹520.00',
+      'method': 'UPI',
+      'methodIcon': Icons.account_balance_wallet_outlined,
+      'status': 'COMPLETED',
+      'statusColor': const Color(0xFF00C46B),
+      'statusBgColor': const Color(0xFFE8Fdf2),
+    },
+  ];
+
+  List<Map<String, dynamic>> get _filteredData {
+    return _allData.where((item) {
+      final matchesMethod =
+          _selectedMethod == 'All Payment Methods' ||
+          item['method'] == _selectedMethod;
+      final matchesStatus =
+          _selectedStatus == 'All Status' || item['status'] == _selectedStatus;
+      final matchesSearch =
+          _searchQuery.isEmpty ||
+          item['txId'].toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          item['riderName'].toLowerCase().contains(_searchQuery.toLowerCase());
+      return matchesMethod && matchesStatus && matchesSearch;
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +109,12 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                Expanded(flex: 3, child: _buildSearchField()),
+                Expanded(
+                  flex: 3,
+                  child: _buildSearchField(
+                    (val) => setState(() => _searchQuery = val),
+                  ),
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   flex: 2,
@@ -63,9 +143,10 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
           const Divider(height: 1, color: Color(0xFFF0F1F3)),
 
           // Data Table
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+          SizedBox(
+            width: double.infinity,
             child: DataTable(
+              showCheckboxColumn: false,
               headingRowColor: WidgetStateProperty.all(Colors.white),
               dataRowMaxHeight: 80,
               dataRowMinHeight: 80,
@@ -88,64 +169,22 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
                 DataColumn(label: Text('STATUS')),
                 DataColumn(label: Text('ACTION')),
               ],
-              rows: [
-                _buildRow(
-                  txId: '#TXN-88291',
-                  riderName: 'Vikram Malhotra',
-                  riderType: 'Regular Rider',
-                  date: '24 Oct 2023,',
-                  time: '08:45 PM',
-                  tripId: '#TRP-44201',
-                  amount: '₹842.00',
-                  method: 'UPI',
-                  methodIcon: Icons.account_balance_wallet_outlined,
-                  status: 'COMPLETED',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
-                ),
-                _buildRow(
-                  txId: '#TXN-88289',
-                  riderName: 'Priya Singh',
-                  riderType: 'Gold Member',
-                  date: '24 Oct 2023,',
-                  time: '08:45 PM',
-                  tripId: '#TRP-44198',
-                  amount: '₹1,240.00',
-                  method: 'Card',
-                  methodIcon: Icons.credit_card_outlined,
-                  status: 'FAILED',
-                  statusColor: const Color(0xFFEA3546),
-                  statusBgColor: const Color(0xFFFFECEE),
-                ),
-                _buildRow(
-                  txId: '#TXN-88285',
-                  riderName: 'Arjun Verma',
-                  riderType: 'New User',
-                  date: '24 Oct 2023,',
-                  time: '08:45 PM',
-                  tripId: '#TRP-44195',
-                  amount: '₹350.00',
-                  method: 'Cash',
-                  methodIcon: Icons.payments_outlined,
-                  status: 'PROCESSING',
-                  statusColor: const Color(0xFF0066FF),
-                  statusBgColor: const Color(0xFFE5F0FF),
-                ),
-                _buildRow(
-                  txId: '#TXN-88282',
-                  riderName: 'Sonia Kapoor',
-                  riderType: 'Frequent Rider',
-                  date: '24 Oct 2023,',
-                  time: '08:45 PM',
-                  tripId: '#TRP-44182',
-                  amount: '₹520.00',
-                  method: 'UPI',
-                  methodIcon: Icons.account_balance_wallet_outlined,
-                  status: 'COMPLETED',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
-                ),
-              ],
+              rows: _filteredData.map((item) {
+                return _buildRow(
+                  txId: item['txId'],
+                  riderName: item['riderName'],
+                  riderType: item['riderType'],
+                  date: item['date'],
+                  time: item['time'],
+                  tripId: item['tripId'],
+                  amount: item['amount'],
+                  method: item['method'],
+                  methodIcon: item['methodIcon'],
+                  status: item['status'],
+                  statusColor: item['statusColor'],
+                  statusBgColor: item['statusBgColor'],
+                );
+              }).toList(),
             ),
           ),
           const Divider(height: 1, color: Color(0xFFF0F1F3)),
@@ -156,9 +195,9 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Showing 4 of 2,450 transactions',
-                  style: TextStyle(
+                Text(
+                  'Showing ${_filteredData.length} of ${_allData.length} transactions',
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF6F767E),
@@ -187,7 +226,7 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
     );
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(ValueChanged<String> onChanged) {
     return Container(
       height: 42,
       decoration: BoxDecoration(
@@ -195,6 +234,7 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextField(
+        onChanged: onChanged,
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.search,

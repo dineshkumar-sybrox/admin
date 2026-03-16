@@ -91,15 +91,12 @@ class _StatCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isPrimary
-                ? AppColors.primary
-                : const Color(0xFFF1F5F9), // slate-100
-            width: isPrimary ? 2 : 1,
+            color: const Color(0xFFF1F5F9), // slate-100
+            width: 1,
           ),
           boxShadow: [
             if (isPrimary)
@@ -116,63 +113,82 @@ class _StatCard extends StatelessWidget {
               ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(11),
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  value,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    height: 1,
+                if (isPrimary) Container(width: 3, color: AppColors.primary),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 24,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              value,
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            if (trend != null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2),
+                                child: Text(
+                                  trend!,
+                                  style: TextStyle(
+                                    color: trendIsPositive
+                                        ? AppColors.success
+                                        : AppColors.error,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            if (trendText != null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2),
+                                child: Text(
+                                  trendText!,
+                                  style: TextStyle(
+                                    color: trendTextIsError
+                                        ? AppColors.error
+                                        : AppColors.textSecondary,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                if (trend != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: Text(
-                      trend!,
-                      style: TextStyle(
-                        color: trendIsPositive
-                            ? AppColors.success
-                            : AppColors.error,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                if (trendText != null)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: Text(
-                      trendText!,
-                      style: TextStyle(
-                        color: trendTextIsError
-                            ? AppColors.error
-                            : AppColors.textSecondary,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

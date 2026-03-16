@@ -81,46 +81,38 @@ class PeakHourHeatmap extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 32),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: 800, // Fixed width to ensure grid squares remain readable
-              child: Column(
+          Column(
+            children: [
+              // X-Axis (Hours)
+              Row(
                 children: [
-                  // X-Axis (Hours)
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                      ), // Left margin for Y-Axis labels
-                      ...List.generate(24, (i) {
-                        return Expanded(
-                          child: Center(
-                            child: Text(
-                              '${i}h',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF6F767E),
-                              ),
-                            ),
+                  const SizedBox(width: 40), // Left margin for Y-Axis labels
+                  ...List.generate(24, (i) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          '${i}h',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF6F767E),
                           ),
-                        );
-                      }),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  // Heatmap Rows (Y-Axis Days)
-                  _buildHeatmapRow('Mon', _mockDataRow1()),
-                  _buildHeatmapRow('Tue', _mockDataRow2()),
-                  _buildHeatmapRow('Wed', _mockDataRow3()),
-                  _buildHeatmapRow('Thu', _mockDataRow4()),
-                  _buildHeatmapRow('Fri', _mockDataRow5()),
-                  _buildHeatmapRow('Sat', _mockDataRow6()),
-                  _buildHeatmapRow('Sun', _mockDataRow7()),
+                        ),
+                      ),
+                    );
+                  }),
                 ],
               ),
-            ),
+              const SizedBox(height: 8),
+              // Heatmap Rows (Y-Axis Days)
+              _buildHeatmapRow('Mon', _mockDataRow1()),
+              _buildHeatmapRow('Tue', _mockDataRow2()),
+              _buildHeatmapRow('Wed', _mockDataRow3()),
+              _buildHeatmapRow('Thu', _mockDataRow4()),
+              _buildHeatmapRow('Fri', _mockDataRow5()),
+              _buildHeatmapRow('Sat', _mockDataRow6()),
+              _buildHeatmapRow('Sun', _mockDataRow7()),
+            ],
           ),
           const SizedBox(height: 24),
           Row(

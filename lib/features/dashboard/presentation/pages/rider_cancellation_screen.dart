@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../widgets/cancellation/cancellation_stat_cards.dart';
+import 'driver_cancellation_screen.dart';
 
 class RiderCancellationScreen extends StatefulWidget {
   const RiderCancellationScreen({super.key});
@@ -25,6 +26,13 @@ class _RiderCancellationScreenState extends State<RiderCancellationScreen> {
               onCardTapped: (index) {
                 if (index == 0) {
                   Navigator.pop(context); // Go back to total cancellation
+                } else if (index == 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DriverCancellationScreen(),
+                    ),
+                  );
                 }
               },
             ),
@@ -161,96 +169,91 @@ class _RiderCancellationScreenState extends State<RiderCancellationScreen> {
   }
 
   Widget _buildDataTable() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width - 48,
+    return SizedBox(
+      width: double.infinity,
+      child: DataTable(
+        headingRowColor: WidgetStateProperty.all(
+          const Color(0xFFF4F6F9).withValues(alpha: 0.5),
         ),
-        child: DataTable(
-          headingRowColor: WidgetStateProperty.all(
-            const Color(0xFFF4F6F9).withValues(alpha: 0.5),
-          ),
-          dataRowMaxHeight: 80,
-          dataRowMinHeight: 80,
-          horizontalMargin: 24,
-          columnSpacing: 24,
-          dividerThickness: 1,
-          headingTextStyle: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF6F767E),
-            letterSpacing: 0.5,
-          ),
-          columns: const [
-            DataColumn(label: Text('TRANSACTION ID')),
-            DataColumn(label: Text('RIDER NAME')),
-            DataColumn(label: Text('VEHICLE')),
-            DataColumn(label: Text('REASON FOR CANCELLATION')),
-            DataColumn(label: Text('PICKUP-DROP\nLOCATION')),
-            DataColumn(label: Text('DISTANCE')),
-            DataColumn(label: Text('TIME &\nDATE')),
-            DataColumn(label: Text('PENALTY(₹)')),
-          ],
-          rows: [
-            _buildDataRow(
-              id: '#TXN-88291',
-              name: 'Vikram\nMalhotra',
-              vehicle: 'CAB',
-              vehicleColor: const Color(0xFFFFA629),
-              vehicleBgColor: const Color(0xFFFFF7DB),
-              reason: 'Long Wait Time',
-              reasonColor: const Color(0xFFEA3546),
-              reasonBgColor: const Color(0xFFFFECEE),
-              location: 'Besant Naga -\nGuindy Tech Park',
-              distance: '8.2km',
-              timeDate: '08:45 PM\n24 Feb 2026',
-              penalty: '₹0.00',
-            ),
-            _buildDataRow(
-              id: '#TXN-88290',
-              name: 'Rahul\nMalhotra',
-              vehicle: 'AUTO',
-              vehicleColor: const Color(0xFF2E5BFF),
-              vehicleBgColor: const Color(0xFFEAF0FF),
-              reason: 'Wrong pickup location',
-              reasonColor: const Color(0xFFD4A000),
-              reasonBgColor: const Color(0xFFFFF7DB),
-              location: 'Besant Naga -\nGuindy Tech Park',
-              distance: '8.2km',
-              timeDate: '08:45 PM\n24 Feb 2026',
-              penalty: '₹0.00',
-            ),
-            _buildDataRow(
-              id: '#TXN-88289',
-              name: 'Arun\nMalhotra',
-              vehicle: 'BIKE/SCOOTER',
-              vehicleColor: const Color(0xFF00A86B),
-              vehicleBgColor: const Color(0xFFE8FDF2),
-              reason: 'Driver too far away',
-              reasonColor: const Color(0xFF6F767E),
-              reasonBgColor: const Color(0xFFF4F6F9),
-              location: 'Besant Naga -\nGuindy Tech Park',
-              distance: '8.2km',
-              timeDate: '08:45 PM\n24 Feb 2026',
-              penalty: '₹0.00',
-            ),
-            _buildDataRow(
-              id: '#TXN-88288',
-              name: 'Mani\nMalhotra',
-              vehicle: 'CAB',
-              vehicleColor: const Color(0xFFFFA629),
-              vehicleBgColor: const Color(0xFFFFF7DB),
-              reason: 'The price is not reasonable',
-              reasonColor: const Color(0xFF2E5BFF),
-              reasonBgColor: const Color(0xFFEAF0FF),
-              location: 'Besant Naga -\nGuindy Tech Park',
-              distance: '8.2km',
-              timeDate: '08:45 PM\n24 Feb 2026',
-              penalty: '₹0.00',
-            ),
-          ],
+        dataRowMaxHeight: 80,
+        dataRowMinHeight: 80,
+        horizontalMargin: 24,
+        columnSpacing: 24,
+        dividerThickness: 1,
+        headingTextStyle: const TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w800,
+          color: Color(0xFF6F767E),
+          letterSpacing: 0.5,
         ),
+        columns: const [
+          DataColumn(label: Text('TRANSACTION ID')),
+          DataColumn(label: Text('RIDER NAME')),
+          DataColumn(label: Text('VEHICLE')),
+          DataColumn(label: Text('REASON FOR CANCELLATION')),
+          DataColumn(label: Text('PICKUP-DROP\nLOCATION')),
+          DataColumn(label: Text('DISTANCE')),
+          DataColumn(label: Text('TIME &\nDATE')),
+          DataColumn(label: Text('PENALTY(₹)')),
+        ],
+        rows: [
+          _buildDataRow(
+            id: '#TXN-88291',
+            name: 'Vikram\nMalhotra',
+            vehicle: 'CAB',
+            vehicleColor: const Color(0xFFFFA629),
+            vehicleBgColor: const Color(0xFFFFF7DB),
+            reason: 'Long Wait Time',
+            reasonColor: const Color(0xFFEA3546),
+            reasonBgColor: const Color(0xFFFFECEE),
+            location: 'Besant Naga -\nGuindy Tech Park',
+            distance: '8.2km',
+            timeDate: '08:45 PM\n24 Feb 2026',
+            penalty: '₹0.00',
+          ),
+          _buildDataRow(
+            id: '#TXN-88290',
+            name: 'Rahul\nMalhotra',
+            vehicle: 'AUTO',
+            vehicleColor: const Color(0xFF2E5BFF),
+            vehicleBgColor: const Color(0xFFEAF0FF),
+            reason: 'Wrong pickup location',
+            reasonColor: const Color(0xFFD4A000),
+            reasonBgColor: const Color(0xFFFFF7DB),
+            location: 'Besant Naga -\nGuindy Tech Park',
+            distance: '8.2km',
+            timeDate: '08:45 PM\n24 Feb 2026',
+            penalty: '₹0.00',
+          ),
+          _buildDataRow(
+            id: '#TXN-88289',
+            name: 'Arun\nMalhotra',
+            vehicle: 'BIKE/SCOOTER',
+            vehicleColor: const Color(0xFF00A86B),
+            vehicleBgColor: const Color(0xFFE8FDF2),
+            reason: 'Driver too far away',
+            reasonColor: const Color(0xFF6F767E),
+            reasonBgColor: const Color(0xFFF4F6F9),
+            location: 'Besant Naga -\nGuindy Tech Park',
+            distance: '8.2km',
+            timeDate: '08:45 PM\n24 Feb 2026',
+            penalty: '₹0.00',
+          ),
+          _buildDataRow(
+            id: '#TXN-88288',
+            name: 'Mani\nMalhotra',
+            vehicle: 'CAB',
+            vehicleColor: const Color(0xFFFFA629),
+            vehicleBgColor: const Color(0xFFFFF7DB),
+            reason: 'The price is not reasonable',
+            reasonColor: const Color(0xFF2E5BFF),
+            reasonBgColor: const Color(0xFFEAF0FF),
+            location: 'Besant Naga -\nGuindy Tech Park',
+            distance: '8.2km',
+            timeDate: '08:45 PM\n24 Feb 2026',
+            penalty: '₹0.00',
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../drivers/presentation/cubit/drivers_management_state.dart';
 
 enum NavItem {
   dashboard,
@@ -7,6 +8,9 @@ enum NavItem {
   payments,
   analytics,
   compliance,
+  totalDocuments,
+  totalTickets,
+  complianceScoreDetails,
   support,
   settings,
   revenue,
@@ -64,14 +68,35 @@ class SupportTicket {
   });
 }
 
+class Transaction {
+  final String id;
+  final String amount;
+  final String serviceType;
+  final String paymentMethod;
+  final String status;
+  final bool isCompleted;
+
+  const Transaction({
+    required this.id,
+    required this.amount,
+    required this.serviceType,
+    required this.paymentMethod,
+    required this.status,
+    required this.isCompleted,
+  });
+}
+
 class DashboardState extends Equatable {
   final bool isLoading;
   final NavItem selectedNav;
   final List<StatCard> statCards;
   final List<DriverApproval> driverApprovals;
   final List<SupportTicket> supportTickets;
+  final List<Transaction> recentTransactions;
   final int pendingApprovals;
   final int newTickets;
+  final DriverTab? initialDriverTab;
+  final bool isExportingReport;
 
   const DashboardState({
     this.isLoading = true,
@@ -79,8 +104,11 @@ class DashboardState extends Equatable {
     this.statCards = const [],
     this.driverApprovals = const [],
     this.supportTickets = const [],
+    this.recentTransactions = const [],
     this.pendingApprovals = 0,
     this.newTickets = 0,
+    this.initialDriverTab,
+    this.isExportingReport = false,
   });
 
   DashboardState copyWith({
@@ -89,8 +117,11 @@ class DashboardState extends Equatable {
     List<StatCard>? statCards,
     List<DriverApproval>? driverApprovals,
     List<SupportTicket>? supportTickets,
+    List<Transaction>? recentTransactions,
     int? pendingApprovals,
     int? newTickets,
+    DriverTab? initialDriverTab,
+    bool? isExportingReport,
   }) {
     return DashboardState(
       isLoading: isLoading ?? this.isLoading,
@@ -98,8 +129,11 @@ class DashboardState extends Equatable {
       statCards: statCards ?? this.statCards,
       driverApprovals: driverApprovals ?? this.driverApprovals,
       supportTickets: supportTickets ?? this.supportTickets,
+      recentTransactions: recentTransactions ?? this.recentTransactions,
       pendingApprovals: pendingApprovals ?? this.pendingApprovals,
       newTickets: newTickets ?? this.newTickets,
+      initialDriverTab: initialDriverTab ?? this.initialDriverTab,
+      isExportingReport: isExportingReport ?? this.isExportingReport,
     );
   }
 
@@ -110,7 +144,10 @@ class DashboardState extends Equatable {
     statCards,
     driverApprovals,
     supportTickets,
+    recentTransactions,
     pendingApprovals,
     newTickets,
+    initialDriverTab,
+    isExportingReport,
   ];
 }

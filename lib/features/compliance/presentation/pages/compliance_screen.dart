@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'total_tickets_screen.dart';
-import 'total_documents_screen.dart';
-import 'compliance_score_details_screen.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:admin/features/dashboard/presentation/cubit/dashboard_cubit.dart';
+import 'package:admin/features/dashboard/presentation/cubit/dashboard_state.dart';
 
 class ComplianceScreen extends StatelessWidget {
   const ComplianceScreen({super.key});
@@ -67,12 +67,7 @@ class _StatCardsSection extends StatelessWidget {
             isPositive: false,
             isPrimary: true,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const TotalDocumentsScreen(),
-                ),
-              );
+              context.read<DashboardCubit>().selectNav(NavItem.totalDocuments);
             },
           ),
         ),
@@ -85,12 +80,7 @@ class _StatCardsSection extends StatelessWidget {
             isPositive: false,
             isPrimary: false,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const TotalTicketsScreen(),
-                ),
-              );
+              context.read<DashboardCubit>().selectNav(NavItem.totalTickets);
             },
           ),
         ),
@@ -103,11 +93,8 @@ class _StatCardsSection extends StatelessWidget {
             isPositive: true,
             isPrimary: false,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ComplianceScoreDetailsScreen(),
-                ),
+              context.read<DashboardCubit>().selectNav(
+                NavItem.complianceScoreDetails,
               );
             },
           ),
@@ -146,76 +133,74 @@ class _StatCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.grey.shade200),
           ),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              if (isPrimary)
-                Positioned(
-                  left: -24,
-                  top: -6,
-                  bottom: -6,
-                  child: Container(
-                    width: 4,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(4),
-                        bottomRight: Radius.circular(4),
-                      ),
-                    ),
-                  ),
-                ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(11),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    title,
-                    style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        value,
-                        style: AppTypography.h1.copyWith(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 32,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(trendIcon, size: 16, color: trendColor),
-                            const SizedBox(width: 4),
-                            Text(
-                              trend,
-                              style: AppTypography.bodySmall.copyWith(
-                                color: trendColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  if (isPrimary) Container(width: 3, color: AppColors.primary),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: AppTypography.bodySmall.copyWith(
+                              color: AppColors.textSecondary,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                value,
+                                style: AppTypography.h1.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 32,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 6),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      trendIcon,
+                                      size: 16,
+                                      color: trendColor,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      trend,
+                                      style: AppTypography.bodySmall.copyWith(
+                                        color: trendColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubit/dashboard_cubit.dart';
+import '../../../../drivers/presentation/cubit/drivers_management_cubit.dart';
 
 class TopEarningDrivers extends StatelessWidget {
   const TopEarningDrivers({super.key});
@@ -90,7 +93,11 @@ class TopEarningDrivers extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<DashboardCubit>().selectDriversTab(
+                  DriverTab.active,
+                );
+              },
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(

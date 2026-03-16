@@ -26,8 +26,6 @@ class Rider {
   });
 }
 
-enum RiderStatusFilter { all, active, inactive, banned }
-
 enum RiderTab { total, active, newRiders, suspended }
 
 class RiderState extends Equatable {
@@ -35,7 +33,7 @@ class RiderState extends Equatable {
   final List<Rider> riders;
   final List<Rider> filteredRiders;
   final String searchQuery;
-  final RiderStatusFilter statusFilter;
+  final String statusFilter; // Changed to String for simpler mapping in UI
   final RiderTab selectedTab;
   final int currentPage;
   final int totalCount;
@@ -43,13 +41,14 @@ class RiderState extends Equatable {
   final int activeToday;
   final int newRegistrations;
   final int bannedRiders;
+  final bool isExporting;
 
   const RiderState({
     this.isLoading = true,
     this.riders = const [],
     this.filteredRiders = const [],
     this.searchQuery = '',
-    this.statusFilter = RiderStatusFilter.all,
+    this.statusFilter = 'All Status',
     this.selectedTab = RiderTab.total,
     this.currentPage = 1,
     this.totalCount = 0,
@@ -57,6 +56,7 @@ class RiderState extends Equatable {
     this.activeToday = 0,
     this.newRegistrations = 0,
     this.bannedRiders = 0,
+    this.isExporting = false,
   });
 
   RiderState copyWith({
@@ -64,7 +64,7 @@ class RiderState extends Equatable {
     List<Rider>? riders,
     List<Rider>? filteredRiders,
     String? searchQuery,
-    RiderStatusFilter? statusFilter,
+    String? statusFilter,
     RiderTab? selectedTab,
     int? currentPage,
     int? totalCount,
@@ -72,6 +72,7 @@ class RiderState extends Equatable {
     int? activeToday,
     int? newRegistrations,
     int? bannedRiders,
+    bool? isExporting,
   }) {
     return RiderState(
       isLoading: isLoading ?? this.isLoading,
@@ -86,6 +87,7 @@ class RiderState extends Equatable {
       activeToday: activeToday ?? this.activeToday,
       newRegistrations: newRegistrations ?? this.newRegistrations,
       bannedRiders: bannedRiders ?? this.bannedRiders,
+      isExporting: isExporting ?? this.isExporting,
     );
   }
 
@@ -103,5 +105,6 @@ class RiderState extends Equatable {
     activeToday,
     newRegistrations,
     bannedRiders,
+    isExporting,
   ];
 }

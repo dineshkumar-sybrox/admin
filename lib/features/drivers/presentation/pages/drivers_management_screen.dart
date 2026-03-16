@@ -10,16 +10,18 @@ import '../widgets/drivers_table_header.dart';
 import '../widgets/pagination_controls.dart';
 
 class DriversManagementScreen extends StatelessWidget {
-  const DriversManagementScreen({super.key});
+  final DriverTab? initialTab;
+  const DriversManagementScreen({super.key, this.initialTab});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DriversManagementCubit(),
-      child: BlocBuilder<DriversManagementCubit, DriverTab>(
-        builder: (context, selectedTab) {
+      create: (context) =>
+          DriversManagementCubit(initialTab: initialTab ?? DriverTab.total),
+      child: BlocBuilder<DriversManagementCubit, DriversManagementState>(
+        builder: (context, state) {
           Widget currentTable;
-          switch (selectedTab) {
+          switch (state.selectedTab) {
             case DriverTab.active:
               currentTable = const ActiveDriversTable();
               break;

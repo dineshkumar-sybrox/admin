@@ -17,6 +17,9 @@ import '../../../../features/incentives/presentation/pages/create_incentive_scre
 import '../../../../features/incentives/presentation/pages/incentive_historical_screen.dart';
 import '../../../../features/incentives/presentation/pages/incentive_detail_screen.dart';
 import '../../../../features/compliance/presentation/pages/compliance_screen.dart';
+import '../../../../features/compliance/presentation/pages/total_documents_screen.dart';
+import '../../../../features/compliance/presentation/pages/total_tickets_screen.dart';
+import '../../../../features/compliance/presentation/pages/compliance_score_details_screen.dart';
 import '../../../../features/drivers/presentation/pages/drivers_management_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -26,14 +29,6 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, DashboardState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return const Scaffold(
-            backgroundColor: Color(0xFFF4F6F9),
-            body: Center(
-              child: CircularProgressIndicator(color: Color(0xFF00A86B)),
-            ),
-          );
-        }
         return AdminScaffold(
           title: _titleFor(state.selectedNav),
           body: LayoutBuilder(
@@ -73,12 +68,23 @@ class DashboardScreen extends StatelessWidget {
         return 'Morning Commute Rush';
       case NavItem.compliance:
         return 'Compliance';
+      case NavItem.totalDocuments:
+        return 'Total Documents';
+      case NavItem.totalTickets:
+        return 'Total Tickets';
+      case NavItem.complianceScoreDetails:
+        return 'Compliance Score Details';
       default:
         return 'Dashboard';
     }
   }
 
   Widget _buildBody(DashboardState state, bool isTablet) {
+    if (state.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFF00A86B)),
+      );
+    }
     switch (state.selectedNav) {
       case NavItem.rider:
         return const RiderScreen();
@@ -98,8 +104,14 @@ class DashboardScreen extends StatelessWidget {
         return const IncentiveDetailScreen();
       case NavItem.compliance:
         return const ComplianceScreen();
+      case NavItem.totalDocuments:
+        return const TotalDocumentsScreen();
+      case NavItem.totalTickets:
+        return const TotalTicketsScreen();
+      case NavItem.complianceScoreDetails:
+        return const ComplianceScoreDetailsScreen();
       case NavItem.drivers:
-        return const DriversManagementScreen();
+        return DriversManagementScreen(initialTab: state.initialDriverTab);
       default:
         return _DashboardBody(isTablet: isTablet);
     }
