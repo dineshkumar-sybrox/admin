@@ -507,7 +507,7 @@ class _TopStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const trendColor = Color(0xFF22C55E); // Green from mockup
+    // const trendColor = Color(0xFF22C55E); // Green from mockup
     const trendIcon = Icons.trending_up;
 
     return InkWell(

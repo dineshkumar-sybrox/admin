@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/dashboard_cubit.dart';
-import '../../../../drivers/presentation/cubit/drivers_management_cubit.dart';
+import '../../../../drivers/presentation/cubit/drivers_management_state.dart';
 
 class TopEarningDrivers extends StatelessWidget {
   const TopEarningDrivers({super.key});
@@ -95,7 +95,7 @@ class TopEarningDrivers extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () {
                 context.read<DashboardCubit>().selectDriversTab(
-                  DriverTab.active,
+                  DriverTab.leaderboard,
                 );
               },
               style: OutlinedButton.styleFrom(

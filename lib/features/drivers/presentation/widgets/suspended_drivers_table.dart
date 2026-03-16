@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
-import 'suspension_details_dialog.dart';
 
 class SuspendedDriversTable extends StatelessWidget {
   const SuspendedDriversTable({super.key});
@@ -54,101 +53,43 @@ class SuspendedDriversTable extends StatelessWidget {
                   columns: const [
                     DataColumn(label: Text('DRIVER ID')),
                     DataColumn(label: Text('DRIVER')),
-                    DataColumn(label: Text('VEHICLE TYPE')),
-                    DataColumn(
-                      label: Text(
-                        'SUSPENSION\nREASON',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        'SUSPENSION\nDATE',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    DataColumn(label: Text('LOCATION')),
+                    DataColumn(label: Text('SUSPENSION REASON')),
+                    DataColumn(label: Text('DATE')),
                     DataColumn(label: Text('APPEAL STATUS')),
-                    DataColumn(label: Text('ACTION')),
+                    DataColumn(label: Text('ACTIONS')),
                   ],
                   rows: displayDrivers.map((driver) {
                     return DataRow(
                       cells: [
                         DataCell(Text(driver.id)),
                         DataCell(Text(driver.name)),
-                        DataCell(_VehicleBadge(type: driver.vehicleType)),
+                        DataCell(Text(driver.city)),
                         DataCell(
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          _SuspensionReasonBadge(
+                            reason: driver.suspensionReason ?? 'VIOLATION',
+                            subReason: driver.suspensionSubreason,
+                          ),
+                        ),
+                        DataCell(Text(driver.suspensionDate ?? '-')),
+                        DataCell(
+                          _AppealStatus(status: driver.appealStatus ?? 'NONE'),
+                        ),
+                        DataCell(
+                          Row(
                             children: [
-                              Text(
-                                driver.suspensionReason ?? 'N/A',
-                                style: const TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  size: 20,
                                 ),
+                                onPressed: () {},
                               ),
-                              Text(
-                                driver.suspensionSubreason ?? '',
-                                style: const TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 12,
-                                ),
+                              TextButton(
+                                onPressed: () {},
+                                child: const Text('Review'),
                               ),
                             ],
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            driver.suspensionDate ?? '-',
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          _AppealStatusBadge(
-                            status: driver.appealStatus ?? 'NONE',
-                          ),
-                        ),
-                        DataCell(
-                          InkWell(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (context) =>
-                                    const SuspensionDetailsDialog(),
-                              );
-                            },
-                            borderRadius: BorderRadius.circular(4),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                                vertical: 8,
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text(
-                                    'Activate',
-                                    style: TextStyle(
-                                      color: AppColors.success,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  const Icon(
-                                    Icons.remove_red_eye_outlined,
-                                    color: AppColors.textSecondary,
-                                    size: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                         ),
                       ],
@@ -164,93 +105,60 @@ class SuspendedDriversTable extends StatelessWidget {
   }
 }
 
-class _VehicleBadge extends StatelessWidget {
-  final String type;
-
-  const _VehicleBadge({required this.type});
+class _SuspensionReasonBadge extends StatelessWidget {
+  final String reason;
+  final String? subReason;
+  const _SuspensionReasonBadge({required this.reason, this.subReason});
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor;
-    Color textColor;
-
-    switch (type) {
-      case 'PREMIUM CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
-        break;
-      case 'AUTO':
-        bgColor = const Color(0xFFDBEAFE);
-        textColor = const Color(0xFF2563EB);
-        break;
-      case 'BIKE':
-        bgColor = const Color(0xFFD1FAE5);
-        textColor = const Color(0xFF059669);
-        break;
-      case 'XL CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
-        break;
-      case 'CAB':
-      default:
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
-        break;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Text(
-        type,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 11,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.5,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFE5E5),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Text(
+            reason.toUpperCase(),
+            style: const TextStyle(
+              color: Color(0xFFFF4842),
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
         ),
-      ),
+        if (subReason != null)
+          Text(
+            subReason!,
+            style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+          ),
+      ],
     );
   }
 }
 
-class _AppealStatusBadge extends StatelessWidget {
+class _AppealStatus extends StatelessWidget {
   final String status;
-
-  const _AppealStatusBadge({required this.status});
+  const _AppealStatus({required this.status});
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor;
-    Color textColor;
-
-    if (status == 'PENDING REVIEW') {
-      bgColor = const Color(0xFFFEF3C7);
-      textColor = const Color(0xFFD97706);
-    } else if (status == 'REJECTED') {
-      bgColor = const Color(0xFFFEE2E2);
-      textColor = const Color(0xFFDC2626);
-    } else {
-      bgColor = const Color(0xFFF3F4F6);
-      textColor = AppColors.textSecondary;
-    }
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: bgColor,
+        color: const Color(0xFFFFF7ED),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
-        status,
-        style: TextStyle(
-          color: textColor,
+        status.toUpperCase(),
+        style: const TextStyle(
+          color: Color(0xFFEA580C),
           fontSize: 11,
           fontWeight: FontWeight.bold,
-          letterSpacing: 0.5,
         ),
       ),
     );

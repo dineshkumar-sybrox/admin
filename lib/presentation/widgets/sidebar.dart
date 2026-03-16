@@ -117,6 +117,17 @@ class Sidebar extends StatelessWidget {
                   Navigator.popUntil(context, (route) => route.isFirst);
                 },
               ),
+              _buildMenuItem(
+                icon: Icons.location_on_outlined,
+                label: 'Zone-wise Pricing',
+                isActive: state.selectedNav == NavItem.zoneWisePricing,
+                onTap: () {
+                  context.read<DashboardCubit>().selectNav(
+                    NavItem.zoneWisePricing,
+                  );
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+              ),
 
               const SizedBox(height: 16),
 
@@ -197,6 +208,7 @@ class Sidebar extends StatelessWidget {
     required IconData icon,
     required String label,
     bool isActive = false,
+    bool isNew = false,
     required VoidCallback onTap,
   }) {
     return Container(
@@ -219,15 +231,40 @@ class Sidebar extends StatelessWidget {
               : Colors.white.withValues(alpha: 0.5), // Active is Green
           size: 20,
         ),
-        title: Text(
-          label,
-          style: TextStyle(
-            color: isActive
-                ? Colors.white
-                : Colors.white.withValues(alpha: 0.5),
-            fontSize: 14,
-            fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
-          ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  color: isActive
+                      ? Colors.white
+                      : Colors.white.withValues(alpha: 0.5),
+                  fontSize: 14,
+                  fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (isNew) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  'NEW',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ],
         ),
         onTap: onTap,
         dense: true,

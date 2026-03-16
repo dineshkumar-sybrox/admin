@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum DriverTab { total, active, newDrivers, suspended }
+enum DriverTab { total, active, newDrivers, suspended, leaderboard }
 
 class Driver {
   final String id;

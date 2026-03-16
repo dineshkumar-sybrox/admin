@@ -18,6 +18,7 @@ enum NavItem {
   createIncentive,
   incentiveHistory,
   incentiveDetail,
+  zoneWisePricing,
 }
 
 class StatCard {

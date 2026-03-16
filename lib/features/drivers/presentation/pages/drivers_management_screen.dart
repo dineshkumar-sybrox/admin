@@ -4,6 +4,7 @@ import '../cubit/drivers_management_cubit.dart';
 import '../widgets/active_drivers_table.dart';
 import '../widgets/new_drivers_table.dart';
 import '../widgets/suspended_drivers_table.dart';
+import '../widgets/leaderboard_table.dart';
 import '../widgets/driver_stat_cards.dart';
 import '../widgets/drivers_table.dart';
 import '../widgets/drivers_table_header.dart';
@@ -30,6 +31,9 @@ class DriversManagementScreen extends StatelessWidget {
               break;
             case DriverTab.suspended:
               currentTable = const SuspendedDriversTable();
+              break;
+            case DriverTab.leaderboard:
+              currentTable = const LeaderboardTable();
               break;
             case DriverTab.total:
               currentTable = const DriversTable();
