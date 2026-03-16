@@ -4,7 +4,6 @@ import '../widgets/cancellation/reasons_for_cancellation.dart';
 import '../widgets/cancellation/cancellation_zones_chart.dart';
 import '../widgets/cancellation/high_risk_zones_table.dart';
 
-<<<<<<< HEAD
 class CancellationScreen extends StatefulWidget {
   final int initialIndex;
   const CancellationScreen({super.key, this.initialIndex = 0});
@@ -648,4 +647,3 @@ class _DriverCancellationContent extends StatelessWidget {
     );
   }
 }
-
