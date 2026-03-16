@@ -1,8 +1,10 @@
 import 'dart:math' as math;
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 class DemandMapWidget extends StatefulWidget {
-  const DemandMapWidget({super.key});
+  DemandMapWidget({super.key});
 
   @override
   State<DemandMapWidget> createState() => _DemandMapWidgetState();
@@ -27,7 +29,7 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
 
     _heatController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 3),
     )..repeat(reverse: true);
     _heatAnim = Tween<double>(begin: 0.88, end: 1.12).animate(
       CurvedAnimation(parent: _heatController, curve: Curves.easeInOut),
@@ -35,7 +37,7 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
 
     _rippleController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: Duration(seconds: 2),
     )..repeat();
     _rippleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _rippleController, curve: Curves.easeOut),
@@ -43,13 +45,13 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
 
     _carController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: Duration(seconds: 6),
     )..repeat();
     _carAnim = Tween<double>(begin: 0.0, end: 1.0).animate(_carController);
 
     _blinkController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 900),
+      duration: Duration(milliseconds: 900),
     )..repeat(reverse: true);
     _blinkAnim = Tween<double>(begin: 0.2, end: 1.0).animate(
       CurvedAnimation(parent: _blinkController, curve: Curves.easeInOut),
@@ -57,7 +59,7 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
 
     _scanController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: Duration(seconds: 4),
     )..repeat();
     _scanAnim = Tween<double>(
       begin: 0.0,
@@ -75,7 +77,7 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
     super.dispose();
   }
 
-  static const List<Offset> _pins = [
+  static List<Offset> _pins = [
     Offset(80, 55),
     Offset(225, 78),
     Offset(140, 178),
@@ -88,38 +90,35 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
     return Container(
       height: 485,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderBlack, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 16, 0),
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 20, vertical: 15),
             child: Row(
               children: [
-                const Text(
+                Text(
                   'Real-time Demand Map - Chennai',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1A2332),
-                  ),
+                  style: AppTypography.h3
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 3,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00A86B),
+                    color: AppColors.greenColour,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: AnimatedBuilder(
@@ -131,17 +130,17 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                           child: Container(
                             width: 6,
                             height: 6,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
                               shape: BoxShape.circle,
                             ),
                           ),
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
+                        SizedBox(width: 4),
+                        Text(
                           'LIVE HEATMAP',
-                          style: TextStyle(
-                            color: Colors.white,
+                          style: AppTypography.base.copyWith(
+                            color: AppColors.white,
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 0.8,
@@ -154,17 +153,18 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          Divider(color: AppColors.borderBlack, thickness: 1),
+          //SizedBox(height: 8),
           Expanded(
             child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
+              borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(12),
               ),
               child: Stack(
                 fit: StackFit.expand,
                 children: [
                   Container(
-                    color: Colors.white,
+                    color: AppColors.white,
                     child: CustomPaint(
                       painter: _MapPainter(),
                       size: Size.infinite,
@@ -187,9 +187,9 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
                               colors: [
-                                const Color(0xFF00A86B).withValues(alpha: 0.42),
-                                const Color(0xFF00A86B).withValues(alpha: 0.16),
-                                Colors.transparent,
+                                AppColors.cFF00A86B.withValues(alpha: 0.42),
+                                AppColors.cFF00A86B.withValues(alpha: 0.16),
+                                AppColors.transparent,
                               ],
                               stops: const [0.0, 0.5, 1.0],
                             ),
@@ -206,31 +206,31 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
                           colors: [
-                            const Color(0xFF00A86B).withValues(alpha: 0.5),
-                            const Color(0xFF00A86B).withValues(alpha: 0.2),
-                            Colors.transparent,
+                            AppColors.cFF00A86B.withValues(alpha: 0.5),
+                            AppColors.cFF00A86B.withValues(alpha: 0.2),
+                            AppColors.transparent,
                           ],
                         ),
                       ),
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           'Chennai',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF1A2332),
+                            color: AppColors.cFF1A2332,
                           ),
                         ),
                         Text(
                           'சென்னை',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 16,
-                            color: Color(0xFF1A2332),
+                            color: AppColors.cFF1A2332,
                           ),
                         ),
                       ],
@@ -260,12 +260,12 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF00A86B),
+                          color: AppColors.cFF00A86B,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(color: AppColors.white, width: 2),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(
+                              color: Color(
                                 0xFF00A86B,
                               ).withValues(alpha: 0.5),
                               blurRadius: 6,
@@ -285,12 +285,12 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                     bottom: 12,
                     left: 12,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1A2332).withValues(alpha: 0.72),
+                        color: AppColors.cFF1A2332.withValues(alpha: 0.72),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -303,33 +303,33 @@ class _DemandMapWidgetState extends State<DemandMapWidget>
                               child: Container(
                                 width: 6,
                                 height: 6,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF00A86B),
+                                decoration: BoxDecoration(
+                                  color: AppColors.cFF00A86B,
                                   shape: BoxShape.circle,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 6),
-                          const Text(
+                          SizedBox(width: 6),
+                          Text(
                             '8.2k active rides',
-                            style: TextStyle(
-                              color: Colors.white,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.white,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10),
                           Container(
                             width: 1,
                             height: 10,
-                            color: Colors.white24,
+                            color: AppColors.white24,
                           ),
-                          const SizedBox(width: 10),
-                          const Text(
+                          SizedBox(width: 10),
+                          Text(
                             '24k drivers online',
-                            style: TextStyle(
-                              color: Colors.white70,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.white70,
                               fontSize: 10,
                               fontWeight: FontWeight.w500,
                             ),
@@ -361,7 +361,7 @@ class _RipplePainter extends CustomPainter {
         center,
         p * 18.0,
         Paint()
-          ..color = const Color(0xFF00A86B).withValues(alpha: (1.0 - p) * 0.55)
+          ..color = AppColors.cFF00A86B.withValues(alpha: (1.0 - p) * 0.55)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5,
       );
@@ -394,8 +394,8 @@ class _ScanPainter extends CustomPainter {
           startAngle: angle - 1.0,
           endAngle: angle,
           colors: [
-            Colors.transparent,
-            const Color(0xFF00A86B).withValues(alpha: 0.15),
+            AppColors.transparent,
+            AppColors.cFF00A86B.withValues(alpha: 0.15),
           ],
         ).createShader(rect)
         ..style = PaintingStyle.fill,
@@ -405,7 +405,7 @@ class _ScanPainter extends CustomPainter {
       Offset(cx, cy),
       Offset(cx + radius * math.cos(angle), cy + radius * math.sin(angle)),
       Paint()
-        ..color = const Color(0xFF00A86B).withValues(alpha: 0.45)
+        ..color = AppColors.cFF00A86B.withValues(alpha: 0.45)
         ..strokeWidth = 1.0,
     );
 
@@ -413,7 +413,7 @@ class _ScanPainter extends CustomPainter {
       Offset(cx, cy),
       radius,
       Paint()
-        ..color = const Color(0xFF00A86B).withValues(alpha: 0.07)
+        ..color = AppColors.cFF00A86B.withValues(alpha: 0.07)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.0,
     );
@@ -434,14 +434,14 @@ class _CarPainter extends CustomPainter {
         o,
         3.5,
         Paint()
-          ..color = const Color(0xFF00A86B)
+          ..color = AppColors.cFF00A86B
           ..style = PaintingStyle.fill,
       );
       canvas.drawCircle(
         o,
         3.5,
         Paint()
-          ..color = Colors.white.withValues(alpha: 0.35)
+          ..color = AppColors.white.withValues(alpha: 0.35)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.2,
       );
@@ -461,13 +461,13 @@ class _MapPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final major = Paint()
-      ..color = const Color(0xFFBFCDBE)
+      ..color = AppColors.cFFBFCDBE
       ..strokeWidth = 2.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
     final minor = Paint()
-      ..color = const Color(0xFFD0DACC)
+      ..color = AppColors.cFFD0DACC
       ..strokeWidth = 1.2
       ..style = PaintingStyle.stroke;
 
@@ -535,3 +535,7 @@ class _MapPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+

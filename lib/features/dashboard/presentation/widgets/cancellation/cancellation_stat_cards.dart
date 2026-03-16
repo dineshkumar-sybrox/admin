@@ -1,5 +1,6 @@
 import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 
 class CancellationStatCards extends StatelessWidget {
   final int selectedIndex;
@@ -15,7 +16,7 @@ class CancellationStatCards extends StatelessWidget {
   final String driverTrend;
   final bool driverTrendUp;
 
-  const CancellationStatCards({
+  CancellationStatCards({
     super.key,
     this.selectedIndex = 0,
     this.onCardTapped,
@@ -46,7 +47,7 @@ class CancellationStatCards extends StatelessWidget {
                 isSelected: selectedIndex == 0,
                 onTap: () => onCardTapped?.call(0),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               _CancellationStatCard(
                 title: 'RIDER CANCELLATION',
                 value: riderValue,
@@ -55,7 +56,7 @@ class CancellationStatCards extends StatelessWidget {
                 isSelected: selectedIndex == 1,
                 onTap: () => onCardTapped?.call(1),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               _CancellationStatCard(
                 title: 'DRIVER CANCELLATION',
                 value: driverValue,
@@ -79,7 +80,7 @@ class CancellationStatCards extends StatelessWidget {
                 onTap: () => onCardTapped?.call(0),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _CancellationStatCard(
                 title: 'RIDER CANCELLATION',
@@ -90,7 +91,7 @@ class CancellationStatCards extends StatelessWidget {
                 onTap: () => onCardTapped?.call(1),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _CancellationStatCard(
                 title: 'DRIVER CANCELLATION',
@@ -134,9 +135,9 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
 
   @override
   Widget build(BuildContext context) {
-    const accentColor = Color(0xFF00A86B);
-    const borderColor = Color(0xFFE6EAF0);
-    const trendColorRed = Color(0xFFFF4757); // Red color for the trend
+    const accentColor = AppColors.cFF00A86B;
+    const borderColor = AppColors.cFFE6EAF0;
+    const trendColorRed = AppColors.cFFFF4757; // Red color for the trend
     const trendColorGreen = accentColor;
 
     final trendColor = widget.isTrendUp ? trendColorGreen : trendColorRed;
@@ -150,16 +151,16 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
         onTap: widget.onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: borderColor, width: 1.0),
             boxShadow: [
               BoxShadow(
                 color: _isHovered && isClickable
                     ? accentColor.withValues(alpha: 0.13)
-                    : Colors.black.withValues(alpha: 0.02),
+                    : AppColors.black.withValues(alpha: 0.02),
                 blurRadius: _isHovered && isClickable ? 20 : 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),
@@ -175,7 +176,7 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
                     Container(width: 3, color: AppColors.primary),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 24,
                       ),
@@ -185,34 +186,34 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
                         children: [
                           Text(
                             widget.title,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF8A97A8),
+                              color: AppColors.cFF8A97A8,
                               letterSpacing: 0.5,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,
                             textBaseline: TextBaseline.alphabetic,
                             children: [
                               Text(
                                 widget.value,
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF1A1D1F),
+                                  color: AppColors.cFF1A1D1F,
                                   height: 1.0,
                                   letterSpacing: -0.5,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons
                                         .show_chart_rounded, // Assuming downwards variant or visually similar. StatCardsRow uses trending_down_rounded. Let's use trending_down_rounded
                                     // Icons.trending_down_rounded,
@@ -227,10 +228,10 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
                                 size: 18,
                                 color: trendColor,
                               ),
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4),
                               Text(
                                 widget.trend,
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
                                   color: trendColor,
@@ -251,3 +252,5 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
     );
   }
 }
+
+

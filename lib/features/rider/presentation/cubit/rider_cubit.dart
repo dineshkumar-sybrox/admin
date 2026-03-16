@@ -3,7 +3,7 @@ import 'rider_state.dart';
 import '../../../../core/utils/excel_export_helper.dart';
 
 class RiderCubit extends Cubit<RiderState> {
-  RiderCubit() : super(const RiderState());
+  RiderCubit() : super(RiderState());
 
   // ... rest of the class ...
 
@@ -48,7 +48,7 @@ class RiderCubit extends Cubit<RiderState> {
     }
   }
 
-  static const List<Rider> _allRiders = [
+  static List<Rider> _allRiders = [
     Rider(
       id: '#CUST-90821',
       name: 'Rahul Sharma',
@@ -144,7 +144,7 @@ class RiderCubit extends Cubit<RiderState> {
 
   Future<void> loadRiders() async {
     emit(state.copyWith(isLoading: true));
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
     emit(
       state.copyWith(
         isLoading: false,
@@ -239,3 +239,4 @@ class RiderCubit extends Cubit<RiderState> {
     }).toList();
   }
 }
+

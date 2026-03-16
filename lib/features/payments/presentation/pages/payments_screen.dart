@@ -1,4 +1,7 @@
+import 'package:admin/features/rider/presentation/cubit/rider_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/payment_stat_cards.dart';
 import '../widgets/payment_analytics_chart.dart';
@@ -8,7 +11,9 @@ import '../cubit/payments_cubit.dart';
 import '../cubit/payments_state.dart';
 
 class PaymentsScreen extends StatelessWidget {
-  const PaymentsScreen({super.key});
+  TextEditingController dateController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+  PaymentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class PaymentsScreen extends StatelessWidget {
           return LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -29,7 +34,7 @@ class PaymentsScreen extends StatelessWidget {
                         context.read<PaymentsCubit>().changeStatIndex(index);
                       },
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     _buildView(context, state, constraints),
                   ],
                 ),
@@ -56,7 +61,7 @@ class PaymentsScreen extends StatelessWidget {
   Widget _buildDashboardView(BoxConstraints constraints) {
     final isTablet = constraints.maxWidth < 1100;
     if (isTablet) {
-      return const Column(
+      return Column(
         children: [
           PaymentAnalyticsChart(),
           SizedBox(height: 16),
@@ -66,7 +71,7 @@ class PaymentsScreen extends StatelessWidget {
         ],
       );
     } else {
-      return const Column(
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
@@ -87,14 +92,14 @@ class PaymentsScreen extends StatelessWidget {
   Widget _buildTransactionListView(BuildContext context, PaymentsState state) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: AppColors.black.withOpacity(0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -102,9 +107,9 @@ class PaymentsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _buildFilterBar(context, state),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           _buildDataTable(state.filteredTransactions),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           _buildPagination(state.filteredTransactions.length),
         ],
       ),
@@ -113,162 +118,256 @@ class PaymentsScreen extends StatelessWidget {
 
   Widget _buildFilterBar(BuildContext context, PaymentsState state) {
     return Padding(
-      padding: const EdgeInsets.all(24),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isNarrow = constraints.maxWidth < 900;
-          if (isNarrow) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextField(
-                  onChanged: (val) =>
-                      context.read<PaymentsCubit>().searchTransactions(val),
-                  decoration: _getSearchInputDecoration(
-                    'Search by ID or Rider...',
-                  ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 380,
+            height: 48,
+            child: TextField(
+              controller: searchController,
+              onChanged: (v) => context.read<RiderCubit>().search(v),
+              decoration: InputDecoration(
+                hintText: 'Search by name, email or phone...',
+                hintStyle: AppTypography.base.copyWith(
+                  color: AppColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildDropdown(
-                        'All Payment Methods',
-                        state.paymentMethodFilter,
-                        (val) => context
-                            .read<PaymentsCubit>()
-                            .filterByPaymentMethod(val!),
-                        ['All Payment Methods', 'UPI', 'Cash', 'Card'],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildDropdown(
-                        'All Status',
-                        state.statusFilter,
-                        (val) =>
-                            context.read<PaymentsCubit>().filterByStatus(val!),
-                        ['All Status', 'Completed', 'Failed', 'Pending'],
-                      ),
-                    ),
-                  ],
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.textSecondary,
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(child: _buildTextField('mm/dd/yyyy', null)),
-                    const SizedBox(width: 12),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF00A86B),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 18,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      icon: const Icon(Icons.download_rounded, size: 18),
-                      label: const Text(
-                        'Export',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ],
+                filled: true,
+                fillColor: AppColors.cFFF1F5F9,
+                border: OutlineInputBorder(
+                  
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
                 ),
-              ],
-            );
-          }
-          return Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: TextField(
-                  onChanged: (val) =>
-                      context.read<PaymentsCubit>().searchTransactions(val),
-                  decoration: _getSearchInputDecoration(
-                    'Search by ID or Rider...',
-                  ),
+                
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 0,
+                  horizontal: 16,
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 1,
-                child: _buildDropdown(
-                  'All Payment Methods',
-                  state.paymentMethodFilter,
-                  (val) =>
-                      context.read<PaymentsCubit>().filterByPaymentMethod(val!),
-                  ['All Payment Methods', 'UPI', 'Cash', 'Card'],
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDropdown(
+                'Payment Methods',
+                state.payoutMethodFilter,
+                (val) =>
+                    context.read<PaymentsCubit>().filterPayoutByMethod(val!),
+                ['Payment Methods', 'UPI', 'Bank'],
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDropdown(
+                'All Status',
+                state.payoutStatusFilter,
+                (val) =>
+                    context.read<PaymentsCubit>().filterPayoutByStatus(val!),
+                ['All Status', 'Successful', 'Pending', 'Rejected'],
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDateField(context, dateController),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+          SizedBox(
+            height: 48,
+            child: ElevatedButton.icon(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.cFF00A86B,
+                foregroundColor: AppColors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 1,
-                child: _buildDropdown(
-                  'All Status',
-                  state.statusFilter,
-                  (val) => context.read<PaymentsCubit>().filterByStatus(val!),
-                  ['All Status', 'Completed', 'Failed', 'Pending'],
+              icon: const Icon(Icons.download_rounded, size: 18),
+              label: Text(
+                'Export CSV',
+                style: AppTypography.base.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.white
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(flex: 1, child: _buildTextField('mm/dd/yyyy', null)),
-              const SizedBox(width: 16),
-              ElevatedButton.icon(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00A86B),
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 18,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                icon: const Icon(Icons.download_rounded, size: 18),
-                label: const Text(
-                  'Export CSV',
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }
+}
 
-  InputDecoration _getSearchInputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(
-        color: Color(0xFF9EA5AD),
+Widget _buildDateField(BuildContext context, TextEditingController controller) {
+  return TextField(
+    controller: controller,
+    readOnly: true,
+    onTap: () async {
+      DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+      );
+
+      if (pickedDate != null) {
+        String formattedDate =
+            "${pickedDate.month.toString().padLeft(2, '0')}/"
+            "${pickedDate.day.toString().padLeft(2, '0')}/"
+            "${pickedDate.year}";
+
+        controller.text = formattedDate;
+      }
+    },
+    decoration: InputDecoration(
+      hintText: 'dd/mm/yyyy',
+      hintStyle: AppTypography.base.copyWith(
+        color: AppColors.cFF9EA5AD,
         fontSize: 13,
         fontWeight: FontWeight.w500,
       ),
-      prefixIcon: const Icon(Icons.search, color: Color(0xFF9EA5AD), size: 18),
+      prefixIcon: const Icon(
+        Icons.calendar_today_outlined,
+        size: 18,
+        color: AppColors.cFF9EA5AD,
+      ),
       filled: true,
-      fillColor: const Color(0xFFF9FAFB),
+      fillColor: AppColors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFFEFEFEF)),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(color: Color(0xFFEFEFEF)),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFF00A86B),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    ),
+  );
+}
+
+Widget _buildDropdown(
+  String hint,
+  String selectedValue,
+  Function(String?) onSelected,
+  List<String> items,
+) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: AppColors.cFFEFEFEF),
+    ),
+    child: PopupMenuButton<String>(
+      offset: const Offset(0, 40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      color: AppColors.white,
+      elevation: 6,
+      onSelected: onSelected,
+      itemBuilder: (context) => items
+          .map((item) => _buildPopupItem(item, selectedValue == item))
+          .toList(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            selectedValue.isEmpty ? hint : selectedValue,
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+          const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            size: 16,
+            color: AppColors.cFF6F767E,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+  return PopupMenuItem<String>(
+    value: text,
+    height: 44,
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: Container(
+      color: isSelected ? AppColors.cFFF4FDF8 : Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+          if (isSelected)
+            const Icon(
+              Icons.check_circle_outline_rounded,
+              color: AppColors.cFF00A86B,
+              size: 18,
+            ),
+        ],
+      ),
+    ),
+  );
+}
+  InputDecoration _getSearchInputDecoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: AppTypography.base.copyWith(
+        color: AppColors.cFF9EA5AD,
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+      ),
+      prefixIcon: Icon(Icons.search, color: AppColors.cFF9EA5AD, size: 18),
+      filled: true,
+      fillColor: AppColors.cFFF9FAFB,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
   }
 
@@ -276,25 +375,25 @@ class PaymentsScreen extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(
-          color: Color(0xFF9EA5AD),
+        hintStyle: AppTypography.base.copyWith(
+          color: AppColors.cFF9EA5AD,
           fontSize: 13,
           fontWeight: FontWeight.w500,
         ),
         prefixIcon: icon != null
-            ? Icon(icon, color: const Color(0xFF9EA5AD), size: 18)
+            ? Icon(icon, color: AppColors.cFF9EA5AD, size: 18)
             : null,
         filled: true,
-        fillColor: const Color(0xFFF9FAFB),
+        fillColor: AppColors.cFFF9FAFB,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFFEFEFEF)),
+          borderSide: BorderSide(color: AppColors.cFFEFEFEF),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Color(0xFFEFEFEF)),
+          borderSide: BorderSide(color: AppColors.cFFEFEFEF),
         ),
-        contentPadding: const EdgeInsets.symmetric(
+        contentPadding: EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
         ),
@@ -302,44 +401,7 @@ class PaymentsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDropdown(
-    String hint,
-    String? value,
-    void Function(String?)? onChanged,
-    List<String> items,
-  ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFEFEFEF)),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: items.contains(value) ? value : null,
-          isExpanded: true,
-          hint: Text(
-            hint,
-            style: const TextStyle(
-              color: Color(0xFF6F767E),
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: Color(0xFF6F767E),
-            size: 20,
-          ),
-          items: items.map((String item) {
-            return DropdownMenuItem<String>(value: item, child: Text(item));
-          }).toList(),
-          onChanged: onChanged,
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildDataTable(List<Map<String, dynamic>> transactions) {
     return LayoutBuilder(
@@ -351,17 +413,17 @@ class PaymentsScreen extends StatelessWidget {
             child: DataTable(
               showCheckboxColumn: false,
               headingRowColor: WidgetStateProperty.all(
-                const Color(0xFFF4F6F9).withOpacity(0.5),
+                AppColors.cFFF4F6F9.withOpacity(0.5),
               ),
               dataRowMaxHeight: 80,
               dataRowMinHeight: 80,
               horizontalMargin: 24,
               columnSpacing: 24,
               dividerThickness: 1,
-              headingTextStyle: const TextStyle(
+              headingTextStyle: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF6F767E),
+                color: AppColors.cFF6F767E,
                 letterSpacing: 0.5,
               ),
               columns: const [
@@ -415,20 +477,20 @@ class PaymentsScreen extends StatelessWidget {
         DataCell(
           Text(
             id,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Text(
             riderName,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
               height: 1.4,
             ),
           ),
@@ -436,10 +498,10 @@ class PaymentsScreen extends StatelessWidget {
         DataCell(
           Text(
             driverName,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
               height: 1.4,
             ),
           ),
@@ -447,10 +509,10 @@ class PaymentsScreen extends StatelessWidget {
         DataCell(
           Text(
             dateAndTime,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 13,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
               height: 1.4,
             ),
           ),
@@ -458,34 +520,34 @@ class PaymentsScreen extends StatelessWidget {
         DataCell(
           Text(
             tripId,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF00A86B),
+              color: AppColors.cFF00A86B,
             ),
           ),
         ),
         DataCell(
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 14,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Row(
             children: [
-              Icon(paymentIcon, size: 16, color: const Color(0xFF6F767E)),
-              const SizedBox(width: 6),
+              Icon(paymentIcon, size: 16, color: AppColors.cFF6F767E),
+              SizedBox(width: 6),
               Text(
                 paymentMethod,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
             ],
@@ -493,7 +555,7 @@ class PaymentsScreen extends StatelessWidget {
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: statusBgColor,
               borderRadius: BorderRadius.circular(20),
@@ -509,10 +571,10 @@ class PaymentsScreen extends StatelessWidget {
                     color: statusColor,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   status,
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontWeight: FontWeight.w800,
                     fontSize: 9,
                     color: statusColor,
@@ -526,9 +588,9 @@ class PaymentsScreen extends StatelessWidget {
         DataCell(
           IconButton(
             onPressed: () {},
-            icon: const Icon(
+            icon: Icon(
               Icons.visibility_outlined,
-              color: Color(0xFF9EA5AD),
+              color: AppColors.cFF9EA5AD,
               size: 20,
             ),
           ),
@@ -539,30 +601,30 @@ class PaymentsScreen extends StatelessWidget {
 
   Widget _buildPagination(int total) {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             'Showing ${total > 0 ? 1 : 0}-${total > 10 ? 10 : total} of $total transactions',
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ),
           Row(
             children: [
               _buildPaginator('<', isActive: false),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildPaginator('1', isActive: true),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildPaginator('2', isActive: false),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildPaginator('3', isActive: false),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildPaginator('4', isActive: false),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildPaginator('>', isActive: false),
             ],
           ),
@@ -576,20 +638,24 @@ class PaymentsScreen extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF00A86B) : Colors.white,
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
         borderRadius: BorderRadius.circular(4),
-        border: isActive ? null : Border.all(color: const Color(0xFFEFEFEF)),
+        border: isActive ? null : Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: isActive ? Colors.white : const Color(0xFF1A1D1F),
+            color: isActive ? AppColors.white : AppColors.cFF1A1D1F,
           ),
         ),
       ),
     );
   }
-}
+
+
+
+
+

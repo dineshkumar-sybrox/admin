@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../presentation/widgets/admin_scaffold.dart';
 import '../widgets/refund_success_dialog.dart';
@@ -10,7 +11,7 @@ class RefundTicketPage extends StatefulWidget {
   final VoidCallback? onCancel;
   final VoidCallback? onSuccess;
 
-  const RefundTicketPage({
+  RefundTicketPage({
     super.key,
     required this.ticketId,
     required this.rideId,
@@ -47,8 +48,8 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
       children: [
         // Sub-header area
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          color: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          color: AppColors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -58,7 +59,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                   InkWell(
                     onTap: widget.onCancel,
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.arrow_back,
                           size: 16,
@@ -67,7 +68,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                         SizedBox(width: 4),
                         Text(
                           ' Back to Ticket',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textSecondary,
                             fontSize: 14,
                           ),
@@ -75,14 +76,14 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
-                      const Text(
+                      Text(
                         'Refund for Ticket ',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
@@ -90,7 +91,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                       ),
                       Text(
                         widget.ticketId,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
@@ -98,26 +99,26 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.directions_car_outlined,
                         size: 16,
                         color: AppColors.textSecondary,
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4),
                       RichText(
                         text: TextSpan(
                           text: 'Linked Ride ID: ',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 14,
                             color: AppColors.textSecondary,
                           ),
                           children: [
                             TextSpan(
                               text: widget.rideId,
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textPrimary,
                               ),
@@ -130,38 +131,35 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFEF3C7), // Light yellow/orange
+                  color: AppColors.cFFFEF3C7, // Light yellow/orange
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Text(
+                child: Text(
                   'ACTION REQUIRED',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFD97706), // Dark orange
+                    color: AppColors.cFFD97706, // Dark orange
                   ),
                 ),
               ),
             ],
           ),
         ),
-        const Divider(height: 1, color: AppColors.divider),
+        Divider(height: 1, color: AppColors.divider),
 
         // Main Content Scrollable Area
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // ORIGINAL FARE BREAKDOWN Card
                 _buildFareBreakdownCard(),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Two Column Layout
                 Row(
@@ -169,7 +167,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                   children: [
                     // Left Column: Refund Calculator
                     Expanded(flex: 2, child: _buildRefundCalculatorCard()),
-                    const SizedBox(width: 24),
+                    SizedBox(width: 24),
 
                     // Right Column: Refund Method
                     Expanded(flex: 1, child: _buildRefundMethodCard()),
@@ -195,7 +193,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
   Widget _buildFareBreakdownCard() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -204,9 +202,9 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
         children: [
           Container(
             color: AppColors.divider.withValues(alpha: 0.4),
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: Row(
-              children: const [
+              children: [
                 Icon(
                   Icons.receipt_long_outlined,
                   size: 20,
@@ -215,7 +213,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 SizedBox(width: 8),
                 Text(
                   'ORIGINAL FARE BREAKDOWN',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textSecondary,
@@ -225,9 +223,9 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.divider),
+          Divider(height: 1, color: AppColors.divider),
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -238,20 +236,17 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 ), // As per screenshot, odd value but mirroring it
                 _buildFareItem('SURGE', '₹50.00'),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   decoration: BoxDecoration(
                     color: AppColors.scaffoldBackground,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'TOTAL CHARGED',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textSecondary,
@@ -261,7 +256,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                       SizedBox(height: 4),
                       Text(
                         '₹352.00',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
@@ -284,17 +279,17 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.bold,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
@@ -306,9 +301,9 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
 
   Widget _buildRefundCalculatorCard() {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -316,7 +311,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: const [
+            children: [
               Icon(
                 Icons.calculate_outlined,
                 size: 20,
@@ -325,7 +320,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               SizedBox(width: 8),
               Text(
                 'Refund Calculator',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -333,7 +328,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -341,60 +336,54 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Refund Amount (₹)',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     TextField(
                       controller: amountController,
                       decoration: InputDecoration(
                         prefixText: '₹ ',
-                        prefixStyle: const TextStyle(
+                        prefixStyle: AppTypography.base.copyWith(
                           color: AppColors.textPrimary,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
+                        contentPadding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 16,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                            color: AppColors.divider,
-                          ),
+                          borderSide: BorderSide(color: AppColors.divider),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                            color: AppColors.divider,
-                          ),
+                          borderSide: BorderSide(color: AppColors.divider),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(
-                            color: AppColors.primary,
-                          ),
+                          borderSide: BorderSide(color: AppColors.primary),
                         ),
                       ),
-                      style: const TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
-                      keyboardType: const TextInputType.numberWithOptions(
+                      keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       'Suggested refund based on detour: ₹125.00',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -402,22 +391,22 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                   ],
                 ),
               ),
-              const SizedBox(width: 24),
+              SizedBox(width: 24),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Reason for Refund',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 4,
                       ),
@@ -431,7 +420,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                         child: DropdownButton<String>(
                           value: selectedReason,
                           isExpanded: true,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.keyboard_arrow_down,
                             color: AppColors.textSecondary,
                           ),
@@ -452,7 +441,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                                         children: [
                                           Text(
                                             reason,
-                                            style: TextStyle(
+                                            style: AppTypography.base.copyWith(
                                               fontSize: 14,
                                               color: reason == 'Driver Detour'
                                                   ? AppColors.textPrimary
@@ -464,7 +453,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                                             ),
                                           ),
                                           if (reason == 'Driver Detour')
-                                            const Icon(
+                                            Icon(
                                               Icons.check_circle_outline,
                                               size: 16,
                                               color: AppColors.primary,
@@ -489,38 +478,38 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
-          const Text(
+          SizedBox(height: 24),
+          Text(
             'Customer-facing Notes',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           TextField(
             controller: notesController,
             maxLines: 4,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
+              contentPadding: EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 16,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColors.divider),
+                borderSide: BorderSide(color: AppColors.divider),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColors.divider),
+                borderSide: BorderSide(color: AppColors.divider),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColors.primary),
+                borderSide: BorderSide(color: AppColors.primary),
               ),
             ),
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 14,
               color: AppColors.textSecondary,
               height: 1.5,
@@ -533,31 +522,31 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
 
   Widget _buildRefundMethodCard() {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'REFUND METHOD',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.textSecondary,
               letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Wallet Refund Option
           InkWell(
             onTap: () => setState(() => selectedRefundMethod = 'wallet'),
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: selectedRefundMethod == 'wallet'
@@ -567,8 +556,8 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 ),
                 borderRadius: BorderRadius.circular(8),
                 color: selectedRefundMethod == 'wallet'
-                    ? const Color(0xFFF0FDF4)
-                    : Colors.white, // Very light mint if active
+                    ? AppColors.cFFF0FDF4
+                    : AppColors.white, // Very light mint if active
               ),
               child: Row(
                 children: [
@@ -581,23 +570,23 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                         : AppColors.divider,
                     size: 20,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Wallet Refund',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimary,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           'Instant credit to user wallet',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                           ),
@@ -615,13 +604,13 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           // Bank Transfer Option
           InkWell(
             onTap: () => setState(() => selectedRefundMethod = 'bank'),
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: selectedRefundMethod == 'bank'
@@ -631,8 +620,8 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 ),
                 borderRadius: BorderRadius.circular(8),
                 color: selectedRefundMethod == 'bank'
-                    ? const Color(0xFFF0FDF4)
-                    : Colors.white,
+                    ? AppColors.cFFF0FDF4
+                    : AppColors.white,
               ),
               child: Row(
                 children: [
@@ -645,23 +634,23 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                         : AppColors.divider,
                     size: 20,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Bank Transfer',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimary,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           'Takes 5-7 business days',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                           ),
@@ -680,17 +669,17 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
             ),
           ),
 
-          const SizedBox(height: 32),
-          const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: 24),
+          SizedBox(height: 32),
+          Divider(height: 1, color: AppColors.divider),
+          SizedBox(height: 24),
 
           // Summary calculations
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Collect Amount',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -698,7 +687,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
               Text(
                 '₹452.00',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -706,13 +695,13 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'New Final Fare',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -720,7 +709,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
               Text(
                 '₹352.00',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -728,13 +717,13 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Refund Amount',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -742,7 +731,7 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               ),
               Text(
                 '₹100.00', // Note: This doesn't match the 125 input in screenshot but matches UI text lower down. Sticking to screenshot text.
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary, // Green color as per screenshot
@@ -757,16 +746,16 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
 
   Widget _buildFooter(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
         border: Border(top: BorderSide(color: AppColors.divider)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: const [
+            children: [
               Icon(
                 Icons.info_outline,
                 size: 16,
@@ -775,7 +764,10 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
               SizedBox(width: 8),
               Text(
                 'This action cannot be undone once processed.',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                style: AppTypography.base.copyWith(
+                  fontSize: 12,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -785,22 +777,21 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                 onPressed: widget.onCancel,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.textPrimary,
-                  side: const BorderSide(color: AppColors.divider),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
+                  side: BorderSide(color: AppColors.divider),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   backgroundColor: AppColors.scaffoldBackground,
                 ),
-                child: const Text(
+                child: Text(
                   'Cancel',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: AppTypography.base.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               ElevatedButton.icon(
                 onPressed: () {
                   // Process refund logic (API call would go here)
@@ -834,15 +825,12 @@ class _RefundTicketPageState extends State<RefundTicketPage> {
                     ),
                   );
                 },
-                icon: const Icon(Icons.check_circle_outline, size: 18),
-                label: const Text('Process Refund'),
+                icon: Icon(Icons.check_circle_outline, size: 18),
+                label: Text('Process Refund'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
+                  foregroundColor: AppColors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

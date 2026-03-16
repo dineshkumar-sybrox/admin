@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'dart:math' as math;
 
 class CancellationZonesChart extends StatelessWidget {
-  const CancellationZonesChart({super.key});
+  CancellationZonesChart({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             'Cancellation Zones',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32),
           SizedBox(
             height: 200,
             child: Stack(
@@ -43,46 +45,46 @@ class CancellationZonesChart extends StatelessWidget {
                   height: 200,
                   child: CustomPaint(
                     painter: _DoughnutChartPainter(
-                      segments: const [
+                      segments: [
                         ChartSegment(
                           value: 45,
-                          color: Color(0xFF1B2C4E),
+                          color: AppColors.cFF1B2C4E,
                         ), // Anna Nagar (Dark Blue)
                         ChartSegment(
                           value: 25,
-                          color: Color(0xFF00A86B),
+                          color: AppColors.cFF00A86B,
                         ), // Adyar (Green)
                         ChartSegment(
                           value: 20,
-                          color: Color(0xFFFFA629),
+                          color: AppColors.cFFFFA629,
                         ), // Velachery (Orange)
                         ChartSegment(
                           value: 10,
-                          color: Color(0xFFEA3546),
+                          color: AppColors.cFFEA3546,
                         ), // Others (Red)
                       ],
                       strokeWidth: 20,
                     ),
                   ),
                 ),
-                const Column(
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       'Chennai',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF9EA5AD),
+                        color: AppColors.cFF9EA5AD,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'Cancellation Zones',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1A1D1F),
+                        color: AppColors.cFF1A1D1F,
                       ),
                     ),
                   ],
@@ -90,14 +92,14 @@ class CancellationZonesChart extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 32),
-          _buildLegendRow(const Color(0xFF1B2C4E), 'Anna Nagar', '1,116 (45%)'),
-          const SizedBox(height: 16),
-          _buildLegendRow(const Color(0xFF00A86B), 'Adyar', '508 (25%)'),
-          const SizedBox(height: 16),
-          _buildLegendRow(const Color(0xFFFFA629), 'Velachery', '702 (20%)'),
-          const SizedBox(height: 16),
-          _buildLegendRow(const Color(0xFFEA3546), 'Others', '602 (10%)'),
+          SizedBox(height: 32),
+          _buildLegendRow(AppColors.cFF1B2C4E, 'Anna Nagar', '1,116 (45%)'),
+          SizedBox(height: 16),
+          _buildLegendRow(AppColors.cFF00A86B, 'Adyar', '508 (25%)'),
+          SizedBox(height: 16),
+          _buildLegendRow(AppColors.cFFFFA629, 'Velachery', '702 (20%)'),
+          SizedBox(height: 16),
+          _buildLegendRow(AppColors.cFFEA3546, 'Others', '602 (10%)'),
         ],
       ),
     );
@@ -115,23 +117,23 @@ class CancellationZonesChart extends StatelessWidget {
               height: 10,
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text(
               title,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
           ],
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1A1D1F),
+            color: AppColors.cFF1A1D1F,
           ),
         ),
       ],
@@ -143,7 +145,7 @@ class ChartSegment {
   final double value;
   final Color color;
 
-  const ChartSegment({required this.value, required this.color});
+  ChartSegment({required this.value, required this.color});
 }
 
 class _DoughnutChartPainter extends CustomPainter {
@@ -185,3 +187,7 @@ class _DoughnutChartPainter extends CustomPainter {
         oldDelegate.strokeWidth != strokeWidth;
   }
 }
+
+
+
+

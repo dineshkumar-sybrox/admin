@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
 import '../cubit/drivers_management_state.dart';
 
 class ActiveDriversTable extends StatelessWidget {
-  const ActiveDriversTable({super.key});
+  ActiveDriversTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +27,14 @@ class ActiveDriversTable extends StatelessWidget {
                       : 1000,
                 ),
                 child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(
-                    const Color(0xFFF8FAFC),
-                  ),
-                  headingTextStyle: const TextStyle(
-                    color: Color(0xFF8E9BAB),
+                  headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+                  headingTextStyle: AppTypography.base.copyWith(
+                    color: AppColors.textSecondary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -48,7 +47,7 @@ class ActiveDriversTable extends StatelessWidget {
                   showCheckboxColumn: false,
                   border: const TableBorder(
                     horizontalInside: BorderSide(
-                      color: Color(0xFFF3F4F6),
+                      color: AppColors.cFFF3F4F6,
                       width: 1,
                     ),
                   ),
@@ -72,7 +71,7 @@ class ActiveDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             '#${driver.id}',
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.bold,
                             ),
@@ -81,7 +80,7 @@ class ActiveDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.name,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.bold,
                             ),
@@ -91,8 +90,8 @@ class ActiveDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.city,
-                            style: const TextStyle(
-                              color: Color(0xFF64748B),
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.textSecondary,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -102,7 +101,7 @@ class ActiveDriversTable extends StatelessWidget {
                             child: Text(
                               driver.ridesToday?.toString().padLeft(2, '0') ??
                                   '00',
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 color: AppColors.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -112,8 +111,8 @@ class ActiveDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             _formatDuration(driver.onlineHours ?? 0),
-                            style: const TextStyle(
-                              color: Color(0xFF64748B),
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.textSecondary,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -181,7 +180,7 @@ class _VehicleBadge extends StatelessWidget {
       ),
       child: Text(
         type.toUpperCase(),
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           color: textColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
@@ -200,18 +199,18 @@ class _AcceptanceRateText extends StatelessWidget {
   Widget build(BuildContext context) {
     Color textColor;
     if (rate >= 90) {
-      textColor = const Color(0xFF22C55E); // Success green
+      textColor = AppColors.success;
     } else if (rate >= 80) {
-      textColor = const Color(0xFF10B981); // Teal
+      textColor = AppColors.primary;
     } else if (rate >= 70) {
-      textColor = const Color(0xFFF59E0B); // Amber
+      textColor = AppColors.warning;
     } else {
-      textColor = const Color(0xFFEF4444); // Error red
+      textColor = AppColors.error;
     }
 
     return Text(
       '$rate%',
-      style: TextStyle(
+      style: AppTypography.base.copyWith(
         color: textColor,
         fontWeight: FontWeight.bold,
         fontSize: 14,

@@ -1,98 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class RegionalPerformanceTable extends StatelessWidget {
-  const RegionalPerformanceTable({super.key});
+  RegionalPerformanceTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Regional Performance',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF1A1D1F),
-                      ),
+                      style: AppTypography.h3
                     ),
                     SizedBox(height: 4),
                     Text(
                       'Top performing cities by efficiency',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF9EA5AD),
+                      style: AppTypography.base.copyWith(
+                        
                       ),
                     ),
                   ],
                 ),
                 OutlinedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.download_rounded,
                     size: 16,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                   ),
-                  label: const Text(
+                  label: Text(
                     'Export Report',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.w800
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 14,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    side: const BorderSide(color: Color(0xFFEFEFEF)),
+                    side: BorderSide(color: AppColors.cFFEFEFEF),
                   ),
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           SizedBox(
             width: double.infinity,
             child: DataTable(
               showCheckboxColumn: false,
-              headingRowColor: WidgetStateProperty.all(Colors.white),
-              dataRowMaxHeight: 80,
-              dataRowMinHeight: 80,
+             headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+              headingTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
+              ),
+              dataTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
               horizontalMargin: 24,
-              columnSpacing: 64,
-              dividerThickness: 1,
-              headingTextStyle: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF6F767E),
-                letterSpacing: 0.5,
+              columnSpacing: 24,
+              headingRowHeight: 56,
+              dataRowMaxHeight: 72,
+              dataRowMinHeight: 72,
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                  color: AppColors.cFFF3F4F6,
+                  width: 1,
+                ),
               ),
               columns: const [
                 DataColumn(label: Text('CITY / ZONE')),
@@ -110,10 +115,10 @@ class RegionalPerformanceTable extends StatelessWidget {
                   waitTime: '3.2m',
                   completionValue: '98.2%',
                   completionProgress: 0.98,
-                  completionColor: const Color(0xFF00C46B),
+                  completionColor: AppColors.cFF00C46B,
                   status: 'STEADY TREND',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
+                  statusColor: AppColors.cFF00C46B,
+                  statusBgColor: AppColors.cFFE8FDF2,
                 ),
                 _buildRow(
                   city: 'Delhi NCR',
@@ -122,12 +127,12 @@ class RegionalPerformanceTable extends StatelessWidget {
                   waitTime: '5.8m',
                   completionValue: '84.5%',
                   completionProgress: 0.84,
-                  completionColor: const Color(0xFFFFD12E),
+                  completionColor: AppColors.cFFFFD12E,
                   status: 'MODERATE SURGE',
-                  statusColor: const Color(
+                  statusColor: Color(
                     0xFFD4A000,
                   ), // Darker yellow for text visibility
-                  statusBgColor: const Color(0xFFFFFBE8),
+                  statusBgColor: AppColors.cFFFFFBE8,
                 ),
                 _buildRow(
                   city: 'Bangalore East',
@@ -136,10 +141,10 @@ class RegionalPerformanceTable extends StatelessWidget {
                   waitTime: '4.1m',
                   completionValue: '92.0%',
                   completionProgress: 0.92,
-                  completionColor: const Color(0xFF00C46B),
+                  completionColor: AppColors.cFF00C46B,
                   status: 'NORMAL',
-                  statusColor: const Color(0xFF00C46B),
-                  statusBgColor: const Color(0xFFE8Fdf2),
+                  statusColor: AppColors.cFF00C46B,
+                  statusBgColor: AppColors.cFFE8FDF2,
                 ),
                 _buildRow(
                   city: 'Chennai Central',
@@ -148,38 +153,38 @@ class RegionalPerformanceTable extends StatelessWidget {
                   waitTime: '8.2m',
                   completionValue: '68.2%',
                   completionProgress: 0.68,
-                  completionColor: const Color(0xFFEA3546),
+                  completionColor: AppColors.cFFEA3546,
                   status: 'HIGH DEMAND',
-                  statusColor: const Color(0xFFEA3546),
-                  statusBgColor: const Color(0xFFFFECEE),
+                  statusColor: AppColors.cFFEA3546,
+                  statusBgColor: AppColors.cFFFFECEE,
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Showing 4 of 28 zones',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
                 Row(
                   children: [
                     _buildPaginator('<', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('1', isActive: true),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('2', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('3', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('>', isActive: false),
                   ],
                 ),
@@ -196,17 +201,17 @@ class RegionalPerformanceTable extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF00A86B) : Colors.white,
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
         borderRadius: BorderRadius.circular(4),
-        border: isActive ? null : Border.all(color: const Color(0xFFEFEFEF)),
+        border: isActive ? null : Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: isActive ? Colors.white : const Color(0xFF1A1D1F),
+            color: isActive ? AppColors.white : AppColors.cFF1A1D1F,
           ),
         ),
       ),
@@ -234,19 +239,15 @@ class RegionalPerformanceTable extends StatelessWidget {
             children: [
               Text(
                 city,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                style: AppTypography.base.copyWith(
+                  
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 zoneDesc,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11,
-                  color: Color(0xFF9EA5AD),
+                style: AppTypography.base.copyWith(
+                  fontWeight: FontWeight.w400
                 ),
               ),
             ],
@@ -255,20 +256,16 @@ class RegionalPerformanceTable extends StatelessWidget {
         DataCell(
           Text(
             requests,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 13,
-              color: Color(0xFF1A1D1F),
+            style: AppTypography.base.copyWith(
+              
             ),
           ),
         ),
         DataCell(
           Text(
             waitTime,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 13,
-              color: Color(0xFF1A1D1F),
+            style: AppTypography.base.copyWith(
+              
             ),
           ),
         ),
@@ -280,14 +277,12 @@ class RegionalPerformanceTable extends StatelessWidget {
                 width: 48,
                 child: Text(
                   completionValue,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
-                    color: Color(0xFF1A1D1F),
+                  style: AppTypography.base.copyWith(
+                    
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               SizedBox(
                 width: 60,
                 height: 4,
@@ -295,7 +290,7 @@ class RegionalPerformanceTable extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF4F6F9),
+                        color: AppColors.cFFF4F6F9,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -316,7 +311,7 @@ class RegionalPerformanceTable extends StatelessWidget {
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
               color: statusBgColor,
               borderRadius: BorderRadius.circular(20),
@@ -332,10 +327,10 @@ class RegionalPerformanceTable extends StatelessWidget {
                     color: statusColor,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   status,
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontWeight: FontWeight.w800,
                     fontSize: 8,
                     color: statusColor,
@@ -351,15 +346,15 @@ class RegionalPerformanceTable extends StatelessWidget {
             onPressed: () {},
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
-              minimumSize: const Size(0, 0),
+              minimumSize: Size(0, 0),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Text(
+            child: Text(
               'View Details',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.w700,
                 fontSize: 12,
-                color: Color(0xFF00C46B),
+                color: AppColors.cFF00C46B,
               ),
             ),
           ),
@@ -368,3 +363,7 @@ class RegionalPerformanceTable extends StatelessWidget {
     );
   }
 }
+
+
+
+

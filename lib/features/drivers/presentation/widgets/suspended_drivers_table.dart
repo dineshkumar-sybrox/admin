@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
+import '../cubit/drivers_management_state.dart';
 
 class SuspendedDriversTable extends StatelessWidget {
-  const SuspendedDriversTable({super.key});
+  SuspendedDriversTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +27,14 @@ class SuspendedDriversTable extends StatelessWidget {
                       : 1000,
                 ),
                 child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(
-                    AppColors.tableHeaderBGColor,
-                  ),
-                  headingTextStyle: const TextStyle(
+                  headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+                  headingTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textSecondary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -46,7 +46,7 @@ class SuspendedDriversTable extends StatelessWidget {
                   dataRowMinHeight: 72,
                   border: const TableBorder(
                     horizontalInside: BorderSide(
-                      color: Color(0xFFF3F4F6),
+                      color: AppColors.cFFF3F4F6,
                       width: 1,
                     ),
                   ),
@@ -62,32 +62,81 @@ class SuspendedDriversTable extends StatelessWidget {
                   rows: displayDrivers.map((driver) {
                     return DataRow(
                       cells: [
-                        DataCell(Text(driver.id)),
-                        DataCell(Text(driver.name)),
-                        DataCell(Text(driver.city)),
+                        DataCell(
+                          Text(
+                            driver.id,
+                            style: AppTypography.base.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            driver.name,
+                            style: AppTypography.base.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          Text(
+                            driver.city,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ),
                         DataCell(
                           _SuspensionReasonBadge(
                             reason: driver.suspensionReason ?? 'VIOLATION',
                             subReason: driver.suspensionSubreason,
                           ),
                         ),
-                        DataCell(Text(driver.suspensionDate ?? '-')),
                         DataCell(
-                          _AppealStatus(status: driver.appealStatus ?? 'NONE'),
+                          Text(
+                            driver.suspensionDate ?? '-',
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ),
+                        DataCell(
+                          _AppealStatusBadge(
+                            status: driver.appealStatus ?? 'NONE',
+                          ),
                         ),
                         DataCell(
                           Row(
                             children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.remove_red_eye_outlined,
-                                  size: 20,
+                              InkWell(
+                                onTap: () {
+                                  // Action logic from branch
+                                },
+                                borderRadius: BorderRadius.circular(4),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 4,
+                                    vertical: 8,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Activate',
+                                        style: AppTypography.base.copyWith(
+                                          color: AppColors.success,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Icon(
+                                        Icons.remove_red_eye_outlined,
+                                        color: AppColors.textSecondary,
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                onPressed: () {},
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text('Review'),
                               ),
                             ],
                           ),
@@ -124,8 +173,8 @@ class _SuspensionReasonBadge extends StatelessWidget {
           ),
           child: Text(
             reason.toUpperCase(),
-            style: const TextStyle(
-              color: Color(0xFFFF4842),
+            style: AppTypography.base.copyWith(
+              color: const Color(0xFFFF4842),
               fontSize: 10,
               fontWeight: FontWeight.w800,
             ),
@@ -134,29 +183,46 @@ class _SuspensionReasonBadge extends StatelessWidget {
         if (subReason != null)
           Text(
             subReason!,
-            style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+            style: AppTypography.base.copyWith(
+              fontSize: 11,
+              color: AppColors.textSecondary,
+            ),
           ),
       ],
     );
   }
 }
 
-class _AppealStatus extends StatelessWidget {
+class _AppealStatusBadge extends StatelessWidget {
   final String status;
-  const _AppealStatus({required this.status});
+  const _AppealStatusBadge({required this.status});
 
   @override
   Widget build(BuildContext context) {
+    Color bgColor;
+    Color textColor;
+
+    if (status == 'PENDING REVIEW') {
+      bgColor = AppColors.cFFFEF3C7;
+      textColor = AppColors.cFFD97706;
+    } else if (status == 'REJECTED') {
+      bgColor = AppColors.cFFFEE2E2;
+      textColor = AppColors.cFFDC2626;
+    } else {
+      bgColor = AppColors.cFFF3F4F6;
+      textColor = AppColors.textSecondary;
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF7ED),
+        color: bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         status.toUpperCase(),
-        style: const TextStyle(
-          color: Color(0xFFEA580C),
+        style: AppTypography.base.copyWith(
+          color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),

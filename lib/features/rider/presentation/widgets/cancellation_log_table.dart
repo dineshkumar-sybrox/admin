@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CancellationLogTable extends StatelessWidget {
-  const CancellationLogTable({super.key});
+  CancellationLogTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
@@ -17,24 +18,24 @@ class CancellationLogTable extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'DETAILED CANCELLATION LOG',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       '(LAST 10)',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textSecondary,
@@ -44,7 +45,7 @@ class CancellationLogTable extends StatelessWidget {
                 ),
                 Text(
                   'Page 1 of 1',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -69,9 +70,9 @@ class CancellationLogTable extends StatelessWidget {
                     dataRowMinHeight: 60,
                     dataRowMaxHeight: 60,
                     headingRowColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 248, 248, 248),
+                      AppColors.cFFF8F8F8,
                     ),
-                    headingTextStyle: const TextStyle(
+                    headingTextStyle: AppTypography.base.copyWith(
                       color: AppColors.textSecondary,
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -112,10 +113,10 @@ class CancellationLogTable extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 16),
-          // const Divider(height: 1),
+          SizedBox(height: 16),
+          // Divider(height: 1),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
               child: TextButton(
                 onPressed: () {},
@@ -124,13 +125,13 @@ class CancellationLogTable extends StatelessWidget {
                   children: [
                     Text(
                       'LOAD OLDER HISTORY',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         color: AppColors.textSecondary,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Icon(
                       Icons.keyboard_arrow_down,
                       size: 16,
@@ -162,16 +163,16 @@ class CancellationLogTable extends StatelessWidget {
             children: [
               Text(
                 date,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                   color: AppColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 time,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -190,10 +191,10 @@ class CancellationLogTable extends StatelessWidget {
                   color: dotColor,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 cancelledBy,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                   color: AppColors.textPrimary,
@@ -204,10 +205,10 @@ class CancellationLogTable extends StatelessWidget {
         ),
         DataCell(
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               reason,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 13,
                 color: AppColors.textSecondary,
                 fontStyle: FontStyle.italic,
@@ -219,3 +220,7 @@ class CancellationLogTable extends StatelessWidget {
     );
   }
 }
+
+
+
+

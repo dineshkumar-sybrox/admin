@@ -7,7 +7,7 @@ import '../widgets/revenue/revenue_by_region.dart';
 import '../widgets/revenue/service_type_breakdown.dart';
 
 class RevenueTodayScreen extends StatelessWidget {
-  const RevenueTodayScreen({super.key});
+  RevenueTodayScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +15,14 @@ class RevenueTodayScreen extends StatelessWidget {
       builder: (context, constraints) {
         final isTablet = constraints.maxWidth < 1100;
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StatCardsRow(),
-              const SizedBox(height: 20),
+              StatCardsRow(),
+              SizedBox(height: 20),
               if (isTablet)
-                const Column(
+                Column(
                   children: [
                     RevenueTrendChart(),
                     SizedBox(height: 16),
@@ -36,7 +36,7 @@ class RevenueTodayScreen extends StatelessWidget {
                   ],
                 )
               else
-                const Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
@@ -71,3 +71,4 @@ class RevenueTodayScreen extends StatelessWidget {
     );
   }
 }
+

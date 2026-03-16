@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class ComplaintsTab extends StatefulWidget {
   final VoidCallback? onIssueRefund;
 
-  const ComplaintsTab({super.key, this.onIssueRefund});
+  ComplaintsTab({super.key, this.onIssueRefund});
 
   @override
   State<ComplaintsTab> createState() => _ComplaintsTabState();
@@ -51,13 +52,13 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
             children: [
               // Sidebar Header
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Support Tickets',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -66,39 +67,39 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                     Row(
                       children: [
                         IconButton(
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.filter_list,
                             size: 20,
                             color: AppColors.textSecondary,
                           ),
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         IconButton(
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.search,
                             size: 20,
                             color: AppColors.textSecondary,
                           ),
                           onPressed: () {},
                           padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
+                          constraints: BoxConstraints(),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const Divider(height: 1, color: AppColors.divider),
+              Divider(height: 1, color: AppColors.divider),
 
               // Tickets List
               Expanded(
                 child: ListView.separated(
                   itemCount: tickets.length,
                   separatorBuilder: (context, index) =>
-                      const Divider(height: 1, color: AppColors.divider),
+                      Divider(height: 1, color: AppColors.divider),
                   itemBuilder: (context, index) {
                     final ticket = tickets[index];
                     final isSelected = index == _selectedTicketIndex;
@@ -109,22 +110,22 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                         });
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(16.0),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? Colors.transparent
+                              ? AppColors.transparent
                               : Colors
                                     .transparent, // Can use a subtle color if needed
                           border: isSelected
-                              ? const Border(
+                              ? Border(
                                   left: BorderSide(
                                     color: AppColors.primary,
                                     width: 4,
                                   ),
                                 )
-                              : const Border(
+                              : Border(
                                   left: BorderSide(
-                                    color: Colors.transparent,
+                                    color: AppColors.transparent,
                                     width: 4,
                                   ),
                                 ),
@@ -137,7 +138,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                               children: [
                                 Text(
                                   ticket['id'],
-                                  style: const TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textSecondary,
@@ -146,41 +147,41 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                 _buildStatusBadge(ticket['status']),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Text(
                               ticket['title'],
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textPrimary,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.directions_car_outlined,
                                   size: 14,
                                   color: AppColors.textSecondary,
                                 ),
-                                const SizedBox(width: 4),
+                                SizedBox(width: 4),
                                 Text(
                                   ticket['rideId'],
-                                  style: const TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 12,
                                     color: AppColors.textSecondary,
                                   ),
                                 ),
-                                const SizedBox(width: 12),
-                                const Icon(
+                                SizedBox(width: 12),
+                                Icon(
                                   Icons.calendar_today_outlined,
                                   size: 14,
                                   color: AppColors.textSecondary,
                                 ),
-                                const SizedBox(width: 4),
+                                SizedBox(width: 4),
                                 Text(
                                   ticket['date'],
-                                  style: const TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 12,
                                     color: AppColors.textSecondary,
                                   ),
@@ -198,17 +199,17 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
           ),
         ),
 
-        const VerticalDivider(width: 1, color: AppColors.divider),
+        VerticalDivider(width: 1, color: AppColors.divider),
 
         // Right Panel: Chat/Resolution
         Expanded(
           child: Container(
-            color: Colors.white,
+            color: AppColors.white,
             child: Column(
               children: [
                 // Chat Header
                 Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 24.0,
                     vertical: 16.0,
                   ),
@@ -220,27 +221,27 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                         children: [
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Complaints & Resolution',
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.textPrimary,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               Container(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: 8,
                                   vertical: 4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  color: AppColors.grey[200],
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'BILLING',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textSecondary,
@@ -249,18 +250,18 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               text: 'Ticket ID: #TC-8821 • Assigned to: ',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 12,
                                 color: AppColors.textSecondary,
                               ),
                               children: [
                                 TextSpan(
                                   text: 'Support Agent Sarah',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textPrimary,
                                   ),
@@ -274,30 +275,30 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                         children: [
                           OutlinedButton.icon(
                             onPressed: () {},
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.check_circle_outline_sharp,
                               size: 16,
                             ),
-                            label: const Text('ClOSE TICKET'),
+                            label: Text('ClOSE TICKET'),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: AppColors.textPrimary,
-                              side: const BorderSide(color: AppColors.divider),
+                              side: BorderSide(color: AppColors.divider),
                               backgroundColor: AppColors.background,
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           ElevatedButton.icon(
                             onPressed: () {
                               if (widget.onIssueRefund != null) {
                                 widget.onIssueRefund!();
                               }
                             },
-                            icon: const Icon(Icons.money, size: 16),
-                            label: const Text('Issue Refund'),
+                            icon: Icon(Icons.money, size: 16),
+                            label: Text('Issue Refund'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               elevation: 0,
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 12,
                               ),
@@ -311,47 +312,47 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                     ],
                   ),
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
 
                 // Chat Messages // [Rest of the Chat UI intact]
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: EdgeInsets.all(24.0),
                     children: [
                       // User Message
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 16,
                             backgroundImage: AssetImage(
                               'assets/images/rahul_sharma.jpg',
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(16),
                                   decoration: BoxDecoration(
                                     color: AppColors.scaffoldBackground,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Hi, I was charged ₹452 for a ride from Prestige Tech Park to Indiranagar, but the app estimated only ₹352. Could you please look into why the final fare was so high? There was no significant traffic.',
-                                    style: TextStyle(
+                                    style: AppTypography.base.copyWith(
                                       fontSize: 14,
                                       color: AppColors.textPrimary,
                                       height: 1.5,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                const Text(
+                                SizedBox(height: 8),
+                                Text(
                                   'Rahul Sharma • 10:42 AM',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 11,
                                     color: AppColors.textSecondary,
                                   ),
@@ -359,40 +360,40 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 48), // Padding on right
+                          SizedBox(width: 48), // Padding on right
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
 
                       // Agent Message
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const SizedBox(width: 48), // Padding on left
+                          SizedBox(width: 48), // Padding on left
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(16),
+                                  padding: EdgeInsets.all(16),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF111827), // Very dark
+                                    color: AppColors.cFF111827, // Very dark
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Hello Rahul, I am checking the ride logs right now. It appears the driver deviated from the suggested route. Please give me a moment to calculate the refund amount based on the estimated path.',
-                                    style: TextStyle(
+                                    style: AppTypography.base.copyWith(
                                       fontSize: 14,
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       height: 1.5,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                const Text(
+                                SizedBox(height: 8),
+                                Text(
                                   'Support Sarah • 10:55 AM',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 11,
                                     color: AppColors.textSecondary,
                                   ),
@@ -400,19 +401,19 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          const CircleAvatar(
+                          SizedBox(width: 12),
+                          CircleAvatar(
                             radius: 16,
-                            backgroundColor: Color(0xFF111827),
+                            backgroundColor: AppColors.cFF111827,
                             child: Icon(
                               Icons.support_agent,
-                              color: Colors.white,
+                              color: AppColors.white,
                               size: 18,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
 
                       // Ride Reference Card
                       Center(
@@ -426,13 +427,13 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: 16,
                                   vertical: 12,
                                 ),
                                 decoration: BoxDecoration(
                                   color: AppColors.scaffoldBackground,
-                                  borderRadius: const BorderRadius.only(
+                                  borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(12),
                                     topRight: Radius.circular(12),
                                   ),
@@ -441,9 +442,9 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'RIDE REFERENCE RD-1205',
-                                      style: TextStyle(
+                                      style: AppTypography.base.copyWith(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.textSecondary,
@@ -452,7 +453,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                     ),
                                     Text(
                                       'COMPLETED',
-                                      style: TextStyle(
+                                      style: AppTypography.base.copyWith(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.success,
@@ -462,12 +463,12 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                   ],
                                 ),
                               ),
-                              const Divider(
+                              Divider(
                                 height: 1,
                                 color: AppColors.divider,
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(16.0),
+                                padding: EdgeInsets.all(16.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -475,10 +476,10 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         Text(
                                           'FARE CHARGED',
-                                          style: TextStyle(
+                                          style: AppTypography.base.copyWith(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.textSecondary,
@@ -487,7 +488,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                         SizedBox(height: 4),
                                         Text(
                                           '₹452.00',
-                                          style: TextStyle(
+                                          style: AppTypography.base.copyWith(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.textPrimary,
@@ -498,10 +499,10 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children:[
                                         Text(
                                           'ESTIMATED',
-                                          style: TextStyle(
+                                          style: AppTypography.base.copyWith(
                                             fontSize: 10,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.textSecondary,
@@ -510,7 +511,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                         SizedBox(height: 4),
                                         Text(
                                           '₹352.00',
-                                          style: TextStyle(
+                                          style: AppTypography.base.copyWith(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.textPrimary,
@@ -518,7 +519,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(width: 24), // Spacer
+                                    SizedBox(width: 24), // Spacer
                                   ],
                                 ),
                               ),
@@ -532,7 +533,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
 
                 // Bottom Input
                 Container(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -544,17 +545,17 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                           child: Row(
                             children: [
                               IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.add_circle_outline,
                                   color: AppColors.textSecondary,
                                 ),
                                 onPressed: () {},
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: TextField(
                                   decoration: InputDecoration(
                                     hintText: 'Type a message...',
-                                    hintStyle: TextStyle(
+                                    hintStyle: AppTypography.base.copyWith(
                                       color: AppColors.textSecondary,
                                     ),
                                     border: InputBorder.none,
@@ -566,7 +567,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.camera_alt_outlined,
                                   color: AppColors.textPrimary,
                                 ),
@@ -576,14 +577,14 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: AppColors.scaffoldBackground,
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.mic, color: AppColors.primary),
+                          icon: Icon(Icons.mic, color: AppColors.primary),
                           onPressed: () {},
                         ),
                       ),
@@ -604,31 +605,31 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
 
     switch (status) {
       case 'In Progress':
-        bgColor = const Color(0xFFFEF3C7); // Light orange/yellow
-        textColor = const Color(0xFFD97706); // Dark orange
+        bgColor = AppColors.cFFFEF3C7; // Light orange/yellow
+        textColor = AppColors.cFFD97706; // Dark orange
         break;
       case 'Resolved':
-        bgColor = const Color(0xFFD1FAE5); // Light green
-        textColor = const Color(0xFF065F46); // Dark green
+        bgColor = AppColors.cFFD1FAE5; // Light green
+        textColor = AppColors.cFF065F46; // Dark green
         break;
       case 'Closed':
-        bgColor = const Color(0xFFFEE2E2); // Light red
-        textColor = const Color(0xFFB91C1C); // Dark red
+        bgColor = AppColors.cFFFEE2E2; // Light red
+        textColor = AppColors.cFFB91C1C; // Dark red
         break;
       default:
-        bgColor = Colors.grey[200]!;
+        bgColor = AppColors.grey[200]!;
         textColor = AppColors.textSecondary;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         status,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           fontSize: 10,
           fontWeight: FontWeight.bold,
           color: textColor,
@@ -637,3 +638,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
     );
   }
 }
+
+
+
+

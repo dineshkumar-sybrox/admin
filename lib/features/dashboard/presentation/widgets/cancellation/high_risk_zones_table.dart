@@ -1,51 +1,52 @@
 import 'package:admin/core/theme/app_colors.dart';
 import 'package:admin/features/dashboard/presentation/pages/cancellation_zone_details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 
 class HighRiskZonesTable extends StatelessWidget {
-  const HighRiskZonesTable({super.key});
+  HighRiskZonesTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'High-Risk Cancellation Zones',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1A1D1F),
+                        color: AppColors.cFF1A1D1F,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'Areas with highest frequency of canceled rides',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF9EA5AD),
+                        color: AppColors.cFF9EA5AD,
                       ),
                     ),
                   ],
@@ -53,28 +54,28 @@ class HighRiskZonesTable extends StatelessWidget {
                 OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 14,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    side: const BorderSide(color: Color(0xFFEFEFEF)),
+                    side: BorderSide(color: AppColors.cFFEFEFEF),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Export Report',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
+                      color: AppColors.cFF1A1D1F,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          //const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          //Divider(height: 1, color: AppColors.cFFF0F1F3),
           LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
@@ -92,9 +93,9 @@ class HighRiskZonesTable extends StatelessWidget {
                     dataRowMinHeight: 60,
                     dataRowMaxHeight: 60,
                     headingRowColor: MaterialStateProperty.all(
-                      Color.fromARGB(255, 248, 248, 248),
+                      AppColors.cFFF8F8F8,
                     ),
-                    headingTextStyle: const TextStyle(
+                    headingTextStyle: AppTypography.base.copyWith(
                       color: AppColors.textSecondary,
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
@@ -115,16 +116,16 @@ class HighRiskZonesTable extends StatelessWidget {
                         requests: '12,400',
                         cancellations: '1,116',
                         rate: '9.0%',
-                        rateBgColor: const Color(0xFFFFECEE),
-                        rateTextColor: const Color(0xFFEA3546),
+                        rateBgColor: AppColors.cFFFFECEE,
+                        rateTextColor: AppColors.cFFEA3546,
                         status: 'Critical High',
-                        statusColor: const Color(0xFFEA3546),
+                        statusColor: AppColors.cFFEA3546,
                         onViewDetails: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CancellationZoneDetailsScreen(
+                                  CancellationZoneDetailsScreen(
                                     zoneName: 'Anna Nagar',
                                   ),
                             ),
@@ -137,16 +138,16 @@ class HighRiskZonesTable extends StatelessWidget {
                         requests: '8,200',
                         cancellations: '508',
                         rate: '6.2%',
-                        rateBgColor: const Color(0xFFFFF7DB),
-                        rateTextColor: const Color(0xFFD4A000),
+                        rateBgColor: AppColors.cFFFFF7DB,
+                        rateTextColor: AppColors.cFFD4A000,
                         status: 'Elevated',
-                        statusColor: const Color(0xFFD4A000),
+                        statusColor: AppColors.cFFD4A000,
                         onViewDetails: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CancellationZoneDetailsScreen(
+                                  CancellationZoneDetailsScreen(
                                     zoneName: 'Adyar',
                                   ),
                             ),
@@ -159,16 +160,16 @@ class HighRiskZonesTable extends StatelessWidget {
                         requests: '15,600',
                         cancellations: '702',
                         rate: '4.5%',
-                        rateBgColor: const Color(0xFFE8FDF2),
-                        rateTextColor: const Color(0xFF00C46B),
+                        rateBgColor: AppColors.cFFE8FDF2,
+                        rateTextColor: AppColors.cFF00C46B,
                         status: 'Normal',
-                        statusColor: const Color(0xFF00C46B),
+                        statusColor: AppColors.cFF00C46B,
                         onViewDetails: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CancellationZoneDetailsScreen(
+                                  CancellationZoneDetailsScreen(
                                     zoneName: 'Velachery',
                                   ),
                             ),
@@ -181,16 +182,16 @@ class HighRiskZonesTable extends StatelessWidget {
                         requests: '10,100',
                         cancellations: '858',
                         rate: '8.5%',
-                        rateBgColor: const Color(0xFFFFECEE),
-                        rateTextColor: const Color(0xFFEA3546),
+                        rateBgColor: AppColors.cFFFFECEE,
+                        rateTextColor: AppColors.cFFEA3546,
                         status: 'High Risk',
-                        statusColor: const Color(0xFFEA3546),
+                        statusColor: AppColors.cFFEA3546,
                         onViewDetails: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CancellationZoneDetailsScreen(
+                                  CancellationZoneDetailsScreen(
                                     zoneName: 'T-Nagar',
                                   ),
                             ),
@@ -207,17 +208,17 @@ class HighRiskZonesTable extends StatelessWidget {
           //   scrollDirection: Axis.horizontal,
           //   child: DataTable(
           //     headingRowColor: WidgetStateProperty.all(
-          //       const Color(0xFFF4F6F9).withValues(alpha: 0.5),
+          //       AppColors.cFFF4F6F9.withValues(alpha: 0.5),
           //     ),
           //     dataRowMaxHeight: 80,
           //     dataRowMinHeight: 80,
           //     horizontalMargin: 24,
           //     columnSpacing: 40,
           //     dividerThickness: 1,
-          //     headingTextStyle: const TextStyle(
+          //     headingTextStyle: AppTypography.base.copyWith(
           //       fontSize: 11,
           //       fontWeight: FontWeight.w700,
-          //       color: Color(0xFF6F767E),
+          //       color: AppColors.cFF6F767E,
           //       letterSpacing: 0.5,
           //     ),
           //     columns: const [
@@ -235,16 +236,16 @@ class HighRiskZonesTable extends StatelessWidget {
           //     requests: '12,400',
           //     cancellations: '1,116',
           //     rate: '9.0%',
-          //     rateBgColor: const Color(0xFFFFECEE),
-          //     rateTextColor: const Color(0xFFEA3546),
+          //     rateBgColor: AppColors.cFFFFECEE,
+          //     rateTextColor: AppColors.cFFEA3546,
           //     status: 'Critical High',
-          //     statusColor: const Color(0xFFEA3546),
+          //     statusColor: AppColors.cFFEA3546,
           //     onViewDetails: () {
           //       Navigator.push(
           //         context,
           //         MaterialPageRoute(
           //           builder: (context) =>
-          //               const CancellationZoneDetailsScreen(
+          //               CancellationZoneDetailsScreen(
           //                 zoneName: 'Anna Nagar',
           //               ),
           //         ),
@@ -257,16 +258,16 @@ class HighRiskZonesTable extends StatelessWidget {
           //     requests: '8,200',
           //     cancellations: '508',
           //     rate: '6.2%',
-          //     rateBgColor: const Color(0xFFFFF7DB),
-          //     rateTextColor: const Color(0xFFD4A000),
+          //     rateBgColor: AppColors.cFFFFF7DB,
+          //     rateTextColor: AppColors.cFFD4A000,
           //     status: 'Elevated',
-          //     statusColor: const Color(0xFFD4A000),
+          //     statusColor: AppColors.cFFD4A000,
           //     onViewDetails: () {
           //       Navigator.push(
           //         context,
           //         MaterialPageRoute(
           //           builder: (context) =>
-          //               const CancellationZoneDetailsScreen(
+          //               CancellationZoneDetailsScreen(
           //                 zoneName: 'Adyar',
           //               ),
           //         ),
@@ -279,16 +280,16 @@ class HighRiskZonesTable extends StatelessWidget {
           //     requests: '15,600',
           //     cancellations: '702',
           //     rate: '4.5%',
-          //     rateBgColor: const Color(0xFFE8FDF2),
-          //     rateTextColor: const Color(0xFF00C46B),
+          //     rateBgColor: AppColors.cFFE8FDF2,
+          //     rateTextColor: AppColors.cFF00C46B,
           //     status: 'Normal',
-          //     statusColor: const Color(0xFF00C46B),
+          //     statusColor: AppColors.cFF00C46B,
           //     onViewDetails: () {
           //       Navigator.push(
           //         context,
           //         MaterialPageRoute(
           //           builder: (context) =>
-          //               const CancellationZoneDetailsScreen(
+          //               CancellationZoneDetailsScreen(
           //                 zoneName: 'Velachery',
           //               ),
           //         ),
@@ -301,16 +302,16 @@ class HighRiskZonesTable extends StatelessWidget {
           //     requests: '10,100',
           //     cancellations: '858',
           //     rate: '8.5%',
-          //     rateBgColor: const Color(0xFFFFECEE),
-          //     rateTextColor: const Color(0xFFEA3546),
+          //     rateBgColor: AppColors.cFFFFECEE,
+          //     rateTextColor: AppColors.cFFEA3546,
           //     status: 'High Risk',
-          //     statusColor: const Color(0xFFEA3546),
+          //     statusColor: AppColors.cFFEA3546,
           //     onViewDetails: () {
           //       Navigator.push(
           //         context,
           //         MaterialPageRoute(
           //           builder: (context) =>
-          //               const CancellationZoneDetailsScreen(
+          //               CancellationZoneDetailsScreen(
           //                 zoneName: 'T-Nagar',
           //               ),
           //         ),
@@ -320,30 +321,30 @@ class HighRiskZonesTable extends StatelessWidget {
           // ],
           //   ),
           // ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Showing 4 of 28 zones',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
                 Row(
                   children: [
                     _buildPaginator('<', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('1', isActive: true),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('2', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('3', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('>', isActive: false),
                   ],
                 ),
@@ -360,17 +361,17 @@ class HighRiskZonesTable extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF00A86B) : Colors.white,
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
         borderRadius: BorderRadius.circular(4),
-        border: isActive ? null : Border.all(color: const Color(0xFFEFEFEF)),
+        border: isActive ? null : Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: isActive ? Colors.white : const Color(0xFF1A1D1F),
+            color: isActive ? AppColors.white : AppColors.cFF1A1D1F,
           ),
         ),
       ),
@@ -398,19 +399,19 @@ class HighRiskZonesTable extends StatelessWidget {
             children: [
               Text(
                 areaName,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 areaDesc,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 11,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
             ],
@@ -419,33 +420,33 @@ class HighRiskZonesTable extends StatelessWidget {
         DataCell(
           Text(
             requests,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Text(
             cancellations,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: rateBgColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               rate,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.w700,
                 fontSize: 11,
                 color: rateTextColor,
@@ -465,10 +466,10 @@ class HighRiskZonesTable extends StatelessWidget {
                   color: statusColor,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 status,
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                   color: statusColor,
@@ -482,15 +483,15 @@ class HighRiskZonesTable extends StatelessWidget {
             onPressed: onViewDetails,
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
-              minimumSize: const Size(0, 0),
+              minimumSize: Size(0, 0),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Text(
+            child: Text(
               'View Details',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.w700,
                 fontSize: 12,
-                color: Color(0xFF00C46B), // Brighter green for actions
+                color: AppColors.cFF00C46B, // Brighter green for actions
               ),
             ),
           ),
@@ -499,3 +500,8 @@ class HighRiskZonesTable extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

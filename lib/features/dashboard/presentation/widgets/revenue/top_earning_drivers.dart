@@ -1,58 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/dashboard_cubit.dart';
 import '../../../../drivers/presentation/cubit/drivers_management_state.dart';
 
 class TopEarningDrivers extends StatelessWidget {
-  const TopEarningDrivers({super.key});
+  TopEarningDrivers({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'TOP EARNING DRIVERS',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                     letterSpacing: 0.5,
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8Fdf2),
+                    color: AppColors.cFFE8FDF2,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Text(
+                  child: Text(
                     'TODAY',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF00A86B),
+                      color: AppColors.cFF00A86B,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -60,38 +62,38 @@ class TopEarningDrivers extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildDriverRow(
             '1',
             'Rahul M.',
             '48 Rides Today',
             '₹8,450',
-            const Color(0xFFFFA629),
+            AppColors.cFFFFA629,
           ),
           _buildDriverRow(
             '2',
             'Vikram S.',
             '42 Rides Today',
             '₹7,120',
-            const Color(0xFF67B5FF),
+            AppColors.cFF67B5FF,
           ),
           _buildDriverRow(
             '3',
             'Amit J.',
             '39 Rides Today',
             '₹6,840',
-            const Color(0xFFFF8A29),
+            AppColors.cFFFF8A29,
           ),
           _buildDriverRow(
             '4',
             'Arun',
             '35 Rides Today',
             '₹6,340',
-            const Color(0xFFFF7A29),
+            AppColors.cFFFF7A29,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+            padding: EdgeInsets.fromLTRB(24, 8, 24, 24),
             child: OutlinedButton(
               onPressed: () {
                 context.read<DashboardCubit>().selectDriversTab(
@@ -99,18 +101,18 @@ class TopEarningDrivers extends StatelessWidget {
                 );
               },
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                padding: EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                side: const BorderSide(color: Color(0xFFEFEFEF)),
+                side: BorderSide(color: AppColors.cFFEFEFEF),
               ),
-              child: const Text(
+              child: Text(
                 'VIEW FULL LEADERBOARD',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                   letterSpacing: 0.5,
                 ),
               ),
@@ -129,7 +131,7 @@ class TopEarningDrivers extends StatelessWidget {
     Color rankColor,
   ) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: Row(
         children: [
           Stack(
@@ -140,11 +142,11 @@ class TopEarningDrivers extends StatelessWidget {
                 height: 44,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFFF4F6F9),
-                  border: Border.all(color: const Color(0xFFEFEFEF), width: 2),
+                  color: AppColors.cFFF4F6F9,
+                  border: Border.all(color: AppColors.cFFEFEFEF, width: 2),
                 ),
                 child: Center(
-                  child: Icon(Icons.person, color: Colors.grey[400]),
+                  child: Icon(Icons.person, color: AppColors.grey[400]),
                 ),
               ),
               Positioned(
@@ -156,15 +158,15 @@ class TopEarningDrivers extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: rankColor,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: AppColors.white, width: 2),
                   ),
                   child: Center(
                     child: Text(
                       rank,
-                      style: const TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -172,26 +174,26 @@ class TopEarningDrivers extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   rides,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
               ],
@@ -199,10 +201,10 @@ class TopEarningDrivers extends StatelessWidget {
           ),
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 15,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF00A86B),
+              color: AppColors.cFF00A86B,
             ),
           ),
         ],
@@ -210,3 +212,7 @@ class TopEarningDrivers extends StatelessWidget {
     );
   }
 }
+
+
+
+

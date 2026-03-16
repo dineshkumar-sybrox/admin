@@ -10,7 +10,7 @@ class TotalTicketsState extends Equatable {
   final String categoryFilter;
   final bool isLoading;
 
-  const TotalTicketsState({
+  TotalTicketsState({
     required this.allTickets,
     required this.filteredTickets,
     this.statusFilter = TicketStatusFilter.all,
@@ -47,3 +47,4 @@ class TotalTicketsState extends Equatable {
     isLoading,
   ];
 }
+

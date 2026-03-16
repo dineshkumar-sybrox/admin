@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
 
 class NewDriversTable extends StatelessWidget {
-  const NewDriversTable({super.key});
+  NewDriversTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DriversManagementCubit, DriversManagementState>(
       builder: (context, state) {
-        if (state.isLoading) return const SizedBox.shrink();
+        if (state.isLoading) return SizedBox.shrink();
 
         final displayDrivers = state.filteredDrivers;
 
@@ -26,15 +27,15 @@ class NewDriversTable extends StatelessWidget {
                 ),
                 child: DataTable(
                   headingRowColor: WidgetStateProperty.all(
-                    AppColors.tableHeaderBGColor,
+                    AppColors.cFFF8FAFC,
                   ),
-                  headingTextStyle: const TextStyle(
+                  headingTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textSecondary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -44,9 +45,9 @@ class NewDriversTable extends StatelessWidget {
                   headingRowHeight: 56,
                   dataRowMaxHeight: 72,
                   dataRowMinHeight: 72,
-                  border: const TableBorder(
+                  border: TableBorder(
                     horizontalInside: BorderSide(
-                      color: Color(0xFFF3F4F6),
+                      color: AppColors.cFFF3F4F6,
                       width: 1,
                     ),
                   ),
@@ -57,7 +58,7 @@ class NewDriversTable extends StatelessWidget {
                     DataColumn(label: Text('LOCATION')),
                     DataColumn(
                       label: Text(
-                        'LIFETIME\nRIDES',
+                        'LIFETIME RIDES',
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -73,7 +74,7 @@ class NewDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.city,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textSecondary,
                               fontWeight: FontWeight.normal,
                             ),
@@ -82,7 +83,7 @@ class NewDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.lifetimeRides.toString(),
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.w700,
                             ),
@@ -91,7 +92,7 @@ class NewDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.walletBalance.toStringAsFixed(2),
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.w700,
                             ),
@@ -123,37 +124,37 @@ class _VehicleBadge extends StatelessWidget {
 
     switch (type) {
       case 'PREMIUM CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
       case 'AUTO':
-        bgColor = const Color(0xFFDBEAFE);
-        textColor = const Color(0xFF2563EB);
+        bgColor = AppColors.cFFDBEAFE;
+        textColor = AppColors.cFF2563EB;
         break;
       case 'BIKE':
-        bgColor = const Color(0xFFD1FAE5);
-        textColor = const Color(0xFF059669);
+        bgColor = AppColors.cFFD1FAE5;
+        textColor = AppColors.cFF059669;
         break;
       case 'XL CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
       case 'CAB':
       default:
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         type,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
@@ -198,10 +199,10 @@ class _StatusBadge extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         Text(
           status,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             color: textColor,
             fontSize: 13,
             fontWeight: FontWeight.bold,
@@ -211,3 +212,6 @@ class _StatusBadge extends StatelessWidget {
     );
   }
 }
+
+
+

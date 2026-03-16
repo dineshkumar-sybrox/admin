@@ -1,13 +1,19 @@
+import 'package:admin/features/payments/presentation/cubit/payments_cubit.dart';
+import 'package:admin/features/payments/presentation/cubit/payments_state.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RiderPaymentsTable extends StatefulWidget {
-  const RiderPaymentsTable({super.key});
+  RiderPaymentsTable({super.key});
 
   @override
   State<RiderPaymentsTable> createState() => _RiderPaymentsTableState();
 }
 
 class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
+  TextEditingController dateController = TextEditingController();
   String _selectedMethod = 'All Payment Methods';
   String _selectedStatus = 'All Status';
   String _searchQuery = '';
@@ -24,8 +30,8 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       'method': 'UPI',
       'methodIcon': Icons.account_balance_wallet_outlined,
       'status': 'COMPLETED',
-      'statusColor': const Color(0xFF00C46B),
-      'statusBgColor': const Color(0xFFE8Fdf2),
+      'statusColor': AppColors.cFF00C46B,
+      'statusBgColor': AppColors.cFFE8FDF2,
     },
     {
       'txId': '#TXN-88289',
@@ -38,8 +44,8 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       'method': 'Card',
       'methodIcon': Icons.credit_card_outlined,
       'status': 'FAILED',
-      'statusColor': const Color(0xFFEA3546),
-      'statusBgColor': const Color(0xFFFFECEE),
+      'statusColor': AppColors.cFFEA3546,
+      'statusBgColor': AppColors.cFFFFECEE,
     },
     {
       'txId': '#TXN-88285',
@@ -52,8 +58,8 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       'method': 'Cash',
       'methodIcon': Icons.payments_outlined,
       'status': 'PROCESSING',
-      'statusColor': const Color(0xFF0066FF),
-      'statusBgColor': const Color(0xFFE5F0FF),
+      'statusColor': AppColors.cFF0066FF,
+      'statusBgColor': AppColors.cFFE5F0FF,
     },
     {
       'txId': '#TXN-88282',
@@ -66,8 +72,8 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       'method': 'UPI',
       'methodIcon': Icons.account_balance_wallet_outlined,
       'status': 'COMPLETED',
-      'statusColor': const Color(0xFF00C46B),
-      'statusBgColor': const Color(0xFFE8Fdf2),
+      'statusColor': AppColors.cFF00C46B,
+      'statusBgColor': AppColors.cFFE8FDF2,
     },
   ];
 
@@ -90,77 +96,43 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Filter Bar
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: _buildSearchField(
-                    (val) => setState(() => _searchQuery = val),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: _buildDropdown(
-                    value: _selectedMethod,
-                    items: ['All Payment Methods', 'UPI', 'Card', 'Cash'],
-                    onChanged: (val) => setState(() => _selectedMethod = val!),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  flex: 2,
-                  child: _buildDropdown(
-                    value: _selectedStatus,
-                    items: ['All Status', 'COMPLETED', 'PENDING', 'FAILED'],
-                    onChanged: (val) => setState(() => _selectedStatus = val!),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(flex: 2, child: _buildDatePicker()),
-                const SizedBox(width: 12),
-                _buildExportButton(),
-              ],
-            ),
-          ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          _buildFilterBar(context, context.watch<PaymentsCubit>().state),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
 
           // Data Table
           SizedBox(
             width: double.infinity,
             child: DataTable(
               showCheckboxColumn: false,
-              headingRowColor: WidgetStateProperty.all(Colors.white),
+              headingRowColor: WidgetStateProperty.all(AppColors.white),
               dataRowMaxHeight: 80,
               dataRowMinHeight: 80,
               horizontalMargin: 24,
               columnSpacing: 40,
               dividerThickness: 1,
-              headingTextStyle: const TextStyle(
+              headingTextStyle: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF6F767E),
+                color: AppColors.cFF6F767E,
                 letterSpacing: 0.5,
               ),
               columns: const [
-                DataColumn(label: Text('TRANSACTION ID')),
+                DataColumn(label: Text('TRANSACTION IDd')),
                 DataColumn(label: Text('RIDER NAME')),
                 DataColumn(label: Text('DATE & TIME')),
                 DataColumn(label: Text('TRIP ID')),
@@ -187,34 +159,34 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
               }).toList(),
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
 
           // Pagination
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Showing ${_filteredData.length} of ${_allData.length} transactions',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
                 Row(
                   children: [
                     _buildPaginator('<', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('1', isActive: true),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('2', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('3', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('4', isActive: false),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildPaginator('>', isActive: false),
                   ],
                 ),
@@ -230,25 +202,25 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
     return Container(
       height: 42,
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F6F9),
+        color: AppColors.cFFF4F6F9,
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextField(
         onChanged: onChanged,
         decoration: InputDecoration(
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             Icons.search,
-            color: Color(0xFF9EA5AD),
+            color: AppColors.cFF9EA5AD,
             size: 20,
           ),
           hintText: 'Search by ID or Rider...',
-          hintStyle: const TextStyle(
+          hintStyle: AppTypography.base.copyWith(
             fontSize: 13,
-            color: Color(0xFF9EA5AD),
+            color: AppColors.cFF9EA5AD,
             fontWeight: FontWeight.w500,
           ),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
+          contentPadding: EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 12,
           ),
@@ -257,56 +229,245 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
     );
   }
 
-  Widget _buildDropdown({
-    required String value,
-    required List<String> items,
-    required ValueChanged<String?> onChanged,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      height: 42,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF4F6F9),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          isExpanded: true,
-          icon: const Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: Color(0xFF6F767E),
+  Widget _buildFilterBar(BuildContext context, PaymentsState state) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+      child: Row(
+        children: [
+          Expanded(
+                  flex: 3,
+                  child: _buildSearchField(
+                    (val) => setState(() => _searchQuery = val),
+                  ),
+                ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDropdown(
+                'Payment Methods',
+                state.payoutMethodFilter,
+                (val) =>
+                    context.read<PaymentsCubit>().filterPayoutByMethod(val!),
+                ['Payment Methods', 'UPI', 'Bank'],
+              ),
+            ),
           ),
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF6F767E),
+
+          const SizedBox(width: 10),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDropdown(
+                'All Status',
+                state.payoutStatusFilter,
+                (val) =>
+                    context.read<PaymentsCubit>().filterPayoutByStatus(val!),
+                ['All Status', 'Successful', 'Pending', 'Rejected'],
+              ),
+            ),
           ),
-          onChanged: onChanged,
-          items: items.map<DropdownMenuItem<String>>((String item) {
-            return DropdownMenuItem<String>(value: item, child: Text(item));
-          }).toList(),
-        ),
+
+          const SizedBox(width: 10),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDateField(context, dateController),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+          Expanded(
+            child: SizedBox(
+              height: 48,
+              child: _buildDropdown(
+                'Vehicle',
+                state.payoutVehicleFilter,
+                (val) =>
+                    context.read<PaymentsCubit>().filterPayoutByVehicle(val!),
+                ['Vehicle', 'Cab', 'Bike/Scooter', 'Auto'],
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 10),
+          SizedBox(
+            height: 48,
+            child: ElevatedButton.icon(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.cFF00A86B,
+                foregroundColor: AppColors.white,
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              icon: const Icon(Icons.download_rounded, size: 18),
+              label: Text(
+                'Export CSV',
+                style: AppTypography.base.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.white
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
+}
+
+Widget _buildDateField(BuildContext context, TextEditingController controller) {
+  return TextField(
+    controller: controller,
+    readOnly: true,
+    onTap: () async {
+      DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+      );
+
+      if (pickedDate != null) {
+        String formattedDate =
+            "${pickedDate.month.toString().padLeft(2, '0')}/"
+            "${pickedDate.day.toString().padLeft(2, '0')}/"
+            "${pickedDate.year}";
+
+        controller.text = formattedDate;
+      }
+    },
+    decoration: InputDecoration(
+      hintText: 'dd/mm/yyyy',
+      hintStyle: AppTypography.base.copyWith(
+        color: AppColors.cFF9EA5AD,
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+      ),
+      prefixIcon: const Icon(
+        Icons.calendar_today_outlined,
+        size: 18,
+        color: AppColors.cFF9EA5AD,
+      ),
+      filled: true,
+      fillColor: AppColors.white,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(color: AppColors.cFF00A86B),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    ),
+  );
+}
+
+Widget _buildDropdown(
+  String hint,
+  String selectedValue,
+  Function(String?) onSelected,
+  List<String> items,
+) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: AppColors.cFFEFEFEF),
+    ),
+    child: PopupMenuButton<String>(
+      offset: const Offset(0, 40),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: BorderSide(color: AppColors.cFFEFEFEF),
+      ),
+      color: AppColors.white,
+      elevation: 6,
+      onSelected: onSelected,
+      itemBuilder: (context) => items
+          .map((item) => _buildPopupItem(item, selectedValue == item))
+          .toList(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            selectedValue.isEmpty ? hint : selectedValue,
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+          const Icon(
+            Icons.keyboard_arrow_down_rounded,
+            size: 16,
+            color: AppColors.cFF6F767E,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+  return PopupMenuItem<String>(
+    value: text,
+    height: 44,
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: Container(
+      color: isSelected ? AppColors.cFFF4FDF8 : Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+          if (isSelected)
+            const Icon(
+              Icons.check_circle_outline_rounded,
+              color: AppColors.cFF00A86B,
+              size: 18,
+            ),
+        ],
+      ),
+    ),
+  );
+}
+
+
+  
 
   Widget _buildDatePicker() {
     return Container(
       height: 42,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      padding: EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F6F9),
+        color: AppColors.cFFF4F6F9,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Align(
+      child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           'mm/dd/yyyy',
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF6F767E),
+            color: AppColors.cFF6F767E,
           ),
         ),
       ),
@@ -316,15 +477,15 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
   Widget _buildExportButton() {
     return ElevatedButton.icon(
       onPressed: () {},
-      icon: const Icon(Icons.file_download_outlined, size: 18),
-      label: const Text('Export CSV'),
+      icon: Icon(Icons.file_download_outlined, size: 18),
+      label: Text('Export CSV'),
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF00A86B),
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.cFF00A86B,
+        foregroundColor: AppColors.white,
         elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+        textStyle: AppTypography.base.copyWith(fontSize: 13, fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -334,17 +495,17 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFF00A86B) : Colors.white,
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
         borderRadius: BorderRadius.circular(4),
-        border: isActive ? null : Border.all(color: const Color(0xFFEFEFEF)),
+        border: isActive ? null : Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 13,
             fontWeight: FontWeight.w700,
-            color: isActive ? Colors.white : const Color(0xFF1A1D1F),
+            color: isActive ? AppColors.white : AppColors.cFF1A1D1F,
           ),
         ),
       ),
@@ -370,10 +531,10 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
         DataCell(
           Text(
             txId,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
@@ -384,19 +545,19 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
             children: [
               Text(
                 riderName,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 riderType,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 11,
-                  color: Color(0xFF9EA5AD),
+                  color: AppColors.cFF9EA5AD,
                 ),
               ),
             ],
@@ -409,19 +570,19 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
             children: [
               Text(
                 date,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 time,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
             ],
@@ -430,20 +591,20 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
         DataCell(
           Text(
             tripId,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF00A86B), // Green distinct color for Trip ID
+              color: AppColors.cFF00A86B, // Green distinct color for Trip ID
             ),
           ),
         ),
         DataCell(
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 14,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
@@ -451,14 +612,14 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(methodIcon, size: 16, color: const Color(0xFF6F767E)),
-              const SizedBox(width: 8),
+              Icon(methodIcon, size: 16, color: AppColors.cFF6F767E),
+              SizedBox(width: 8),
               Text(
                 method,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
             ],
@@ -466,7 +627,7 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: statusBgColor,
               borderRadius: BorderRadius.circular(20),
@@ -482,10 +643,10 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
                     color: statusColor,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   status,
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontWeight: FontWeight.w800,
                     fontSize: 9,
                     color: statusColor,
@@ -499,9 +660,9 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
         DataCell(
           IconButton(
             onPressed: () {},
-            icon: const Icon(
+            icon: Icon(
               Icons.visibility_outlined,
-              color: Color(0xFF9EA5AD),
+              color: AppColors.cFF9EA5AD,
               size: 20,
             ),
             splashRadius: 20,
@@ -510,4 +671,6 @@ class _RiderPaymentsTableState extends State<RiderPaymentsTable> {
       ],
     );
   }
-}
+
+
+

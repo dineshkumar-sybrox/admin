@@ -4,22 +4,22 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
 class IncentiveDetailScreen extends StatelessWidget {
-  const IncentiveDetailScreen({super.key});
+  IncentiveDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _StatCardsSection(),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             const _ActionSection(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             const _DriverListTable(),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
           ],
         ),
       ),
@@ -34,7 +34,7 @@ class _StatCardsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: _StatCard(
             title: 'TOTAL PARTICIPATING',
             value: '1,248',
@@ -42,8 +42,8 @@ class _StatCardsSection extends StatelessWidget {
             isPrimary: true,
           ),
         ),
-        const SizedBox(width: 24),
-        const Expanded(
+        SizedBox(width: 24),
+        Expanded(
           child: _StatCard(
             title: 'COMPLETED TARGET',
             value: '848',
@@ -51,8 +51,8 @@ class _StatCardsSection extends StatelessWidget {
             isPrimary: false,
           ),
         ),
-        const SizedBox(width: 24),
-        const Expanded(
+        SizedBox(width: 24),
+        Expanded(
           child: _StatCard(
             title: 'PENDING PROGRESS',
             value: '400',
@@ -82,14 +82,14 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -102,7 +102,7 @@ class _StatCard extends StatelessWidget {
               if (isPrimary) Container(width: 3, color: AppColors.primary),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -114,7 +114,7 @@ class _StatCard extends StatelessWidget {
                           letterSpacing: 0.5,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       Text(
                         value,
                         style: AppTypography.h1.copyWith(
@@ -122,7 +122,7 @@ class _StatCard extends StatelessWidget {
                           fontSize: 32,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Text(
                         subtitle,
                         style: AppTypography.bodySmall.copyWith(
@@ -156,9 +156,9 @@ class _ActionSection extends StatelessWidget {
               width: 300,
               height: 48,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: AppColors.grey.shade300),
               ),
               child: TextField(
                 decoration: InputDecoration(
@@ -166,32 +166,32 @@ class _ActionSection extends StatelessWidget {
                   hintStyle: AppTypography.bodyRegular.copyWith(
                     color: AppColors.textSecondary,
                   ),
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.search,
                     color: AppColors.textSecondary,
                   ),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(
+                  contentPadding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 14,
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             _buildDropdownFilter('Achievement Badge'),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             _buildDropdownFilter('All Status'),
           ],
         ),
         ElevatedButton.icon(
           onPressed: () {},
-          icon: const Icon(Icons.download, size: 20),
-          label: const Text('Export CSV'),
+          icon: Icon(Icons.download, size: 20),
+          label: Text('Export CSV'),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            foregroundColor: AppColors.white,
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -207,11 +207,11 @@ class _ActionSection extends StatelessWidget {
   Widget _buildDropdownFilter(String hint) {
     return Container(
       height: 48,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.grey.shade300),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -222,8 +222,8 @@ class _ActionSection extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
           ),
-          const SizedBox(width: 8),
-          const Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
+          SizedBox(width: 8),
+          Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary),
         ],
       ),
     );
@@ -237,22 +237,22 @@ class _DriverListTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         children: [
           // Table Header
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
-              borderRadius: const BorderRadius.only(
+              color: AppColors.cFFF9FAFB,
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+              border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Row(
               children: [
@@ -332,7 +332,7 @@ class _DriverListTable extends StatelessWidget {
           // Table Rows
           ListView(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: [
               _buildDriverRow(
                 id: 'DRV-00281',
@@ -346,7 +346,7 @@ class _DriverListTable extends StatelessWidget {
                 progressColor: AppColors.primary,
                 status: 'COMPLETED',
                 statusColor: AppColors.primary,
-                statusBgColor: const Color(0xFFE8F5E9),
+                statusBgColor: AppColors.cFFE8F5E9,
               ),
               _buildDriverRow(
                 id: 'DRV-00280',
@@ -357,10 +357,10 @@ class _DriverListTable extends StatelessWidget {
                 completionSub: '5 LEFT TO MILESTONE',
                 progressName: 'Tier 3 (Gold)',
                 progressPct: 60,
-                progressColor: Colors.amber.shade600,
+                progressColor: AppColors.amber.shade600,
                 status: 'PENDING',
-                statusColor: Colors.amber.shade800,
-                statusBgColor: const Color(0xFFFFF8E1),
+                statusColor: AppColors.amber.shade800,
+                statusBgColor: AppColors.cFFFFF8E1,
               ),
               _buildDriverRow(
                 id: 'DRV-00265',
@@ -371,10 +371,10 @@ class _DriverListTable extends StatelessWidget {
                 completionSub: '7 LEFT TO MILESTONE',
                 progressName: 'Tier 3 (Silver)',
                 progressPct: 30,
-                progressColor: Colors.blue.shade500,
+                progressColor: AppColors.blue.shade500,
                 status: 'PENDING',
-                statusColor: Colors.amber.shade800,
-                statusBgColor: const Color(0xFFFFF8E1),
+                statusColor: AppColors.amber.shade800,
+                statusBgColor: AppColors.cFFFFF8E1,
               ),
               _buildDriverRow(
                 id: 'DRV-00232',
@@ -388,7 +388,7 @@ class _DriverListTable extends StatelessWidget {
                 progressColor: AppColors.primary,
                 status: 'COMPLETED',
                 statusColor: AppColors.primary,
-                statusBgColor: const Color(0xFFE8F5E9),
+                statusBgColor: AppColors.cFFE8F5E9,
               ),
               _buildDriverRow(
                 id: 'DRV-00255',
@@ -402,15 +402,15 @@ class _DriverListTable extends StatelessWidget {
                 progressColor: AppColors.primary,
                 status: 'COMPLETED',
                 statusColor: AppColors.primary,
-                statusBgColor: const Color(0xFFE8F5E9),
+                statusBgColor: AppColors.cFFE8F5E9,
               ),
             ],
           ),
           // Pagination Footer
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              border: Border(top: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -427,9 +427,9 @@ class _DriverListTable extends StatelessWidget {
                     Icon(
                       Icons.chevron_left,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: AppColors.grey.shade400,
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Container(
                       width: 28,
                       height: 28,
@@ -441,28 +441,28 @@ class _DriverListTable extends StatelessWidget {
                         child: Text(
                           '1',
                           style: AppTypography.bodySmall.copyWith(
-                            color: Colors.white,
+                            color: AppColors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       '2',
                       style: AppTypography.bodySmall.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Text(
                       '3',
                       style: AppTypography.bodySmall.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    const Icon(Icons.chevron_right, size: 20),
+                    SizedBox(width: 16),
+                    Icon(Icons.chevron_right, size: 20),
                   ],
                 ),
               ],
@@ -488,9 +488,9 @@ class _DriverListTable extends StatelessWidget {
     required Color statusBgColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -524,7 +524,7 @@ class _DriverListTable extends StatelessWidget {
                     color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Icon(iconData, size: 20, color: AppColors.textSecondary),
               ],
             ),
@@ -540,7 +540,7 @@ class _DriverListTable extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   completionSub,
                   style: AppTypography.bodySmall.copyWith(
@@ -555,7 +555,7 @@ class _DriverListTable extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.only(right: 24.0),
+              padding: EdgeInsets.only(right: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -580,7 +580,7 @@ class _DriverListTable extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   LayoutBuilder(
                     builder: (context, constraints) {
                       return Stack(
@@ -589,7 +589,7 @@ class _DriverListTable extends StatelessWidget {
                             height: 6,
                             width: constraints.maxWidth,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFF3F4F6),
+                              color: AppColors.cFFF3F4F6,
                               borderRadius: BorderRadius.circular(3),
                             ),
                           ),
@@ -613,7 +613,7 @@ class _DriverListTable extends StatelessWidget {
             flex: 2,
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
                 ),
@@ -638,3 +638,7 @@ class _DriverListTable extends StatelessWidget {
     );
   }
 }
+
+
+
+

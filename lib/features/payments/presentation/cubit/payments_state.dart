@@ -15,7 +15,7 @@ class PaymentsState extends Equatable {
   final int selectedStatIndex;
   final bool isLoading;
 
-  const PaymentsState({
+  PaymentsState({
     required this.allTransactions,
     required this.filteredTransactions,
     required this.allPayouts,
@@ -80,3 +80,4 @@ class PaymentsState extends Equatable {
     isLoading,
   ];
 }
+

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class WalletCoinsTab extends StatelessWidget {
-  const WalletCoinsTab({super.key});
+  WalletCoinsTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 24, bottom: 48),
+      padding: EdgeInsets.only(top: 24, bottom: 48),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -19,39 +20,39 @@ class WalletCoinsTab extends StatelessWidget {
                   title: 'CURRENT WALLET BALANCE',
                   value: '₹1,240.50',
                   icon: Icons.account_balance_wallet_outlined,
-                  iconColor: const Color(0xFF2F80ED),
-                  iconBg: const Color(0xFFEAF2FD),
+                  iconColor: AppColors.cFF2F80ED,
+                  iconBg: AppColors.cFFEAF2FD,
                   onAdjust: () {},
                 ),
               ),
-              const SizedBox(width: 24),
+              SizedBox(width: 24),
               Expanded(
                 child: _BalanceCard(
                   title: 'CURRENT COINS BALANCE',
                   value: '4,850',
                   icon: Icons.monetization_on_outlined,
-                  iconColor: const Color(0xFFD97706),
-                  iconBg: const Color(0xFFFFF7E6),
+                  iconColor: AppColors.cFFD97706,
+                  iconBg: AppColors.cFFFFF7E6,
                   onAdjust: () {},
                 ),
               ),
             ],
           ),
 
-          const SizedBox(height: 32),
+          SizedBox(height: 32),
 
           // Transaction Log Header
           Row(
             children: [
-              const Text(
+              Text(
                 'Transaction Log',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
 
               /// SEARCH FIELD
               SizedBox(
@@ -60,22 +61,22 @@ class WalletCoinsTab extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search transactions...',
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.search,
                       size: 18,
                       color: AppColors.textSecondary,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.divider),
+                      borderSide: BorderSide(color: AppColors.divider),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.divider),
+                      borderSide: BorderSide(color: AppColors.divider),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(
+                    contentPadding: EdgeInsets.symmetric(
                       vertical: 0,
                       horizontal: 12,
                     ),
@@ -83,20 +84,20 @@ class WalletCoinsTab extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
 
               /// EXPORT BUTTON
               SizedBox(
                 height: 44, // 👈 SAME HEIGHT
                 child: OutlinedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.download, size: 18),
-                  label: const Text('Export'),
+                  icon: Icon(Icons.download, size: 18),
+                  label: Text('Export'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
-                    side: const BorderSide(color: AppColors.divider),
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    side: BorderSide(color: AppColors.divider),
+                    backgroundColor: AppColors.white,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -106,38 +107,38 @@ class WalletCoinsTab extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Transaction Table
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.divider),
             ),
             child: Column(
               children: [
                 _buildTableHeader(),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
                   dateTime: '05 Nov 2023\n10:24 AM',
                   type: 'Ride Refund',
-                  typeColor: const Color(0xFF2F80ED), // Blue
+                  typeColor: AppColors.cFF2F80ED, // Blue
                   amount: '+ ₹120.00',
                   isPositive: true,
                   remarks: 'Refund for cancelled ride #RD-10492 by ...',
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
                   dateTime: '04 Nov 2023\n03:15 PM',
                   type: 'Coin Reward',
-                  typeColor: const Color(0xFFF59E0B), // Amber
+                  typeColor: AppColors.cFFF59E0B, // Amber
                   amount: '+ 500 Coins',
                   isPositive: true,
                   remarks: 'Loyalty reward for completing 50 rides.',
                   isCoins: true,
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
                   dateTime: '02 Nov 2023\n11:45 AM',
                   type: 'Manual Adjustment',
@@ -146,7 +147,7 @@ class WalletCoinsTab extends StatelessWidget {
                   isPositive: false,
                   remarks: 'Deduction due to double credit in previou...',
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
                   dateTime: '29 Oct 2023\n06:45 PM',
                   type: 'Wallet Top-up',
@@ -155,7 +156,7 @@ class WalletCoinsTab extends StatelessWidget {
                   isPositive: true,
                   remarks: 'UPI Transaction #TXN_920194857',
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
                   dateTime: '28 Oct 2023\n06:45 PM',
                   type: 'Ride Payment',
@@ -167,16 +168,16 @@ class WalletCoinsTab extends StatelessWidget {
                 Divider(height: 1, color: AppColors.divider),
                 Container(
                   color: AppColors.divider.withValues(alpha: 0.4),
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 12,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'SHOWING 1-10 OF 42 TRANSACTIONS',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                           color: AppColors.textSecondary,
@@ -186,11 +187,11 @@ class WalletCoinsTab extends StatelessWidget {
                       Row(
                         children: [
                           _buildPageButton('<', false),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           _buildPageButton('1', true),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           _buildPageButton('2', false),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           _buildPageButton('>', false),
                         ],
                       ),
@@ -201,7 +202,7 @@ class WalletCoinsTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Pagination
         ],
@@ -213,7 +214,7 @@ class WalletCoinsTab extends StatelessWidget {
     return Container(
       color: AppColors.divider.withValues(alpha: 0.4),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Row(
           children: [
             _buildHeaderCell('DATE & TIME', flex: 2),
@@ -231,7 +232,7 @@ class WalletCoinsTab extends StatelessWidget {
       flex: flex,
       child: Text(
         text,
-        style: const TextStyle(
+        style: AppTypography.base.copyWith(
           color: AppColors.textSecondary,
           fontWeight: FontWeight.bold,
           fontSize: 11,
@@ -247,15 +248,15 @@ class WalletCoinsTab extends StatelessWidget {
       height: 36,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isActive ? AppColors.sidebar : Colors.white,
+        color: isActive ? AppColors.sidebar : AppColors.white,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(color: AppColors.divider),
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           fontWeight: FontWeight.bold,
-          color: isActive ? Colors.white : AppColors.textPrimary,
+          color: isActive ? AppColors.white : AppColors.textPrimary,
         ),
       ),
     );
@@ -282,9 +283,9 @@ class _BalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -296,24 +297,24 @@ class _BalanceCard extends StatelessWidget {
             decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
             child: Icon(icon, color: iconColor, size: 28),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textSecondary,
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -324,19 +325,19 @@ class _BalanceCard extends StatelessWidget {
           ),
           ElevatedButton.icon(
             onPressed: onAdjust,
-            icon: const Icon(Icons.edit, size: 16, color: Colors.white),
-            label: const Text(
+            icon: Icon(Icons.edit, size: 16, color: AppColors.white),
+            label: Text(
               'ADJUST',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.white,
               ),
             ),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.success, // Functionally green
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.white,
               elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
               ),
@@ -370,14 +371,14 @@ class _TransactionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Row(
         children: [
           Expanded(
             flex: 2,
             child: Text(
               dateTime,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 height: 1.4,
@@ -397,10 +398,10 @@ class _TransactionRow extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Text(
                   type,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -413,7 +414,7 @@ class _TransactionRow extends StatelessWidget {
             flex: 2,
             child: Text(
               amount,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: isCoins
@@ -426,7 +427,7 @@ class _TransactionRow extends StatelessWidget {
             flex: 4,
             child: Text(
               remarks,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 13,
                 color: AppColors.textSecondary,
               ),
@@ -438,3 +439,7 @@ class _TransactionRow extends StatelessWidget {
     );
   }
 }
+
+
+
+

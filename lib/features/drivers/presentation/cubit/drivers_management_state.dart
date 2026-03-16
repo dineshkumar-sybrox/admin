@@ -26,7 +26,7 @@ class Driver {
   final String? suspensionDate;
   final String? appealStatus;
 
-  const Driver({
+  Driver({
     required this.id,
     required this.name,
     required this.avatarUrl,
@@ -58,7 +58,7 @@ class DriversManagementState extends Equatable {
   final int currentPage;
   final bool isExporting;
 
-  const DriversManagementState({
+  DriversManagementState({
     this.isLoading = true,
     this.drivers = const [],
     this.filteredDrivers = const [],
@@ -103,3 +103,4 @@ class DriversManagementState extends Equatable {
     isExporting,
   ];
 }
+

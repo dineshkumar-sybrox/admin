@@ -1,46 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'dart:math' as math;
 
 class SupplyVsDemandIndicator extends StatelessWidget {
-  const SupplyVsDemandIndicator({super.key});
+  SupplyVsDemandIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'Supply vs Demand',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
-            ),
-          ),
-          const SizedBox(height: 4),
-          const Text(
-            'Correlation index',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF9EA5AD),
-            ),
-          ),
-          const SizedBox(height: 48),
+          Text('Supply vs Demand', style: AppTypography.h3),
+          SizedBox(height: 4),
+          Text('Correlation index', style: AppTypography.base.copyWith()),
+          SizedBox(height: 48),
           Center(
             child: SizedBox(
               width: 160,
@@ -51,31 +39,31 @@ class SupplyVsDemandIndicator extends StatelessWidget {
                   CustomPaint(
                     painter: _CircularProgressPainter(
                       progress: 0.88,
-                      activeColor: const Color(0xFF00C46B),
-                      backgroundColor: const Color(0xFFF4F6F9),
+                      activeColor: AppColors.cFF00C46B,
+                      backgroundColor: AppColors.cFFF4F6F9,
                       strokeWidth: 16,
                     ),
-                    size: const Size(160, 160),
+                    size: Size(160, 160),
                   ),
-                  const Column(
+                  Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         '88%',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 32,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF1A1D1F),
+                          color: AppColors.cFF1A1D1F,
                           height: 1.0,
                         ),
                       ),
                       SizedBox(height: 4),
                       Text(
                         'EFFICIENCY',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 8,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF6F767E),
+                          color: AppColors.cFF6F767E,
                           letterSpacing: 1.0,
                         ),
                       ),
@@ -85,20 +73,10 @@ class SupplyVsDemandIndicator extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 48),
-          _buildStatBar(
-            'Active Drivers',
-            '1,240',
-            0.88,
-            const Color(0xFF00C46B),
-          ),
-          const SizedBox(height: 24),
-          _buildStatBar(
-            'Active Riders',
-            '14,800',
-            0.70,
-            const Color(0xFF6764FF),
-          ),
+          SizedBox(height: 48),
+          _buildStatBar('Active Drivers', '1,240', 0.88, AppColors.cFF00C46B),
+          SizedBox(height: 24),
+          _buildStatBar('Active Riders', '14,800', 0.70, AppColors.cFF6764FF),
         ],
       ),
     );
@@ -118,29 +96,29 @@ class SupplyVsDemandIndicator extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF6F767E),
+                color: AppColors.cFF6F767E,
               ),
             ),
             Text(
               value,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         Stack(
           children: [
             Container(
               height: 6,
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F6F9),
+                color: AppColors.cFFF4F6F9,
                 borderRadius: BorderRadius.circular(3),
               ),
             ),

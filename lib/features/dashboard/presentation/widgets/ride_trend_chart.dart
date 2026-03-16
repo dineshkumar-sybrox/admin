@@ -1,14 +1,16 @@
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 class RideTrendChart extends StatefulWidget {
-  const RideTrendChart({super.key});
+  RideTrendChart({super.key});
 
   @override
   State<RideTrendChart> createState() => _RideTrendChartState();
 }
 
 class _RideTrendChartState extends State<RideTrendChart> {
-  static const List<double> _todayPoints = [
+  static List<double> _todayPoints = [
     0.5,
     0.4,
     0.35,
@@ -21,7 +23,7 @@ class _RideTrendChartState extends State<RideTrendChart> {
     0.85,
     0.9,
   ];
-  static const List<double> _yesterdayPoints = [
+  static List<double> _yesterdayPoints = [
     0.45,
     0.4,
     0.3,
@@ -34,7 +36,7 @@ class _RideTrendChartState extends State<RideTrendChart> {
     0.7,
     0.75,
   ];
-  static const List<String> _timeLabels = [
+  static List<String> _timeLabels = [
     '00:00',
     '02:00',
     '04:00',
@@ -73,15 +75,16 @@ class _RideTrendChartState extends State<RideTrendChart> {
   Widget build(BuildContext context) {
     return Container(
       height: 270,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
+        border: Border.all(color: AppColors.borderBlack, width: 1),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: AppColors.black.withValues(alpha: 0.04),
             blurRadius: 8,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -90,39 +93,31 @@ class _RideTrendChartState extends State<RideTrendChart> {
         children: [
           Row(
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Ride Trend Analytics',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1A2332),
-                    ),
+                    style: AppTypography.h3
                   ),
                   SizedBox(height: 2),
                   Text(
                     'Comparing Today vs Yesterday performance',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF8E9BAB),
-                    ),
+                    style: AppTypography.bodyRegular
                   ),
                 ],
               ),
-              const Spacer(),
+              Spacer(),
               Row(
                 children: [
-                  _Legend(color: const Color(0xFF00A86B), label: 'Today'),
-                  const SizedBox(width: 14),
-                  _Legend(color: const Color(0xFFCDD3DA), label: 'Yesterday'),
+                  _Legend(color: AppColors.greenColour, label: 'Today'),
+                  SizedBox(width: 14),
+                  _Legend(color: AppColors.inactiveGrey, label: 'Yesterday'),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -163,17 +158,17 @@ class _RideTrendChartState extends State<RideTrendChart> {
               },
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: ['00:00', '06:00', '12:00', '18:00', '23:59']
                 .map(
                   (t) => Text(
                     t,
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: Color(0xFF8E9BAB),
-                    ),
+                     style: AppTypography.bodySmall.copyWith(
+                          // color: AppColors.greenColour,
+                          fontWeight: FontWeight.w500,
+                        ),
                   ),
                 )
                 .toList(),
@@ -198,10 +193,10 @@ class _Legend extends StatelessWidget {
           height: 10,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 5),
+        SizedBox(width: 5),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: Color(0xFF6B7A8D)),
+          style: AppTypography.base.copyWith(fontSize: 11, color: AppColors.cFF6B7A8D),
         ),
       ],
     );
@@ -225,30 +220,30 @@ class _TrendChartPainter extends CustomPainter {
       canvas,
       size,
       yesterdayPoints,
-      const Color(0xFFCDD3DA),
+      AppColors.cFFCDD3DA,
       1.5,
       dashed: true,
     );
-    _drawAreaFill(canvas, size, todayPoints, const Color(0xFF00A86B));
-    _drawLine(canvas, size, todayPoints, const Color(0xFF00A86B), 2.5);
+    _drawAreaFill(canvas, size, todayPoints, AppColors.greenColour);
+    _drawLine(canvas, size, todayPoints, AppColors.greenColour, 2.5);
 
     if (hoverIndex != null) {
       final i = hoverIndex!;
       final x = i / (todayPoints.length - 1) * size.width;
       final y = (1 - todayPoints[i]) * size.height;
       final linePaint = Paint()
-        ..color = const Color(0xFF00A86B).withValues(alpha: 0.25)
+        ..color = AppColors.greenColour.withValues(alpha: 0.25)
         ..strokeWidth = 1;
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), linePaint);
       canvas.drawCircle(
         Offset(x, y),
         4,
-        Paint()..color = const Color(0xFF00A86B),
+        Paint()..color = AppColors.greenColour,
       );
       canvas.drawCircle(
         Offset(x, y),
         7,
-        Paint()..color = const Color(0xFF00A86B).withValues(alpha: 0.15),
+        Paint()..color = AppColors.greenColour.withValues(alpha: 0.15),
       );
     }
   }
@@ -363,68 +358,69 @@ class _HoverTooltip extends StatelessWidget {
       child: Container(
         width: tooltipWidth,
         height: tooltipHeight,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
+
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: AppColors.black.withValues(alpha: 0.08),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
-          border: Border.all(color: const Color(0xFFE8ECF0)),
+          border: Border.all(color: AppColors.borderBlack, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               time,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A2332),
+                color: AppColors.cFF1A2332,
               ),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Row(
               children: [
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF00A86B),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFF00A86B,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   'Today: ${_ridesFromValue(todayValue)}',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 10,
-                    color: Color(0xFF1A2332),
+                    color: AppColors.cFF1A2332,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Row(
               children: [
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFCDD3DA),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFCDD3DA,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   'Yesterday: ${_ridesFromValue(yesterdayValue)}',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 10,
-                    color: Color(0xFF6B7A8D),
+                    color: AppColors.cFF6B7A8D,
                   ),
                 ),
               ],
@@ -435,3 +431,6 @@ class _HoverTooltip extends StatelessWidget {
     );
   }
 }
+
+
+

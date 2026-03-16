@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/theme/app_colors.dart';
 import '../../features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import '../../features/dashboard/presentation/cubit/dashboard_state.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({super.key});
+  Sidebar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class Sidebar extends StatelessWidget {
             children: [
               // Logo Area
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(24.0),
                 child: Row(
                   children: [
                     Container(
@@ -30,22 +31,22 @@ class Sidebar extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'GoAPP',
-                          style: TextStyle(
-                            color: Colors.white,
+                          style: AppTypography.base.copyWith(
+                            color: AppColors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
                         Text(
                           'ADMIN PANEL',
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.5),
+                          style: AppTypography.base.copyWith(
+                            color: AppColors.white.withValues(alpha: 0.5),
                             fontSize: 10,
                             letterSpacing: 1.0,
                           ),
@@ -56,7 +57,7 @@ class Sidebar extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Menu Items
               _buildMenuItem(
@@ -129,18 +130,15 @@ class Sidebar extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Incentive Section
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 child: Text(
                   'INCENTIVE',
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.3),
+                  style: AppTypography.base.copyWith(
+                    color: AppColors.white.withValues(alpha: 0.3),
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -169,18 +167,18 @@ class Sidebar extends StatelessWidget {
                 },
               ),
 
-              const Spacer(),
+              Spacer(),
 
               // // Support Section
               // Padding(
-              //   padding: const EdgeInsets.symmetric(
+              //   padding: EdgeInsets.symmetric(
               //     horizontal: 24,
               //     vertical: 12,
               //   ),
               //   child: Text(
               //     'SUPPORT',
-              //     style: TextStyle(
-              //       color: Colors.white.withValues(alpha: 0.3),
+              //     style: AppTypography.base.copyWith(
+              //       color: AppColors.white.withValues(alpha: 0.3),
               //       fontSize: 12,
               //       fontWeight: FontWeight.bold,
               //     ),
@@ -196,7 +194,7 @@ class Sidebar extends StatelessWidget {
               //   label: 'System Settings',
               //   onTap: () {},
               // ),
-              // const SizedBox(height: 24),
+              // SizedBox(height: 24),
             ],
           ),
         );
@@ -212,7 +210,7 @@ class Sidebar extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Container(
-      margin: const EdgeInsets.symmetric(
+      margin: EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 4,
       ), // Increased margin
@@ -228,7 +226,7 @@ class Sidebar extends StatelessWidget {
           icon,
           color: isActive
               ? AppColors.primary
-              : Colors.white.withValues(alpha: 0.5), // Active is Green
+              : AppColors.white.withValues(alpha: 0.5), // Active is Green
           size: 20,
         ),
         title: Row(
@@ -236,10 +234,10 @@ class Sidebar extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   color: isActive
-                      ? Colors.white
-                      : Colors.white.withValues(alpha: 0.5),
+                      ? AppColors.white
+                      : AppColors.white.withValues(alpha: 0.5),
                   fontSize: 14,
                   fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
                 ),
@@ -268,7 +266,7 @@ class Sidebar extends StatelessWidget {
         ),
         onTap: onTap,
         dense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );

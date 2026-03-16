@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CriticalFeedbackLogsCard extends StatelessWidget {
-  const CriticalFeedbackLogsCard({super.key});
+  CriticalFeedbackLogsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
@@ -17,25 +18,25 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Critical Feedback Logs',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Ratings 3-stars and below',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -43,17 +44,17 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFEE2E2), // Light red bg
+                    color: AppColors.cFFFEE2E2, // Light red bg
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
                     '9 TOTAL',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: AppColors.error,
@@ -64,7 +65,7 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1),
+          Divider(height: 1),
           _buildFeedbackLogItem(
             stars: 2,
             date: 'OCT 14, 2023',
@@ -82,7 +83,7 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
             hasBottomDivider: true,
           ),
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
@@ -90,11 +91,11 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16),
               ),
-              child: const Text(
+              child: Text(
                 'LOAD MORE LOGS',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   color: AppColors.textSecondary,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
@@ -117,7 +118,7 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -130,14 +131,14 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
                         index < stars ? Icons.star : Icons.star_border,
                         size: 16,
                         color: index < stars
-                            ? Colors.amber
-                            : const Color(0xFFCBD5E1), // Grey star border
+                            ? AppColors.amber
+                            : AppColors.cFFCBD5E1, // Grey star border
                       );
                     }),
                   ),
                   Text(
                     date,
-                    style: const TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textSecondary,
@@ -145,30 +146,30 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 comment,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   color: AppColors.textPrimary,
                   height: 1.5,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 12,
-                        backgroundColor: Color(0xFFE2E8F0),
-                        child: Icon(Icons.person, size: 16, color: Colors.grey),
+                        backgroundColor: AppColors.cFFE2E8F0,
+                        child: Icon(Icons.person, size: 16, color: AppColors.grey),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text(
                         'DRIVER: $driverName',
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textSecondary,
@@ -178,27 +179,27 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {},
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.open_in_new,
                       size: 14,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
-                    label: const Text(
+                    label: Text(
                       'VIEW RIDE',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       elevation: 0,
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 0,
                       ),
-                      minimumSize: const Size(0, 32),
+                      minimumSize: Size(0, 32),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),
@@ -209,8 +210,12 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
             ],
           ),
         ),
-        if (hasBottomDivider) const Divider(height: 1),
+        if (hasBottomDivider) Divider(height: 1),
       ],
     );
   }
 }
+
+
+
+

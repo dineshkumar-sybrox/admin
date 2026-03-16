@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class StatsCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class StatsCard extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? activeColor;
 
-  const StatsCard({
+  StatsCard({
     super.key,
     required this.title,
     required this.value,
@@ -30,23 +31,23 @@ class StatsCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border(
             left: BorderSide(
               color: isSelected
                   ? (activeColor ?? AppColors.primary)
-                  : Colors.transparent, // 👈 Hide when not selected
+                  : AppColors.transparent, // 👈 Hide when not selected
               width: 4, // Thickness of left border
             ),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
+              color: AppColors.black.withValues(alpha: 0.05),
               blurRadius: 8,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             ),
           ],
         ),
@@ -57,17 +58,17 @@ class StatsCard extends StatelessWidget {
             SizedBox(height: 12),
             Text(
               title.toUpperCase(),
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF8E9BAB),
+                color: AppColors.cFF8E9BAB,
                 letterSpacing: 0.4,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Text(
               value,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: title == 'Cancellation'
@@ -76,7 +77,7 @@ class StatsCard extends StatelessWidget {
                 height: 1,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             if (trend != null)
               Row(
                 children: [
@@ -88,10 +89,10 @@ class StatsCard extends StatelessWidget {
                         ? AppColors.success
                         : AppColors.textSecondary,
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   Text(
                     trend!,
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       color: isPositiveTrend
                           ? AppColors.success
                           : AppColors.textSecondary,
@@ -101,18 +102,18 @@ class StatsCard extends StatelessWidget {
                   ),
                 ],
               ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             if (subtitle != null)
               Text(
                 subtitle!,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
                 ),
               ),
             if (extraContent != null) ...[
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               extraContent!,
             ],
             SizedBox(height: 12),
@@ -130,7 +131,7 @@ class StatsCard extends StatelessWidget {
     //   elevation: isSelected ? 4 : 0,
     //   shadowColor: AppColors.primary.withValues(alpha: 0.5),
     //   margin: EdgeInsets.zero,
-    //   color: Colors.white,
+    //   color: AppColors.white,
     //   shape: RoundedRectangleBorder(
     //     borderRadius: BorderRadius.circular(16),
     //     //side: BorderSide(color: AppColors.divider, width: 1),
@@ -147,7 +148,7 @@ class StatsCard extends StatelessWidget {
     //               width: 6,
     //               decoration: BoxDecoration(
     //                 color: activeColor ?? AppColors.primary,
-    //                 borderRadius: const BorderRadius.only(
+    //                 borderRadius: BorderRadius.only(
     //                   topLeft: Radius.circular(16),
     //                   bottomLeft: Radius.circular(16),
     //                 ),
@@ -157,24 +158,24 @@ class StatsCard extends StatelessWidget {
     //             ),
     //           Expanded(
     //             child: Padding(
-    //               padding: const EdgeInsets.all(24.0),
+    //               padding: EdgeInsets.all(24.0),
     //               child: Column(
     //                 crossAxisAlignment: CrossAxisAlignment.start,
     //                 mainAxisAlignment: MainAxisAlignment.center,
     //                 children: [
     //                   Text(
     //                     title.toUpperCase(),
-    //                     style: TextStyle(
+    //                     style: AppTypography.base.copyWith(
     //                       fontSize: 11,
     //                       fontWeight: FontWeight.bold,
     //                       letterSpacing: 0.8,
     //                       color: AppColors.textSecondary,
     //                     ),
     //                   ),
-    //                   const SizedBox(height: 16),
+    //                   SizedBox(height: 16),
     //                   Text(
     //                     value,
-    //                     style: TextStyle(
+    //                     style: AppTypography.base.copyWith(
     //                       fontSize: 28,
     //                       fontWeight: FontWeight.bold,
     // color: title == 'Cancellation'
@@ -183,7 +184,7 @@ class StatsCard extends StatelessWidget {
     //           .textPrimary, // Special case for cancellation
     //                     ),
     //                   ),
-    //                   const SizedBox(height: 8),
+    //                   SizedBox(height: 8),
     //   if (trend != null)
     //     Row(
     //       children: [
@@ -195,10 +196,10 @@ class StatsCard extends StatelessWidget {
     //               ? AppColors.success
     //               : AppColors.textSecondary,
     //         ),
-    //         const SizedBox(width: 4),
+    //         SizedBox(width: 4),
     //         Text(
     //           trend!,
-    //           style: TextStyle(
+    //           style: AppTypography.base.copyWith(
     //             color: isPositiveTrend
     //                 ? AppColors.success
     //                 : AppColors.textSecondary,
@@ -211,14 +212,14 @@ class StatsCard extends StatelessWidget {
     //   if (subtitle != null)
     //     Text(
     //       subtitle!,
-    //       style: const TextStyle(
+    //       style: AppTypography.base.copyWith(
     //         fontSize: 14,
     //         fontWeight: FontWeight.w500,
     //         color: AppColors.textSecondary,
     //       ),
     //     ),
     //   if (extraContent != null) ...[
-    //     const SizedBox(height: 4),
+    //     SizedBox(height: 4),
     //     extraContent!,
     //   ],
     // ],
@@ -230,3 +231,4 @@ class StatsCard extends StatelessWidget {
     //     ),
     //   ),
     // );
+

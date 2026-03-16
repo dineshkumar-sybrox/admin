@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class TrustSafetyPanel extends StatelessWidget {
-  const TrustSafetyPanel({super.key});
+  TrustSafetyPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.shield_outlined, color: AppColors.warning, size: 20),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'Trust & Safety',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: AppTypography.base.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             _buildSafetyItem(
               icon: Icons.check_circle_outline,
@@ -30,14 +31,14 @@ class TrustSafetyPanel extends StatelessWidget {
               title: 'Verified Account',
               subtitle: 'KYC completed on Aug 12, 2023',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildSafetyItem(
               icon: Icons.warning_amber_rounded,
               color: AppColors.textSecondary, // Or specific color
               title: 'No Safety Reports',
               subtitle: 'Last 12 months clear of violations',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildSafetyItem(
               icon: Icons.credit_card,
               color: AppColors.textPrimary,
@@ -57,7 +58,7 @@ class TrustSafetyPanel extends StatelessWidget {
     required String subtitle,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.background,
         borderRadius: BorderRadius.circular(12),
@@ -67,22 +68,22 @@ class TrustSafetyPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 26),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     color: AppColors.textSecondary,
                     fontSize: 13,
                   ),
@@ -95,3 +96,6 @@ class TrustSafetyPanel extends StatelessWidget {
     );
   }
 }
+
+
+

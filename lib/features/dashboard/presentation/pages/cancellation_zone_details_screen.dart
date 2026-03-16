@@ -8,7 +8,7 @@ import '../widgets/cancellation/recent_cancelled_rides.dart';
 class CancellationZoneDetailsScreen extends StatelessWidget {
   final String zoneName;
 
-  const CancellationZoneDetailsScreen({super.key, required this.zoneName});
+  CancellationZoneDetailsScreen({super.key, required this.zoneName});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,11 @@ class CancellationZoneDetailsScreen extends StatelessWidget {
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth < 1100;
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CancellationStatCards(
+                CancellationStatCards(
                   totalValue: '24k',
                   totalTrend: '+5.2%',
                   riderValue: '8.2k',
@@ -31,11 +31,11 @@ class CancellationZoneDetailsScreen extends StatelessWidget {
                   driverTrend: '+12%',
                   driverTrendUp: true,
                 ),
-                const SizedBox(height: 20),
-                const HighRiskClustersMap(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
+                HighRiskClustersMap(),
+                SizedBox(height: 20),
                 if (isTablet)
-                  const Column(
+                  Column(
                     children: [
                       SpecificCancellationReasons(),
                       SizedBox(height: 16),
@@ -43,7 +43,7 @@ class CancellationZoneDetailsScreen extends StatelessWidget {
                     ],
                   )
                 else
-                  const Row(
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(flex: 2, child: SpecificCancellationReasons()),
@@ -59,3 +59,4 @@ class CancellationZoneDetailsScreen extends StatelessWidget {
     );
   }
 }
+

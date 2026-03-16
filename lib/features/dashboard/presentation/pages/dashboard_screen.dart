@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
@@ -24,7 +25,7 @@ import '../../../../features/drivers/presentation/pages/drivers_management_scree
 import '../../../pricing/presentation/pages/zone_wise_pricing_page.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -84,33 +85,33 @@ class DashboardScreen extends StatelessWidget {
 
   Widget _buildBody(DashboardState state, bool isTablet) {
     if (state.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: Color(0xFF00A86B)),
+      return Center(
+        child: CircularProgressIndicator(color: AppColors.cFF00A86B),
       );
     }
     switch (state.selectedNav) {
       case NavItem.rider:
-        return const RiderScreen();
+        return RiderScreen();
       case NavItem.payments:
-        return const PaymentsScreen();
+        return PaymentsScreen();
       case NavItem.analytics:
-        return const AnalyticsScreen();
+        return AnalyticsScreen();
       case NavItem.revenue:
-        return const RevenueTodayScreen();
+        return RevenueTodayScreen();
       case NavItem.cancellation:
-        return const CancellationScreen();
+        return CancellationScreen();
       case NavItem.createIncentive:
-        return const CreateIncentiveScreen();
+        return CreateIncentiveScreen();
       case NavItem.incentiveHistory:
-        return const IncentiveHistoricalScreen();
+        return IncentiveHistoricalScreen();
       case NavItem.incentiveDetail:
-        return const IncentiveDetailScreen();
+        return IncentiveDetailScreen();
       case NavItem.compliance:
-        return const ComplianceScreen();
+        return ComplianceScreen();
       case NavItem.totalDocuments:
-        return const TotalDocumentsScreen();
+        return TotalDocumentsScreen();
       case NavItem.totalTickets:
-        return const TotalTicketsScreen();
+        return TotalTicketsScreen();
       case NavItem.complianceScoreDetails:
         return const ComplianceScoreDetailsScreen();
       case NavItem.zoneWisePricing:
@@ -130,14 +131,14 @@ class _DashboardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const StatCardsRow(),
-          const SizedBox(height: 20),
+          StatCardsRow(),
+          SizedBox(height: 20),
           if (isTablet)
-            const Column(
+            Column(
               children: [
                 DemandMapWidget(),
                 SizedBox(height: 16),
@@ -145,7 +146,7 @@ class _DashboardBody extends StatelessWidget {
               ],
             )
           else
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(flex: 3, child: DemandMapWidget()),
@@ -153,9 +154,9 @@ class _DashboardBody extends StatelessWidget {
                 Expanded(flex: 2, child: DocumentApprovalsPanel()),
               ],
             ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           if (isTablet)
-            const Column(
+            Column(
               children: [
                 RideTrendChart(),
                 SizedBox(height: 16),
@@ -163,7 +164,7 @@ class _DashboardBody extends StatelessWidget {
               ],
             )
           else
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(flex: 3, child: RideTrendChart()),

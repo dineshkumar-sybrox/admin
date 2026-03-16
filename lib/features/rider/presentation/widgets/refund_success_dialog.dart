@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RefundSuccessDialog extends StatelessWidget {
@@ -8,7 +9,7 @@ class RefundSuccessDialog extends StatelessWidget {
   final VoidCallback onBackToTicket;
   final VoidCallback onViewWalletLogs;
 
-  const RefundSuccessDialog({
+  RefundSuccessDialog({
     super.key,
     required this.ticketId,
     required this.rideId,
@@ -22,12 +23,12 @@ class RefundSuccessDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       child: Container(
         width: 480,
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(24),
         ),
         child: Column(
@@ -35,69 +36,69 @@ class RefundSuccessDialog extends StatelessWidget {
           children: [
             // Success Icon
             Container(
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Color(0xFFF0FDF4), // light green bg
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.cFFF0FDF4, // light green bg
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.check_circle,
                 color: AppColors.primary,
                 size: 32,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Title
-            const Text(
+            Text(
               'Refund Processed Successfully',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             // Subtitle IDs
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.receipt_long_outlined,
                   size: 14,
                   color: AppColors.textSecondary,
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(
                   'Ticket $ticketId',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(width: 12),
-                const Text(
+                SizedBox(width: 12),
+                Text(
                   '•',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppTypography.base.copyWith(color: AppColors.textSecondary),
                 ),
-                const SizedBox(width: 12),
-                const Icon(
+                SizedBox(width: 12),
+                Icon(
                   Icons.directions_car_outlined,
                   size: 14,
                   color: AppColors.textSecondary,
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(
                   'Ride ID $rideId',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Details Box
             Container(
@@ -108,7 +109,7 @@ class RefundSuccessDialog extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: EdgeInsets.all(24.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,38 +118,38 @@ class RefundSuccessDialog extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'REFUND AMOUNT',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               '₹$refundAmount',
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.primary,
                               ),
                             ),
-                            const SizedBox(height: 24),
-                            const Text(
+                            SizedBox(height: 24),
+                            Text(
                               'TRANSACTION ID',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            const Text(
+                            SizedBox(height: 4),
+                            Text(
                               'TXN_882910',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 14,
                                 color: AppColors.textPrimary,
                               ),
@@ -160,18 +161,18 @@ class RefundSuccessDialog extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Text(
+                            Text(
                               'DESTINATION',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Row(
-                              children: const [
+                              children: [
                                 Icon(
                                   Icons.account_balance_wallet_outlined,
                                   size: 16,
@@ -180,7 +181,7 @@ class RefundSuccessDialog extends StatelessWidget {
                                 SizedBox(width: 4),
                                 Text(
                                   'User Wallet',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textPrimary,
@@ -188,30 +189,30 @@ class RefundSuccessDialog extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 32,
                             ), // Add visual space to align
-                            const Text(
+                            Text(
                               'STATUS',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.textSecondary,
                                 letterSpacing: 0.5,
                               ),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Container(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 8,
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFD1FAE5), // Light green
+                                color: AppColors.cFFD1FAE5, // Light green
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Row(
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.circle,
                                     size: 6,
@@ -220,7 +221,7 @@ class RefundSuccessDialog extends StatelessWidget {
                                   SizedBox(width: 4),
                                   Text(
                                     'CREDITED',
-                                    style: TextStyle(
+                                    style: AppTypography.base.copyWith(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.primary,
@@ -234,14 +235,14 @@ class RefundSuccessDialog extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Divider(height: 1, color: AppColors.divider),
+                  Divider(height: 1, color: AppColors.divider),
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 12,
                     ),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.scaffoldBackground,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
@@ -249,7 +250,7 @@ class RefundSuccessDialog extends StatelessWidget {
                       ),
                     ),
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(
                           Icons.access_time,
                           size: 12,
@@ -258,7 +259,7 @@ class RefundSuccessDialog extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                           'Processed at Oct 24, 2023 • 14:45 PM by Admin System',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 10,
                             color: AppColors.textSecondary,
                           ),
@@ -269,7 +270,7 @@ class RefundSuccessDialog extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Buttons
             Row(
@@ -277,11 +278,11 @@ class RefundSuccessDialog extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: onBackToTicket,
-                    icon: const Icon(Icons.arrow_back, size: 16),
-                    label: const Text('Back to Ticket'),
+                    icon: Icon(Icons.arrow_back, size: 16),
+                    label: Text('Back to Ticket'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      padding: EdgeInsets.symmetric(vertical: 16),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -289,16 +290,16 @@ class RefundSuccessDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: onViewWalletLogs,
-                    icon: const Icon(Icons.history, size: 16),
-                    label: const Text('View Wallet Logs'),
+                    icon: Icon(Icons.history, size: 16),
+                    label: Text('View Wallet Logs'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.textPrimary,
-                      side: const BorderSide(color: AppColors.divider),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      side: BorderSide(color: AppColors.divider),
+                      padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -307,12 +308,12 @@ class RefundSuccessDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Footer Text
-            const Text(
+            Text(
               'A notification has been sent to the customer regarding this refund.',
-              style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+              style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -321,3 +322,7 @@ class RefundSuccessDialog extends StatelessWidget {
     );
   }
 }
+
+
+
+

@@ -1,41 +1,42 @@
 import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cubit/dashboard_cubit.dart';
 import '../../cubit/dashboard_state.dart';
 
 class RecentTransactionsTable extends StatelessWidget {
-  const RecentTransactionsTable({super.key});
+  RecentTransactionsTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Recent Transactions',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                   ),
                 ),
                 BlocBuilder<DashboardCubit, DashboardState>(
@@ -47,32 +48,32 @@ class RecentTransactionsTable extends StatelessWidget {
                                 .read<DashboardCubit>()
                                 .exportTodayReport(),
                       icon: state.isExportingReport
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 16,
                               height: 16,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: Color(0xFF6F767E),
+                                color: AppColors.cFF6F767E,
                               ),
                             )
-                          : const Icon(
+                          : Icon(
                               Icons.download_rounded,
                               size: 16,
-                              color: Color(0xFF6F767E),
+                              color: AppColors.cFF6F767E,
                             ),
                       label: Text(
                         state.isExportingReport
                             ? 'EXPORTING...'
                             : 'EXPORT EXCEL',
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFF6F767E),
+                          color: AppColors.cFF6F767E,
                           letterSpacing: 0.5,
                         ),
                       ),
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 8,
                         ),
@@ -83,7 +84,7 @@ class RecentTransactionsTable extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           BlocBuilder<DashboardCubit, DashboardState>(
             builder: (context, state) {
               return LayoutBuilder(
@@ -101,9 +102,9 @@ class RecentTransactionsTable extends StatelessWidget {
                         dataRowMinHeight: 60,
                         dataRowMaxHeight: 60,
                         headingRowColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 248, 248, 248),
+                          AppColors.cFFF8F8F8,
                         ),
-                        headingTextStyle: const TextStyle(
+                        headingTextStyle: AppTypography.base.copyWith(
                           color: AppColors.textSecondary,
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -122,17 +123,17 @@ class RecentTransactionsTable extends StatelessWidget {
 
                           switch (t.serviceType) {
                             case 'CAB':
-                              serviceColor = const Color(0xFFFFF6ED);
-                              serviceTextColor = const Color(0xFFDC6803);
+                              serviceColor = AppColors.cFFFFF6ED;
+                              serviceTextColor = AppColors.cFFDC6803;
                               break;
                             case 'AUTO':
-                              serviceColor = const Color(0xFFE8F2FF);
-                              serviceTextColor = const Color(0xFF2970FF);
+                              serviceColor = AppColors.cFFE8F2FF;
+                              serviceTextColor = AppColors.cFF2970FF;
                               break;
                             case 'BIKE/SCOOTER':
                             default:
-                              serviceColor = const Color(0xFFECFDF3);
-                              serviceTextColor = const Color(0xFF027A48);
+                              serviceColor = AppColors.cFFECFDF3;
+                              serviceTextColor = AppColors.cFF027A48;
                           }
 
                           IconData paymentIcon = t.paymentMethod == 'UPI'
@@ -158,28 +159,28 @@ class RecentTransactionsTable extends StatelessWidget {
               );
             },
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
+            padding: EdgeInsets.symmetric(vertical: 16),
             child: InkWell(
               onTap: () {},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'LOAD OLDER HISTORY',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF6F767E),
+                      color: AppColors.cFF6F767E,
                       letterSpacing: 0.5,
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  const Icon(
+                  SizedBox(width: 4),
+                  Icon(
                     Icons.keyboard_arrow_down_rounded,
                     size: 16,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ],
               ),
@@ -206,33 +207,33 @@ class RecentTransactionsTable extends StatelessWidget {
         DataCell(
           Text(
             id,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
               color: serviceColor,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               serviceType,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.w700,
                 fontSize: 10,
                 color: serviceTextColor,
@@ -245,14 +246,14 @@ class RecentTransactionsTable extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(paymentIcon, size: 16, color: const Color(0xFF9EA5AD)),
-              const SizedBox(width: 8),
+              Icon(paymentIcon, size: 16, color: AppColors.cFF9EA5AD),
+              SizedBox(width: 8),
               Text(
                 paymentMethod,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
             ],
@@ -268,19 +269,19 @@ class RecentTransactionsTable extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isCompleted
-                      ? const Color(0xFF00A86B)
-                      : const Color(0xFFFF4757),
+                      ? AppColors.cFF00A86B
+                      : AppColors.cFFFF4757,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 status,
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                   color: isCompleted
-                      ? const Color(0xFF00A86B)
-                      : const Color(0xFFFF4757),
+                      ? AppColors.cFF00A86B
+                      : AppColors.cFFFF4757,
                 ),
               ),
             ],
@@ -290,3 +291,8 @@ class RecentTransactionsTable extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

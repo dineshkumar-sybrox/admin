@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
 
 class DriversTableHeader extends StatelessWidget {
-  const DriversTableHeader({super.key});
+  DriversTableHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,7 +23,7 @@ class DriversTableHeader extends StatelessWidget {
                   context.read<DriversManagementCubit>().search(v),
               decoration: InputDecoration(
                 hintText: 'Search by name, email or phone...',
-                hintStyle: TextStyle(
+                hintStyle: AppTypography.base.copyWith(
                   color: AppColors.textSecondary.withOpacity(0.6),
                   fontSize: 14,
                 ),
@@ -32,12 +33,12 @@ class DriversTableHeader extends StatelessWidget {
                   size: 20,
                 ),
                 filled: true,
-                fillColor: const Color(0xFFF3F4F6),
+                fillColor: AppColors.cFFF3F4F6,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
             ),
           ),
@@ -48,11 +49,11 @@ class DriversTableHeader extends StatelessWidget {
               // All Status Dropdown
               Container(
                 height: 44,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF3F4F6),
+                  color: AppColors.cFFF3F4F6,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  border: Border.all(color: AppColors.cFFE2E8F0),
                 ),
                 child:
                     BlocBuilder<DriversManagementCubit, DriversManagementState>(
@@ -61,12 +62,12 @@ class DriversTableHeader extends StatelessWidget {
                         return DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             value: state.statusFilter,
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.keyboard_arrow_down,
                               color: AppColors.textSecondary,
                               size: 20,
                             ),
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -95,7 +96,7 @@ class DriversTableHeader extends StatelessWidget {
                       },
                     ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               // Export Button
               BlocBuilder<DriversManagementCubit, DriversManagementState>(
                 builder: (context, state) {
@@ -106,30 +107,30 @@ class DriversTableHeader extends StatelessWidget {
                               .read<DriversManagementCubit>()
                               .exportToExcel(),
                     icon: state.isExporting
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 18,
                             height: 18,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           )
-                        : const Icon(
+                        : Icon(
                             Icons.download,
                             size: 18,
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                     label: Text(
                       state.isExporting ? 'Exporting...' : 'Export Data',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: AppTypography.base.copyWith(
+                        color: AppColors.white,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       elevation: 0,
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 18,
                       ),
@@ -147,3 +148,6 @@ class DriversTableHeader extends StatelessWidget {
     );
   }
 }
+
+
+

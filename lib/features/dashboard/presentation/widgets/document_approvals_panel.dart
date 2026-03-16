@@ -1,10 +1,12 @@
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
 
 class DocumentApprovalsPanel extends StatelessWidget {
-  const DocumentApprovalsPanel({super.key});
+  DocumentApprovalsPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +14,14 @@ class DocumentApprovalsPanel extends StatelessWidget {
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.borderBlack, width: 1),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: AppColors.black.withValues(alpha: 0.04),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -26,32 +29,27 @@ class DocumentApprovalsPanel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Row(
                   children: [
-                    const Text(
-                      'Document Approvals',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF1A2332),
-                      ),
-                    ),
-                    const Spacer(),
+                    Text('Document Approvals', style: AppTypography.h3),
+                    Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF00A86B).withValues(alpha: 0.4),
+                        color: AppColors.greenColour.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         '${state.pendingApprovals} PENDING',
-                        style: const TextStyle(
-                          color: Color(0xFF00A86B),
-                          fontSize: 12,
+                        style: AppTypography.bodyRegular.copyWith(
+                          color: AppColors.greenColour,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -59,6 +57,7 @@ class DocumentApprovalsPanel extends StatelessWidget {
                   ],
                 ),
               ),
+              Divider(color: AppColors.borderBlack, thickness: 1),
 
               ...state.driverApprovals.map(
                 (driver) => _DriverApprovalCard(driver: driver),
@@ -66,16 +65,14 @@ class DocumentApprovalsPanel extends StatelessWidget {
 
               InkWell(
                 onTap: () {},
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Center(
                     child: Text(
                       'VIEW ALL PENDING',
-                      style: TextStyle(
-                        fontSize: 12,
+                      style: AppTypography.bodyRegular.copyWith(
+                        color: AppColors.textGrey,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF6B7A8D),
-                        letterSpacing: 0.5,
                       ),
                     ),
                   ),
@@ -96,10 +93,13 @@ class _DriverApprovalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(14),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFEEF0F4)),
+        border: Border.all(
+          color: AppColors.borderBlack.withAlpha(20),
+          width: 1,
+        ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -109,74 +109,84 @@ class _DriverApprovalCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 16,
-                backgroundColor: const Color(0xFFE8F5FF),
-                child: const Icon(
+                backgroundColor: AppColors.cFFE8F5FF,
+                child: Icon(
                   Icons.person_outline,
                   size: 16,
-                  color: Colors.grey,
+                  color: AppColors.grey,
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     driver.name,
-                    style: const TextStyle(
+                    style: AppTypography.bodyLarge.copyWith(
+                      //color: AppColors.textGrey,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Color(0xFF1A2332),
                     ),
                   ),
                 ],
               ),
-              const Spacer(),
+              Spacer(),
               Text(
                 driver.driverId,
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTypography.bodyRegular.copyWith(
+                  color: AppColors.textGrey,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF8E9BAB),
                 ),
+                // style: AppTypography.base.copyWith(
+                //   fontSize: 12,
+                //   fontWeight: FontWeight.w500,
+                //   color: AppColors.cFF8E9BAB,
+                // ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           Row(
             children: [
               Text(
                 '${driver.documentCount} DOCUMENTS',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF4F4F4F),
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.textGrey,
                   fontWeight: FontWeight.w600,
                 ),
+                // style: AppTypography.base.copyWith(
+                //   fontSize: 12,
+                //   color: AppColors.cFF4F4F4F,
+                //   fontWeight: FontWeight.w600,
+                // ),
               ),
-              const Spacer(),
+              Spacer(),
               Text(
                 '${driver.progress}%',
-                style: const TextStyle(
-                  fontSize: 12,
+                style: AppTypography.bodySmall.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1A2332),
                 ),
+                // style: AppTypography.base.copyWith(
+                //   fontSize: 12,
+                //   fontWeight: FontWeight.w600,
+                //   color: AppColors.cFF1A2332,
+                // ),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: driver.progress / 100,
               minHeight: 6,
-              backgroundColor: const Color(0xFFEEF0F4),
-              valueColor: const AlwaysStoppedAnimation<Color>(
-                Color(0xFF00A86B),
+              backgroundColor: AppColors.cFFEEF0F4,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                AppColors.greenColour,
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Wrap(
             spacing: 4,
             runSpacing: 4,
@@ -189,7 +199,7 @@ class _DriverApprovalCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           Row(
             children: [
@@ -197,23 +207,23 @@ class _DriverApprovalCard extends StatelessWidget {
                 child: OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFFDDE1E7)),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    side: BorderSide(
+                      color: AppColors.borderBlack.withAlpha(10),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'VIEW FILE',
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTypography.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF6B7A8D),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -222,19 +232,18 @@ class _DriverApprovalCard extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00A86B),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    backgroundColor: AppColors.greenColour,
+                    padding: EdgeInsets.symmetric(vertical: 8),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'APPROVE',
-                    style: TextStyle(
-                      fontSize: 11,
+                    style: AppTypography.bodySmall.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                 ),
@@ -255,19 +264,24 @@ class _DocTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: isApproved ? const Color(0xFFE8F9F1) : const Color(0xFFFFF3E0),
+        color: isApproved
+            ? AppColors.greenColour.withAlpha(40)
+            : AppColors.btnOrange.withAlpha(40),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         isApproved ? '$label ✓' : '$label •',
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           fontSize: 9.5,
           fontWeight: FontWeight.w600,
-          color: isApproved ? const Color(0xFF00A86B) : const Color(0xFFFF8C42),
+          color: isApproved ? AppColors.greenColour : AppColors.btnOrange,
         ),
       ),
     );
   }
 }
+
+
+

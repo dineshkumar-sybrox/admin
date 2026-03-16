@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/rider_state.dart';
 import '../pages/rider_overview_page.dart';
@@ -6,16 +7,16 @@ import '../pages/rider_overview_page.dart';
 class SuspendedRidersTable extends StatelessWidget {
   final RiderState state;
 
-  const SuspendedRidersTable({super.key, required this.state});
+  SuspendedRidersTable({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
     if (state.filteredRiders.isEmpty) {
-      return const Expanded(
+      return Expanded(
         child: Center(
           child: Text(
             'No riders found',
-            style: TextStyle(color: Color(0xFF8E9BAB), fontSize: 14),
+            style: AppTypography.base.copyWith(color: AppColors.cFF8E9BAB, fontSize: 14),
           ),
         ),
       );
@@ -32,14 +33,14 @@ class SuspendedRidersTable extends StatelessWidget {
                   : 1000,
             ),
             child: DataTable(
-              headingRowColor: WidgetStateProperty.all(const Color(0xFFF8FAFC)),
-              headingTextStyle: const TextStyle(
+              headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+              headingTextStyle: AppTypography.base.copyWith(
                 color: AppColors.textSecondary,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.0,
               ),
-              dataTextStyle: const TextStyle(
+              dataTextStyle: AppTypography.base.copyWith(
                 color: AppColors.textPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -49,9 +50,9 @@ class SuspendedRidersTable extends StatelessWidget {
               headingRowHeight: 56,
               dataRowMaxHeight: 72,
               dataRowMinHeight: 72,
-              border: const TableBorder(
+              border: TableBorder(
                 horizontalInside: BorderSide(
-                  color: Color(0xFFF3F4F6),
+                  color: AppColors.cFFF3F4F6,
                   width: 1,
                 ),
               ),
@@ -76,7 +77,7 @@ class SuspendedRidersTable extends StatelessWidget {
                     DataCell(
                       Text(
                         rider.id,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           color: AppColors.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
@@ -88,13 +89,13 @@ class SuspendedRidersTable extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const RiderOverviewPage(),
+                              builder: (context) => RiderOverviewPage(),
                             ),
                           );
                         },
                         child: Text(
                           rider.name,
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
                           ),
@@ -108,7 +109,7 @@ class SuspendedRidersTable extends StatelessWidget {
                         children: [
                           Text(
                             rider.phone,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
@@ -116,7 +117,7 @@ class SuspendedRidersTable extends StatelessWidget {
                           ),
                           Text(
                             rider.email,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textSecondary,
                               fontWeight: FontWeight.normal,
                               fontSize: 12,
@@ -129,7 +130,7 @@ class SuspendedRidersTable extends StatelessWidget {
                       Center(
                         child: Text(
                           rider.totalRides.toString(),
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.w700,
                           ),
@@ -149,21 +150,21 @@ class SuspendedRidersTable extends StatelessWidget {
                             onTap: () {
                               // Perform activation logic mock
                             },
-                            child: const Text(
+                            child: Text(
                               'Activate',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 color: AppColors.success,
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: 16),
                           InkWell(
                             onTap: () {
                               // Link to suspension dialog if created
                             },
-                            child: const Icon(
+                            child: Icon(
                               Icons.remove_red_eye_outlined,
                               color: AppColors.textSecondary,
                               size: 18,
@@ -195,32 +196,32 @@ class _SuspensionReasonBadge extends StatelessWidget {
 
     switch (reason.toUpperCase()) {
       case 'FRAUD':
-        bgColor = const Color(0xFFFFE4E6); // Rose-100
-        textColor = const Color(0xFFE11D48); // Rose-600
+        bgColor = AppColors.cFFFFE4E6; // Rose-100
+        textColor = AppColors.cFFE11D48; // Rose-600
         break;
       case 'PAYMENT ISSUE':
-        bgColor = const Color(0xFFF1F5F9); // Slate-100
-        textColor = const Color(0xFF475569); // Slate-600
+        bgColor = AppColors.cFFF1F5F9; // Slate-100
+        textColor = AppColors.cFF475569; // Slate-600
         break;
       case 'SAFETY VIOLATION':
-        bgColor = const Color(0xFFFFEDD5); // Orange-100
-        textColor = const Color(0xFFEA580C); // Orange-600
+        bgColor = AppColors.cFFFFEDD5; // Orange-100
+        textColor = AppColors.cFFEA580C; // Orange-600
         break;
       default:
-        bgColor = const Color(0xFFF1F5F9);
-        textColor = const Color(0xFF64748B);
+        bgColor = AppColors.cFFF1F5F9;
+        textColor = AppColors.cFF64748B;
         break;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         reason.toUpperCase(),
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           color: textColor,
           fontSize: 10,
           fontWeight: FontWeight.bold,
@@ -230,3 +231,7 @@ class _SuspensionReasonBadge extends StatelessWidget {
     );
   }
 }
+
+
+
+

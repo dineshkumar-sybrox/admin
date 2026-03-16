@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CancellationTimelineChart extends StatefulWidget {
-  const CancellationTimelineChart({super.key});
+  CancellationTimelineChart({super.key});
 
   @override
   State<CancellationTimelineChart> createState() =>
@@ -16,13 +17,13 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,18 +33,18 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Cancellation by Customer vs Driver Timeline',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Correlation of failed bookings against daily ride density (Last 6 Months)',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -51,39 +52,39 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 14,
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFFEFEFEF)),
+                    border: Border.all(color: AppColors.cFFEFEFEF),
                   ),
                   child: PopupMenuButton<String>(
-                    offset: const Offset(0, 40),
+                    offset: Offset(0, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: Color(0xFFEFEFEF)),
+                      side: BorderSide(color: AppColors.cFFEFEFEF),
                     ),
-                    color: Colors.white,
+                    color: AppColors.white,
                     elevation: 6,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           _selectedFilter,
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF1A1D1F),
+                            color: AppColors.cFF1A1D1F,
                           ),
                         ),
-                        const SizedBox(width: 32),
-                        const Icon(
+                        SizedBox(width: 32),
+                        Icon(
                           Icons.keyboard_arrow_down_rounded,
                           size: 16,
-                          color: Color(0xFF6F767E),
+                          color: AppColors.cFF6F767E,
                         ),
                       ],
                     ),
@@ -116,7 +117,7 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
                 ),
               ],
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48),
             SizedBox(
               height: 250,
               child: BarChart(
@@ -130,8 +131,8 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
-                          const style = TextStyle(
-                            color: Color(0xFF6B7280),
+                          final style = AppTypography.base.copyWith(
+                            color: AppColors.cFF6B7280,
                             fontWeight: FontWeight.bold,
                             fontSize: 10,
                           );
@@ -159,19 +160,19 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
                               return Container();
                           }
                           return Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Text(text, style: style),
                           );
                         },
                       ),
                     ),
-                    leftTitles: const AxisTitles(
+                    leftTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    topTitles: const AxisTitles(
+                    topTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    rightTitles: const AxisTitles(
+                    rightTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
                   ),
@@ -208,24 +209,24 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
     return PopupMenuItem<String>(
       value: text,
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: const Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle_outline_rounded,
-                color: Color(0xFF00A86B),
+                color: AppColors.cFF00A86B,
                 size: 18,
               ),
           ],
@@ -255,3 +256,7 @@ class _CancellationTimelineChartState extends State<CancellationTimelineChart> {
     );
   }
 }
+
+
+
+

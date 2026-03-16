@@ -6,14 +6,14 @@ class CloseTicketDialog extends StatelessWidget {
   final String ticketId;
   final VoidCallback? onSuccess;
 
-  const CloseTicketDialog({super.key, required this.ticketId, this.onSuccess});
+  CloseTicketDialog({super.key, required this.ticketId, this.onSuccess});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       child: _buildContent(context),
     );
   }
@@ -22,13 +22,13 @@ class CloseTicketDialog extends StatelessWidget {
     return Container(
       width: 500,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.black.withOpacity(0.1),
             blurRadius: 20,
-            offset: const Offset(0, 10),
+            offset: Offset(0, 10),
           ),
         ],
       ),
@@ -38,22 +38,22 @@ class CloseTicketDialog extends StatelessWidget {
         children: [
           // Header
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFF0FAF8),
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFF0FAF8,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.check_circle_outline,
                     color: AppColors.primary,
                     size: 20,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'Close Ticket #$ticketId',
@@ -62,25 +62,25 @@ class CloseTicketDialog extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close, color: Colors.grey, size: 20),
+                  icon: Icon(Icons.close, color: AppColors.grey, size: 20),
                 ),
               ],
             ),
           ),
-          const Divider(height: 1),
+          Divider(height: 1),
 
           // Body
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildLabel('Resolution Category', isRequired: true),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 _buildDropdownField('Select Reason'),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 _buildLabel('Final Internal Notes'),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 _buildTextArea(
                   'Enter detailed resolution notes for internal tracking...',
                 ),
@@ -88,11 +88,11 @@ class CloseTicketDialog extends StatelessWidget {
             ),
           ),
 
-          const Divider(height: 1),
+          Divider(height: 1),
 
           // Footer
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -115,9 +115,9 @@ class CloseTicketDialog extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     elevation: 0,
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 16,
                     ),
@@ -125,7 +125,7 @@ class CloseTicketDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text('CONFIRM & CLOSE'),
+                  child: Text('CONFIRM & CLOSE'),
                 ),
               ],
             ),
@@ -146,9 +146,9 @@ class CloseTicketDialog extends StatelessWidget {
           ),
         ),
         if (isRequired)
-          const Text(
+          Text(
             ' *',
-            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            style: AppTypography.base.copyWith(color: AppColors.red, fontWeight: FontWeight.bold),
           ),
       ],
     );
@@ -156,20 +156,20 @@ class CloseTicketDialog extends StatelessWidget {
 
   Widget _buildDropdownField(String hint) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
+        color: AppColors.cFFF9FAFB,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: AppColors.cFFE5E7EB),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             hint,
-            style: AppTypography.bodySmall.copyWith(color: Colors.grey),
+            style: AppTypography.bodySmall.copyWith(color: AppColors.grey),
           ),
-          const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
+          Icon(Icons.keyboard_arrow_down, color: AppColors.grey),
         ],
       ),
     );
@@ -177,11 +177,11 @@ class CloseTicketDialog extends StatelessWidget {
 
   Widget _buildTextArea(String hint) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
+        color: AppColors.cFFF9FAFB,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: AppColors.cFFE5E7EB),
       ),
       child: SizedBox(
         height: 100,
@@ -189,7 +189,7 @@ class CloseTicketDialog extends StatelessWidget {
           maxLines: null,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: AppTypography.bodySmall.copyWith(color: Colors.grey),
+            hintStyle: AppTypography.bodySmall.copyWith(color: AppColors.grey),
             border: InputBorder.none,
             isDense: true,
             contentPadding: EdgeInsets.zero,
@@ -199,3 +199,7 @@ class CloseTicketDialog extends StatelessWidget {
     );
   }
 }
+
+
+
+
