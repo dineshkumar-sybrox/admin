@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class RevenueByRegion extends StatelessWidget {
-  const RevenueByRegion({super.key});
+  RevenueByRegion({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             'REVENUE BY TAMIL NADU',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
               letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildRegionProgressBar('Chennai', '₹450k', '38%', 0.38),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           _buildRegionProgressBar('Kanchipuram', '₹320k', '27%', 0.27),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           _buildRegionProgressBar('Thiruvallur', '₹280k', '23%', 0.23),
         ],
       ),
@@ -56,37 +58,37 @@ class RevenueByRegion extends StatelessWidget {
           children: [
             Text(
               city,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             RichText(
               text: TextSpan(
                 text: amount,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
                 children: [
                   TextSpan(
                     text: ' ($percent)',
-                    style: const TextStyle(color: Color(0xFF9EA5AD)),
+                    style: AppTypography.base.copyWith(color: AppColors.cFF9EA5AD),
                   ),
                 ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Stack(
           children: [
             Container(
               height: 6,
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F6F9),
+                color: AppColors.cFFF4F6F9,
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -95,7 +97,7 @@ class RevenueByRegion extends StatelessWidget {
               child: Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00A86B),
+                  color: AppColors.cFF00A86B,
                   borderRadius: BorderRadius.circular(3),
                 ),
               ),
@@ -106,3 +108,7 @@ class RevenueByRegion extends StatelessWidget {
     );
   }
 }
+
+
+
+

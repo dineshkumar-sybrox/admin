@@ -10,7 +10,7 @@ class TotalDocumentsState extends Equatable {
   final String categoryFilter;
   final bool isLoading;
 
-  const TotalDocumentsState({
+  TotalDocumentsState({
     required this.allDocuments,
     required this.filteredDocuments,
     this.statusFilter = DocumentStatusFilter.all,
@@ -47,3 +47,4 @@ class TotalDocumentsState extends Equatable {
     isLoading,
   ];
 }
+

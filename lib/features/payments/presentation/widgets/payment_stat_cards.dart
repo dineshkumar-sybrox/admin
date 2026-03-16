@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class PaymentStatCards extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int>? onCardTapped;
 
-  const PaymentStatCards({
+  PaymentStatCards({
     super.key,
     this.selectedIndex = 0,
     this.onCardTapped,
@@ -26,7 +28,7 @@ class PaymentStatCards extends StatelessWidget {
                 isSelected: selectedIndex == 0,
                 onTap: () => onCardTapped?.call(0),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               _PaymentStatCard(
                 title: 'CAB PAYMENT',
                 value: '₹8.2k',
@@ -35,7 +37,7 @@ class PaymentStatCards extends StatelessWidget {
                 isSelected: selectedIndex == 1,
                 onTap: () => onCardTapped?.call(1),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               _PaymentStatCard(
                 title: 'BIKE/SCOOTER PAYMENT',
                 value: '₹1.2k',
@@ -44,7 +46,7 @@ class PaymentStatCards extends StatelessWidget {
                 isSelected: selectedIndex == 2,
                 onTap: () => onCardTapped?.call(2),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               _PaymentStatCard(
                 title: 'AUTO PAYMENT',
                 value: '₹4.2k',
@@ -68,7 +70,7 @@ class PaymentStatCards extends StatelessWidget {
                 onTap: () => onCardTapped?.call(0),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _PaymentStatCard(
                 title: 'CAB PAYMENT',
@@ -79,7 +81,7 @@ class PaymentStatCards extends StatelessWidget {
                 onTap: () => onCardTapped?.call(1),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _PaymentStatCard(
                 title: 'BIKE/SCOOTER PAYMENT',
@@ -90,7 +92,7 @@ class PaymentStatCards extends StatelessWidget {
                 onTap: () => onCardTapped?.call(2),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _PaymentStatCard(
                 title: 'AUTO PAYMENT',
@@ -134,8 +136,8 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
 
   @override
   Widget build(BuildContext context) {
-    const accentColor = Color(0xFF00A86B);
-    const borderColor = Color(0xFFE6EAF0);
+    const accentColor = AppColors.cFF00A86B;
+    const borderColor = AppColors.cFFE6EAF0;
     const trendColor =
         accentColor; // In the design, all trends are green styled
 
@@ -149,18 +151,24 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
         onTap: widget.onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: borderColor, width: 1.0),
+            border: Border(
+            left: BorderSide(
+              color: widget.isSelected
+                  ? AppColors.primary
+                  : AppColors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
+          ),
+            
             boxShadow: [
-              BoxShadow(
-                color: _isHovered && isClickable
-                    ? accentColor.withValues(alpha: 0.13)
-                    : Colors.black.withValues(alpha: 0.02),
-                blurRadius: _isHovered && isClickable ? 20 : 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
+          ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(11),
@@ -168,11 +176,11 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (widget.isSelected)
-                    Container(width: 3, color: accentColor),
+                  // if (widget.isSelected)
+                  //   Container(width: 3, color: accentColor),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 24,
                       ),
@@ -182,29 +190,29 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
                         children: [
                           Text(
                             widget.title,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF8A97A8),
+                              color: AppColors.cFF8A97A8,
                               letterSpacing: 0.5,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.baseline,
                             textBaseline: TextBaseline.alphabetic,
                             children: [
                               Text(
                                 widget.value,
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF1A1D1F),
+                                  color: AppColors.cFF1A1D1F,
                                   height: 1.0,
                                   letterSpacing: -0.5,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Icon(
                                 widget.isTrendUp
                                     ? Icons.trending_up_rounded
@@ -213,10 +221,10 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
                                 size: 18,
                                 color: trendColor,
                               ),
-                              const SizedBox(width: 2),
+                              SizedBox(width: 2),
                               Text(
                                 widget.trend,
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
                                   color: trendColor,
@@ -237,3 +245,5 @@ class _PaymentStatCardState extends State<_PaymentStatCard> {
     );
   }
 }
+
+

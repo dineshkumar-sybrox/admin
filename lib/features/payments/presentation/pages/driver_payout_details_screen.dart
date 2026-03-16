@@ -6,7 +6,7 @@ import '../widgets/rider_payments_table.dart';
 class DriverPayoutDetailsScreen extends StatelessWidget {
   final String driverName;
 
-  const DriverPayoutDetailsScreen({super.key, required this.driverName});
+  DriverPayoutDetailsScreen({super.key, required this.driverName});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,13 @@ class DriverPayoutDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const StatCardsRow(), // Re-use our stat cards from dashboard
-            const SizedBox(height: 24),
-            const RiderPaymentsTable(),
+            StatCardsRow(), // Re-use our stat cards from dashboard
+            SizedBox(height: 24),
+            RiderPaymentsTable(),
           ],
         ),
       ),
     );
   }
 }
+

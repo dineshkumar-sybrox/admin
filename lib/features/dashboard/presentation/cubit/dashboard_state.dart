@@ -26,7 +26,7 @@ class StatCard {
   final String trend;
   final bool isPositive;
 
-  const StatCard({
+  StatCard({
     required this.title,
     required this.value,
     required this.trend,
@@ -42,7 +42,7 @@ class DriverApproval {
   final List<String> approvedDocs;
   final List<String> pendingDocs;
 
-  const DriverApproval({
+  DriverApproval({
     required this.name,
     required this.driverId,
     required this.documentCount,
@@ -59,7 +59,7 @@ class SupportTicket {
   final String timeAgo;
   final String priority;
 
-  const SupportTicket({
+  SupportTicket({
     required this.ticketId,
     required this.userName,
     required this.issue,
@@ -76,7 +76,7 @@ class Transaction {
   final String status;
   final bool isCompleted;
 
-  const Transaction({
+  Transaction({
     required this.id,
     required this.amount,
     required this.serviceType,
@@ -98,7 +98,7 @@ class DashboardState extends Equatable {
   final DriverTab? initialDriverTab;
   final bool isExportingReport;
 
-  const DashboardState({
+  DashboardState({
     this.isLoading = true,
     this.selectedNav = NavItem.dashboard,
     this.statCards = const [],
@@ -151,3 +151,4 @@ class DashboardState extends Equatable {
     isExportingReport,
   ];
 }
+

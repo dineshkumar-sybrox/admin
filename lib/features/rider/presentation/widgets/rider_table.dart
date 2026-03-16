@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/rider_state.dart';
 import '../pages/rider_overview_page.dart';
@@ -11,11 +12,14 @@ class RiderTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (state.filteredRiders.isEmpty) {
-      return const Expanded(
+      return Expanded(
         child: Center(
           child: Text(
             'No riders found',
-            style: TextStyle(color: Color(0xFF8E9BAB), fontSize: 14),
+            style: AppTypography.base.copyWith(
+              color: AppColors.cFF8E9BAB,
+              fontSize: 14,
+            ),
           ),
         ),
       );
@@ -32,129 +36,138 @@ class RiderTable extends StatelessWidget {
                   : 1000,
             ),
             child: DataTable(
-              headingRowColor: WidgetStateProperty.all(
-                const Color(0xFFF8FAFC), // Off-white typical table header
-              ),
-              headingTextStyle: const TextStyle(
+              headingRowColor:
+                  WidgetStateProperty.all(AppColors.cFFF8FAFC),
+              headingTextStyle: AppTypography.base.copyWith(
                 color: AppColors.textSecondary,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                letterSpacing: 1.0,
+                letterSpacing: 1,
               ),
-              dataTextStyle: const TextStyle(
+              dataTextStyle: AppTypography.base.copyWith(
                 color: AppColors.textPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
               ),
               horizontalMargin: 24,
-              columnSpacing: 24,
+              columnSpacing: 50,
               headingRowHeight: 56,
               dataRowMaxHeight: 72,
               dataRowMinHeight: 72,
-              border: const TableBorder(
+              border: TableBorder(
                 horizontalInside: BorderSide(
-                  color: Color(0xFFF3F4F6),
+                  color: AppColors.cFFF3F4F6,
                   width: 1,
                 ),
               ),
+
+              /// TABLE HEADERS
               columns: const [
-                DataColumn(label: Text('RIDER ID')),
-                DataColumn(label: Text('RIDER NAME')),
-                DataColumn(
-                  label: Text(
-                    'CONTACT INFORMATION',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                DataColumn(
-                  label: Text('TOTAL RIDES', textAlign: TextAlign.center),
-                ),
-                DataColumn(
-                  label: Text(
-                    'WALLET BALANCE (₹)',
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                DataColumn(label: Text('COINS', textAlign: TextAlign.center)),
-                DataColumn(label: Text('STATUS')),
+                DataColumn(label: Center(child: Text('RIDER ID'))),
+                DataColumn(label: Center(child: Text('RIDER NAME'))),
+                DataColumn(label: Center(child: Text('CONTACT INFORMATION'))),
+                DataColumn(label: Center(child: Text('TOTAL RIDES'))),
+                DataColumn(label: Center(child: Text('WALLET BALANCE (₹)'))),
+                DataColumn(label: Center(child: Text('COINS'))),
+                DataColumn(label: Center(child: Text('STATUS'))),
               ],
+
+              /// TABLE ROWS
               rows: state.filteredRiders.map((rider) {
                 return DataRow(
                   cells: [
+
+                    /// RIDER ID
                     DataCell(
-                      Text(
-                        rider.id,
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    DataCell(
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RiderOverviewPage(),
-                            ),
-                          );
-                        },
+                      Center(
                         child: Text(
-                          rider.name,
-                          style: const TextStyle(
+                          rider.id,
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
+
+                    /// RIDER NAME
                     DataCell(
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            rider.phone,
-                            style: const TextStyle(
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RiderOverviewPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            rider.name,
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textPrimary,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            rider.email,
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
+
+                    /// CONTACT INFO
+                    DataCell(
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              rider.phone,
+                              style: AppTypography.base.copyWith(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              rider.email,
+                              style: AppTypography.base.copyWith(
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    /// TOTAL RIDES
                     DataCell(
                       Center(
                         child: Text(
                           rider.totalRides.toString(),
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ),
+
+                    /// WALLET BALANCE
                     DataCell(
                       Center(
                         child: Text(
                           '₹${rider.walletBalance.toStringAsFixed(2)}',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ),
+
+                    /// COINS
                     DataCell(
                       Center(
                         child: Text(
@@ -162,14 +175,20 @@ class RiderTable extends StatelessWidget {
                             RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                             (Match m) => '${m[1]},',
                           ),
-                          style: const TextStyle(
-                            color: Color(0xFFD97706), // Orange equivalent
+                          style: AppTypography.base.copyWith(
+                            color: AppColors.cFFD97706,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ),
-                    DataCell(_StatusBadge(status: rider.status)),
+
+                    /// STATUS
+                    DataCell(
+                      Center(
+                        child: _StatusBadge(status: rider.status),
+                      ),
+                    ),
                   ],
                 );
               }).toList(),
@@ -196,34 +215,40 @@ class _StatusBadge extends StatelessWidget {
         dotColor = AppColors.success;
         textColor = AppColors.success;
         break;
+
       case 'Inactive':
-        dotColor = const Color(0xFFD97706); // Orange
-        textColor = const Color(0xFFD97706);
+        dotColor = AppColors.cFFD97706;
+        textColor = AppColors.cFFD97706;
         break;
+
       case 'Suspend':
       case 'Suspended':
       case 'Banned':
         dotColor = AppColors.error;
         textColor = AppColors.error;
         break;
+
       default:
         dotColor = AppColors.textSecondary;
         textColor = AppColors.textSecondary;
-        break;
     }
 
     return Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 8,
           height: 8,
-          decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: dotColor,
+            shape: BoxShape.circle,
+          ),
         ),
         const SizedBox(width: 8),
         Text(
           status,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             color: textColor,
             fontSize: 13,
             fontWeight: FontWeight.bold,

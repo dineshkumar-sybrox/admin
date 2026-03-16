@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'total_tickets_state.dart';
 
 class TotalTicketsCubit extends Cubit<TotalTicketsState> {
   TotalTicketsCubit()
-    : super(const TotalTicketsState(allTickets: [], filteredTickets: [])) {
+    : super(TotalTicketsState(allTickets: [], filteredTickets: [])) {
     _initializeTickets();
   }
 
@@ -17,7 +18,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Driver',
         'category': 'BILLING ISSUE',
         'status': 'IN-PROGRESS',
-        'statusColor': const Color(0xFFF2C94C),
+        'statusColor': AppColors.cFFF2C94C,
       },
       {
         'id': '#TK-8839',
@@ -25,7 +26,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'SAFETY',
         'status': 'OPEN',
-        'statusColor': const Color(0xFF2F80ED),
+        'statusColor': AppColors.cFF2F80ED,
       },
       {
         'id': '#TK-8835',
@@ -33,7 +34,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Driver',
         'category': 'APP GLITCH',
         'status': 'CLOSED',
-        'statusColor': const Color(0xFF00A86B),
+        'statusColor': AppColors.cFF00A86B,
       },
       {
         'id': '#TK-8831',
@@ -41,7 +42,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'PAYMENT ERROR',
         'status': 'OPEN',
-        'statusColor': const Color(0xFF2F80ED),
+        'statusColor': AppColors.cFF2F80ED,
       },
       {
         'id': '#TK-8845',
@@ -49,7 +50,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'REFUND',
         'status': 'REFUNDED',
-        'statusColor': const Color(0xFFEF4444),
+        'statusColor': AppColors.cFFEF4444,
       },
     ];
 
@@ -112,3 +113,6 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
     emit(state.copyWith(filteredTickets: filtered));
   }
 }
+
+
+

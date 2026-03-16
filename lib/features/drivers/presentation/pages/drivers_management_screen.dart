@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/drivers_management_cubit.dart';
 import '../widgets/active_drivers_table.dart';
@@ -11,7 +12,7 @@ import '../widgets/pagination_controls.dart';
 
 class DriversManagementScreen extends StatelessWidget {
   final DriverTab? initialTab;
-  const DriversManagementScreen({super.key, this.initialTab});
+  DriversManagementScreen({super.key, this.initialTab});
 
   @override
   Widget build(BuildContext context) {
@@ -23,46 +24,46 @@ class DriversManagementScreen extends StatelessWidget {
           Widget currentTable;
           switch (state.selectedTab) {
             case DriverTab.active:
-              currentTable = const ActiveDriversTable();
+              currentTable = ActiveDriversTable();
               break;
             case DriverTab.newDrivers:
-              currentTable = const NewDriversTable();
+              currentTable = NewDriversTable();
               break;
             case DriverTab.suspended:
-              currentTable = const SuspendedDriversTable();
+              currentTable = SuspendedDriversTable();
               break;
             case DriverTab.total:
-              currentTable = const DriversTable();
+              currentTable = DriversTable();
           }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const DriverStatCards(),
-              const SizedBox(height: 24),
+              DriverStatCards(),
+              SizedBox(height: 24),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                    border: Border.all(color: AppColors.cFFE5E7EB),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.02),
+                        color: AppColors.black.withOpacity(0.02),
                         blurRadius: 8,
-                        offset: const Offset(0, 2),
+                        offset: Offset(0, 2),
                       ),
                     ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const DriversTableHeader(),
+                      DriversTableHeader(),
                       currentTable,
-                      const Divider(height: 1, color: Color(0xFFE5E7EB)),
+                      Divider(height: 1, color: AppColors.cFFE5E7EB),
                       Container(
-                        color: Colors.white,
-                        child: const PaginationControls(),
+                        color: AppColors.cFFF8FAFC,
+                        child: PaginationControls(),
                       ),
                     ],
                   ),
@@ -75,3 +76,6 @@ class DriversManagementScreen extends StatelessWidget {
     );
   }
 }
+
+
+

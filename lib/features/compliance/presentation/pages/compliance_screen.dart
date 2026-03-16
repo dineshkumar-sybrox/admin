@@ -7,18 +7,18 @@ import 'package:admin/features/dashboard/presentation/cubit/dashboard_cubit.dart
 import 'package:admin/features/dashboard/presentation/cubit/dashboard_state.dart';
 
 class ComplianceScreen extends StatelessWidget {
-  const ComplianceScreen({super.key});
+  ComplianceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _StatCardsSection(),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -32,7 +32,7 @@ class ComplianceScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 24),
+                SizedBox(width: 24),
                 Expanded(
                   flex: 10,
                   child: Column(
@@ -71,7 +71,7 @@ class _StatCardsSection extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(width: 24),
+        SizedBox(width: 24),
         Expanded(
           child: _StatCard(
             title: 'TOTAL TICKETS',
@@ -84,7 +84,7 @@ class _StatCardsSection extends StatelessWidget {
             },
           ),
         ),
-        const SizedBox(width: 24),
+        SizedBox(width: 24),
         Expanded(
           child: _StatCard(
             title: 'COMPLAIANCE SCORE',
@@ -134,9 +134,23 @@ class _StatCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey.shade200),
+            border: Border(
+              left: BorderSide(
+                color: isPrimary
+                    ? AppColors.primary
+                    : AppColors.transparent, // 👈 Hide when not selected
+                width: 4, // Thickness of left border
+              ),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.black.withValues(alpha: 0.05),
+                blurRadius: 8,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(11),
@@ -144,10 +158,9 @@ class _StatCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (isPrimary) Container(width: 3, color: AppColors.primary),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(24),
+                      padding: EdgeInsets.all(24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -159,7 +172,7 @@ class _StatCard extends StatelessWidget {
                               letterSpacing: 0.5,
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -170,9 +183,9 @@ class _StatCard extends StatelessWidget {
                                   fontSize: 32,
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 6),
+                                padding: EdgeInsets.only(bottom: 6),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -181,7 +194,7 @@ class _StatCard extends StatelessWidget {
                                       size: 16,
                                       color: trendColor,
                                     ),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: 4),
                                     Text(
                                       trend,
                                       style: AppTypography.bodySmall.copyWith(
@@ -208,17 +221,24 @@ class _StatCard extends StatelessWidget {
   }
 }
 
-class _SupportTicketsChartCard extends StatelessWidget {
+class _SupportTicketsChartCard extends StatefulWidget {
   const _SupportTicketsChartCard();
 
   @override
+  State<_SupportTicketsChartCard> createState() =>
+      _SupportTicketsChartCardState();
+}
+
+class _SupportTicketsChartCardState extends State<_SupportTicketsChartCard> {
+  @override
   Widget build(BuildContext context) {
+    String _selectedFilter = 'Today';
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +251,7 @@ class _SupportTicketsChartCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Support Tickets', style: AppTypography.h3),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'Breakdown of user-reported reasons',
                     style: AppTypography.bodySmall.copyWith(
@@ -241,40 +261,116 @@ class _SupportTicketsChartCard extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: AppColors.grey.shade300),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Row(
-                  children: [
-                    Text(
-                      'Today',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.cFFEFEFEF),
+                  ),
+                  child: PopupMenuButton<String>(
+                    offset: Offset(0, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: AppColors.cFFEFEFEF),
                     ),
-                    const SizedBox(width: 32),
-                    const Icon(Icons.expand_more, size: 16),
-                  ],
+                    color: AppColors.white,
+                    elevation: 6,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          _selectedFilter,
+                          style: AppTypography.base.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.cFF1A1D1F,
+                          ),
+                        ),
+                        SizedBox(width: 32),
+                        Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 16,
+                          color: AppColors.cFF6F767E,
+                        ),
+                      ],
+                    ),
+                    onSelected: (val) {
+                      setState(() {
+                        _selectedFilter = val;
+                      });
+                    },
+                    itemBuilder: (context) => [
+                      _buildPopupItem('Hourly', _selectedFilter == 'Hourly'),
+                      _buildPopupItem('Today', _selectedFilter == 'Today'),
+                      _buildPopupItem(
+                        'Last Week',
+                        _selectedFilter == 'Last Week',
+                      ),
+                      _buildPopupItem(
+                        'Last 30 Months',
+                        _selectedFilter == 'Last 30 Months',
+                      ),
+                      _buildPopupItem(
+                        'Last 6 Months',
+                        _selectedFilter == 'Last 6 Months',
+                      ),
+                      _buildPopupItem(
+                        'Last 1 Year',
+                        _selectedFilter == 'Last 1 Year',
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 32),
-          _buildProgressRow('Driver Behavior Issue', 50, false),
-          const SizedBox(height: 24),
-          _buildProgressRow('Route Issue', 30, false),
-          const SizedBox(height: 24),
+          SizedBox(height: 32),
+          _buildProgressRow('Driver Behavior Issue', 50, true),
+          SizedBox(height: 24),
+          _buildProgressRow('Route Issue', 30, true),
+          SizedBox(height: 24),
           _buildProgressRow('Incorrect Fare', 18, true),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildProgressRow('Technical Issue', 7, true),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildProgressRow('Other Reasons', 5, true),
         ],
+      ),
+    );
+  }
+
+  PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+    return PopupMenuItem<String>(
+      value: text,
+      height: 44,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: AppTypography.base.copyWith(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: AppColors.cFF1A1D1F,
+              ),
+            ),
+            if (isSelected)
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.cFF00A86B,
+                size: 18,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -301,7 +397,7 @@ class _SupportTicketsChartCard extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         LayoutBuilder(
           builder: (context, constraints) {
             return Stack(
@@ -310,7 +406,7 @@ class _SupportTicketsChartCard extends StatelessWidget {
                   height: 8,
                   width: constraints.maxWidth,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3F4F6),
+                    color: AppColors.cFFF3F4F6,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -340,26 +436,23 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Recent Document Submissions', style: AppTypography.h3),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE0F2F1),
+                    color: AppColors.cFFE0F2F1,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
@@ -387,7 +480,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
               _Badg('BANK', false),
             ],
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Divider(height: 1),
           ),
@@ -406,9 +499,9 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              border: Border(top: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Center(
               child: Text(
@@ -434,11 +527,11 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
     required List<_Badg> badges,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Container(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: const Color(0xFFF9FAFB),
+          color: AppColors.cFFF9FAFB,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -447,19 +540,19 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.grey.shade300,
-                  child: Icon(Icons.person, color: Colors.grey.shade600),
+                  backgroundColor: AppColors.grey.shade300,
+                  child: Icon(Icons.person, color: AppColors.grey.shade600),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         name,
-                        style: AppTypography.bodySmall.copyWith(
+                        style: AppTypography.h4.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          // fontSize: 14,
                         ),
                       ),
                       Text(
@@ -475,49 +568,44 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
                 OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Colors.grey.shade300),
+                    side: BorderSide(color: AppColors.grey.shade300),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                   child: Text(
                     'VIEW FILE',
                     style: AppTypography.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      fontSize: 11,
+                      color: AppColors.black87,
+                      // fontSize: 11,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   ),
                   child: Text(
                     'APPROVE',
                     style: AppTypography.bodySmall.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: 11,
+                      color: AppColors.white,
+                      // fontSize: 11,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -541,7 +629,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
                 return Stack(
@@ -550,7 +638,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
                       height: 6,
                       width: constraints.maxWidth,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: AppColors.grey.shade300,
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
@@ -566,7 +654,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
                 );
               },
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -582,12 +670,12 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
 
   Widget _buildStatusChip(String label, bool isDone) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isDone ? const Color(0xFFE8F5E9) : const Color(0xFFFFF8E1),
+        color: isDone ? AppColors.cFFE8F5E9 : AppColors.cFFFFF8E1,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDone ? Colors.green.shade200 : Colors.amber.shade200,
+          color: isDone ? AppColors.green.shade200 : AppColors.amber.shade200,
         ),
       ),
       child: Row(
@@ -596,16 +684,16 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
           Text(
             label,
             style: AppTypography.bodySmall.copyWith(
-              color: isDone ? AppColors.primary : Colors.amber.shade800,
+              color: isDone ? AppColors.primary : AppColors.amber.shade800,
               fontWeight: FontWeight.bold,
               fontSize: 9,
             ),
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: 4),
           Icon(
             isDone ? Icons.check : Icons.circle,
             size: 10,
-            color: isDone ? AppColors.primary : Colors.amber.shade800,
+            color: isDone ? AppColors.primary : AppColors.amber.shade800,
           ),
         ],
       ),
@@ -626,26 +714,23 @@ class _RecentSupportTicketsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Support Tickets', style: AppTypography.h3),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFEBEE),
+                    color: AppColors.cFFFFEBEE,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -653,7 +738,7 @@ class _RecentSupportTicketsCard extends StatelessWidget {
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.error,
                       fontWeight: FontWeight.bold,
-                      fontSize: 10,
+                      // fontSize: 10,
                     ),
                   ),
                 ),
@@ -665,13 +750,13 @@ class _RecentSupportTicketsCard extends StatelessWidget {
             title: 'Amit Shah - Payment Failed',
             time: '3 mins ago',
           ),
-          const Divider(height: 1),
+          Divider(height: 1),
           _buildTicketRow(
             id: '#TK-8819',
             title: 'Sonia G. - Route issue',
             time: '12 mins ago',
           ),
-          const Divider(height: 1),
+          Divider(height: 1),
           _buildTicketRow(
             id: '#TK-8819',
             title: 'Yogesh S - Driver behavior',
@@ -679,9 +764,9 @@ class _RecentSupportTicketsCard extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 20),
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              border: Border(top: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Center(
               child: Text(
@@ -705,7 +790,7 @@ class _RecentSupportTicketsCard extends StatelessWidget {
     required String time,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -716,34 +801,40 @@ class _RecentSupportTicketsCard extends StatelessWidget {
                 Text(
                   id,
                   style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
+                    color: AppColors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   title,
                   style: AppTypography.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: AppColors.black87,
                   ),
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  time,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                    fontSize: 11,
-                  ),
+                SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      time,
+                      style: AppTypography.bodySmall.copyWith(
+                        color: AppColors.textSecondary,
+                        // fontSize: 11,
+                      ),
+                    ),
+                    Text(
+                      'RESOLVE >',
+                      style: AppTypography.bodySmall.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                        // fontSize: 11,
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ),
-          Text(
-            'RESOLVE >',
-            style: AppTypography.bodySmall.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 11,
             ),
           ),
         ],
@@ -758,17 +849,17 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Global Document Status', style: AppTypography.h3),
-          const SizedBox(height: 40),
+          SizedBox(height: 40),
           Center(
             child: Stack(
               alignment: Alignment.center,
@@ -779,7 +870,7 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: 1.0,
                     strokeWidth: 16,
-                    color: Colors.grey.shade100,
+                    color: AppColors.grey.shade100,
                   ),
                 ),
                 SizedBox(
@@ -797,7 +888,7 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
                   child: CircularProgressIndicator(
                     value: 0.15,
                     strokeWidth: 16,
-                    color: Colors.amber.shade600,
+                    color: AppColors.amber.shade600,
                   ),
                 ),
                 SizedBox(
@@ -833,19 +924,19 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 48),
+          SizedBox(height: 48),
           _buildLegendRow(
             color: AppColors.primary,
             label: 'Verified',
             pct: '75%',
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildLegendRow(
-            color: Colors.amber.shade600,
+            color: AppColors.amber.shade600,
             label: 'Pending Review',
             pct: '15%',
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildLegendRow(
             color: AppColors.error,
             label: 'Expired/Rejected',
@@ -866,11 +957,11 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.circle, size: 8, color: color),
-            const SizedBox(width: 8),
+            Icon(Icons.circle, size: 12, color: color),
+            SizedBox(width: 8),
             Text(
               label,
-              style: AppTypography.bodySmall.copyWith(
+              style: AppTypography.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -878,7 +969,7 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
         ),
         Text(
           pct,
-          style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.bold),
+          style: AppTypography.bodyRegular.copyWith(fontWeight: FontWeight.bold),
         ),
       ],
     );

@@ -7,7 +7,7 @@ import 'rider_cancellation_screen.dart';
 import 'driver_cancellation_screen.dart';
 
 class CancellationScreen extends StatelessWidget {
-  const CancellationScreen({super.key});
+  CancellationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CancellationScreen extends StatelessWidget {
       builder: (context, constraints) {
         final isTablet = constraints.maxWidth < 1100;
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -26,22 +26,22 @@ class CancellationScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const RiderCancellationScreen(),
+                        builder: (context) => RiderCancellationScreen(),
                       ),
                     );
                   } else if (index == 2) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DriverCancellationScreen(),
+                        builder: (context) => DriverCancellationScreen(),
                       ),
                     );
                   }
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               if (isTablet)
-                const Column(
+                Column(
                   children: [
                     ReasonsForCancellation(),
                     SizedBox(height: 16),
@@ -51,7 +51,7 @@ class CancellationScreen extends StatelessWidget {
                   ],
                 )
               else
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
@@ -73,3 +73,4 @@ class CancellationScreen extends StatelessWidget {
     );
   }
 }
+

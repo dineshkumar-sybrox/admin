@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'payments_state.dart';
 
 class PaymentsCubit extends Cubit<PaymentsState> {
   PaymentsCubit()
     : super(
-        const PaymentsState(
+        PaymentsState(
           allTransactions: [],
           filteredTransactions: [],
           allPayouts: [],
@@ -27,8 +28,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentMethod': 'UPI',
         'paymentIcon': Icons.account_balance_wallet_outlined,
         'status': 'COMPLETED',
-        'statusColor': const Color(0xFF2E5BFF),
-        'statusBgColor': const Color(0xFFEAF0FF),
+        'statusColor': AppColors.cFF2E5BFF,
+        'statusBgColor': AppColors.cFFEAF0FF,
         'type': 'Cab',
       },
       {
@@ -41,8 +42,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentMethod': 'Cash',
         'paymentIcon': Icons.payments_outlined,
         'status': 'COMPLETED',
-        'statusColor': const Color(0xFF00A86B),
-        'statusBgColor': const Color(0xFFE8FDF2),
+        'statusColor': AppColors.cFF00A86B,
+        'statusBgColor': AppColors.cFFE8FDF2,
         'type': 'Cab',
       },
       {
@@ -55,8 +56,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentMethod': 'UPI',
         'paymentIcon': Icons.account_balance_wallet_outlined,
         'status': 'FAILED',
-        'statusColor': const Color(0xFFEA3546),
-        'statusBgColor': const Color(0xFFFFECEE),
+        'statusColor': AppColors.cFFEA3546,
+        'statusBgColor': AppColors.cFFFFECEE,
         'type': 'Bike/Scooter',
       },
       {
@@ -69,8 +70,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentMethod': 'UPI',
         'paymentIcon': Icons.account_balance_wallet_outlined,
         'status': 'COMPLETED',
-        'statusColor': const Color(0xFF00A86B),
-        'statusBgColor': const Color(0xFFE8FDF2),
+        'statusColor': AppColors.cFF00A86B,
+        'statusBgColor': AppColors.cFFE8FDF2,
         'type': 'Auto',
       },
     ];
@@ -79,8 +80,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
       {
         'id': '#PAY-99210',
         'vehicleType': 'CAB',
-        'vehicleColor': const Color(0xFFFFA629),
-        'vehicleBgColor': const Color(0xFFFFF7DB),
+        'vehicleColor': AppColors.cFFFFA629,
+        'vehicleBgColor': AppColors.cFFFFF7DB,
         'dateAndTime': '24 Feb 2026,\n08:45 PM',
         'driverName': 'Rahul Jaiswal',
         'driverDesc': 'Driver',
@@ -88,14 +89,14 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentTransfer': 'UPI',
         'paymentIcon': Icons.account_balance_wallet_outlined,
         'status': 'SUCCESSFUL',
-        'statusColor': const Color(0xFF00C46B),
-        'statusBgColor': const Color(0xFFE8Fdf2),
+        'statusColor': AppColors.cFF00C46B,
+        'statusBgColor': AppColors.cFFE8FDF2,
       },
       {
         'id': '#PAY-99211',
         'vehicleType': 'BIKE/SCOOTER',
-        'vehicleColor': const Color(0xFF00A86B),
-        'vehicleBgColor': const Color(0xFFE8FDF2),
+        'vehicleColor': AppColors.cFF00A86B,
+        'vehicleBgColor': AppColors.cFFE8FDF2,
         'dateAndTime': '24 Feb 2026,\n08:45 PM',
         'driverName': 'Sam Yogi',
         'driverDesc': 'Driver',
@@ -103,14 +104,14 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentTransfer': 'Bank',
         'paymentIcon': Icons.account_balance_outlined,
         'status': 'PENDING',
-        'statusColor': const Color(0xFFD4A000),
-        'statusBgColor': const Color(0xFFFFF7DB),
+        'statusColor': AppColors.cFFD4A000,
+        'statusBgColor': AppColors.cFFFFF7DB,
       },
       {
         'id': '#PAY-99212',
         'vehicleType': 'CAB',
-        'vehicleColor': const Color(0xFFFFA629),
-        'vehicleBgColor': const Color(0xFFFFF7DB),
+        'vehicleColor': AppColors.cFFFFA629,
+        'vehicleBgColor': AppColors.cFFFFF7DB,
         'dateAndTime': '24 Feb 2026,\n08:45 PM',
         'driverName': 'Rahul Singh',
         'driverDesc': 'Driver',
@@ -118,14 +119,14 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentTransfer': 'Bank',
         'paymentIcon': Icons.account_balance_outlined,
         'status': 'REJECTED',
-        'statusColor': const Color(0xFFEA3546),
-        'statusBgColor': const Color(0xFFFFECEE),
+        'statusColor': AppColors.cFFEA3546,
+        'statusBgColor': AppColors.cFFFFECEE,
       },
       {
         'id': '#PAY-99213',
         'vehicleType': 'AUTO',
-        'vehicleColor': const Color(0xFF2E5BFF),
-        'vehicleBgColor': const Color(0xFFEAF0FF),
+        'vehicleColor': AppColors.cFF2E5BFF,
+        'vehicleBgColor': AppColors.cFFEAF0FF,
         'dateAndTime': '24 Feb 2026,\n08:45 PM',
         'driverName': 'Aruk Kumar',
         'driverDesc': 'Driver',
@@ -133,8 +134,8 @@ class PaymentsCubit extends Cubit<PaymentsState> {
         'paymentTransfer': 'UPI',
         'paymentIcon': Icons.account_balance_wallet_outlined,
         'status': 'SUCCESSFUL',
-        'statusColor': const Color(0xFF00C46B),
-        'statusBgColor': const Color(0xFFE8Fdf2),
+        'statusColor': AppColors.cFF00C46B,
+        'statusBgColor': AppColors.cFFE8FDF2,
       },
     ];
 
@@ -271,3 +272,6 @@ class PaymentsCubit extends Cubit<PaymentsState> {
     emit(state.copyWith(filteredPayouts: filtered));
   }
 }
+
+
+

@@ -17,7 +17,7 @@ import '../widgets/common_feedback_tags_card.dart';
 import '../widgets/critical_feedback_logs_card.dart';
 
 class RiderOverviewTab extends StatefulWidget {
-  const RiderOverviewTab({super.key});
+  RiderOverviewTab({super.key});
 
   @override
   State<RiderOverviewTab> createState() => _RiderOverviewTabState();
@@ -34,7 +34,7 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
         final isSmallScreen = width < 900;
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.only(
+          padding: EdgeInsets.only(
             top: 24,
             bottom: 48,
           ), // Move padding here
@@ -48,15 +48,15 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                     Row(
                       children: [
                         Expanded(child: _buildStatsCard1()),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Expanded(child: _buildStatsCard2()),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Row(
                       children: [
                         Expanded(child: _buildStatsCard3()),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Expanded(child: _buildStatsCard4()),
                       ],
                     ),
@@ -66,21 +66,21 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                 Row(
                   children: [
                     Expanded(child: _buildStatsCard1()),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Expanded(child: _buildStatsCard2()),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Expanded(child: _buildStatsCard3()),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Expanded(child: _buildStatsCard4()),
                   ],
                 ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Activity + Safety Row
               if (_selectedStatIndex == 1) ...[
                 if (isSmallScreen)
-                  const Column(
+                  Column(
                     children: [
                       MonthlySpendingTrendChart(),
                       SizedBox(height: 24),
@@ -91,19 +91,19 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 2,
                         child: MonthlySpendingTrendChart(),
                       ),
-                      const SizedBox(width: 24),
-                      const Expanded(flex: 1, child: SpendByCategoryChart()),
+                      SizedBox(width: 24),
+                      Expanded(flex: 1, child: SpendByCategoryChart()),
                     ],
                   ),
-                const SizedBox(height: 24),
-                const TransactionsList(),
+                SizedBox(height: 24),
+                TransactionsList(),
               ] else if (_selectedStatIndex == 2) ...[
                 if (isSmallScreen)
-                  const Column(
+                  Column(
                     children: [
                       TotalCancellationRateCard(),
                       SizedBox(height: 24),
@@ -114,21 +114,21 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 1,
                         child: TotalCancellationRateCard(),
                       ),
-                      const SizedBox(width: 24),
-                      const Expanded(flex: 2, child: CancellationReasonsCard()),
+                      SizedBox(width: 24),
+                      Expanded(flex: 2, child: CancellationReasonsCard()),
                     ],
                   ),
-                const SizedBox(height: 24),
-                const CancellationTimelineChart(),
-                const SizedBox(height: 24),
-                const CancellationLogTable(),
+                SizedBox(height: 24),
+                CancellationTimelineChart(),
+                SizedBox(height: 24),
+                CancellationLogTable(),
               ] else if (_selectedStatIndex == 3) ...[
                 if (isSmallScreen)
-                  const Column(
+                  Column(
                     children: [
                       RatingForRiderCard(),
                       SizedBox(height: 24),
@@ -141,7 +141,7 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(
+                      Expanded(
                         flex: 5,
                         child: Column(
                           children: [
@@ -151,8 +151,8 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 24),
-                      const Expanded(
+                      SizedBox(width: 24),
+                      Expanded(
                         flex: 4,
                         child: CriticalFeedbackLogsCard(),
                       ),
@@ -160,7 +160,7 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   ),
               ] else ...[
                 if (isSmallScreen)
-                  const Column(
+                  Column(
                     children: [
                       ActivityTrendChart(),
                       SizedBox(height: 24),
@@ -171,15 +171,15 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(flex: 2, child: ActivityTrendChart()),
-                      const SizedBox(width: 24),
-                      const Expanded(flex: 1, child: TrustSafetyPanel()),
+                      Expanded(flex: 2, child: ActivityTrendChart()),
+                      SizedBox(width: 24),
+                      Expanded(flex: 1, child: TrustSafetyPanel()),
                     ],
                   ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 // Outcome + Summary Row
                 if (isSmallScreen)
-                  const Column(
+                  Column(
                     children: [
                       RideOutcomeDistribution(),
                       SizedBox(height: 24),
@@ -190,9 +190,9 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Expanded(flex: 3, child: RideOutcomeDistribution()),
-                      const SizedBox(width: 24),
-                      const Expanded(flex: 2, child: LastRideSummary()),
+                      Expanded(flex: 3, child: RideOutcomeDistribution()),
+                      SizedBox(width: 24),
+                      Expanded(flex: 2, child: LastRideSummary()),
                     ],
                   ),
               ],
@@ -234,16 +234,18 @@ class _RiderOverviewTabState extends State<RiderOverviewTab> {
     title: 'Avg Rating',
     value: '4.8',
     isSelected: _selectedStatIndex == 3,
-    activeColor: Colors.amber,
+    activeColor: AppColors.amber,
     onTap: () => setState(() => _selectedStatIndex = 3),
     extraContent: Row(
       children: const [
-        Icon(Icons.star, size: 16, color: Colors.amber),
-        Icon(Icons.star, size: 16, color: Colors.amber),
-        Icon(Icons.star, size: 16, color: Colors.amber),
-        Icon(Icons.star, size: 16, color: Colors.amber),
-        Icon(Icons.star_half, size: 16, color: Colors.amber),
+        Icon(Icons.star, size: 16, color: AppColors.amber),
+        Icon(Icons.star, size: 16, color: AppColors.amber),
+        Icon(Icons.star, size: 16, color: AppColors.amber),
+        Icon(Icons.star, size: 16, color: AppColors.amber),
+        Icon(Icons.star_half, size: 16, color: AppColors.amber),
       ],
     ),
   );
 }
+
+

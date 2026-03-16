@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class TransactionsList extends StatefulWidget {
-  const TransactionsList({super.key});
+  TransactionsList({super.key});
 
   @override
   State<TransactionsList> createState() => _TransactionsListState();
@@ -22,7 +23,7 @@ class _TransactionsListState extends State<TransactionsList> {
         side: BorderSide(color: AppColors.divider, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -32,18 +33,18 @@ class _TransactionsListState extends State<TransactionsList> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Transactions',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Transaction history',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                       ),
@@ -54,39 +55,39 @@ class _TransactionsListState extends State<TransactionsList> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 14,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFFEFEFEF)),
+                        border: Border.all(color: AppColors.cFFEFEFEF),
                       ),
                       child: PopupMenuButton<String>(
-                        offset: const Offset(0, 40),
+                        offset: Offset(0, 40),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(color: Color(0xFFEFEFEF)),
+                          side: BorderSide(color: AppColors.cFFEFEFEF),
                         ),
-                        color: Colors.white,
+                        color: AppColors.white,
                         elevation: 6,
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               _selectedFilter,
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xFF1A1D1F),
+                                color: AppColors.cFF1A1D1F,
                               ),
                             ),
-                            const SizedBox(width: 32),
-                            const Icon(
+                            SizedBox(width: 32),
+                            Icon(
                               Icons.keyboard_arrow_down_rounded,
                               size: 16,
-                              color: Color(0xFF6F767E),
+                              color: AppColors.cFF6F767E,
                             ),
                           ],
                         ),
@@ -113,14 +114,14 @@ class _TransactionsListState extends State<TransactionsList> {
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: AppColors.divider),
                         ),
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'View All Rides',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           color: AppColors.textSecondary,
                           fontWeight: FontWeight.bold,
                         ),
@@ -130,7 +131,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
@@ -148,9 +149,9 @@ class _TransactionsListState extends State<TransactionsList> {
                       dataRowMinHeight: 60,
                       dataRowMaxHeight: 60,
                       headingRowColor: MaterialStateProperty.all(
-                        Color.fromARGB(255, 248, 248, 248),
+                        AppColors.cFFF8F8F8,
                       ),
-                      headingTextStyle: const TextStyle(
+                      headingTextStyle: AppTypography.base.copyWith(
                         color: AppColors.textSecondary,
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -172,8 +173,8 @@ class _TransactionsListState extends State<TransactionsList> {
                           paymentMethod: 'G-Pay',
                           amount: '₹452.00',
                           textColor: AppColors.textPrimary,
-                          badgeColor: const Color(0xFFE8F0FE), // Light blue
-                          badgeTextColor: const Color(0xFF1967D2), // Dark blue
+                          badgeColor: AppColors.cFFE8F0FE, // Light blue
+                          badgeTextColor: AppColors.cFF1967D2, // Dark blue
                           icon: Icons.account_balance_wallet_outlined,
                         ),
                         _buildTransactionRow(
@@ -184,8 +185,8 @@ class _TransactionsListState extends State<TransactionsList> {
                           paymentMethod: 'Wallet Credits',
                           amount: '₹1,180.00',
                           textColor: AppColors.textPrimary,
-                          badgeColor: const Color(0xFFFEF3C7), // Light amber
-                          badgeTextColor: const Color(0xFFD97706), // Dark amber
+                          badgeColor: AppColors.cFFFEF3C7, // Light amber
+                          badgeTextColor: AppColors.cFFD97706, // Dark amber
                           icon: Icons.account_balance_wallet_outlined,
                         ),
                         _buildTransactionRow(
@@ -196,8 +197,8 @@ class _TransactionsListState extends State<TransactionsList> {
                           paymentMethod: 'G-Pay',
                           amount: '₹624.50',
                           textColor: AppColors.textPrimary,
-                          badgeColor: const Color(0xFFD1FAE5), // Light emerald
-                          badgeTextColor: const Color(
+                          badgeColor: AppColors.cFFD1FAE5, // Light emerald
+                          badgeTextColor: Color(
                             0xFF047857,
                           ), // Dark emerald
                           icon: Icons.account_balance_wallet_outlined,
@@ -218,24 +219,24 @@ class _TransactionsListState extends State<TransactionsList> {
     return PopupMenuItem<String>(
       value: text,
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: const Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle_outline_rounded,
-                color: Color(0xFF00A86B),
+                color: AppColors.cFF00A86B,
                 size: 18,
               ),
           ],
@@ -265,16 +266,16 @@ class _TransactionsListState extends State<TransactionsList> {
             children: [
               Text(
                 date,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                   color: AppColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 time,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 12,
                   color: AppColors.textSecondary,
                 ),
@@ -285,7 +286,7 @@ class _TransactionsListState extends State<TransactionsList> {
         DataCell(
           Text(
             route,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 13,
               color: AppColors.textPrimary,
@@ -294,14 +295,14 @@ class _TransactionsListState extends State<TransactionsList> {
         ),
         DataCell(
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
               color: badgeColor,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               category,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 color: badgeTextColor,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -314,10 +315,10 @@ class _TransactionsListState extends State<TransactionsList> {
           Row(
             children: [
               Icon(icon, size: 16, color: AppColors.textSecondary),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 paymentMethod,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                   color: AppColors.textPrimary,
@@ -329,7 +330,7 @@ class _TransactionsListState extends State<TransactionsList> {
         DataCell(
           Text(
             amount,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 13,
               color: AppColors.textPrimary,
@@ -340,3 +341,8 @@ class _TransactionsListState extends State<TransactionsList> {
     );
   }
 }
+
+
+
+
+

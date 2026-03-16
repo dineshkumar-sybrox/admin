@@ -20,7 +20,7 @@ class ExcelExportHelper {
 
       // The excel package creates 'Sheet1' by default.
       // Rename it to 'Data' to be more descriptive and avoid extra sheets.
-      const String sheetName = 'Data';
+      String sheetName = 'Data';
       if (excel.tables.containsKey('Sheet1')) {
         excel.rename('Sheet1', sheetName);
       }
@@ -72,7 +72,7 @@ class ExcelExportHelper {
           ..click();
 
         // Small delay before revoking to ensure download starts
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(Duration(milliseconds: 500));
         html.Url.revokeObjectUrl(url);
       }
     } catch (e) {
@@ -80,3 +80,4 @@ class ExcelExportHelper {
     }
   }
 }
+

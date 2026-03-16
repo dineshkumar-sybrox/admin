@@ -9,7 +9,7 @@ import 'refund_ticket_page.dart';
 import 'safety_tab.dart';
 
 class RiderOverviewPage extends StatefulWidget {
-  const RiderOverviewPage({super.key});
+  RiderOverviewPage({super.key});
 
   @override
   State<RiderOverviewPage> createState() => _RiderOverviewPageState();
@@ -60,9 +60,9 @@ class _RiderOverviewPageState extends State<RiderOverviewPage>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      const RiderOverviewTab(), // Overview
-                      const RideHistoryTab(), // Ride History
-                      const WalletCoinsTab(), // Wallet & Coins
+                      RiderOverviewTab(), // Overview
+                      RideHistoryTab(), // Ride History
+                      WalletCoinsTab(), // Wallet & Coins
                       ComplaintsTab(
                         onIssueRefund: () {
                           setState(() {
@@ -70,7 +70,7 @@ class _RiderOverviewPageState extends State<RiderOverviewPage>
                           });
                         },
                       ), // Complaints
-                      const SafetyTab(),
+                      SafetyTab(),
                     ],
                   ),
                 ),
@@ -79,3 +79,4 @@ class _RiderOverviewPageState extends State<RiderOverviewPage>
     );
   }
 }
+

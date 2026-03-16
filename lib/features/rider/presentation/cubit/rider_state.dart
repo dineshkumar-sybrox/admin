@@ -12,7 +12,7 @@ class Rider {
   final String status;
   final String? reasonForSuspend;
 
-  const Rider({
+  Rider({
     required this.id,
     required this.name,
     required this.avatarInitials,
@@ -43,7 +43,7 @@ class RiderState extends Equatable {
   final int bannedRiders;
   final bool isExporting;
 
-  const RiderState({
+  RiderState({
     this.isLoading = true,
     this.riders = const [],
     this.filteredRiders = const [],
@@ -108,3 +108,4 @@ class RiderState extends Equatable {
     isExporting,
   ];
 }
+

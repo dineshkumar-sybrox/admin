@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class AdjustWalletDialog extends StatefulWidget {
   final String riderName;
   final String currentBalance;
 
-  const AdjustWalletDialog({
+  AdjustWalletDialog({
     super.key,
     required this.riderName,
     required this.currentBalance,
@@ -23,10 +24,10 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       child: Container(
         width: 400,
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -37,7 +38,7 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
               children: [
                 Text(
                   'Adjust Wallet - ${widget.riderName}',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -45,17 +46,17 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.close,
                     color: AppColors.textSecondary,
                     size: 20,
                   ),
                   padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
+                  constraints: BoxConstraints(),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Toggle Buttons
             Row(
@@ -64,9 +65,9 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                   child: InkWell(
                     onTap: () => setState(() => isAddMoney = true),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         border: Border.all(
                           color: isAddMoney
                               ? AppColors.primary
@@ -85,10 +86,10 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                                 ? AppColors.textPrimary
                                 : AppColors.textSecondary,
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Text(
                             'Add Money',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: isAddMoney
                                   ? AppColors.textPrimary
                                   : AppColors.textSecondary,
@@ -103,14 +104,14 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: InkWell(
                     onTap: () => setState(() => isAddMoney = false),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      padding: EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         border: Border.all(
                           color: !isAddMoney
                               ? AppColors.primary
@@ -129,10 +130,10 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                                 ? AppColors.textPrimary
                                 : AppColors.textSecondary,
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Text(
                             'Add Coin',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: !isAddMoney
                                   ? AppColors.textPrimary
                                   : AppColors.textSecondary,
@@ -149,7 +150,7 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Amount & Reason
             Row(
@@ -158,40 +159,40 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'AMOUNT (₹)',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       TextField(
                         decoration: InputDecoration(
                           hintText: '130',
-                          hintStyle: const TextStyle(
+                          hintStyle: AppTypography.base.copyWith(
                             color: AppColors.textPrimary,
                           ),
-                          contentPadding: const EdgeInsets.symmetric(
+                          contentPadding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: AppColors.divider,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: AppColors.divider,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: AppColors.primary,
                             ),
                           ),
@@ -201,22 +202,22 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'REASON',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
                           border: Border.all(color: AppColors.divider),
                           borderRadius: BorderRadius.circular(8),
@@ -225,7 +226,7 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                           child: DropdownButton<String>(
                             value: selectedReason,
                             isExpanded: true,
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.keyboard_arrow_down,
                               color: AppColors.textSecondary,
                             ),
@@ -236,7 +237,7 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                                         value: reason,
                                         child: Text(
                                           reason,
-                                          style: const TextStyle(
+                                          style: AppTypography.base.copyWith(
                                             fontSize: 14,
                                             color: AppColors.textPrimary,
                                           ),
@@ -259,49 +260,49 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Admin Remarks
-            const Text(
+            Text(
               'ADMIN REMARKS',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             TextField(
               maxLines: 4,
               decoration: InputDecoration(
                 hintText: 'Describe the reason for adjustment...',
-                hintStyle: const TextStyle(
+                hintStyle: AppTypography.base.copyWith(
                   color: AppColors.textSecondary,
                   fontSize: 14,
                 ),
-                contentPadding: const EdgeInsets.symmetric(
+                contentPadding: EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 12,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColors.divider),
+                  borderSide: BorderSide(color: AppColors.divider),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColors.divider),
+                  borderSide: BorderSide(color: AppColors.divider),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: BorderSide(color: AppColors.primary),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Current Balance
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
                 color: AppColors.scaffoldBackground,
                 borderRadius: BorderRadius.circular(8),
@@ -309,16 +310,16 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Current Balance:',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 14,
                       color: AppColors.textPrimary,
                     ),
                   ),
                   Text(
                     '₹${widget.currentBalance}',
-                    style: const TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimary,
@@ -327,7 +328,7 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Confirm Button
             SizedBox(
@@ -336,29 +337,29 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  foregroundColor: AppColors.white,
+                  padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Confirm Adjustment',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Center(
               child: TextButton(
                 onPressed: () => Navigator.pop(context),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.textSecondary,
                 ),
-                child: const Text(
+                child: Text(
                   'Cancel',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -368,3 +369,6 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
     );
   }
 }
+
+
+

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class SafetyTab extends StatelessWidget {
-  const SafetyTab({super.key});
+  SafetyTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(24.0),
+      padding: EdgeInsets.all(24.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,27 +25,27 @@ class SafetyTab extends StatelessWidget {
                       child: _buildStatCard(
                         title: 'TOTAL SOS ALERTS',
                         value: '03',
-                        valueColor: const Color(0xFFE11D48), // Pink/Red
+                        valueColor: AppColors.cFFE11D48, // Pink/Red
                         subtitle: 'Lifetime total',
                       ),
                     ),
-                    const SizedBox(width: 24),
+                    SizedBox(width: 24),
                     Expanded(
                       child: _buildStatCard(
                         title: 'SAFETY SCORE',
                         value: '92/100',
-                        valueColor: const Color(0xFF0D9488), // Teal
+                        valueColor: AppColors.cFF0D9488, // Teal
                         subtitle: 'Based on violations',
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // SOS Incident History
                 _buildIncidentHistoryCard(context),
 
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Live Location Sharing Log
                 _buildLiveLocationCard(),
@@ -52,7 +53,7 @@ class SafetyTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(width: 24),
+          SizedBox(width: 24),
 
           // Right Column
           Expanded(
@@ -61,7 +62,7 @@ class SafetyTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildActiveIncidentSelection(),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 _buildDriverDetailsLog(),
               ],
             ),
@@ -78,9 +79,9 @@ class SafetyTab extends StatelessWidget {
     required String subtitle,
   }) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -89,26 +90,26 @@ class SafetyTab extends StatelessWidget {
         children: [
           Text(
             title,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.bold,
               color: AppColors.textSecondary,
               letterSpacing: 0.5,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             value,
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: valueColor,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             subtitle,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 14,
               color: AppColors.textSecondary,
             ),
@@ -121,49 +122,49 @@ class SafetyTab extends StatelessWidget {
   Widget _buildIncidentHistoryCard(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children:  [
                 Text(
                   'SOS Incident History',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   'Detailed log of safety triggers',
-                  style: TextStyle(fontSize: 13, color: Color(0xFF9EA5AD)),
+                  style: AppTypography.base.copyWith(fontSize: 13, color: AppColors.cFF9EA5AD),
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFF0F1F3)),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
           SizedBox(
             width: double.infinity,
             child: DataTable(
               showCheckboxColumn: false,
-              headingRowColor: WidgetStateProperty.all(Colors.white),
+              headingRowColor: WidgetStateProperty.all(AppColors.white),
               dataRowMaxHeight: 80,
               dataRowMinHeight: 80,
               horizontalMargin: 24,
               columnSpacing: 24,
               dividerThickness: 1,
-              headingTextStyle: const TextStyle(
+              headingTextStyle: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF6F767E),
+                color: AppColors.cFF6F767E,
                 letterSpacing: 0.5,
               ),
               columns: const [
@@ -178,8 +179,8 @@ class SafetyTab extends StatelessWidget {
                   time: '07:45 PM',
                   rideId: '#RID- 44210',
                   status: 'Active',
-                  statusColor: const Color(0xFF00C46B), // Green
-                  bgColor: const Color(
+                  statusColor: AppColors.cFF00C46B, // Green
+                  bgColor: Color(
                     0xFFCFEFE2,
                   ), // Light green for active item
                 ),
@@ -188,14 +189,14 @@ class SafetyTab extends StatelessWidget {
                   time: '08:12 PM',
                   rideId: '#RID- 39822',
                   status: 'Resolved',
-                  statusColor: const Color(0xFF00C46B),
+                  statusColor: AppColors.cFF00C46B,
                 ),
                 _buildIncidentRow(
                   date: '04 Aug, 2025',
                   time: '10:30 AM',
                   rideId: '#RID- 31004',
                   status: 'False Alarm',
-                  statusColor: const Color(0xFF00C46B),
+                  statusColor: AppColors.cFF00C46B,
                 ),
               ],
             ),
@@ -211,7 +212,7 @@ class SafetyTab extends StatelessWidget {
     required String rideId,
     required String status,
     required Color statusColor,
-    Color bgColor = Colors.transparent,
+    Color bgColor = AppColors.transparent,
   }) {
     return DataRow(
       color: WidgetStateProperty.all(bgColor),
@@ -223,19 +224,19 @@ class SafetyTab extends StatelessWidget {
             children: [
               Text(
                 date,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w700,
                   fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 time,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: 11,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
             ],
@@ -244,10 +245,10 @@ class SafetyTab extends StatelessWidget {
         DataCell(
           Text(
             rideId,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontWeight: FontWeight.w700,
               fontSize: 13,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
@@ -263,13 +264,13 @@ class SafetyTab extends StatelessWidget {
                   color: statusColor,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 status,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
             ],
@@ -280,15 +281,15 @@ class SafetyTab extends StatelessWidget {
             onPressed: () {},
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
-              minimumSize: const Size(0, 0),
+              minimumSize: Size(0, 0),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Text(
+            child: Text(
               'View Logs',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontWeight: FontWeight.w800,
                 fontSize: 13,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
           ),
@@ -300,7 +301,7 @@ class SafetyTab extends StatelessWidget {
   Widget _buildLiveLocationCard() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -308,13 +309,13 @@ class SafetyTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Live Location Sharing Log',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -323,7 +324,7 @@ class SafetyTab extends StatelessWidget {
                 SizedBox(height: 4),
                 Text(
                   'Records of location sharing with emergency contacts',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -349,41 +350,41 @@ class SafetyTab extends StatelessWidget {
 
   Widget _buildLiveLocationRow(String title, String subtitle, String time) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              color: Color(0xFFF9FAFB),
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.cFFF9FAFB,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.my_location,
               size: 20,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   subtitle,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 13,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
               ],
@@ -391,10 +392,10 @@ class SafetyTab extends StatelessWidget {
           ),
           Text(
             time,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF9EA5AD),
+              color: AppColors.cFF9EA5AD,
             ),
           ),
         ],
@@ -405,45 +406,45 @@ class SafetyTab extends StatelessWidget {
   Widget _buildActiveIncidentSelection() {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFFEF2F2), // Light red bg
+        color: AppColors.cFFFEF2F2, // Light red bg
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFFECACA)), // Red border
+        border: Border.all(color: AppColors.cFFFECACA), // Red border
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'ACTIVE INCIDENT SELECTION',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFFE11D48),
+                        color: AppColors.cFFE11D48,
                         letterSpacing: 0.5,
                       ),
                     ),
                     SizedBox(height: 4),
                     Text(
                       'RID-44210 Context',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF6F767E),
+                        color: AppColors.cFF6F767E,
                       ),
                     ),
                   ],
                 ),
-                const Icon(
+                Icon(
                   Icons.info_outline,
-                  color: Color(0xFFE11D48),
+                  color: AppColors.cFFE11D48,
                   size: 20,
                 ),
               ],
@@ -452,18 +453,18 @@ class SafetyTab extends StatelessWidget {
 
           // Map Placeholder Image
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Container(
               height: 180,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                image: const DecorationImage(
+                image: DecorationImage(
                   image: NetworkImage(
                     'https://static.mapmyindia.com/images/mmi_maps.png', // Temporary placeholder for India Map view
                   ),
                   fit: BoxFit.cover,
                 ),
-                border: Border.all(color: const Color(0xFFEFEFEF)),
+                border: Border.all(color: AppColors.cFFEFEFEF),
               ),
               child: Stack(
                 children: [
@@ -471,39 +472,39 @@ class SafetyTab extends StatelessWidget {
                     top: 16,
                     right: 16,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
+                            color: AppColors.black.withValues(alpha: 0.05),
                             blurRadius: 4,
-                            offset: const Offset(0, 2),
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
+                        children: [
                           Text(
                             'ALERT LAT/LONG',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 9,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF6F767E),
+                              color: AppColors.cFF6F767E,
                             ),
                           ),
                           SizedBox(height: 2),
                           Text(
                             '12.9716° N, 77.5946° E',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF1A1D1F),
+                              color: AppColors.cFF1A1D1F,
                             ),
                           ),
                         ],
@@ -514,54 +515,54 @@ class SafetyTab extends StatelessWidget {
                     bottom: 16,
                     left: 16,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
+                            color: AppColors.black.withValues(alpha: 0.05),
                             blurRadius: 4,
-                            offset: const Offset(0, 2),
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(6),
+                            padding: EdgeInsets.all(6),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFE11D48), // Match red theme
+                              color: AppColors.cFFE11D48, // Match red theme
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.cell_tower,
                               size: 16,
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 'ALERT LOCATION',
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 9,
                                   fontWeight: FontWeight.w800,
-                                  color: Color(0xFF6F767E),
+                                  color: AppColors.cFF6F767E,
                                 ),
                               ),
                               SizedBox(height: 2),
                               Text(
                                 'Outer Ring Rd, Marathahalli',
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
-                                  color: Color(0xFF1A1D1F),
+                                  color: AppColors.cFF1A1D1F,
                                 ),
                               ),
                             ],
@@ -570,10 +571,10 @@ class SafetyTab extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Center(
+                  Center(
                     child: Icon(
                       Icons.location_on,
-                      color: Color(0xFFE11D48),
+                      color: AppColors.cFFE11D48,
                       size: 48,
                     ),
                   ),
@@ -582,31 +583,31 @@ class SafetyTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Details List
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Row(
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
-                      children: const [
+                      children: [
                         Text(
                           'DRIVER ASSIGNED',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF6F767E),
+                            color: AppColors.cFF6F767E,
                           ),
                         ),
                         Spacer(),
@@ -619,10 +620,10 @@ class SafetyTab extends StatelessWidget {
                         SizedBox(width: 8),
                         Text(
                           'Amit K.',
-                          style: TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF1A1D1F),
+                            color: AppColors.cFF1A1D1F,
                           ),
                         ),
                       ],
@@ -632,34 +633,34 @@ class SafetyTab extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
-                children: const [
+                children: [
                   Text(
                     'VEHICLE',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFF6F767E),
+                      color: AppColors.cFF6F767E,
                     ),
                   ),
                   SizedBox(width: 16),
                   Text(
                     'Ntroq (TN02 By4447)',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
+                      color: AppColors.cFF1A1D1F,
                     ),
                   ),
                 ],
@@ -667,35 +668,35 @@ class SafetyTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFFEF2F2),
+                color: AppColors.cFFFEF2F2,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFFECACA), width: 0.5),
+                border: Border.all(color: AppColors.cFFFECACA, width: 0.5),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'NOTES',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 11,
                       fontWeight: FontWeight.w800,
-                      color: Color(0xFFE11D48),
+                      color: AppColors.cFFE11D48,
                     ),
                   ),
                   SizedBox(height: 8),
                   Text(
                     '"User pressed panic button. Contacted user within 2 mins. User reported accidental press while.."',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 14,
-                      color: Color(0xFF6F767E),
+                      color: AppColors.cFF6F767E,
                       height: 1.5,
                     ),
                   ),
@@ -703,7 +704,7 @@ class SafetyTab extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
         ],
       ),
     );
@@ -712,7 +713,7 @@ class SafetyTab extends StatelessWidget {
   Widget _buildDriverDetailsLog() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
@@ -720,13 +721,13 @@ class SafetyTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Driver details Sharing Log',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -735,7 +736,7 @@ class SafetyTab extends StatelessWidget {
                 SizedBox(height: 4),
                 Text(
                   'Driver details sharing with emergency contacts',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -755,28 +756,28 @@ class SafetyTab extends StatelessWidget {
 
   Widget _buildDriverDetailRow(String name, String time) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF9FAFB),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.cFFF9FAFB,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.my_location,
                   size: 16,
-                  color: Color(0xFF6F767E),
+                  color: AppColors.cFF6F767E,
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Text(
                 name,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textPrimary,
@@ -786,10 +787,10 @@ class SafetyTab extends StatelessWidget {
           ),
           Text(
             time,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ),
         ],
@@ -797,3 +798,7 @@ class SafetyTab extends StatelessWidget {
     );
   }
 }
+
+
+
+

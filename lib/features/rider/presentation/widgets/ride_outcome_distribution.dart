@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RideOutcomeDistribution extends StatelessWidget {
-  const RideOutcomeDistribution({super.key});
+  RideOutcomeDistribution({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +12,18 @@ class RideOutcomeDistribution extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: const BorderSide(color: AppColors.divider),
+        side: BorderSide(color: AppColors.divider),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Ride Outcome Distribution',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: AppTypography.base.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -40,13 +41,13 @@ class RideOutcomeDistribution extends StatelessWidget {
                         label: "CANCELLED BY USER",
                         count: 4,
                         total: 142,
-                        color: Colors.red,
+                        color: AppColors.red,
                       ),
                       _buildOutcomeItem(
                         label: "CANCELLED BY DRIVER",
                         count: 2,
                         total: 142,
-                        color: Colors.orange,
+                        color: AppColors.orange,
                       ),
                     ],
                   ),
@@ -75,7 +76,7 @@ class RideOutcomeDistribution extends StatelessWidget {
                               showTitle: false,
                             ),
                             PieChartSectionData(
-                              color: const Color(0xFFE5E7EB),
+                              color: AppColors.cFFE5E7EB,
                               value: 3,
                               title: '',
                               radius: 12,
@@ -91,12 +92,12 @@ class RideOutcomeDistribution extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Column(
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             '95.8%',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: AppColors.textPrimary,
@@ -104,7 +105,7 @@ class RideOutcomeDistribution extends StatelessWidget {
                           ),
                           Text(
                             'SUCCESS',
-                            style: TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               color: AppColors.success,
@@ -141,7 +142,7 @@ class RideOutcomeDistribution extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textSecondary,
@@ -151,11 +152,11 @@ class RideOutcomeDistribution extends StatelessWidget {
             ),
             Text(
               "$count RIDES",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              style: AppTypography.base.copyWith(fontWeight: FontWeight.bold, fontSize: 12),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
 
         // 🔥 Progress Bar
         ClipRRect(
@@ -178,8 +179,12 @@ class RideOutcomeDistribution extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20),
       ],
     );
   }
 }
+
+
+
+

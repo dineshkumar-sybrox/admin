@@ -5,20 +5,20 @@ import '../../../drivers/presentation/cubit/drivers_management_state.dart';
 import '../../../../core/utils/excel_export_helper.dart';
 
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit() : super(const DashboardState());
+  DashboardCubit() : super(DashboardState());
 
   Future<void> loadDashboard() async {
     emit(state.copyWith(isLoading: true));
 
     // Simulate API call
-    await Future.delayed(const Duration(milliseconds: 800));
+    await Future.delayed(Duration(milliseconds: 800));
 
     emit(
       state.copyWith(
         isLoading: false,
         pendingApprovals: 12,
         newTickets: 4,
-        statCards: const [
+        statCards:  [
           StatCard(
             title: 'TOTAL DRIVERS',
             value: '24k',
@@ -44,7 +44,7 @@ class DashboardCubit extends Cubit<DashboardState> {
             isPositive: true,
           ),
         ],
-        driverApprovals: const [
+        driverApprovals:  [
           DriverApproval(
             name: 'Arun Kumar',
             driverId: '#D-4421',
@@ -62,7 +62,7 @@ class DashboardCubit extends Cubit<DashboardState> {
             pendingDocs: ['Bank'],
           ),
         ],
-        supportTickets: const [
+        supportTickets:  [
           SupportTicket(
             ticketId: '#TK-8821',
             userName: 'Amit Shah',
@@ -78,7 +78,7 @@ class DashboardCubit extends Cubit<DashboardState> {
             priority: 'MEDIUM',
           ),
         ],
-        recentTransactions: const [
+        recentTransactions:  [
           Transaction(
             id: '#RX-82710',
             amount: '85.00',
@@ -126,7 +126,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     );
 
     // Small delay to show the loader
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
 
     emit(state.copyWith(isLoading: false));
   }
@@ -141,7 +141,7 @@ class DashboardCubit extends Cubit<DashboardState> {
     );
 
     // Small delay to show the loader
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
 
     emit(state.copyWith(isLoading: false));
   }
@@ -201,3 +201,4 @@ class DashboardCubit extends Cubit<DashboardState> {
     }
   }
 }
+

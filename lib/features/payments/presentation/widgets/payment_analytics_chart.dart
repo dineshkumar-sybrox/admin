@@ -1,50 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class PaymentAnalyticsChart extends StatefulWidget {
-  const PaymentAnalyticsChart({super.key});
+  PaymentAnalyticsChart({super.key});
 
   @override
   State<PaymentAnalyticsChart> createState() => _PaymentAnalyticsChartState();
 }
 
 class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
-  static const List<double> _cabPoints = [
-    0.45,
-    0.5,
-    0.6,
-    0.55,
-    0.85,
-    0.75,
-    0.9,
-  ];
-  static const List<double> _autoPoints = [
-    0.35,
-    0.4,
-    0.55,
-    0.5,
-    0.75,
-    0.65,
-    0.8,
-  ];
-  static const List<double> _bikePoints = [
-    0.2,
-    0.25,
-    0.35,
-    0.3,
-    0.5,
-    0.45,
-    0.6,
-  ];
+  static List<double> _cabPoints = [0.45, 0.5, 0.6, 0.55, 0.85, 0.75, 0.9];
+  static List<double> _autoPoints = [0.35, 0.4, 0.55, 0.5, 0.75, 0.65, 0.8];
+  static List<double> _bikePoints = [0.2, 0.25, 0.35, 0.3, 0.5, 0.45, 0.6];
 
-  static const List<String> _days = [
-    'MON',
-    'TUE',
-    'WED',
-    'THU',
-    'FRI',
-    'SAT',
-    'SUN',
-  ];
+  static List<String> _days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   int? _hoverIndex;
   Offset? _hoverPos;
@@ -72,18 +42,18 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
   Widget build(BuildContext context) {
     return Container(
       height: 380,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,32 +62,21 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Payment Analytics',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
-                    ),
-                  ),
+                  Text('Payment Analytics', style: AppTypography.h3),
                   SizedBox(height: 4),
                   Text(
                     'Comparison of Net Volume and Platform Fees',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF9EA5AD),
-                    ),
+                    style: AppTypography.base.copyWith(),
                   ),
                 ],
               ),
               _buildDropdown(),
             ],
           ),
-          const SizedBox(height: 48),
+          SizedBox(height: 48),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -162,30 +121,30 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
               },
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: _days
                 .map(
                   (d) => Text(
                     d,
-                    style: const TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF6F767E),
+                      color: AppColors.cFF6F767E,
                     ),
                   ),
                 )
                 .toList(),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
-              _buildLegend(const Color(0xFF00A86B), 'BIKE/SCOOTER'),
-              const SizedBox(width: 16),
-              _buildLegend(const Color(0xFFE8E500), 'AUTO'),
-              const SizedBox(width: 16),
-              _buildLegend(const Color(0xFFD97A21), 'Cab'),
+              _buildLegend(AppColors.cFF00A86B, 'BIKE/SCOOTER'),
+              SizedBox(width: 16),
+              _buildLegend(AppColors.cFFE8E500, 'AUTO'),
+              SizedBox(width: 16),
+              _buildLegend(AppColors.cFFD97A21, 'Cab'),
             ],
           ),
         ],
@@ -202,13 +161,13 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
           height: 10,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Text(
           label,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1A1D1F),
+            color: AppColors.cFF1A1D1F,
           ),
         ),
       ],
@@ -217,36 +176,36 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
 
   Widget _buildDropdown() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFEFEFEF)),
+        border: Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: PopupMenuButton<String>(
-        offset: const Offset(0, 40),
+        offset: Offset(0, 40),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(color: Color(0xFFEFEFEF)),
+          side: BorderSide(color: AppColors.cFFEFEFEF),
         ),
-        color: Colors.white,
+        color: AppColors.white,
         elevation: 6,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               _selectedFilter,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(width: 32),
-            const Icon(
+            SizedBox(width: 32),
+            Icon(
               Icons.keyboard_arrow_down_rounded,
               size: 16,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ],
         ),
@@ -274,24 +233,24 @@ class _PaymentAnalyticsChartState extends State<PaymentAnalyticsChart> {
     return PopupMenuItem<String>(
       value: text,
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: const Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle_outline_rounded,
-                color: Color(0xFF00A86B),
+                color: AppColors.cFF00A86B,
                 size: 18,
               ),
           ],
@@ -305,7 +264,7 @@ class _GridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFF0F1F3)
+      ..color = AppColors.cFFF0F1F3
       ..strokeWidth = 1;
 
     for (int i = 0; i < 4; i++) {
@@ -347,22 +306,22 @@ class _AreaChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _drawLayer(canvas, size, cabPoints, const Color(0xFFD97A21));
-    _drawLayer(canvas, size, autoPoints, const Color(0xFF1B2C4E)); // Blue line
-    _drawLayer(canvas, size, bikePoints, const Color(0xFF00A86B));
+    _drawLayer(canvas, size, cabPoints, AppColors.cFFD97A21);
+    _drawLayer(canvas, size, autoPoints, AppColors.cFF1B2C4E); // Blue line
+    _drawLayer(canvas, size, bikePoints, AppColors.cFF00A86B);
 
     if (hoverIndex != null) {
       final i = hoverIndex!;
       final x = i / (cabPoints.length - 1) * size.width;
 
       final linePaint = Paint()
-        ..color = const Color(0xFF1A1D1F).withValues(alpha: 0.1)
+        ..color = AppColors.cFF1A1D1F.withValues(alpha: 0.1)
         ..strokeWidth = 1;
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), linePaint);
 
-      _drawHoverPoint(canvas, size, x, cabPoints[i], const Color(0xFFD97A21));
-      _drawHoverPoint(canvas, size, x, autoPoints[i], const Color(0xFF1B2C4E));
-      _drawHoverPoint(canvas, size, x, bikePoints[i], const Color(0xFF00A86B));
+      _drawHoverPoint(canvas, size, x, cabPoints[i], AppColors.cFFD97A21);
+      _drawHoverPoint(canvas, size, x, autoPoints[i], AppColors.cFF1B2C4E);
+      _drawHoverPoint(canvas, size, x, bikePoints[i], AppColors.cFF00A86B);
     }
   }
 
@@ -466,40 +425,40 @@ class _HoverTooltip extends StatelessWidget {
       child: Container(
         width: tooltipWidth,
         height: tooltipHeight,
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.12),
+              color: AppColors.black.withValues(alpha: 0.12),
               blurRadius: 16,
-              offset: const Offset(0, 8),
+              offset: Offset(0, 8),
             ),
           ],
-          border: Border.all(color: const Color(0xFFE8ECF0)),
+          border: Border.all(color: AppColors.cFFE8ECF0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               day,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(height: 6),
-            _buildTooltipRow(const Color(0xFFD97A21), 'CAB', cabVal),
-            const SizedBox(height: 2),
+            SizedBox(height: 6),
+            _buildTooltipRow(AppColors.cFFD97A21, 'CAB', cabVal),
+            SizedBox(height: 2),
             _buildTooltipRow(
-              const Color(0xFFE8E500),
+              AppColors.cFFE8E500,
               'AUTO',
               autoVal,
             ), // Yellow dot in tooltip
-            const SizedBox(height: 2),
-            _buildTooltipRow(const Color(0xFF00A86B), 'BIKE/SCOOTER', bikeVal),
+            SizedBox(height: 2),
+            _buildTooltipRow(AppColors.cFF00A86B, 'BIKE/SCOOTER', bikeVal),
           ],
         ),
       ),
@@ -514,19 +473,22 @@ class _HoverTooltip extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(fontSize: 10, color: Color(0xFF6F767E)),
+            style: AppTypography.base.copyWith(
+              fontSize: 10,
+              color: AppColors.cFF6F767E,
+            ),
           ),
         ),
         Text(
           '₹${_vFromVal(val)}k',
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 10,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1A1D1F),
+            color: AppColors.cFF1A1D1F,
           ),
         ),
       ],

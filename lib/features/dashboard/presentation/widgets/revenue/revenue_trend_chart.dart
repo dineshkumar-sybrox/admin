@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class RevenueTrendChart extends StatefulWidget {
-  const RevenueTrendChart({super.key});
+  RevenueTrendChart({super.key});
 
   @override
   State<RevenueTrendChart> createState() => _RevenueTrendChartState();
@@ -11,7 +13,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
   // --- Data Profiles ---
 
   // Hourly / Today
-  static const List<double> _hourlyToday = [
+  static List<double> _hourlyToday = [
     0.1,
     0.15,
     0.25,
@@ -24,7 +26,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     0.7,
     1.0,
   ];
-  static const List<double> _hourlyPrev = [
+  static List<double> _hourlyPrev = [
     0.3,
     0.32,
     0.28,
@@ -37,7 +39,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     0.35,
     0.15,
   ];
-  static const List<String> _hourlyLabels = [
+  static List<String> _hourlyLabels = [
     '00:00',
     '02:00',
     '04:00',
@@ -52,9 +54,9 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
   ];
 
   // Last Week
-  static const List<double> _weekToday = [0.4, 0.6, 0.3, 0.8, 0.7, 0.9, 0.5];
-  static const List<double> _weekPrev = [0.3, 0.4, 0.5, 0.4, 0.6, 0.5, 0.4];
-  static const List<String> _weekLabels = [
+  static List<double> _weekToday = [0.4, 0.6, 0.3, 0.8, 0.7, 0.9, 0.5];
+  static List<double> _weekPrev = [0.3, 0.4, 0.5, 0.4, 0.6, 0.5, 0.4];
+  static List<String> _weekLabels = [
     'Mon',
     'Tue',
     'Wed',
@@ -65,20 +67,20 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
   ];
 
   // Last 30 Months (keeping the original name if requested, but assuming days for logic)
-  static const List<double> _monthsToday = [
+  static List<double> _monthsToday = [
     0.2,
     0.4,
     0.3,
     0.6,
     0.5,
   ]; // 5 weeks approx
-  static const List<double> _monthsPrev = [0.3, 0.2, 0.4, 0.3, 0.5];
-  static const List<String> _monthsLabels = ['W1', 'W2', 'W3', 'W4', 'W5'];
+  static List<double> _monthsPrev = [0.3, 0.2, 0.4, 0.3, 0.5];
+  static List<String> _monthsLabels = ['W1', 'W2', 'W3', 'W4', 'W5'];
 
   // Last 6 Months
-  static const List<double> _sixMonthsToday = [0.4, 0.5, 0.7, 0.6, 0.8, 0.9];
-  static const List<double> _sixMonthsPrev = [0.3, 0.4, 0.5, 0.5, 0.6, 0.7];
-  static const List<String> _sixMonthsLabels = [
+  static List<double> _sixMonthsToday = [0.4, 0.5, 0.7, 0.6, 0.8, 0.9];
+  static List<double> _sixMonthsPrev = [0.3, 0.4, 0.5, 0.5, 0.6, 0.7];
+  static List<String> _sixMonthsLabels = [
     'Jan',
     'Feb',
     'Mar',
@@ -88,7 +90,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
   ];
 
   // Last 1 Year
-  static const List<double> _yearToday = [
+  static List<double> _yearToday = [
     0.3,
     0.4,
     0.5,
@@ -102,7 +104,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     1.0,
     0.9,
   ];
-  static const List<double> _yearPrev = [
+  static List<double> _yearPrev = [
     0.2,
     0.3,
     0.4,
@@ -116,7 +118,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     0.9,
     0.8,
   ];
-  static const List<String> _yearLabels = [
+  static List<String> _yearLabels = [
     'J',
     'F',
     'M',
@@ -184,25 +186,25 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
       initialEntryMode: DatePickerEntryMode.calendar,
       builder: (context, child) {
         return Dialog(
-          insetPadding: const EdgeInsets.symmetric(
+          insetPadding: EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 24,
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.transparent,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400, maxHeight: 560),
+            constraints: BoxConstraints(maxWidth: 400, maxHeight: 560),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.circular(16),
               ),
               clipBehavior: Clip.antiAlias,
               child: Theme(
                 data: Theme.of(context).copyWith(
-                  colorScheme: const ColorScheme.light(
-                    primary: Color(0xFF00A86B),
-                    onPrimary: Colors.white,
-                    onSurface: Color(0xFF1A1D1F),
+                  colorScheme: ColorScheme.light(
+                    primary: AppColors.cFF00A86B,
+                    onPrimary: AppColors.white,
+                    onSurface: AppColors.cFF1A1D1F,
                   ),
                 ),
                 child: child!,
@@ -266,18 +268,18 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
   Widget build(BuildContext context) {
     return Container(
       height: 320,
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,24 +288,24 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Revenue Trend',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
+                      color: AppColors.cFF1A1D1F,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     'Comparing Today vs Yesterday performance',
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF9EA5AD),
+                      color: AppColors.cFF9EA5AD,
                     ),
                   ),
                 ],
@@ -311,7 +313,7 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
               _buildDropdown(),
             ],
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40),
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -355,17 +357,17 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
               },
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: _currentLabels
                 .map(
                   (t) => Text(
                     t,
-                    style: const TextStyle(
+                    style: AppTypography.base.copyWith(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF6F767E),
+                      color: AppColors.cFF6F767E,
                     ),
                   ),
                 )
@@ -378,36 +380,36 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
 
   Widget _buildDropdown() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFEFEFEF)),
+        border: Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: PopupMenuButton<String>(
-        offset: const Offset(0, 40),
+        offset: Offset(0, 40),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(color: Color(0xFFEFEFEF)),
+          side: BorderSide(color: AppColors.cFFEFEFEF),
         ),
-        color: Colors.white,
+        color: AppColors.white,
         elevation: 6,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               _selectedFilter,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(width: 32),
-            const Icon(
+            SizedBox(width: 32),
+            Icon(
               Icons.keyboard_arrow_down_rounded,
               size: 20,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ],
         ),
@@ -444,24 +446,24 @@ class _RevenueTrendChartState extends State<RevenueTrendChart> {
     return PopupMenuItem<String>(
       value: text,
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: const Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle_outline_rounded,
-                color: Color(0xFF00A86B),
+                color: AppColors.cFF00A86B,
                 size: 20,
               ),
           ],
@@ -488,29 +490,29 @@ class _TrendChartPainter extends CustomPainter {
       canvas,
       size,
       yesterdayPoints,
-      const Color(0xFFB5C1C8),
+      AppColors.cFFB5C1C8,
       2.0,
       dashed: true,
     );
-    _drawLine(canvas, size, todayPoints, const Color(0xFF00A86B), 3.0);
+    _drawLine(canvas, size, todayPoints, AppColors.cFF00A86B, 3.0);
 
     if (hoverIndex != null && hoverIndex! < todayPoints.length) {
       final i = hoverIndex!;
       final x = i / (todayPoints.length - 1) * size.width;
       final y = (1 - todayPoints[i]) * size.height;
       final linePaint = Paint()
-        ..color = const Color(0xFF00A86B).withValues(alpha: 0.25)
+        ..color = AppColors.cFF00A86B.withValues(alpha: 0.25)
         ..strokeWidth = 1;
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), linePaint);
       canvas.drawCircle(
         Offset(x, y),
         4,
-        Paint()..color = const Color(0xFF00A86B),
+        Paint()..color = AppColors.cFF00A86B,
       );
       canvas.drawCircle(
         Offset(x, y),
         7,
-        Paint()..color = const Color(0xFF00A86B).withValues(alpha: 0.15),
+        Paint()..color = AppColors.cFF00A86B.withValues(alpha: 0.15),
       );
     }
   }
@@ -611,68 +613,68 @@ class _HoverTooltip extends StatelessWidget {
       child: Container(
         width: tooltipWidth,
         height: tooltipHeight,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: AppColors.black.withValues(alpha: 0.08),
               blurRadius: 10,
-              offset: const Offset(0, 4),
+              offset: Offset(0, 4),
             ),
           ],
-          border: Border.all(color: const Color(0xFFE8ECF0)),
+          border: Border.all(color: AppColors.cFFE8ECF0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               time,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Row(
               children: [
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF00A86B),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFF00A86B,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   'Today: ₹${_revFromValue(todayValue)}',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 10,
-                    color: Color(0xFF1A1D1F),
+                    color: AppColors.cFF1A1D1F,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Row(
               children: [
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFB5C1C8),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFB5C1C8,
                     shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6),
                 Text(
                   'Yesterday: ₹${_revFromValue(yesterdayValue)}',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 10,
-                    color: Color(0xFF6F767E),
+                    color: AppColors.cFF6F767E,
                   ),
                 ),
               ],
@@ -683,3 +685,6 @@ class _HoverTooltip extends StatelessWidget {
     );
   }
 }
+
+
+

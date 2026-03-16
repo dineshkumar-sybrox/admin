@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class PaginationControls extends StatelessWidget {
-  const PaginationControls({super.key});
+  PaginationControls({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             'Showing 1 - 5 of 22,482 drivers',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               color: AppColors.textSecondary,
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -22,13 +23,13 @@ class PaginationControls extends StatelessWidget {
           Row(
             children: [
               _PageButton(icon: Icons.chevron_left, onPressed: () {}),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _PageButton(label: '1', onPressed: () {}, isActive: true),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _PageButton(label: '2', onPressed: () {}),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _PageButton(label: '3', onPressed: () {}),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _PageButton(icon: Icons.chevron_right, onPressed: () {}),
             ],
           ),
@@ -61,18 +62,18 @@ class _PageButton extends StatelessWidget {
         height: 32,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isActive ? AppColors.primary : Colors.white,
+          color: isActive ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
-            color: isActive ? AppColors.primary : const Color(0xFFE5E7EB),
+            color: isActive ? AppColors.primary : AppColors.cFFE5E7EB,
           ),
         ),
         child: icon != null
-            ? Icon(icon, size: 16, color: const Color(0xFF6B7280))
+            ? Icon(icon, size: 16, color: AppColors.cFF6B7280)
             : Text(
                 label!,
-                style: TextStyle(
-                  color: isActive ? Colors.white : AppColors.textPrimary,
+                style: AppTypography.base.copyWith(
+                  color: isActive ? AppColors.white : AppColors.textPrimary,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -81,3 +82,7 @@ class _PageButton extends StatelessWidget {
     );
   }
 }
+
+
+
+

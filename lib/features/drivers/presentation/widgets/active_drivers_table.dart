@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/drivers_management_cubit.dart';
 
 class ActiveDriversTable extends StatelessWidget {
-  const ActiveDriversTable({super.key});
+  ActiveDriversTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DriversManagementCubit, DriversManagementState>(
       builder: (context, state) {
-        if (state.isLoading) return const SizedBox.shrink();
+        if (state.isLoading) return SizedBox.shrink();
 
         final displayDrivers = state.filteredDrivers;
 
@@ -22,30 +24,31 @@ class ActiveDriversTable extends StatelessWidget {
                     : 1100,
               ),
               child: DataTable(
-                headingRowColor: WidgetStateProperty.all(Colors.white),
-                headingTextStyle: const TextStyle(
-                  color: Color(0xFF8E9BAB),
-                  fontSize: 11,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.5,
-                ),
-                dataTextStyle: const TextStyle(
-                  color: Color(0xFF1A1D1F),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-                horizontalMargin: 24,
-                columnSpacing: 24,
-                headingRowHeight: 64,
-                dataRowMaxHeight: 92,
-                dataRowMinHeight: 92,
-                showCheckboxColumn: false,
-                border: const TableBorder(
-                  horizontalInside: BorderSide(
-                    color: Color(0xFFF4F6F9),
-                    width: 1,
+                headingRowColor: WidgetStateProperty.all(
+                    AppColors.cFFF8FAFC,
                   ),
-                ),
+                  headingTextStyle: AppTypography.base.copyWith(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
+                  ),
+                  dataTextStyle: AppTypography.base.copyWith(
+                    color: AppColors.textPrimary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  horizontalMargin: 24,
+                  columnSpacing: 24,
+                  headingRowHeight: 56,
+                  dataRowMaxHeight: 72,
+                  dataRowMinHeight: 72,
+                  border: TableBorder(
+                    horizontalInside: BorderSide(
+                      color: AppColors.cFFF3F4F6,
+                      width: 1,
+                    ),
+                  ),
                 columns: const [
                   DataColumn(label: Text('RANK')),
                   DataColumn(label: Text('DRIVER')),
@@ -63,20 +66,20 @@ class ActiveDriversTable extends StatelessWidget {
                       DataCell(
                         Text(
                           '${driver.ridesToday ?? 0} Rides',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF1A1D1F),
+                            color: AppColors.cFF1A1D1F,
                           ),
                         ),
                       ),
                       DataCell(
                         Text(
                           '${driver.onlineHours ?? 0}\nhrs',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF6F767E),
+                            color: AppColors.cFF6F767E,
                           ),
                         ),
                       ),
@@ -86,10 +89,10 @@ class ActiveDriversTable extends StatelessWidget {
                       DataCell(
                         Text(
                           '₹${(driver.earnings ?? 0).toStringAsFixed(2)}',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 15,
                             fontWeight: FontWeight.w800,
-                            color: Color(0xFF00A86B),
+                            color: AppColors.cFF00A86B,
                           ),
                         ),
                       ),
@@ -114,13 +117,13 @@ class _RankBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     Color bgColor;
     if (rank == 1) {
-      bgColor = const Color(0xFF00A86B);
+      bgColor = AppColors.cFF00A86B;
     } else if (rank == 2) {
-      bgColor = const Color(0xFF8E9BAB).withOpacity(0.6);
+      bgColor = AppColors.cFF8E9BAB.withOpacity(0.6);
     } else if (rank == 3) {
-      bgColor = const Color(0xFFFF9F43).withOpacity(0.8);
+      bgColor = AppColors.cFFFF9F43.withOpacity(0.8);
     } else {
-      bgColor = Colors.transparent;
+      bgColor = AppColors.transparent;
     }
 
     return Container(
@@ -130,10 +133,10 @@ class _RankBadge extends StatelessWidget {
       child: Center(
         child: Text(
           rank == 0 ? '-' : rank.toString(),
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             color: rank <= 3 && rank > 0
-                ? Colors.white
-                : const Color(0xFF8E9BAB),
+                ? AppColors.white
+                : AppColors.cFF8E9BAB,
             fontWeight: FontWeight.w800,
             fontSize: 13,
           ),
@@ -154,28 +157,28 @@ class _DriverInfo extends StatelessWidget {
         CircleAvatar(
           radius: 20,
           backgroundImage: NetworkImage(driver.avatarUrl),
-          backgroundColor: const Color(0xFFF4F6F9),
+          backgroundColor: AppColors.cFFF4F6F9,
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               driver.name,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: 2),
             Text(
               '${driver.city} • ${driver.vehicleType}',
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF8E9BAB),
+                color: AppColors.cFF8E9BAB,
                 letterSpacing: 0.2,
               ),
             ),
@@ -201,21 +204,21 @@ class _AcceptanceRate extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: rate / 100,
-                backgroundColor: const Color(0xFFF4F6F9),
-                valueColor: const AlwaysStoppedAnimation<Color>(
-                  Color(0xFF00A86B),
+                backgroundColor: AppColors.cFFF4F6F9,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  AppColors.cFF00A86B,
                 ),
                 minHeight: 6,
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Text(
             '$rate%',
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ],
@@ -247,7 +250,7 @@ class _SparklinePainter extends CustomPainter {
     if (data.length < 2) return;
 
     final paint = Paint()
-      ..color = const Color(0xFF00A86B)
+      ..color = AppColors.cFF00A86B
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.round
@@ -280,3 +283,6 @@ class _SparklinePainter extends CustomPainter {
 }
 
 // _VehicleBadge removed as it's no longer used in the new leaderboard UI
+
+
+

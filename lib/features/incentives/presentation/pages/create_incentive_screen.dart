@@ -7,7 +7,7 @@ import '../widgets/incentive_launched_dialog.dart';
 import '../widgets/mobile_preview_widget.dart';
 
 class CreateIncentiveScreen extends StatefulWidget {
-  const CreateIncentiveScreen({super.key});
+  CreateIncentiveScreen({super.key});
 
   @override
   State<CreateIncentiveScreen> createState() => _CreateIncentiveScreenState();
@@ -32,7 +32,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
               Expanded(
                 flex: 4,
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: EdgeInsets.all(32.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -44,13 +44,13 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                           });
                         },
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       TargetConfiguration(selectedTab: _selectedTab),
-                      const SizedBox(height: 24),
-                      const ProgramNameConfiguration(),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
+                      ProgramNameConfiguration(),
+                      SizedBox(height: 24),
                       CampaignSchedule(selectedTab: _selectedTab),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       MilestoneRules(),
                     ],
                   ),
@@ -63,7 +63,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                 child: Container(
                   color: AppColors.scaffoldBackground,
                   child: Padding(
-                    padding: const EdgeInsets.all(40.0),
+                    padding: EdgeInsets.all(40.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -73,9 +73,9 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 32),
-                        const Expanded(child: MobilePreviewWidget()),
-                        const SizedBox(height: 32),
+                        SizedBox(height: 32),
+                        Expanded(child: MobilePreviewWidget()),
+                        SizedBox(height: 32),
                         Align(
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
@@ -83,13 +83,13 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                               showDialog(
                                 context: context,
                                 builder: (context) =>
-                                    const IncentiveLaunchedDialog(),
+                                    IncentiveLaunchedDialog(),
                               );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(
+                              foregroundColor: AppColors.white,
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 32,
                                 vertical: 16,
                               ),
@@ -97,9 +97,9 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Publish Incentive',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -116,7 +116,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
         } else {
           // Mobile/Tablet fallback - Stack vertically
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -128,46 +128,46 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 TargetConfiguration(selectedTab: _selectedTab),
-                const SizedBox(height: 24),
-                const ProgramNameConfiguration(),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
+                ProgramNameConfiguration(),
+                SizedBox(height: 24),
                 CampaignSchedule(selectedTab: _selectedTab),
-                const SizedBox(height: 24),
-                const MilestoneRules(),
-                const SizedBox(height: 48),
+                SizedBox(height: 24),
+                MilestoneRules(),
+                SizedBox(height: 48),
                 Text(
                   'Live mobile preview',
                   style: AppTypography.h4.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 24),
-                const SizedBox(
+                SizedBox(height: 24),
+                SizedBox(
                   height:
                       800, // Fixed height for mobile preview mockup inside scroll
                   child: MobilePreviewWidget(),
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) => const IncentiveLaunchedDialog(),
+                        builder: (context) => IncentiveLaunchedDialog(),
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      foregroundColor: AppColors.white,
+                      padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Publish Incentive',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -182,3 +182,6 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
     );
   }
 }
+
+
+

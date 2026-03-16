@@ -1,11 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'total_documents_state.dart';
 
 class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
   TotalDocumentsCubit()
     : super(
-        const TotalDocumentsState(allDocuments: [], filteredDocuments: []),
+        TotalDocumentsState(allDocuments: [], filteredDocuments: []),
       ) {
     _initializeDocuments();
   }
@@ -18,10 +19,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Vikram Seth',
         'documents': 'DRIVING LICENSE',
         'category': 'RESEND',
-        'categoryColor': const Color(0xFFFFF7ED),
-        'categoryTextColor': const Color(0xFFC2410C),
+        'categoryColor': AppColors.cFFFFF7ED,
+        'categoryTextColor': AppColors.cFFC2410C,
         'status': 'Pending',
-        'statusColor': const Color(0xFFF97316),
+        'statusColor': AppColors.cFFF97316,
         'dateTime': '04 Nov 2025\n05:20 PM',
       },
       {
@@ -29,10 +30,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Anita Mehra',
         'documents': 'ALL DOCUMENTS',
         'category': 'NEW DRIVER',
-        'categoryColor': const Color(0xFFEFF6FF),
-        'categoryTextColor': const Color(0xFF1D4ED8),
+        'categoryColor': AppColors.cFFEFF6FF,
+        'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
-        'statusColor': const Color(0xFFF97316),
+        'statusColor': AppColors.cFFF97316,
         'dateTime': '04 Nov 2025\n04:15 PM',
       },
       {
@@ -40,10 +41,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Vikram Seth',
         'documents': 'BANK DETAILS',
         'category': 'NEW DRIVER',
-        'categoryColor': const Color(0xFFEFF6FF),
-        'categoryTextColor': const Color(0xFF1D4ED8),
+        'categoryColor': AppColors.cFFEFF6FF,
+        'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
-        'statusColor': const Color(0xFFF97316),
+        'statusColor': AppColors.cFFF97316,
         'dateTime': '04 Nov 2025\n03:55 PM',
       },
       {
@@ -51,10 +52,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Vikram Seth',
         'documents': 'IDENTITY VERIFICATION',
         'category': 'NEW DRIVER',
-        'categoryColor': const Color(0xFFEFF6FF),
-        'categoryTextColor': const Color(0xFF1D4ED8),
+        'categoryColor': AppColors.cFFEFF6FF,
+        'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
-        'statusColor': const Color(0xFFF97316),
+        'statusColor': AppColors.cFFF97316,
         'dateTime': '04 Nov 2025\n03:50 PM',
       },
       {
@@ -62,10 +63,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Sam Yogi',
         'documents': 'VEHICLE RC',
         'category': 'REJECTED',
-        'categoryColor': const Color(0xFFFEF2F2),
-        'categoryTextColor': const Color(0xFFB91C1C),
+        'categoryColor': AppColors.cFFFEF2F2,
+        'categoryTextColor': AppColors.cFFB91C1C,
         'status': 'Rejected',
-        'statusColor': const Color(0xFFEF4444),
+        'statusColor': AppColors.cFFEF4444,
         'dateTime': '04 Nov 2025\n03:45 PM',
       },
       {
@@ -73,10 +74,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Kabir Singh',
         'documents': 'ALL DOCUMENTS',
         'category': 'VERIFIED',
-        'categoryColor': const Color(0xFFF0FDF4),
-        'categoryTextColor': const Color(0xFF15803D),
+        'categoryColor': AppColors.cFFF0FDF4,
+        'categoryTextColor': AppColors.cFF15803D,
         'status': 'Approved',
-        'statusColor': const Color(0xFF22C55E),
+        'statusColor': AppColors.cFF22C55E,
         'dateTime': '04 Nov 2025\n02:10 PM',
       },
       {
@@ -84,10 +85,10 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'driverName': 'Zara Khan',
         'documents': 'ALL DOCUMENTS',
         'category': 'VERIFIED',
-        'categoryColor': const Color(0xFFF0FDF4),
-        'categoryTextColor': const Color(0xFF15803D),
+        'categoryColor': AppColors.cFFF0FDF4,
+        'categoryTextColor': AppColors.cFF15803D,
         'status': 'Approved',
-        'statusColor': const Color(0xFF22C55E),
+        'statusColor': AppColors.cFF22C55E,
         'dateTime': '04 Nov 2025\n01:30 PM',
       },
     ];
@@ -163,3 +164,6 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
     emit(state.copyWith(filteredDocuments: filtered));
   }
 }
+
+
+

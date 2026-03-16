@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class MonthlySpendingTrendChart extends StatefulWidget {
-  const MonthlySpendingTrendChart({super.key});
+  MonthlySpendingTrendChart({super.key});
 
   @override
   State<MonthlySpendingTrendChart> createState() =>
@@ -17,13 +18,13 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -33,18 +34,18 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Monthly Spending Trend',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       'Analysis of wallet deductions and card spends',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -58,7 +59,7 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(4.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -69,26 +70,26 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                             });
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
                               color: _selectedRange == '6 Months'
-                                  ? Colors.white
-                                  : Colors.transparent,
-                              borderRadius: const BorderRadius.all(
+                                  ? AppColors.white
+                                  : AppColors.transparent,
+                              borderRadius: BorderRadius.all(
                                 Radius.circular(8),
                               ),
                               //border: Border.all(color: AppColors.divider),
-                              // borderRadius: const BorderRadius.only(
+                              // borderRadius: BorderRadius.only(
                               //   topLeft: Radius.circular(8),
                               //   bottomLeft: Radius.circular(8),
                               // ),
                             ),
                             child: Text(
                               '6 Months',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: _selectedRange == '6 Months'
@@ -106,26 +107,26 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                             });
                           },
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
+                            padding: EdgeInsets.symmetric(
                               horizontal: 16,
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
                               color: _selectedRange == '1 Year'
-                                  ? Colors.white
-                                  : Colors.transparent,
+                                  ? AppColors.white
+                                  : AppColors.transparent,
                               // border: Border(
                               //   top: BorderSide(color: AppColors.divider),
                               //   bottom: BorderSide(color: AppColors.divider),
                               //   right: BorderSide(color: AppColors.divider),
                               // ),
-                              borderRadius: const BorderRadius.all(
+                              borderRadius: BorderRadius.all(
                                 Radius.circular(8),
                               ),
                             ),
                             child: Text(
                               '1 Year',
-                              style: TextStyle(
+                              style: AppTypography.base.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: _selectedRange == '1 Year'
@@ -141,7 +142,7 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             SizedBox(
               height: 250,
               child: LineChart(
@@ -162,13 +163,13 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                   ),
                   titlesData: FlTitlesData(
                     show: true,
-                    rightTitles: const AxisTitles(
+                    rightTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    topTitles: const AxisTitles(
+                    topTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
-                    leftTitles: const AxisTitles(
+                    leftTitles: AxisTitles(
                       sideTitles: SideTitles(showTitles: false),
                     ),
                     bottomTitles: AxisTitles(
@@ -177,8 +178,8 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                         reservedSize: 30,
                         interval: 1,
                         getTitlesWidget: (value, meta) {
-                          const style = TextStyle(
-                            color: Color(0xFF6B7280),
+                          final style = AppTypography.base.copyWith(
+                            color: AppColors.cFF6B7280,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           );
@@ -206,7 +207,7 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                               return Container();
                           }
                           return Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
+                            padding: EdgeInsets.only(top: 10.0),
                             child: Text(text, style: style),
                           );
                         },
@@ -243,7 +244,7 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                           }
                           return FlDotCirclePainter(
                             radius: 4,
-                            color: Colors.white,
+                            color: AppColors.white,
                             strokeWidth: 2,
                             strokeColor: AppColors.primary,
                           );
@@ -264,3 +265,6 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
     );
   }
 }
+
+
+

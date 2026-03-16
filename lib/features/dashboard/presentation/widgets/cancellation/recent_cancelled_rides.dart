@@ -1,80 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class RecentCancelledRides extends StatelessWidget {
-  const RecentCancelledRides({super.key});
+  RecentCancelledRides({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             'Recent Cancelled Rides',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             'Real-time update stream',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF9EA5AD),
+              color: AppColors.cFF9EA5AD,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildRideCard(
             id: '#RD-4421',
             timeAgo: '2 min ago',
             reason: 'Long Wait Time',
             cancelledBy: 'Cancelled By Driver',
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildRideCard(
             id: '#RD-4418',
             timeAgo: '5 min ago',
             reason: 'Driver No Show',
             cancelledBy: 'Cancelled By Rider',
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           _buildRideCard(
             id: '#RD-4418',
             timeAgo: '5 min ago',
             reason: 'Driver No Show',
             cancelledBy: 'Cancelled By Rider',
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: const Text(
+            child: Text(
               'VIEW COMPLETE HISTORY',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF00C46B),
+                color: AppColors.cFF00C46B,
                 letterSpacing: 1.0,
               ),
             ),
@@ -91,11 +93,11 @@ class RecentCancelledRides extends StatelessWidget {
     required String cancelledBy,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB), // Very light gray/white background
+        color: AppColors.cFFF9FAFB, // Very light gray/white background
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,38 +107,38 @@ class RecentCancelledRides extends StatelessWidget {
             children: [
               Text(
                 id,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF9EA5AD),
+                  color: AppColors.cFF9EA5AD,
                 ),
               ),
               Text(
                 timeAgo,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFFEA3546), // Red time text
+                  color: AppColors.cFFEA3546, // Red time text
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             reason,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             cancelledBy,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 11,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ),
         ],
@@ -144,3 +146,7 @@ class RecentCancelledRides extends StatelessWidget {
     );
   }
 }
+
+
+
+

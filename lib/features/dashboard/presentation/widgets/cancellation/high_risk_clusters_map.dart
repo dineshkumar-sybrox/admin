@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class HighRiskClustersMap extends StatelessWidget {
-  const HighRiskClustersMap({super.key});
+  HighRiskClustersMap({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,9 +11,9 @@ class HighRiskClustersMap extends StatelessWidget {
       height: 480,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: const Color(0xFFF0F4F8), // Map background color
+        color: AppColors.cFFF0F4F8, // Map background color
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE8ECF0)),
+        border: Border.all(color: AppColors.cFFE8ECF0),
       ),
       child: Stack(
         children: [
@@ -22,17 +24,17 @@ class HighRiskClustersMap extends StatelessWidget {
           Positioned(
             left: 200,
             top: 250,
-            child: _buildHeatBlur(const Color(0xFFEA3546), 180),
+            child: _buildHeatBlur(AppColors.cFFEA3546, 180),
           ),
           Positioned(
             right: 250,
             bottom: 150,
-            child: _buildHeatBlur(const Color(0xFFEA3546), 280, opacity: 0.15),
+            child: _buildHeatBlur(AppColors.cFFEA3546, 280, opacity: 0.15),
           ),
           Positioned(
             right: 50,
             top: 50,
-            child: _buildHeatBlur(const Color(0xFF00C46B), 200, opacity: 0.15),
+            child: _buildHeatBlur(AppColors.cFF00C46B, 200, opacity: 0.15),
           ),
 
           // Marker Point
@@ -48,9 +50,9 @@ class HighRiskClustersMap extends StatelessWidget {
             bottom: 24,
             child: Row(
               children: [
-                _buildLegendItem(const Color(0xFFEA3546), 'Pickup Clusters'),
-                const SizedBox(width: 24),
-                _buildLegendItem(const Color(0xFF00C46B), 'Active Drivers'),
+                _buildLegendItem(AppColors.cFFEA3546, 'Pickup Clusters'),
+                SizedBox(width: 24),
+                _buildLegendItem(AppColors.cFF00C46B, 'Active Drivers'),
               ],
             ),
           ),
@@ -62,9 +64,9 @@ class HighRiskClustersMap extends StatelessWidget {
             child: Row(
               children: [
                 _buildControlButton(Icons.add),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _buildControlButton(Icons.remove),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _buildControlButton(Icons.layers_outlined),
               ],
             ),
@@ -98,27 +100,27 @@ class HighRiskClustersMap extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(Icons.location_on, color: Color(0xFFEA3546), size: 36),
-        const SizedBox(height: 2),
+        Icon(Icons.location_on, color: AppColors.cFFEA3546, size: 36),
+        SizedBox(height: 2),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(4),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
+                color: AppColors.black.withValues(alpha: 0.1),
                 blurRadius: 4,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
           child: Text(
             label,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 10,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1A1D1F),
+              color: AppColors.cFF1A1D1F,
             ),
           ),
         ),
@@ -135,13 +137,13 @@ class HighRiskClustersMap extends StatelessWidget {
           height: 12,
           decoration: BoxDecoration(shape: BoxShape.circle, color: color),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         Text(
           label,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1A1D1F),
+            color: AppColors.cFF1A1D1F,
           ),
         ),
       ],
@@ -153,19 +155,19 @@ class HighRiskClustersMap extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.black.withValues(alpha: 0.05),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
-        border: Border.all(color: const Color(0xFFEFEFEF)),
+        border: Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: Center(
-        child: Icon(icon, size: 16, color: const Color(0xFF1A1D1F)),
+        child: Icon(icon, size: 16, color: AppColors.cFF1A1D1F),
       ),
     );
   }
@@ -173,18 +175,18 @@ class HighRiskClustersMap extends StatelessWidget {
   Widget _buildInfoCard() {
     return Container(
       width: 220,
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.95),
+        color: AppColors.white.withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: AppColors.black.withValues(alpha: 0.08),
             blurRadius: 16,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFE8ECF0)),
+        border: Border.all(color: AppColors.cFFE8ECF0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,66 +196,66 @@ class HighRiskClustersMap extends StatelessWidget {
               Container(
                 width: 8,
                 height: 8,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFEA3546),
+                decoration: BoxDecoration(
+                  color: AppColors.cFFEA3546,
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 'High-Risk Clusters',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          const Text(
+          SizedBox(height: 16),
+          Text(
             'ANNA NAGAR 2ND AVE',
-            style: TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 9,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
               letterSpacing: 1.0,
             ),
           ),
-          const SizedBox(height: 8),
-          const Row(
+          SizedBox(height: 8),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Pickup Failures',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
               Text(
                 '428',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF1A1D1F),
+                  color: AppColors.cFF1A1D1F,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Container(
             height: 4,
             decoration: BoxDecoration(
-              color: const Color(0xFFF4F6F9),
+              color: AppColors.cFFF4F6F9,
               borderRadius: BorderRadius.circular(2),
             ),
             child: FractionallySizedBox(
               widthFactor: 0.8,
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEA3546),
+                  color: AppColors.cFFEA3546,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -269,7 +271,7 @@ class _MockMapPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xFFD6DBE1).withValues(alpha: 0.5)
+      ..color = AppColors.cFFD6DBE1.withValues(alpha: 0.5)
       ..strokeWidth = 12.0
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
@@ -299,7 +301,7 @@ class _MockMapPainter extends CustomPainter {
 
     // Draw some thinner roads
     paint.strokeWidth = 6.0;
-    paint.color = const Color(0xFFD6DBE1).withValues(alpha: 0.4);
+    paint.color = AppColors.cFFD6DBE1.withValues(alpha: 0.4);
     final path2 = Path();
     path2.moveTo(size.width * 0.8, -50);
     path2.lineTo(size.width * 0.4, size.height + 50);
@@ -313,3 +315,7 @@ class _MockMapPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+
+
+

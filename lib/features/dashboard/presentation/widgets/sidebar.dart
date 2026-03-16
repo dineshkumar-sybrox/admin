@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
 
 class Sidebar extends StatelessWidget {
   final bool isCompact;
-  const Sidebar({super.key, this.isCompact = false});
+  Sidebar({super.key, this.isCompact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -13,46 +15,46 @@ class Sidebar extends StatelessWidget {
     return BlocBuilder<DashboardCubit, DashboardState>(
       builder: (context, state) {
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
+          duration: Duration(milliseconds: 250),
           width: width,
-          color: const Color(0xFF1A2332),
+          color: AppColors.cFF1A2332,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Container(
                       width: 36,
                       height: 36,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF00A86B),
+                        color: AppColors.cFF00A86B,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.local_taxi,
-                        color: Colors.white,
+                        color: AppColors.white,
                         size: 20,
                       ),
                     ),
                     if (!isCompact) ...[
-                      const SizedBox(width: 10),
-                      const Column(
+                      SizedBox(width: 10),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             'GoAPP',
-                            style: TextStyle(
-                              color: Colors.white,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 18,
                             ),
                           ),
                           Text(
                             'ADMIN PANEL',
-                            style: TextStyle(
-                              color: Color(0xFF6B7A8D),
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.cFF6B7A8D,
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.2,
@@ -64,7 +66,7 @@ class Sidebar extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               _NavItem(
                 icon: Icons.dashboard_outlined,
                 label: 'Dashboard',
@@ -109,14 +111,14 @@ class Sidebar extends StatelessWidget {
               ),
               if (!isCompact)
                 Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
                   ),
                   child: Text(
                     'SUPPORT',
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.3),
+                    style: AppTypography.base.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.3),
                       fontSize: 10,
                       letterSpacing: 1.5,
                       fontWeight: FontWeight.w600,
@@ -165,20 +167,20 @@ class _NavItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.read<DashboardCubit>().selectNav(navItem),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        duration: Duration(milliseconds: 200),
+        margin: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         padding: EdgeInsets.symmetric(
           horizontal: isCompact ? 0 : 12,
           vertical: 10,
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF00A86B).withValues(alpha: 0.15)
-              : Colors.transparent,
+              ? AppColors.cFF00A86B.withValues(alpha: 0.15)
+              : AppColors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: isSelected
               ? Border(
-                  left: BorderSide(color: const Color(0xFF00A86B), width: 3),
+                  left: BorderSide(color: AppColors.cFF00A86B, width: 3),
                 )
               : null,
         ),
@@ -187,8 +189,8 @@ class _NavItem extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: isSelected
-                      ? const Color(0xFF00A86B)
-                      : const Color(0xFF6B7A8D),
+                      ? AppColors.cFF00A86B
+                      : AppColors.cFF6B7A8D,
                   size: 18,
                 ),
               )
@@ -197,17 +199,17 @@ class _NavItem extends StatelessWidget {
                   Icon(
                     icon,
                     color: isSelected
-                        ? const Color(0xFF00A86B)
-                        : const Color(0xFF6B7A8D),
+                        ? AppColors.cFF00A86B
+                        : AppColors.cFF6B7A8D,
                     size: 20,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Text(
                     label,
-                    style: TextStyle(
+                    style: AppTypography.base.copyWith(
                       color: isSelected
-                          ? Colors.white
-                          : const Color(0xFF6B7A8D),
+                          ? AppColors.white
+                          : AppColors.cFF6B7A8D,
                       fontSize: 14,
                       fontWeight: isSelected
                           ? FontWeight.w600
@@ -220,3 +222,6 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+
+
+

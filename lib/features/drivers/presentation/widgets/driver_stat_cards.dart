@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
 
 class DriverStatCards extends StatelessWidget {
-  const DriverStatCards({super.key});
+  DriverStatCards({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class DriverStatCards extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -49,7 +50,7 @@ class DriverStatCards extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -67,7 +68,7 @@ class DriverStatCards extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -115,27 +116,34 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB), width: 1.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border(
+            left: BorderSide(
+              color: isPrimary
+                  ? AppColors.primary
+                  : AppColors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
           ),
-        ],
-      ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(11),
         child: IntrinsicHeight(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (isPrimary) Container(width: 3, color: AppColors.primary),
+              
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 20,
                   ),
@@ -144,32 +152,32 @@ class _StatCard extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF6B7280),
+                          color: AppColors.cFF6B7280,
                           letterSpacing: 1.0,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             value,
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               fontSize: 28,
                               fontWeight: FontWeight.w800,
                               color: AppColors.textPrimary,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           if (trend != null)
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
+                              padding: EdgeInsets.only(bottom: 6),
                               child: Text(
                                 trend!,
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                   color: trendIsPositive
@@ -180,18 +188,18 @@ class _StatCard extends StatelessWidget {
                             ),
                           if (trendText != null)
                             Padding(
-                              padding: const EdgeInsets.only(
+                              padding: EdgeInsets.only(
                                 bottom: 6,
                                 left: 4,
                               ),
                               child: Text(
                                 trendText!,
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                   color: isWarning
                                       ? AppColors.error
-                                      : const Color(
+                                      : Color(
                                           0xFF6B7280,
                                         ).withOpacity(0.7),
                                 ),
@@ -210,3 +218,10 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

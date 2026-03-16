@@ -1,10 +1,12 @@
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
 
 class StatCardsRow extends StatelessWidget {
-  const StatCardsRow({super.key});
+  StatCardsRow({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class StatCardsRow extends StatelessWidget {
             if (isNarrow) {
               return GridView.count(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 childAspectRatio: 2.2,
                 crossAxisSpacing: 12,
@@ -107,7 +109,7 @@ class _StatCard extends StatefulWidget {
 class _StatCardState extends State<_StatCard> {
   bool _hovered = false;
 
-  static const _accent = Color(0xFF00A86B);
+  static const _accent = AppColors.cFF00A86B;
   static const _cardRadius = 18.0;
   static const _barWidth = 2.5;
 
@@ -115,7 +117,7 @@ class _StatCardState extends State<_StatCard> {
   Widget build(BuildContext context) {
     final trendColor = widget.card.isPositive
         ? _accent
-        : const Color(0xFFFF4757);
+        : AppColors.cFFFF4757;
 
     return MouseRegion(
       cursor: widget.isClickable
@@ -130,19 +132,19 @@ class _StatCardState extends State<_StatCard> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(_cardRadius),
-            border: Border.all(color: const Color(0xFFE6EAF0), width: 1),
+            border: Border.all(color: AppColors.cFFE6EAF0, width: 1),
             boxShadow: [
               BoxShadow(
                 color: _hovered && widget.isClickable
                     ? _accent.withValues(alpha: 0.13)
-                    : Colors.black.withValues(alpha: 0.055),
+                    : AppColors.black.withValues(alpha: 0.055),
                 blurRadius: _hovered && widget.isClickable ? 20 : 12,
                 spreadRadius: 0,
-                offset: const Offset(0, 3),
+                offset: Offset(0, 3),
               ),
             ],
           ),
@@ -153,43 +155,42 @@ class _StatCardState extends State<_StatCard> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
+                    duration: Duration(milliseconds: 200),
                     width: _barWidth,
                     color: _accent,
                   ),
 
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(18, 20, 18, 20),
+                      padding: EdgeInsets.fromLTRB(18, 20, 18, 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             widget.card.title,
-                            style: const TextStyle(
-                              fontSize: 14,
+                            style: AppTypography.bodyRegular.copyWith(
+                              color: AppColors.textSecondary,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF8A97A8),
-                              letterSpacing: 0.9,
+                              letterSpacing: 0.1,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
 
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
                                 widget.card.value,
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xFF1A2332),
+                                  color: AppColors.cFF1A2332,
                                   height: 1.0,
                                   letterSpacing: -0.5,
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 10),
 
                               Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -202,10 +203,10 @@ class _StatCardState extends State<_StatCard> {
                                     size: 16,
                                     color: trendColor,
                                   ),
-                                  const SizedBox(width: 2),
+                                  SizedBox(width: 2),
                                   Text(
                                     widget.card.trend,
-                                    style: TextStyle(
+                                    style: AppTypography.base.copyWith(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                       color: trendColor,
@@ -216,11 +217,11 @@ class _StatCardState extends State<_StatCard> {
                               ),
 
                               if (widget.isClickable) ...[
-                                const Spacer(),
+                                Spacer(),
                                 AnimatedOpacity(
-                                  duration: const Duration(milliseconds: 200),
+                                  duration: Duration(milliseconds: 200),
                                   opacity: _hovered ? 1.0 : 0.4,
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.arrow_forward_ios_rounded,
                                     size: 12,
                                     color: _accent,
@@ -242,3 +243,6 @@ class _StatCardState extends State<_StatCard> {
     );
   }
 }
+
+
+

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class RideHistoryTab extends StatelessWidget {
-  const RideHistoryTab({super.key});
+  RideHistoryTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(top: 24, bottom: 48),
+      padding: EdgeInsets.only(top: 24, bottom: 48),
       child: Column(
         children: [
           // Header Controls
@@ -17,34 +18,34 @@ class RideHistoryTab extends StatelessWidget {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Search Ride ID or Route...',
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.search,
                       color: AppColors.textSecondary,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.divider),
+                      borderSide: BorderSide(color: AppColors.divider),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.divider),
+                      borderSide: BorderSide(color: AppColors.divider),
                     ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               OutlinedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.filter_list, size: 18),
-                label: const Text('Filters'),
+                icon: Icon(Icons.filter_list, size: 18),
+                label: Text('Filters'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.textPrimary,
-                  side: const BorderSide(color: AppColors.divider),
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
+                  side: BorderSide(color: AppColors.divider),
+                  backgroundColor: AppColors.white,
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 18,
                   ),
@@ -53,16 +54,16 @@ class RideHistoryTab extends StatelessWidget {
                   ),
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               OutlinedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.download, size: 18),
-                label: const Text('Export CSV'),
+                icon: Icon(Icons.download, size: 18),
+                label: Text('Export CSV'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.textPrimary,
-                  side: const BorderSide(color: AppColors.divider),
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
+                  side: BorderSide(color: AppColors.divider),
+                  backgroundColor: AppColors.white,
+                  padding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 18,
                   ),
@@ -74,19 +75,19 @@ class RideHistoryTab extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Table
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: AppColors.divider),
             ),
             child: Column(
               children: [
                 _buildTableHeader(),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _RideDataRow(
                   rideId: '#RD-10294',
                   dateTime: '28 Oct 2023\n06:42 PM',
@@ -99,7 +100,7 @@ class RideHistoryTab extends StatelessWidget {
                   status: 'COMPLETED',
                   isExpanded: true,
                 ),
-                const Divider(height: 1, color: AppColors.divider),
+                Divider(height: 1, color: AppColors.divider),
                 _RideDataRow(
                   rideId: '#RD-09872',
                   dateTime: '18 Oct 2023\n08:05 AM',
@@ -117,15 +118,15 @@ class RideHistoryTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Pagination
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'SHOWING 1-10 OF 142 RIDES',
-                style: TextStyle(
+                style: AppTypography.base.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                   color: AppColors.textSecondary,
@@ -135,13 +136,13 @@ class RideHistoryTab extends StatelessWidget {
               Row(
                 children: [
                   _buildPageButton('<', false),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildPageButton('1', true),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildPageButton('2', false),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildPageButton('3', false),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildPageButton('>', false),
                 ],
               ),
@@ -154,7 +155,7 @@ class RideHistoryTab extends StatelessWidget {
 
   Widget _buildTableHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
           _buildHeaderCell('RIDE ID', flex: 2),
@@ -175,7 +176,7 @@ class RideHistoryTab extends StatelessWidget {
       flex: flex,
       child: Text(
         text,
-        style: const TextStyle(
+        style: AppTypography.base.copyWith(
           color: AppColors.textSecondary,
           fontWeight: FontWeight.bold,
           fontSize: 11,
@@ -191,15 +192,15 @@ class RideHistoryTab extends StatelessWidget {
       height: 36,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: isActive ? AppColors.sidebar : Colors.white,
+        color: isActive ? AppColors.sidebar : AppColors.white,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(color: AppColors.divider),
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           fontWeight: FontWeight.bold,
-          color: isActive ? Colors.white : AppColors.textPrimary,
+          color: isActive ? AppColors.white : AppColors.textPrimary,
         ),
       ),
     );
@@ -251,21 +252,21 @@ class _RideDataRowState extends State<_RideDataRow> {
         InkWell(
           onTap: () => setState(() => isExpanded = !isExpanded),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
             child: Row(
               children: [
                 Expanded(
                   flex: 2,
                   child: Text(
                     widget.rideId,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(
                     widget.dateTime,
-                    style: const TextStyle(fontSize: 13, height: 1.4),
+                    style: AppTypography.base.copyWith(fontSize: 13, height: 1.4),
                   ),
                 ),
                 Expanded(
@@ -274,12 +275,12 @@ class _RideDataRowState extends State<_RideDataRow> {
                     children: [
                       Text(
                         widget.routeFrom,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4),
                         child: Icon(
                           Icons.arrow_forward,
@@ -289,7 +290,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                       ),
                       Text(
                         widget.routeTo,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
@@ -301,7 +302,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                   flex: 2,
                   child: Text(
                     widget.fare,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -309,18 +310,18 @@ class _RideDataRowState extends State<_RideDataRow> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF7E6), // Light Orange
+                        color: AppColors.cFFFFF7E6, // Light Orange
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         widget.coupon,
-                        style: const TextStyle(
-                          color: Color(0xFFD97706),
+                        style: AppTypography.base.copyWith(
+                          color: AppColors.cFFD97706,
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
                         ),
@@ -332,7 +333,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                   flex: 1,
                   child: Text(
                     widget.coins,
-                    style: const TextStyle(
+                    style: AppTypography.base.copyWith(
                       color: AppColors.info,
                       fontWeight: FontWeight.bold,
                     ),
@@ -342,7 +343,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                   flex: 1,
                   child: Text(
                     widget.tip,
-                    style: const TextStyle(color: AppColors.textSecondary),
+                    style: AppTypography.base.copyWith(color: AppColors.textSecondary),
                   ),
                 ),
                 Expanded(
@@ -350,7 +351,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 6,
                       ),
@@ -360,7 +361,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                       ),
                       child: Text(
                         widget.status,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           color: AppColors.activeTagText,
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
@@ -376,7 +377,7 @@ class _RideDataRowState extends State<_RideDataRow> {
 
         if (isExpanded)
           Container(
-            color: const Color(
+            color: Color(
               0xFFFAFAFA,
             ), // Very light grey bg for expanded area
             child: IntrinsicHeight(
@@ -389,12 +390,12 @@ class _RideDataRowState extends State<_RideDataRow> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: EdgeInsets.all(24.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.receipt_long,
                                 size: 16,
@@ -403,7 +404,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                               SizedBox(width: 8),
                               Text(
                                 'DETAILED FARE AUDIT',
-                                style: TextStyle(
+                                style: AppTypography.base.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 12,
                                   letterSpacing: 0.5,
@@ -411,22 +412,22 @@ class _RideDataRowState extends State<_RideDataRow> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildAuditItem('BASE FARE', '₹50.00'),
-                              const SizedBox(width: 48),
+                              SizedBox(width: 48),
                               _buildAuditItem('DISTANCE (12.4 KM)', '₹248.00'),
-                              const SizedBox(width: 48),
+                              SizedBox(width: 48),
                               _buildAuditItem('TIME (34 MINS)', '₹102.00'),
-                              const SizedBox(width: 48),
+                              SizedBox(width: 48),
                               _buildAuditItem(
                                 'SURGE (1.2X)',
                                 '+ ₹72.00',
                                 valueColor: AppColors.warning,
                               ),
-                              const SizedBox(width: 48),
+                              SizedBox(width: 48),
                               _buildAuditItem(
                                 'DISCOUNTS',
                                 '- ₹40.00',
@@ -434,9 +435,9 @@ class _RideDataRowState extends State<_RideDataRow> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 32),
-                          const Divider(height: 1),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 32),
+                          Divider(height: 1),
+                          SizedBox(height: 24),
                           Row(
                             children: [
                               _buildAuditItem(
@@ -444,18 +445,18 @@ class _RideDataRowState extends State<_RideDataRow> {
                                 '₹384.20',
                                 isLarge: true,
                               ),
-                              const SizedBox(width: 48),
+                              SizedBox(width: 48),
                               _buildAuditItem(
                                 'PLATFORM FEE',
                                 '₹67.80',
                                 isLarge: true,
                               ),
-                              const Spacer(),
+                              Spacer(),
                               TextButton(
                                 onPressed: () {},
-                                child: const Text(
+                                child: Text(
                                   'View Support Ticket',
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     decoration: TextDecoration.underline,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.textSecondary,
@@ -487,17 +488,17 @@ class _RideDataRowState extends State<_RideDataRow> {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 10,
             fontWeight: FontWeight.bold,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Text(
           value,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: isLarge ? 16 : 14,
             fontWeight: FontWeight.bold,
             color: valueColor ?? AppColors.textPrimary,
@@ -507,3 +508,7 @@ class _RideDataRowState extends State<_RideDataRow> {
     );
   }
 }
+
+
+
+

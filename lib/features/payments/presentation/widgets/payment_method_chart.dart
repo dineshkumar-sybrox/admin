@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 import 'dart:math' as math;
 
 class PaymentMethodChart extends StatefulWidget {
-  const PaymentMethodChart({super.key});
+  PaymentMethodChart({super.key});
 
   @override
   State<PaymentMethodChart> createState() => _PaymentMethodChartState();
@@ -15,18 +17,18 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -34,32 +36,21 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Payment Method',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
-                    ),
-                  ),
+                  Text('Payment Method', style: AppTypography.h3),
                   SizedBox(height: 4),
                   Text(
                     'Transaction volume distribution',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF9EA5AD),
-                    ),
+                    style: AppTypography.base.copyWith(),
                   ),
                 ],
               ),
               _buildDropdown(),
             ],
           ),
-          const SizedBox(height: 48),
+          SizedBox(height: 48),
           SizedBox(
             height: 200,
             child: Stack(
@@ -70,41 +61,41 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
                   height: 200,
                   child: CustomPaint(
                     painter: _PaymentPiePainter(
-                      segments: const [
+                      segments: [
                         ChartSegment(
                           value: 55,
-                          color: Color(0xFF00C46B),
+                          color: AppColors.cFF00C46B,
                         ), // UPI (Green)
                         ChartSegment(
                           value: 30,
-                          color: Color(0xFF6764FF),
+                          color: AppColors.cFF6764FF,
                         ), // CARD (Purple)
                         ChartSegment(
                           value: 15,
-                          color: Color(0xFFFFD12E),
+                          color: AppColors.cFFFFD12E,
                         ), // CASH (Yellow)
                       ],
                       strokeWidth: 20,
                     ),
                   ),
                 ),
-                const Column(
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       '14.2k',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1A1D1F),
+                        color: AppColors.cFF1A1D1F,
                       ),
                     ),
                     Text(
                       'TOTAL TXNS',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF6F767E),
+                        color: AppColors.cFF6F767E,
                         letterSpacing: 0.5,
                       ),
                     ),
@@ -113,13 +104,13 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
               ],
             ),
           ),
-          const SizedBox(height: 48),
+          SizedBox(height: 48),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildLegend(const Color(0xFF00C46B), '55%', 'UPI'),
-              _buildLegend(const Color(0xFF6764FF), '30%', 'CARD'),
-              _buildLegend(const Color(0xFFFFD12E), '15%', 'CASH'),
+              _buildLegend(AppColors.cFF00C46B, '55%', 'UPI'),
+              _buildLegend(AppColors.cFF6764FF, '30%', 'CARD'),
+              _buildLegend(AppColors.cFFFFD12E, '15%', 'CASH'),
             ],
           ),
         ],
@@ -132,19 +123,19 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
       children: [
         Text(
           percentage,
-          style: TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.w700,
             color: color,
           ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(
+          style: AppTypography.base.copyWith(
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF6F767E),
+            color: AppColors.cFF6F767E,
             letterSpacing: 0.5,
           ),
         ),
@@ -154,36 +145,36 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
 
   Widget _buildDropdown() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFEFEFEF)),
+        border: Border.all(color: AppColors.cFFEFEFEF),
       ),
       child: PopupMenuButton<String>(
-        offset: const Offset(0, 40),
+        offset: Offset(0, 40),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(color: Color(0xFFEFEFEF)),
+          side: BorderSide(color: AppColors.cFFEFEFEF),
         ),
-        color: Colors.white,
+        color: AppColors.white,
         elevation: 6,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               _selectedVehicle,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
-            const SizedBox(width: 8),
-            const Icon(
+            SizedBox(width: 8),
+            Icon(
               Icons.keyboard_arrow_down_rounded,
               size: 16,
-              color: Color(0xFF6F767E),
+              color: AppColors.cFF6F767E,
             ),
           ],
         ),
@@ -205,24 +196,24 @@ class _PaymentMethodChartState extends State<PaymentMethodChart> {
     return PopupMenuItem<String>(
       value: text,
       height: 44,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        color: isSelected ? const Color(0xFFF4Fdf8) : Colors.transparent,
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: const Color(0xFF1A1D1F),
+                color: AppColors.cFF1A1D1F,
               ),
             ),
             if (isSelected)
-              const Icon(
+              Icon(
                 Icons.check_circle_outline_rounded,
-                color: Color(0xFF00A86B),
+                color: AppColors.cFF00A86B,
                 size: 18,
               ),
           ],
@@ -236,7 +227,7 @@ class ChartSegment {
   final double value;
   final Color color;
 
-  const ChartSegment({required this.value, required this.color});
+  ChartSegment({required this.value, required this.color});
 }
 
 class _PaymentPiePainter extends CustomPainter {

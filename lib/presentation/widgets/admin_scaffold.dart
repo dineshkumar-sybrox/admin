@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../core/theme/app_colors.dart';
 import 'sidebar.dart';
 
@@ -7,7 +8,7 @@ class AdminScaffold extends StatelessWidget {
   final String title;
   final List<Widget>? actions;
 
-  const AdminScaffold({
+  AdminScaffold({
     super.key,
     required this.body,
     required this.title,
@@ -24,14 +25,14 @@ class AdminScaffold extends StatelessWidget {
           return Scaffold(
             body: Row(
               children: [
-                const Sidebar(),
+                Sidebar(),
                 Expanded(
                   child: Column(
                     children: [
                       _buildHeader(context, showMenuButton: false),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(24),
+                          padding: EdgeInsets.all(24),
                           child: body,
                         ),
                       ),
@@ -49,7 +50,7 @@ class AdminScaffold extends StatelessWidget {
             backgroundColor: AppColors.surface,
             title: Text(
               title,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -59,22 +60,22 @@ class AdminScaffold extends StatelessWidget {
               if (actions != null) ...actions!,
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.notifications_outlined),
+                icon: Icon(Icons.notifications_outlined),
                 color: AppColors.textSecondary,
               ),
-              const SizedBox(width: 8),
-              const CircleAvatar(
+              SizedBox(width: 8),
+              CircleAvatar(
                 radius: 16,
                 backgroundColor: AppColors.warning,
                 child: Text(
                   'AS',
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.white),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
             ],
           ),
-          drawer: const Drawer(width: 250, child: Sidebar()),
+          drawer: Drawer(width: 250, child: Sidebar()),
           body: body,
         );
       },
@@ -88,68 +89,68 @@ class AdminScaffold extends StatelessWidget {
         color: AppColors.surface,
         border: Border(bottom: BorderSide(color: AppColors.divider)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24),
       child: Row(
         children: [
           if (showMenuButton) ...[
             IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: const Icon(Icons.menu),
+              icon: Icon(Icons.menu),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
           ],
           Text(
             title,
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
           ),
-          const Spacer(),
+          Spacer(),
           // Actions
           if (actions != null) ...actions!,
 
           // Default Actions (Notification & Profile)
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications_outlined),
+            icon: Icon(Icons.notifications_outlined),
             color: AppColors.textSecondary,
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Container(
             height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: EdgeInsets.symmetric(horizontal: 4),
             decoration: BoxDecoration(
               border: Border(left: BorderSide(color: AppColors.divider)),
             ),
             child: Row(
               children: [
-                const SizedBox(width: 16),
-                const CircleAvatar(
+                SizedBox(width: 16),
+                CircleAvatar(
                   radius: 16,
                   backgroundColor: AppColors.warning, // Placeholder color
                   // backgroundImage: NetworkImage('...'),
                   child: Text(
                     'AS',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
+                    style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.white),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Aryan Sharma',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       'Super Admin',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 11,
                         color: AppColors.textSecondary,
                       ),
@@ -164,3 +165,6 @@ class AdminScaffold extends StatelessWidget {
     );
   }
 }
+
+
+

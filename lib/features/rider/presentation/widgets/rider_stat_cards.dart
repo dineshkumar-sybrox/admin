@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/rider_cubit.dart';
 import '../cubit/rider_state.dart';
 
 class RiderStatCards extends StatelessWidget {
-  const RiderStatCards({super.key});
+  RiderStatCards({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class RiderStatCards extends StatelessWidget {
                 onTap: () => context.read<RiderCubit>().setTab(RiderTab.total),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _StatCard(
                 title: 'ACTIVE RIDERS',
@@ -33,7 +34,7 @@ class RiderStatCards extends StatelessWidget {
                 onTap: () => context.read<RiderCubit>().setTab(RiderTab.active),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _StatCard(
                 title: 'NEW RIDERS',
@@ -45,7 +46,7 @@ class RiderStatCards extends StatelessWidget {
                     context.read<RiderCubit>().setTab(RiderTab.newRiders),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: _StatCard(
                 title: 'SUSPENDED RIDERS',
@@ -91,73 +92,90 @@ class _StatCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 1),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: const Color(0xFFF1F5F9), // slate-100
-            width: 1,
+          border: Border(
+            left: BorderSide(
+              color: isPrimary
+                  ? AppColors.primary
+                  : AppColors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
           ),
           boxShadow: [
-            if (isPrimary)
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              )
-            else
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.02),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
           ],
         ),
+        // decoration: BoxDecoration(
+        //   color: AppColors.white,
+        //   borderRadius: BorderRadius.circular(12),
+        //   border: Border.all(
+        //     color: AppColors.cFFF1F5F9, // slate-100
+        //     width: 1,
+        //   ),
+        //   boxShadow: [
+        //     if (isPrimary)
+        //       BoxShadow(
+        //         color: AppColors.primary.withValues(alpha: 0.1),
+        //         blurRadius: 10,
+        //         offset: Offset(0, 4),
+        //       )
+        //     else
+        //       BoxShadow(
+        //         color: AppColors.black.withValues(alpha: 0.02),
+        //         blurRadius: 8,
+        //         offset: Offset(0, 2),
+        //       ),
+        //   ],
+        // ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(11),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (isPrimary) Container(width: 3, color: AppColors.primary),
+                //if (isPrimary) Container(width: 3, color: AppColors.primary),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 24,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           title,
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             color: AppColors.textSecondary,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               value,
-                              style: const TextStyle(
+                              style: AppTypography.base.copyWith(
                                 color: AppColors.textPrimary,
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
                                 height: 1,
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             if (trend != null)
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 2),
+                                padding: EdgeInsets.only(bottom: 2),
                                 child: Text(
                                   trend!,
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     color: trendIsPositive
                                         ? AppColors.success
                                         : AppColors.error,
@@ -168,10 +186,10 @@ class _StatCard extends StatelessWidget {
                               ),
                             if (trendText != null)
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 2),
+                                padding: EdgeInsets.only(bottom: 2),
                                 child: Text(
                                   trendText!,
-                                  style: TextStyle(
+                                  style: AppTypography.base.copyWith(
                                     color: trendTextIsError
                                         ? AppColors.error
                                         : AppColors.textSecondary,

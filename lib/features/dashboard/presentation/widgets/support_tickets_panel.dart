@@ -1,10 +1,12 @@
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
 
 class SupportTicketsPanel extends StatelessWidget {
-  const SupportTicketsPanel({super.key});
+  SupportTicketsPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +14,14 @@ class SupportTicketsPanel extends StatelessWidget {
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.borderBlack, width: 1),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
+                color: AppColors.black.withValues(alpha: 0.04),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -26,47 +29,92 @@ class SupportTicketsPanel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
+                padding: EdgeInsetsGeometry.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Row(
                   children: [
-                    const Text(
-                      'Support Tickets',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF1A2332),
+                    Text('Support Tickets', style: AppTypography.h3),
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.lightpink.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        '${state.newTickets} NEW',
+                        style: AppTypography.bodyRegular.copyWith(
+                          color: AppColors.lightpink,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    const Spacer(),
-                    if (state.newTickets > 0)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 3,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFF4757).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          '${state.newTickets} NEW',
-                          style: const TextStyle(
-                            color: Color(0xFFFF4757),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
                   ],
                 ),
               ),
+              Divider(color: AppColors.borderBlack, thickness: 1),
+        // Container(
+        //   decoration: BoxDecoration(
+        //     color: AppColors.white,
+        //     borderRadius: BorderRadius.circular(12),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: AppColors.black.withValues(alpha: 0.04),
+        //         blurRadius: 8,
+        //         offset: Offset(0, 2),
+        //       ),
+        //     ],
+        //   ),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Padding(
+        //         padding: EdgeInsets.fromLTRB(20, 16, 16, 16),
+        //         child: Row(
+        //           children: [
+        //             Text(
+        //               'Support Tickets',
+        //               style: AppTypography.base.copyWith(
+        //                 fontSize: 14,
+        //                 fontWeight: FontWeight.w600,
+        //                 color: AppColors.cFF1A2332,
+        //               ),
+        //             ),
+        //             Spacer(),
+        //             if (state.newTickets > 0)
+        //               Container(
+        //                 padding: EdgeInsets.symmetric(
+        //                   horizontal: 8,
+        //                   vertical: 3,
+        //                 ),
+        //                 decoration: BoxDecoration(
+        //                   color: AppColors.cFFFF4757.withValues(alpha: 0.1),
+        //                   borderRadius: BorderRadius.circular(4),
+        //                 ),
+        //                 child: Text(
+        //                   '${state.newTickets} NEW',
+        //                   style: AppTypography.base.copyWith(
+        //                     color: AppColors.cFFFF4757,
+        //                     fontSize: 10,
+        //                     fontWeight: FontWeight.w600,
+        //                   ),
+        //                 ),
+        //               ),
+        //           ],
+        //         ),
+        //       ),
               if (state.supportTickets.isEmpty)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(24),
                   child: Center(
                     child: Text(
                       'No open tickets',
-                      style: TextStyle(color: Color(0xFF8E9BAB)),
+                      style: AppTypography.base.copyWith(color: AppColors.cFF8E9BAB),
                     ),
                   ),
                 )
@@ -74,7 +122,7 @@ class SupportTicketsPanel extends StatelessWidget {
                 ...state.supportTickets.map(
                   (ticket) => _TicketCard(ticket: ticket),
                 ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
             ],
           ),
         );
@@ -90,21 +138,21 @@ class _TicketCard extends StatelessWidget {
   Color get priorityColor {
     switch (ticket.priority) {
       case 'URGENT':
-        return const Color(0xFFFF4757);
+        return AppColors.red;
       case 'HIGH':
-        return const Color(0xFFFF8C42);
+        return AppColors.btnOrange;
       default:
-        return const Color(0xFF4A90D9);
+        return AppColors.cFF4A90D9;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      padding: const EdgeInsets.all(14),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFEEF0F4)),
+        border: Border.all(color: AppColors.cFFEEF0F4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -114,22 +162,22 @@ class _TicketCard extends StatelessWidget {
             children: [
               Text(
                 ticket.ticketId,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 12,
-                  color: Color(0xFF8E9BAB),
+                  color: AppColors.cFF8E9BAB,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
                   color: priorityColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   ticket.priority,
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     color: priorityColor,
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -138,27 +186,27 @@ class _TicketCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             '${ticket.userName} - ${ticket.issue}',
-            style: const TextStyle(
+            style: AppTypography.base.copyWith(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF1A2332),
+              color: AppColors.cFF1A2332,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             children: [
               Text(
                 ticket.timeAgo,
-                style: const TextStyle(
+                style: AppTypography.base.copyWith(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF8E9BAB),
+                  color: AppColors.cFF8E9BAB,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               TextButton(
                 onPressed: () {
                   context.read<DashboardCubit>().resolveTicket(ticket.ticketId);
@@ -168,21 +216,21 @@ class _TicketCard extends StatelessWidget {
                   minimumSize: Size.zero,
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
                       'RESOLVE',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF00A86B),
+                        color: AppColors.cFF00A86B,
                       ),
                     ),
                     SizedBox(width: 2),
                     Icon(
                       Icons.chevron_right,
                       size: 14,
-                      color: Color(0xFF00A86B),
+                      color: AppColors.cFF00A86B,
                     ),
                   ],
                 ),
@@ -194,3 +242,7 @@ class _TicketCard extends StatelessWidget {
     );
   }
 }
+
+
+
+

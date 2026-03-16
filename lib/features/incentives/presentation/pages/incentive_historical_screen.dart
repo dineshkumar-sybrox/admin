@@ -7,13 +7,13 @@ import '../../../../features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import '../../../../features/dashboard/presentation/cubit/dashboard_state.dart';
 
 class IncentiveHistoricalScreen extends StatelessWidget {
-  const IncentiveHistoricalScreen({super.key});
+  IncentiveHistoricalScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,20 +30,20 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text('Ongoing Incentives', style: AppTypography.h3),
                   ],
                 ),
                 Row(
                   children: [
                     _buildNavButton(Icons.chevron_left),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     _buildNavButton(Icons.chevron_right),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -62,7 +62,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(width: 24),
+                  SizedBox(width: 24),
                   const _OngoingIncentiveCard(
                     status: 'LIVE',
                     type: 'WEEKLY',
@@ -72,7 +72,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                     participation: '856',
                     remaining: '12h 15m',
                   ),
-                  const SizedBox(width: 24),
+                  SizedBox(width: 24),
                   const _OngoingIncentiveCard(
                     status: 'LIVE',
                     type: 'BONAS',
@@ -85,7 +85,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 48),
+            SizedBox(height: 48),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -99,7 +99,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text('New Incentive List', style: AppTypography.h3),
                   ],
                 ),
@@ -109,9 +109,9 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                       width: 300,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey.shade300),
+                        border: Border.all(color: AppColors.grey.shade300),
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -119,28 +119,28 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                           hintStyle: AppTypography.bodyRegular.copyWith(
                             color: AppColors.textSecondary,
                           ),
-                          prefixIcon: const Icon(
+                          prefixIcon: Icon(
                             Icons.search,
                             color: AppColors.textSecondary,
                           ),
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(
+                          contentPadding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 14,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Container(
                       width: 48,
                       height: 48,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey.shade300),
+                        border: Border.all(color: AppColors.grey.shade300),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.tune,
                         color: AppColors.textPrimary,
                       ),
@@ -149,7 +149,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             const _IncentiveListTable(),
           ],
         ),
@@ -162,9 +162,9 @@ class IncentiveHistoricalScreen extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Center(
         child: Icon(icon, size: 20, color: AppColors.textSecondary),
@@ -200,11 +200,11 @@ class _OngoingIncentiveCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 320,
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: AppColors.grey.shade200),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,23 +215,23 @@ class _OngoingIncentiveCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE8F5E9),
+                        color: AppColors.cFFE8F5E9,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.circle,
                             color: AppColors.primary,
                             size: 8,
                           ),
-                          const SizedBox(width: 4),
+                          SizedBox(width: 4),
                           Text(
                             status,
                             style: AppTypography.bodySmall.copyWith(
@@ -243,7 +243,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     Text(
                       type,
                       style: AppTypography.bodySmall.copyWith(
@@ -256,12 +256,12 @@ class _OngoingIncentiveCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F5E9),
+                    color: AppColors.cFFE8F5E9,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -275,12 +275,12 @@ class _OngoingIncentiveCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Text(
               title,
               style: AppTypography.h4.copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -301,7 +301,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             LayoutBuilder(
               builder: (context, constraints) {
                 return Stack(
@@ -310,7 +310,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                       height: 6,
                       width: constraints.maxWidth,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF3F4F6),
+                        color: AppColors.cFFF3F4F6,
                         borderRadius: BorderRadius.circular(3),
                       ),
                     ),
@@ -327,19 +327,19 @@ class _OngoingIncentiveCard extends StatelessWidget {
                       left: constraints.maxWidth * 0.33,
                       top: 0,
                       bottom: 0,
-                      child: Container(width: 2, color: Colors.white),
+                      child: Container(width: 2, color: AppColors.white),
                     ),
                     Positioned(
                       left: constraints.maxWidth * 0.66,
                       top: 0,
                       bottom: 0,
-                      child: Container(width: 2, color: Colors.white),
+                      child: Container(width: 2, color: AppColors.white),
                     ),
                   ],
                 );
               },
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -354,22 +354,22 @@ class _OngoingIncentiveCard extends StatelessWidget {
                         fontSize: 10,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.people_outline,
                           size: 14,
                           color: AppColors.textSecondary,
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text(
                           participation,
                           style: AppTypography.bodyRegular.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text(
                           'Drivers',
                           style: AppTypography.bodySmall.copyWith(
@@ -391,15 +391,15 @@ class _OngoingIncentiveCard extends StatelessWidget {
                         fontSize: 10,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.access_time,
                           size: 14,
                           color: AppColors.textSecondary,
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Text(
                           remaining,
                           style: AppTypography.bodyRegular.copyWith(
@@ -426,22 +426,22 @@ class _IncentiveListTable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Column(
         children: [
           // Table Header
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
-              borderRadius: const BorderRadius.only(
+              color: AppColors.cFFF9FAFB,
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+              border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Row(
               children: [
@@ -507,7 +507,7 @@ class _IncentiveListTable extends StatelessWidget {
           // Table Rows
           ListView(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             children: [
               _buildTableRow(
                 title: 'AfterNoon commute rush',
@@ -515,8 +515,8 @@ class _IncentiveListTable extends StatelessWidget {
                 date: 'Feb 27',
                 time: '06:00 AM - 11:00 PM',
                 vehicle: 'AUTO',
-                vehicleColor: const Color(0xFFE3F2FD),
-                vehicleTextColor: Colors.blue.shade700,
+                vehicleColor: AppColors.cFFE3F2FD,
+                vehicleTextColor: AppColors.blue.shade700,
                 amount: '450.00',
                 status: 'SCHEDULED',
               ),
@@ -526,8 +526,8 @@ class _IncentiveListTable extends StatelessWidget {
                 date: 'Mar 2 — Mar 9',
                 time: 'Full Week',
                 vehicle: 'CAB',
-                vehicleColor: const Color(0xFFFFF8E1),
-                vehicleTextColor: Colors.amber.shade800,
+                vehicleColor: AppColors.cFFFFF8E1,
+                vehicleTextColor: AppColors.amber.shade800,
                 amount: '5,200.00',
                 status: 'SCHEDULED',
               ),
@@ -537,7 +537,7 @@ class _IncentiveListTable extends StatelessWidget {
                 date: 'Mar 2 — Mar 9',
                 time: 'Full Week',
                 vehicle: 'BIKE',
-                vehicleColor: const Color(0xFFE8F5E9),
+                vehicleColor: AppColors.cFFE8F5E9,
                 vehicleTextColor: AppColors.primary,
                 amount: '1,500.00',
                 status: 'SCHEDULED',
@@ -546,9 +546,9 @@ class _IncentiveListTable extends StatelessWidget {
           ),
           // Pagination Footer
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              border: Border(top: BorderSide(color: AppColors.grey.shade200)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -565,9 +565,9 @@ class _IncentiveListTable extends StatelessWidget {
                     Icon(
                       Icons.chevron_left,
                       size: 20,
-                      color: Colors.grey.shade400,
+                      color: AppColors.grey.shade400,
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Container(
                       width: 28,
                       height: 28,
@@ -579,28 +579,28 @@ class _IncentiveListTable extends StatelessWidget {
                         child: Text(
                           '1',
                           style: AppTypography.bodySmall.copyWith(
-                            color: Colors.white,
+                            color: AppColors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       '2',
                       style: AppTypography.bodySmall.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Text(
                       '3',
                       style: AppTypography.bodySmall.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    const Icon(Icons.chevron_right, size: 20),
+                    SizedBox(width: 16),
+                    Icon(Icons.chevron_right, size: 20),
                   ],
                 ),
               ],
@@ -623,9 +623,9 @@ class _IncentiveListTable extends StatelessWidget {
     required String status,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -641,7 +641,7 @@ class _IncentiveListTable extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   '($type)',
                   style: AppTypography.bodySmall.copyWith(
@@ -656,18 +656,18 @@ class _IncentiveListTable extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF9FAFB),
+                    color: AppColors.cFFF9FAFB,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.calendar_today_outlined,
                     size: 16,
                     color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -677,7 +677,7 @@ class _IncentiveListTable extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       time,
                       style: AppTypography.bodySmall.copyWith(
@@ -695,7 +695,7 @@ class _IncentiveListTable extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: vehicleColor,
                   borderRadius: BorderRadius.circular(4),
@@ -725,18 +725,18 @@ class _IncentiveListTable extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue.shade200),
+                  border: Border.all(color: AppColors.blue.shade200),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   status,
                   style: AppTypography.bodySmall.copyWith(
-                    color: Colors.blue.shade700,
+                    color: AppColors.blue.shade700,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -748,3 +748,6 @@ class _IncentiveListTable extends StatelessWidget {
     );
   }
 }
+
+
+

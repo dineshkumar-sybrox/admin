@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 import 'adjust_wallet_dialog.dart';
 import 'emergency_contact_log_dialog.dart';
@@ -7,7 +8,7 @@ class RiderHeader extends StatelessWidget {
   final bool isSafetyTabActive;
   final TabController? tabController;
 
-  const RiderHeader({
+  RiderHeader({
     super.key,
     this.isSafetyTabActive = false,
     this.tabController,
@@ -24,7 +25,7 @@ class RiderHeader extends StatelessWidget {
             Stack(
               alignment: Alignment.bottomRight,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 32,
                   backgroundImage: AssetImage('assets/images/rahul_sharma.jpg'),
                 ),
@@ -33,13 +34,13 @@ class RiderHeader extends StatelessWidget {
                   height: 16,
                   decoration: BoxDecoration(
                     color: AppColors.success,
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: AppColors.white, width: 2),
                     shape: BoxShape.circle,
                   ),
                 ),
               ],
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
 
             // Name & ID & Contact Info
             Column(
@@ -47,16 +48,16 @@ class RiderHeader extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       'Rahul Sharma',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 2,
                       ),
@@ -64,9 +65,9 @@ class RiderHeader extends StatelessWidget {
                         color: AppColors.activeTagBg, // Fixed: Use new bg color
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const Text(
+                      child: Text(
                         'ACTIVE',
-                        style: TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
                           color: AppColors
@@ -76,9 +77,9 @@ class RiderHeader extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Row(
-                  children: const [
+                  children: [
                     Icon(
                       Icons.badge_outlined,
                       size: 12,
@@ -87,21 +88,21 @@ class RiderHeader extends StatelessWidget {
                     SizedBox(width: 4),
                     Text(
                       'ID: RD-9021',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Row(
-                  children: const [
+                  children: [
                     Icon(Icons.phone, size: 12, color: AppColors.textSecondary),
                     SizedBox(width: 4),
                     Text(
                       '9021443372',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -115,7 +116,7 @@ class RiderHeader extends StatelessWidget {
                     SizedBox(width: 4),
                     Text(
                       'rahul@gmail.com',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -125,7 +126,7 @@ class RiderHeader extends StatelessWidget {
               ],
             ),
 
-            const Spacer(),
+            Spacer(),
 
             // Actions
             if (isSafetyTabActive) ...[
@@ -133,17 +134,17 @@ class RiderHeader extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const EmergencyContactLogDialog(),
+                    builder: (context) => EmergencyContactLogDialog(),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.emergency,
                   size: 16,
                   color: AppColors.textPrimary,
                 ),
-                label: const Text(
+                label: Text(
                   'Emergency Contact Log',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     color: AppColors.textPrimary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -154,34 +155,34 @@ class RiderHeader extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(
+                icon: Icon(
                   Icons.warning_amber_rounded,
                   size: 16,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
-                label: const Text(
+                label: Text(
                   'Flag for Investigation',
-                  style: TextStyle(
-                    color: Colors.white,
+                  style: AppTypography.base.copyWith(
+                    color: AppColors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFDC2626), // Red
+                  backgroundColor: AppColors.cFFDC2626, // Red
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
                   ),
@@ -190,30 +191,30 @@ class RiderHeader extends StatelessWidget {
             ] else ...[
               OutlinedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.block, size: 16),
-                label: const Text('BLOCK USER'),
+                icon: Icon(Icons.block, size: 16),
+                label: Text('BLOCK USER'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.textPrimary,
-                  side: const BorderSide(color: AppColors.divider),
+                  side: BorderSide(color: AppColors.divider),
                   backgroundColor: AppColors.background,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               ElevatedButton.icon(
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const AdjustWalletDialog(
+                    builder: (context) => AdjustWalletDialog(
                       riderName: 'Rahul Sharma',
                       currentBalance: '450',
                     ),
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.account_balance_wallet_outlined,
                   size: 16,
                 ),
-                label: const Text('ADJUST WALLET'),
+                label: Text('ADJUST WALLET'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   elevation: 0,
@@ -222,7 +223,7 @@ class RiderHeader extends StatelessWidget {
             ],
           ],
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // Tabs
         TabBar(
@@ -231,15 +232,15 @@ class RiderHeader extends StatelessWidget {
           tabAlignment: TabAlignment.start,
           labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.textSecondary,
-          labelStyle: const TextStyle(
+          labelStyle: AppTypography.base.copyWith(
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
           indicatorColor: AppColors.primary,
           indicatorSize: TabBarIndicatorSize.label, // 👈 Important
           indicatorWeight: 3,
-          labelPadding: const EdgeInsets.symmetric(horizontal: 16),
-          dividerColor: Colors.transparent,
+          labelPadding: EdgeInsets.symmetric(horizontal: 16),
+          dividerColor: AppColors.transparent,
           tabs: const [
             Tab(text: 'OVERVIEW'),
             Tab(text: 'RIDE HISTORY'),
@@ -248,8 +249,12 @@ class RiderHeader extends StatelessWidget {
             Tab(text: 'SAFETY'),
           ],
         ),
-        const Divider(height: 1, color: AppColors.divider),
+        Divider(height: 1, color: AppColors.divider),
       ],
     );
   }
 }
+
+
+
+

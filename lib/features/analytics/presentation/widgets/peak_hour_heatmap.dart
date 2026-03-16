@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
+import 'package:admin/core/theme/app_colors.dart';
 
 class PeakHourHeatmap extends StatelessWidget {
-  const PeakHourHeatmap({super.key});
+  PeakHourHeatmap({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: AppColors.black.withValues(alpha: 0.02),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
-        border: Border.all(color: const Color(0xFFF0F1F3)),
+        border: Border.all(color: AppColors.cFFF0F1F3),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -26,24 +28,18 @@ class PeakHourHeatmap extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Peak Hour Demand Heatmap',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF1A1D1F),
-                    ),
+                    style: AppTypography.h3
                   ),
                   SizedBox(height: 4),
                   Text(
                     'Hourly ride requests distribution',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF9EA5AD),
+                    style: AppTypography.base.copyWith(
+                     
                     ),
                   ),
                 ],
@@ -51,51 +47,49 @@ class PeakHourHeatmap extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'Low',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF6F767E),
+                    style: AppTypography.base.copyWith(
+                      
+                      color: AppColors.cFF6F767E,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  _buildLegendScaleDot(const Color(0xFFE8FDF2)),
-                  const SizedBox(width: 4),
-                  _buildLegendScaleDot(const Color(0xFF8CE0B9)),
-                  const SizedBox(width: 4),
-                  _buildLegendScaleDot(const Color(0xFF00C46B)),
-                  const SizedBox(width: 4),
-                  _buildLegendScaleDot(const Color(0xFF00894B)),
-                  const SizedBox(width: 8),
-                  const Text(
+                  SizedBox(width: 8),
+                  _buildLegendScaleDot(AppColors.cFFE8FDF2),
+                  SizedBox(width: 4),
+                  _buildLegendScaleDot(AppColors.cFF8CE0B9),
+                  SizedBox(width: 4),
+                  _buildLegendScaleDot(AppColors.cFF00C46B),
+                  SizedBox(width: 4),
+                  _buildLegendScaleDot(AppColors.cFF00894B),
+                  SizedBox(width: 8),
+                  Text(
                     'High',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF6F767E),
+                    style: AppTypography.base.copyWith(
+                      
+                      color: AppColors.cFF6F767E,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          SizedBox(height: 32),
           Column(
             children: [
               // X-Axis (Hours)
               Row(
                 children: [
-                  const SizedBox(width: 40), // Left margin for Y-Axis labels
+                  SizedBox(width: 40), // Left margin for Y-Axis labels
                   ...List.generate(24, (i) {
                     return Expanded(
                       child: Center(
                         child: Text(
                           '${i}h',
-                          style: const TextStyle(
+                          style: AppTypography.base.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF6F767E),
+                            color: AppColors.cFF6F767E,
                           ),
                         ),
                       ),
@@ -103,7 +97,7 @@ class PeakHourHeatmap extends StatelessWidget {
                   }),
                 ],
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               // Heatmap Rows (Y-Axis Days)
               _buildHeatmapRow('Mon', _mockDataRow1()),
               _buildHeatmapRow('Tue', _mockDataRow2()),
@@ -114,18 +108,18 @@ class PeakHourHeatmap extends StatelessWidget {
               _buildHeatmapRow('Sun', _mockDataRow7()),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           Row(
             children: [
-              _buildMultiplierLegend(const Color(0xFFE8FDF2), 'Normal'),
-              const SizedBox(width: 16),
-              _buildMultiplierLegend(const Color(0xFF8CE0B9), 'Normal'),
-              const SizedBox(width: 16),
-              _buildMultiplierLegend(const Color(0xFF00C46B), '1.2X'),
-              const SizedBox(width: 16),
-              _buildMultiplierLegend(const Color(0xFF00A86B), '1.8X'),
-              const SizedBox(width: 16),
-              _buildMultiplierLegend(const Color(0xFF00894B), '2.0X'),
+              _buildMultiplierLegend(AppColors.cFFE8FDF2, 'Normal'),
+              SizedBox(width: 16),
+              _buildMultiplierLegend(AppColors.cFF8CE0B9, 'Normal'),
+              SizedBox(width: 16),
+              _buildMultiplierLegend(AppColors.cFF00C46B, '1.2X'),
+              SizedBox(width: 16),
+              _buildMultiplierLegend(AppColors.cFF00A86B, '1.8X'),
+              SizedBox(width: 16),
+              _buildMultiplierLegend(AppColors.cFF00894B, '2.0X'),
             ],
           ),
         ],
@@ -135,24 +129,24 @@ class PeakHourHeatmap extends StatelessWidget {
 
   Widget _buildHeatmapRow(String day, List<int> intensities) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: EdgeInsets.only(bottom: 4),
       child: Row(
         children: [
           SizedBox(
             width: 40,
             child: Text(
               day,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF1A1D1F),
+              style: AppTypography.base.copyWith(
+                // fontSize: 11,
+                // fontWeight: FontWeight.w700,
+                color: AppColors.cFF1A1D1F,
               ),
             ),
           ),
           ...intensities.map((intensity) {
             return Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
+                padding: EdgeInsets.symmetric(horizontal: 2),
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: Container(
@@ -173,19 +167,19 @@ class PeakHourHeatmap extends StatelessWidget {
   Color _getColorForIntensity(int intensity) {
     switch (intensity) {
       case 0:
-        return const Color(0xFFF4F6F9); // Empty/Very Low
+        return AppColors.cFFF4F6F9; // Empty/Very Low
       case 1:
-        return const Color(0xFFE8FDF2); // Low
+        return AppColors.cFFE8FDF2; // Low
       case 2:
-        return const Color(0xFF8CE0B9); // Medium
+        return AppColors.cFF8CE0B9; // Medium
       case 3:
-        return const Color(0xFF00C46B); // High (1.2X)
+        return AppColors.cFF00C46B; // High (1.2X)
       case 4:
-        return const Color(0xFF00A86B); // Very High (1.8X)
+        return AppColors.cFF00A86B; // Very High (1.8X)
       case 5:
-        return const Color(0xFF00894B); // Peak (2.0X)
+        return AppColors.cFF00894B; // Peak (2.0X)
       default:
-        return const Color(0xFFF4F6F9);
+        return AppColors.cFFF4F6F9;
     }
   }
 
@@ -206,13 +200,13 @@ class PeakHourHeatmap extends StatelessWidget {
           height: 10,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 6),
+        SizedBox(width: 6),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF6F767E),
+          style: AppTypography.base.copyWith(
+            // fontSize: 10,
+            // fontWeight: FontWeight.w600,
+            color: AppColors.cFF6F767E,
           ),
         ),
       ],
@@ -403,3 +397,7 @@ class PeakHourHeatmap extends StatelessWidget {
     3,
   ];
 }
+
+
+
+

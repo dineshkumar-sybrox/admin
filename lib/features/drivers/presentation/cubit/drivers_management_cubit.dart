@@ -52,7 +52,7 @@ class DriversManagementCubit extends Cubit<DriversManagementState> {
     loadDrivers();
   }
 
-  static const List<Driver> _allDrivers = [
+  static List<Driver> _allDrivers = [
     Driver(
       id: '#DRV-90832',
       name: 'Rahul Mehta',
@@ -141,7 +141,7 @@ class DriversManagementCubit extends Cubit<DriversManagementState> {
 
   Future<void> loadDrivers() async {
     emit(state.copyWith(isLoading: true));
-    await Future.delayed(const Duration(milliseconds: 600));
+    await Future.delayed(Duration(milliseconds: 600));
     final filtered = _filterDrivers(
       state.searchQuery,
       state.statusFilter,
@@ -229,3 +229,4 @@ class DriversManagementCubit extends Cubit<DriversManagementState> {
     }).toList();
   }
 }
+

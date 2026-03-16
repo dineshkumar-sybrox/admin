@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class EmergencyContactLogDialog extends StatelessWidget {
-  const EmergencyContactLogDialog({super.key});
+  EmergencyContactLogDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       child: Container(
         width: 700,
-        padding: const EdgeInsets.all(32),
+        padding: EdgeInsets.all(32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,10 +24,10 @@ class EmergencyContactLogDialog extends StatelessWidget {
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Emergency Contact Management & Logs',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -35,7 +36,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                     SizedBox(height: 4),
                     Text(
                       'Linked contacts and historical communication activity',
-                      style: TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         color: AppColors.textSecondary,
                       ),
@@ -43,17 +44,17 @@ class EmergencyContactLogDialog extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  icon: const Icon(Icons.close, color: AppColors.textSecondary),
+                  icon: Icon(Icons.close, color: AppColors.textSecondary),
                   onPressed: () => Navigator.of(context).pop(),
                   splashRadius: 24,
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Linked Emergency Contacts Section
             Row(
-              children: const [
+              children: [
                 Icon(
                   Icons.contact_mail_outlined,
                   size: 20,
@@ -62,7 +63,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 SizedBox(width: 8),
                 Text(
                   'Linked Emergency Contacts',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -70,7 +71,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -82,7 +83,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                     isVerified: true,
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: _buildContactCard(
                     name: 'Rajesh Sharma',
@@ -94,16 +95,16 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Communication Log Section
             Row(
-              children: const [
+              children: [
                 Icon(Icons.history, size: 20, color: AppColors.primary),
                 SizedBox(width: 8),
                 Text(
                   'Communication Log',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
@@ -111,7 +112,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Log Table
             Container(
@@ -122,11 +123,11 @@ class EmergencyContactLogDialog extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 16,
                     ),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.scaffoldBackground,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12),
@@ -134,7 +135,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                       ),
                     ),
                     child: Row(
-                      children: const [
+                      children:  [
                         Expanded(
                           flex: 2,
                           child: Text('TIMESTAMP', style: _tableHeaderStyle),
@@ -161,21 +162,21 @@ class EmergencyContactLogDialog extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Divider(height: 1, color: AppColors.divider),
+                  Divider(height: 1, color: AppColors.divider),
                   _buildLogRow(
                     '28 Feb, 07:46',
                     'Ananya Sharma',
                     '# RID-44210 SOS',
                     'SMS',
                   ),
-                  const Divider(height: 1, color: AppColors.divider),
+                  Divider(height: 1, color: AppColors.divider),
                   _buildLogRow(
                     '28 Feb, 07:48',
                     'Rajesh Sharma',
                     '# RID-44210 SOS',
                     'SMS',
                   ),
-                  const Divider(height: 1, color: AppColors.divider),
+                  Divider(height: 1, color: AppColors.divider),
                   _buildLogRow(
                     '12 Sep, 21:13',
                     'Ananya Sharma',
@@ -185,7 +186,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Done Button
             Align(
@@ -194,7 +195,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 32,
                     vertical: 16,
                   ),
@@ -203,11 +204,11 @@ class EmergencyContactLogDialog extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
+                child: Text(
                   'Done',
-                  style: TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppColors.white,
                   ),
                 ),
               ),
@@ -218,7 +219,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
     );
   }
 
-  static const _tableHeaderStyle = TextStyle(
+  static final _tableHeaderStyle = AppTypography.base.copyWith(
     fontSize: 12,
     fontWeight: FontWeight.bold,
     color: AppColors.textSecondary,
@@ -233,27 +234,27 @@ class EmergencyContactLogDialog extends StatelessWidget {
     required bool isVerified,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         border: Border.all(color: AppColors.divider),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(
-              color: Color(0xFFD1FAE5), // light green bg
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.cFFD1FAE5, // light green bg
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.person_outline,
               color: AppColors.primary,
               size: 24,
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +265,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: const TextStyle(
+                      style: AppTypography.base.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -275,7 +276,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
                     if (tag.isNotEmpty)
                       Text(
                         tag,
-                        style: const TextStyle(
+                        style: AppTypography.base.copyWith(
                           fontSize: 12,
                           color: AppColors.textSecondary,
                           fontWeight: FontWeight.w500,
@@ -283,10 +284,10 @@ class EmergencyContactLogDialog extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   '$relation • $phone',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -295,9 +296,9 @@ class EmergencyContactLogDialog extends StatelessWidget {
             ),
           ),
           if (isVerified)
-            const Text(
+            Text(
               'VERIFIED',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
@@ -311,14 +312,14 @@ class EmergencyContactLogDialog extends StatelessWidget {
 
   Widget _buildLogRow(String time, String name, String trigger, String method) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
           Expanded(
             flex: 2,
             child: Text(
               time,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 color: AppColors.textPrimary,
               ),
@@ -328,7 +329,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
             flex: 2,
             child: Text(
               name,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -339,7 +340,7 @@ class EmergencyContactLogDialog extends StatelessWidget {
             flex: 2,
             child: Text(
               trigger,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -349,15 +350,15 @@ class EmergencyContactLogDialog extends StatelessWidget {
             flex: 1,
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.chat_bubble_outline,
                   size: 14,
                   color: AppColors.textSecondary,
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(
                   method,
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     color: AppColors.textPrimary,
                   ),
@@ -369,15 +370,15 @@ class EmergencyContactLogDialog extends StatelessWidget {
             flex: 2,
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.check_circle_outline,
                   size: 16,
                   color: AppColors.primary,
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(
                   '$method Delivered',
-                  style: const TextStyle(
+                  style: AppTypography.base.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
@@ -391,3 +392,6 @@ class EmergencyContactLogDialog extends StatelessWidget {
     );
   }
 }
+
+
+

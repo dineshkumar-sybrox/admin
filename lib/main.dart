@@ -5,11 +5,11 @@ import 'features/dashboard/presentation/cubit/dashboard_cubit.dart';
 import 'features/dashboard/presentation/pages/dashboard_screen.dart';
 
 void main() {
-  runApp(const AdminApp());
+  runApp(AdminApp());
 }
 
 class AdminApp extends StatelessWidget {
-  const AdminApp({super.key});
+  AdminApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,9 @@ class AdminApp extends StatelessWidget {
         title: 'GoAPP Admin',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: const DashboardScreen(),
+        home: DashboardScreen(),
       ),
     );
   }
 }
+

@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class CancellationReasonsCard extends StatelessWidget {
-  const CancellationReasonsCard({super.key});
+  CancellationReasonsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Colors.white,
+      color: AppColors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: AppColors.divider, width: 1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'ATTRIBUTION: CANCELLATION REASONS',
-              style: TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             _buildReasonRow(
               'DRIVER TOOK TOO LONG (ETA MISMATCH)',
               '3 OCCURRENCES',
               0.5,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildReasonRow('WRONG ADDRESS SHOWN', '2 OCCURRENCES', 0.33),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             _buildReasonRow('UNABLE TO CONNECT DRIVER', '1 OCCURRENCE', 0.17),
           ],
         ),
@@ -52,7 +53,7 @@ class CancellationReasonsCard extends StatelessWidget {
           children: [
             Text(
               reason,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textSecondary,
@@ -60,7 +61,7 @@ class CancellationReasonsCard extends StatelessWidget {
             ),
             Text(
               occurrence,
-              style: const TextStyle(
+              style: AppTypography.base.copyWith(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -68,10 +69,10 @@ class CancellationReasonsCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         LinearProgressIndicator(
           value: progress,
-          backgroundColor: const Color(0xFFF1F5F9), // Light grayish background
+          backgroundColor: AppColors.cFFF1F5F9, // Light grayish background
           color: AppColors.error,
           minHeight: 12,
           borderRadius: BorderRadius.circular(4),
@@ -80,3 +81,7 @@ class CancellationReasonsCard extends StatelessWidget {
     );
   }
 }
+
+
+
+

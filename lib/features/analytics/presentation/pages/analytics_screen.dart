@@ -6,7 +6,7 @@ import '../widgets/peak_hour_heatmap.dart';
 import '../widgets/regional_performance_table.dart';
 
 class AnalyticsScreen extends StatelessWidget {
-  const AnalyticsScreen({super.key});
+  AnalyticsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,14 @@ class AnalyticsScreen extends StatelessWidget {
       builder: (context, constraints) {
         final isTablet = constraints.maxWidth < 1100;
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StatCardsRow(),
-              const SizedBox(height: 20),
+              //StatCardsRow(),
+              //SizedBox(height: 20),
               if (isTablet)
-                const Column(
+                Column(
                   children: [
                     CompletionVsCancellationChart(),
                     SizedBox(height: 16),
@@ -33,7 +33,7 @@ class AnalyticsScreen extends StatelessWidget {
                   ],
                 )
               else
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
@@ -60,3 +60,4 @@ class AnalyticsScreen extends StatelessWidget {
     );
   }
 }
+

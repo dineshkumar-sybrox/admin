@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
 import 'suspension_details_dialog.dart';
 
 class SuspendedDriversTable extends StatelessWidget {
-  const SuspendedDriversTable({super.key});
+  SuspendedDriversTable({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DriversManagementCubit, DriversManagementState>(
       builder: (context, state) {
-        if (state.isLoading) return const SizedBox.shrink();
+        if (state.isLoading) return SizedBox.shrink();
 
         final displayDrivers = state.filteredDrivers;
 
@@ -27,15 +28,15 @@ class SuspendedDriversTable extends StatelessWidget {
                 ),
                 child: DataTable(
                   headingRowColor: WidgetStateProperty.all(
-                    AppColors.tableHeaderBGColor,
+                    AppColors.cFFF8FAFC,
                   ),
-                  headingTextStyle: const TextStyle(
+                  headingTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textSecondary,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0,
                   ),
-                  dataTextStyle: const TextStyle(
+                  dataTextStyle: AppTypography.base.copyWith(
                     color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -45,9 +46,9 @@ class SuspendedDriversTable extends StatelessWidget {
                   headingRowHeight: 56,
                   dataRowMaxHeight: 72,
                   dataRowMinHeight: 72,
-                  border: const TableBorder(
+                  border: TableBorder(
                     horizontalInside: BorderSide(
-                      color: Color(0xFFF3F4F6),
+                      color: AppColors.cFFF3F4F6,
                       width: 1,
                     ),
                   ),
@@ -83,7 +84,7 @@ class SuspendedDriversTable extends StatelessWidget {
                             children: [
                               Text(
                                 driver.suspensionReason ?? 'N/A',
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   color: AppColors.textPrimary,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,
@@ -91,7 +92,7 @@ class SuspendedDriversTable extends StatelessWidget {
                               ),
                               Text(
                                 driver.suspensionSubreason ?? '',
-                                style: const TextStyle(
+                                style: AppTypography.base.copyWith(
                                   color: AppColors.textSecondary,
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12,
@@ -103,7 +104,7 @@ class SuspendedDriversTable extends StatelessWidget {
                         DataCell(
                           Text(
                             driver.suspensionDate ?? '-',
-                            style: const TextStyle(
+                            style: AppTypography.base.copyWith(
                               color: AppColors.textSecondary,
                               fontWeight: FontWeight.normal,
                             ),
@@ -121,27 +122,27 @@ class SuspendedDriversTable extends StatelessWidget {
                                 context: context,
                                 barrierDismissible: true,
                                 builder: (context) =>
-                                    const SuspensionDetailsDialog(),
+                                    SuspensionDetailsDialog(),
                               );
                             },
                             borderRadius: BorderRadius.circular(4),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 4,
                                 vertical: 8,
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Activate',
-                                    style: TextStyle(
+                                    style: AppTypography.base.copyWith(
                                       color: AppColors.success,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
-                                  const Icon(
+                                  SizedBox(width: 8),
+                                  Icon(
                                     Icons.remove_red_eye_outlined,
                                     color: AppColors.textSecondary,
                                     size: 20,
@@ -176,37 +177,37 @@ class _VehicleBadge extends StatelessWidget {
 
     switch (type) {
       case 'PREMIUM CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
       case 'AUTO':
-        bgColor = const Color(0xFFDBEAFE);
-        textColor = const Color(0xFF2563EB);
+        bgColor = AppColors.cFFDBEAFE;
+        textColor = AppColors.cFF2563EB;
         break;
       case 'BIKE':
-        bgColor = const Color(0xFFD1FAE5);
-        textColor = const Color(0xFF059669);
+        bgColor = AppColors.cFFD1FAE5;
+        textColor = AppColors.cFF059669;
         break;
       case 'XL CAB':
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
       case 'CAB':
       default:
-        bgColor = const Color(0xFFFEF3C7);
-        textColor = const Color(0xFFD97706);
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
         break;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         type,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
@@ -228,25 +229,25 @@ class _AppealStatusBadge extends StatelessWidget {
     Color textColor;
 
     if (status == 'PENDING REVIEW') {
-      bgColor = const Color(0xFFFEF3C7);
-      textColor = const Color(0xFFD97706);
+      bgColor = AppColors.cFFFEF3C7;
+      textColor = AppColors.cFFD97706;
     } else if (status == 'REJECTED') {
-      bgColor = const Color(0xFFFEE2E2);
-      textColor = const Color(0xFFDC2626);
+      bgColor = AppColors.cFFFEE2E2;
+      textColor = AppColors.cFFDC2626;
     } else {
-      bgColor = const Color(0xFFF3F4F6);
+      bgColor = AppColors.cFFF3F4F6;
       textColor = AppColors.textSecondary;
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Text(
         status,
-        style: TextStyle(
+        style: AppTypography.base.copyWith(
           color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
@@ -256,3 +257,7 @@ class _AppealStatusBadge extends StatelessWidget {
     );
   }
 }
+
+
+
+
