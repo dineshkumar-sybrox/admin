@@ -26,12 +26,12 @@ class RiderHeader extends StatelessWidget {
               alignment: Alignment.bottomRight,
               children: [
                 CircleAvatar(
-                  radius: 32,
+                  radius: 36,
                   backgroundImage: AssetImage('assets/images/rahul_sharma.jpg'),
                 ),
                 Container(
-                  width: 16,
-                  height: 16,
+                  width: 18,
+                  height: 18,
                   decoration: BoxDecoration(
                     color: AppColors.success,
                     border: Border.all(color: AppColors.white, width: 2),
@@ -50,10 +50,7 @@ class RiderHeader extends StatelessWidget {
                   children: [
                     Text(
                       'Rahul Sharma',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppTypography.h3
                     ),
                     SizedBox(width: 8),
                     Container(
@@ -68,7 +65,7 @@ class RiderHeader extends StatelessWidget {
                       child: Text(
                         'ACTIVE',
                         style: AppTypography.base.copyWith(
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: AppColors
                               .activeTagText, // Fixed: Use new text color
@@ -89,7 +86,7 @@ class RiderHeader extends StatelessWidget {
                     Text(
                       'ID: RD-9021',
                       style: AppTypography.base.copyWith(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -103,21 +100,21 @@ class RiderHeader extends StatelessWidget {
                     Text(
                       '9021443372',
                       style: AppTypography.base.copyWith(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: AppColors.textSecondary,
                       ),
                     ),
                     SizedBox(width: 16),
                     Icon(
                       Icons.email_outlined,
-                      size: 12,
+                      size: 14,
                       color: AppColors.textSecondary,
                     ),
                     SizedBox(width: 4),
                     Text(
                       'rahul@gmail.com',
                       style: AppTypography.base.copyWith(
-                        fontSize: 12,
+                        fontSize: 14,
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -192,7 +189,7 @@ class RiderHeader extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: () {},
                 icon: Icon(Icons.block, size: 16),
-                label: Text('BLOCK USER'),
+                label: Text('SUSPEND RIDER'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.textPrimary,
                   side: BorderSide(color: AppColors.divider),
@@ -216,7 +213,7 @@ class RiderHeader extends StatelessWidget {
                 ),
                 label: Text('ADJUST WALLET'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppColors.green,
                   elevation: 0,
                 ),
               ),
@@ -233,8 +230,8 @@ class RiderHeader extends StatelessWidget {
           labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.textSecondary,
           labelStyle: AppTypography.base.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            fontSize: 14,
           ),
           indicatorColor: AppColors.primary,
           indicatorSize: TabBarIndicatorSize.label, // 👈 Important

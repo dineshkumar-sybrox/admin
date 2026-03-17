@@ -26,18 +26,13 @@ class CancellationLogTable extends StatelessWidget {
                   children: [
                     Text(
                       'DETAILED CANCELLATION LOG',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: AppTypography.h3
                     ),
                     SizedBox(width: 8),
                     Text(
                       '(LAST 10)',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                      style: AppTypography.h3.copyWith(
+                       
                         color: AppColors.textSecondary,
                       ),
                     ),
@@ -74,7 +69,7 @@ class CancellationLogTable extends StatelessWidget {
                     ),
                     headingTextStyle: AppTypography.base.copyWith(
                       color: AppColors.textSecondary,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.8,
                     ),
@@ -173,7 +168,7 @@ class CancellationLogTable extends StatelessWidget {
               Text(
                 time,
                 style: AppTypography.base.copyWith(
-                  fontSize: 12,
+                  fontSize: 13,
                   color: AppColors.textSecondary,
                 ),
               ),

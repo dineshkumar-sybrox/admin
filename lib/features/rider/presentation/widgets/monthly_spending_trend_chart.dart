@@ -34,21 +34,11 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Monthly Spending Trend',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
+                    Text('Monthly Spending Trend', style: AppTypography.h3),
                     SizedBox(height: 4),
                     Text(
                       'Analysis of wallet deductions and card spends',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: AppTypography.base.copyWith(),
                     ),
                   ],
                 ),
@@ -81,11 +71,6 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(8),
                               ),
-                              //border: Border.all(color: AppColors.divider),
-                              // borderRadius: BorderRadius.only(
-                              //   topLeft: Radius.circular(8),
-                              //   bottomLeft: Radius.circular(8),
-                              // ),
                             ),
                             child: Text(
                               '6 Months',
@@ -115,11 +100,7 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
                               color: _selectedRange == '1 Year'
                                   ? AppColors.white
                                   : AppColors.transparent,
-                              // border: Border(
-                              //   top: BorderSide(color: AppColors.divider),
-                              //   bottom: BorderSide(color: AppColors.divider),
-                              //   right: BorderSide(color: AppColors.divider),
-                              // ),
+
                               borderRadius: BorderRadius.all(
                                 Radius.circular(8),
                               ),
@@ -265,6 +246,3 @@ class _MonthlySpendingTrendChartState extends State<MonthlySpendingTrendChart> {
     );
   }
 }
-
-
-

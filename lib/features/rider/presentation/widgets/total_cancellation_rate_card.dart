@@ -22,14 +22,14 @@ class TotalCancellationRateCard extends StatelessWidget {
           children: [
             Text(
               'TOTAL CANCELLATION RATE',
-              style: AppTypography.base.copyWith(
-                fontSize: 11,
+              style: AppTypography.h3.copyWith(
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.8,
                 color: AppColors.textSecondary,
               ),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 28),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -58,7 +58,7 @@ class TotalCancellationRateCard extends StatelessWidget {
             Text(
               '6 failed completions out of 142 bookings',
               textAlign: TextAlign.center,
-              style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.textSecondary),
+              style: AppTypography.base.copyWith(fontSize: 13, color: AppColors.textSecondary),
             ),
           ],
         ),

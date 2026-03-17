@@ -18,6 +18,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Driver',
         'category': 'BILLING ISSUE',
         'status': 'IN-PROGRESS',
+        'dateTime': '04 Nov 2025 01:30 PM',
         'statusColor': AppColors.cFFF2C94C,
       },
       {
@@ -26,6 +27,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'SAFETY',
         'status': 'OPEN',
+        'dateTime': '04 Nov 2025 01:30 PM',
         'statusColor': AppColors.cFF2F80ED,
       },
       {
@@ -34,6 +36,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Driver',
         'category': 'APP GLITCH',
         'status': 'CLOSED',
+        'dateTime': '04 Nov 2025 01:30 PM',
         'statusColor': AppColors.cFF00A86B,
       },
       {
@@ -42,6 +45,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'PAYMENT ERROR',
         'status': 'OPEN',
+        'dateTime': '04 Nov 2025 01:30 PM',
         'statusColor': AppColors.cFF2F80ED,
       },
       {
@@ -50,6 +54,7 @@ class TotalTicketsCubit extends Cubit<TotalTicketsState> {
         'personType': 'Customer',
         'category': 'REFUND',
         'status': 'REFUNDED',
+        'dateTime': '04 Nov 2025 01:30 PM',
         'statusColor': AppColors.cFFEF4444,
       },
     ];

@@ -9,110 +9,169 @@ class SafetyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(24.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          // Left Column
-          Expanded(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top Cards
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildStatCard(
-                        title: 'TOTAL SOS ALERTS',
-                        value: '03',
-                        valueColor: AppColors.cFFE11D48, // Pink/Red
-                        subtitle: 'Lifetime total',
-                      ),
-                    ),
-                    SizedBox(width: 24),
-                    Expanded(
-                      child: _buildStatCard(
-                        title: 'SAFETY SCORE',
-                        value: '92/100',
-                        valueColor: AppColors.cFF0D9488, // Teal
-                        subtitle: 'Based on violations',
-                      ),
-                    ),
-                  ],
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatCard(
+                  title: 'TOTAL SOS ALERTS',
+                  icon: Icons.sos,
+                  iconColor: AppColors.cFFE11D48, // Red
+                  value: '03',
+                  valueColor: AppColors.cFFE11D48, // Pink/Red
+                  subtitle: 'Lifetime total',
                 ),
-                SizedBox(height: 24),
-
-                // SOS Incident History
-                _buildIncidentHistoryCard(context),
-
-                SizedBox(height: 24),
-
-                // Live Location Sharing Log
-                _buildLiveLocationCard(),
-              ],
-            ),
+              ),
+              SizedBox(width: 24),
+              Expanded(
+                child: _buildStatCard(
+                  title: 'OVERALL SAFETY SCORE',
+                  icon: Icons.health_and_safety_sharp,
+                  iconColor: AppColors.cFFD4A000, // Teal
+                  value: '92/100',
+                  valueColor: AppColors.cFFD4A000, // Teal
+                  subtitle: 'Based on violations',
+                ),
+              ),
+            ],
           ),
+          SizedBox(height: 24),
+          _buildIncidentHistoryCard(context),
 
-          SizedBox(width: 24),
+          SizedBox(height: 24),
 
-          // Right Column
-          Expanded(
-            flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildActiveIncidentSelection(),
-                SizedBox(height: 24),
-                _buildDriverDetailsLog(),
-              ],
-            ),
+          // Live Location Sharing Log
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 7, child: _buildLiveLocationCard()),
+              SizedBox(width: 24),
+              Expanded(flex: 4, child: _buildDriverDetailsLog()),
+            ],
           ),
         ],
       ),
+
+      // Row(
+
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     // Left Column
+      //     Expanded(
+      //       flex: 2,
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           // Top Cards
+      //           Row(
+      //             children: [
+      //               Expanded(
+      //                 child: _buildStatCard(
+      //                   title: 'TOTAL SOS ALERTS',
+      //                   icon: Icons.sos,
+      //                   iconColor: AppColors.cFFE11D48, // Red
+      //                   value: '03',
+      //                   valueColor: AppColors.cFFE11D48, // Pink/Red
+      //                   subtitle: 'Lifetime total',
+      //                 ),
+      //               ),
+      //               SizedBox(width: 24),
+      //               Expanded(
+      //                 child: _buildStatCard(
+      //                   title: 'OVERALL SAFETY SCORE',
+      //                   icon: Icons.health_and_safety_sharp,
+      //                   iconColor: AppColors.cFFD4A000, // Teal
+      //                   value: '92/100',
+      //                   valueColor: AppColors.cFFD4A000, // Teal
+      //                   subtitle: 'Based on violations',
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //           SizedBox(height: 24),
+
+      //           // SOS Incident History
+      //           _buildIncidentHistoryCard(context),
+
+      //           SizedBox(height: 24),
+
+      //           // Live Location Sharing Log
+      //           _buildLiveLocationCard(),
+      //         ],
+      //       ),
+      //     ),
+
+      //     SizedBox(width: 24),
+
+      //     // Right Column
+      //     Expanded(
+      //       flex: 1,
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           _buildActiveIncidentSelection(),
+      //           SizedBox(height: 24),
+      //           _buildDriverDetailsLog(),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 
   Widget _buildStatCard({
     required String title,
     required String value,
+    required IconData icon,
+    required Color iconColor,
     required Color valueColor,
     required String subtitle,
   }) {
     return Container(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.divider),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text(
-            title,
-            style: AppTypography.base.copyWith(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textSecondary,
-              letterSpacing: 0.5,
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
+            child: Icon(icon, size: 30, color: iconColor),
           ),
-          SizedBox(height: 12),
-          Text(
-            value,
-            style: AppTypography.base.copyWith(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: valueColor,
-            ),
-          ),
-          SizedBox(height: 12),
-          Text(
-            subtitle,
-            style: AppTypography.base.copyWith(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+
+          const SizedBox(width: 16),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: AppTypography.base.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textSecondary,
+                  letterSpacing: 0.5,
+                ),
+              ),
+
+              Text(
+                value,
+                style: AppTypography.base.copyWith(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -131,46 +190,42 @@ class SafetyTab extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.all(24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
-                Text(
-                  'SOS Incident History',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.cFF1A1D1F,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  'Detailed log of safety triggers',
-                  style: AppTypography.base.copyWith(fontSize: 13, color: AppColors.cFF9EA5AD),
-                ),
-              ],
-            ),
+            child: Text('SOS Incident History', style: AppTypography.h3),
           ),
           Divider(height: 1, color: AppColors.cFFF0F1F3),
           SizedBox(
             width: double.infinity,
             child: DataTable(
-              showCheckboxColumn: false,
-              headingRowColor: WidgetStateProperty.all(AppColors.white),
-              dataRowMaxHeight: 80,
-              dataRowMinHeight: 80,
+              headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+              headingTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
+              ),
+              dataTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
               horizontalMargin: 24,
               columnSpacing: 24,
-              dividerThickness: 1,
-              headingTextStyle: AppTypography.base.copyWith(
-                fontSize: 11,
-                fontWeight: FontWeight.w800,
-                color: AppColors.cFF6F767E,
-                letterSpacing: 0.5,
+              headingRowHeight: 56,
+              dataRowMaxHeight: 72,
+              dataRowMinHeight: 72,
+              showCheckboxColumn: false,
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                  color: AppColors.cFFF3F4F6,
+                  width: 1,
+                ),
               ),
               columns: const [
-                DataColumn(label: Text('DATE &\nTIME')),
+                DataColumn(label: Text('DATE & TIME')),
                 DataColumn(label: Text('RIDE ID')),
-                DataColumn(label: Text('STATUS')),
+                DataColumn(label: Text('MOBILE NUMBER')),
+                DataColumn(label: Text('PICKUP-DROP LOCATIONS')),
+                DataColumn(label: Text('DRIVER NAME')),
                 DataColumn(label: Text('ACTION')),
               ],
               rows: [
@@ -178,25 +233,63 @@ class SafetyTab extends StatelessWidget {
                   date: '28 Feb, 2026',
                   time: '07:45 PM',
                   rideId: '#RID- 44210',
+                  mobileNumber: '+91 98765 43210',
+                  pickdropLocation: 'MG Road → Koramangala',
+                  driverName: 'Amit Kumar',
                   status: 'Active',
-                  statusColor: AppColors.cFF00C46B, // Green
-                  bgColor: Color(
-                    0xFFCFEFE2,
-                  ), // Light green for active item
                 ),
                 _buildIncidentRow(
                   date: '12 Sep, 2025',
                   time: '08:12 PM',
+                  mobileNumber: '+91 98765 43210',
+                  pickdropLocation: 'Indiranagar → Jayanagar',
+                  driverName: 'Rajesh Sharma',
+
                   rideId: '#RID- 39822',
                   status: 'Resolved',
-                  statusColor: AppColors.cFF00C46B,
                 ),
                 _buildIncidentRow(
                   date: '04 Aug, 2025',
                   time: '10:30 AM',
                   rideId: '#RID- 31004',
+                  mobileNumber: '+91 98765 43210',
+                  pickdropLocation: 'Whitefield → MG Road',
+                  driverName: 'Sunita Verma',
                   status: 'False Alarm',
-                  statusColor: AppColors.cFF00C46B,
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: AppColors.cFFF0F1F3),
+
+          // Pagination
+          Padding(
+            padding: EdgeInsets.all(24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Showing 1 of 25 transactions',
+                  style: AppTypography.base.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.cFF6F767E,
+                  ),
+                ),
+                Row(
+                  children: [
+                    _buildPaginator('<', isActive: false),
+                    SizedBox(width: 8),
+                    _buildPaginator('1', isActive: true),
+                    SizedBox(width: 8),
+                    _buildPaginator('2', isActive: false),
+                    SizedBox(width: 8),
+                    _buildPaginator('3', isActive: false),
+                    SizedBox(width: 8),
+                    _buildPaginator('4', isActive: false),
+                    SizedBox(width: 8),
+                    _buildPaginator('>', isActive: false),
+                  ],
                 ),
               ],
             ),
@@ -206,16 +299,38 @@ class SafetyTab extends StatelessWidget {
     );
   }
 
+  Widget _buildPaginator(String text, {required bool isActive}) {
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
+        borderRadius: BorderRadius.circular(4),
+        border: isActive ? null : Border.all(color: AppColors.cFFEFEFEF),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: AppTypography.base.copyWith(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: isActive ? AppColors.white : AppColors.cFF1A1D1F,
+          ),
+        ),
+      ),
+    );
+  }
+
   DataRow _buildIncidentRow({
     required String date,
     required String time,
     required String rideId,
+    required String mobileNumber,
+    required String pickdropLocation,
+    required String driverName,
     required String status,
-    required Color statusColor,
-    Color bgColor = AppColors.transparent,
   }) {
     return DataRow(
-      color: WidgetStateProperty.all(bgColor),
       cells: [
         DataCell(
           Column(
@@ -253,29 +368,36 @@ class SafetyTab extends StatelessWidget {
           ),
         ),
         DataCell(
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: statusColor,
-                ),
-              ),
-              SizedBox(width: 8),
-              Text(
-                status,
-                style: AppTypography.base.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
-                  color: AppColors.cFF1A1D1F,
-                ),
-              ),
-            ],
+          Text(
+            mobileNumber,
+            style: AppTypography.base.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              color: AppColors.cFF1A1D1F,
+            ),
           ),
         ),
+        DataCell(
+          Text(
+            pickdropLocation,
+            style: AppTypography.base.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+        ),
+        DataCell(
+          Text(
+            driverName,
+            style: AppTypography.base.copyWith(
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+        ),
+
         DataCell(
           TextButton(
             onPressed: () {},
@@ -313,21 +435,11 @@ class SafetyTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Live Location Sharing Log',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                Text('Live Location Sharing Log', style: AppTypography.h3),
                 SizedBox(height: 4),
                 Text(
                   'Records of location sharing with emergency contacts',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppTypography.base.copyWith(),
                 ),
               ],
             ),
@@ -361,9 +473,9 @@ class SafetyTab extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Icon(
-              Icons.my_location,
-              size: 20,
-              color: AppColors.cFF6F767E,
+              Icons.share_location_sharp,
+              size: 25,
+              color: AppColors.grey,
             ),
           ),
           SizedBox(width: 16),
@@ -374,7 +486,7 @@ class SafetyTab extends StatelessWidget {
                 Text(
                   title,
                   style: AppTypography.base.copyWith(
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
                   ),
@@ -383,7 +495,7 @@ class SafetyTab extends StatelessWidget {
                 Text(
                   subtitle,
                   style: AppTypography.base.copyWith(
-                    fontSize: 13,
+                    fontSize: 14,
                     color: AppColors.cFF6F767E,
                   ),
                 ),
@@ -393,7 +505,7 @@ class SafetyTab extends StatelessWidget {
           Text(
             time,
             style: AppTypography.base.copyWith(
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: FontWeight.w500,
               color: AppColors.cFF9EA5AD,
             ),
@@ -442,11 +554,7 @@ class SafetyTab extends StatelessWidget {
                     ),
                   ],
                 ),
-                Icon(
-                  Icons.info_outline,
-                  color: AppColors.cFFE11D48,
-                  size: 20,
-                ),
+                Icon(Icons.info_outline, color: AppColors.cFFE11D48, size: 20),
               ],
             ),
           ),
@@ -592,10 +700,7 @@ class SafetyTab extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(8),
@@ -725,21 +830,11 @@ class SafetyTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Driver details Sharing Log',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
+                Text('Driver details Sharing Log', style: AppTypography.h3),
                 SizedBox(height: 4),
                 Text(
                   'Driver details sharing with emergency contacts',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppTypography.base.copyWith(),
                 ),
               ],
             ),
@@ -756,7 +851,7 @@ class SafetyTab extends StatelessWidget {
 
   Widget _buildDriverDetailRow(String name, String time) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -769,9 +864,9 @@ class SafetyTab extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  Icons.my_location,
-                  size: 16,
-                  color: AppColors.cFF6F767E,
+                  Icons.share_location_sharp,
+                  size: 25,
+                  color: AppColors.grey,
                 ),
               ),
               SizedBox(width: 16),
@@ -798,7 +893,3 @@ class SafetyTab extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -24,11 +24,7 @@ class SpendByCategoryChart extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Spend by Category',
-                style: AppTypography.base.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
+                style: AppTypography.h3
               ),
             ),
             SizedBox(height: 32),
@@ -133,7 +129,7 @@ class SpendByCategoryChart extends StatelessWidget {
         Text(
           title,
           style: AppTypography.base.copyWith(
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
@@ -142,7 +138,7 @@ class SpendByCategoryChart extends StatelessWidget {
         Text(
           amount,
           style: AppTypography.base.copyWith(
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
@@ -151,7 +147,7 @@ class SpendByCategoryChart extends StatelessWidget {
         Text(
           percentage,
           style: AppTypography.base.copyWith(
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),

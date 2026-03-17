@@ -143,7 +143,7 @@ class _StatCard extends StatelessWidget {
                 //if (isPrimary) Container(width: 3, color: AppColors.primary),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 22),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -151,7 +151,7 @@ class _StatCard extends StatelessWidget {
                           title,
                           style: AppTypography.base.copyWith(
                             color: AppColors.textSecondary,
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                           ),

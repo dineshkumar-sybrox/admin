@@ -1,3 +1,4 @@
+import 'package:admin/features/rider/presentation/widgets/suspension_details_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -16,7 +17,10 @@ class SuspendedRidersTable extends StatelessWidget {
         child: Center(
           child: Text(
             'No riders found',
-            style: AppTypography.base.copyWith(color: AppColors.cFF8E9BAB, fontSize: 14),
+            style: AppTypography.base.copyWith(
+              color: AppColors.cFF8E9BAB,
+              fontSize: 14,
+            ),
           ),
         ),
       );
@@ -146,23 +150,37 @@ class SuspendedRidersTable extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
+                          GestureDetector(
                             onTap: () {
-                              // Perform activation logic mock
+                              debugPrint("SuspensionDetailsDialog");
+                              showDialog(
+                                context: context,
+                                builder: (_) => SuspensionDetailsDialog(
+                                  showActions: true,
+                                ),
+                              );
                             },
                             child: Text(
                               'Activate',
                               style: AppTypography.base.copyWith(
-                                color: AppColors.success,
+                                color: AppColors.primary,
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          SizedBox(width: 16),
-                          InkWell(
+
+                          const SizedBox(width: 16),
+
+                          GestureDetector(
                             onTap: () {
-                              // Link to suspension dialog if created
+                              debugPrint("View clicked");
+                              showDialog(
+                                context: context,
+                                builder: (_) => SuspensionDetailsDialog(
+                                  showActions: false,
+                                ),
+                              );
                             },
                             child: Icon(
                               Icons.remove_red_eye_outlined,
@@ -231,7 +249,3 @@ class _SuspensionReasonBadge extends StatelessWidget {
     );
   }
 }
-
-
-
-

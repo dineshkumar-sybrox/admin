@@ -31,11 +31,7 @@ class _CommonFeedbackTagsCardState extends State<CommonFeedbackTagsCard> {
               children: [
                 Text(
                   'Common Feedback Tags',
-                  style: AppTypography.base.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppTypography.h3
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(

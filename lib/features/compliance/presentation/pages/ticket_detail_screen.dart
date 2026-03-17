@@ -61,11 +61,17 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: AppColors.cFFE5E7EB,
-                child: Icon(Icons.person, color: AppColors.grey),
+              IconButton(
+                onPressed: () {
+                  Navigation.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios_new),
               ),
+              // CircleAvatar(
+              //   radius: 20,
+              //   backgroundColor: AppColors.cFFE5E7EB,
+              //   child: Icon(Icons.person, color: AppColors.grey),
+              // ),
               SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -242,10 +248,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                     ),
                     SizedBox(width: 8),
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
                         color: AppColors.cFFF3F4F6,
                         borderRadius: BorderRadius.circular(4),
@@ -291,10 +294,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.textPrimary,
                 side: BorderSide(color: AppColors.divider),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
             if (!_isRefunded) ...[
@@ -318,19 +318,13 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                     ),
                   );
                 },
-                icon: Icon(
-                  Icons.account_balance_wallet_outlined,
-                  size: 18,
-                ),
+                icon: Icon(Icons.account_balance_wallet_outlined, size: 18),
                 label: Text('Issue Refund'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,
                   elevation: 0,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
             ],
@@ -353,10 +347,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
           'Hello Rahul, I am checking the ride logs right now. It appears the driver deviated from the suggested route. Please give me a moment to calculate the refund amount based on the estimated path.',
           'Admin • 10:55 AM',
         ),
-        if (_isClosed) ...[
-          SizedBox(height: 24),
-          _buildTicketClosedCard(),
-        ],
+        if (_isClosed) ...[SizedBox(height: 24), _buildTicketClosedCard()],
         SizedBox(height: 24),
         _buildRideReferenceCard(),
         if (_isRefunded && !_isClosed) ...[
@@ -369,7 +360,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
               padding: EdgeInsets.only(right: 44),
               child: Text(
                 'Admin • 11:05 AM',
-                style: AppTypography.base.copyWith(fontSize: 10, color: AppColors.textSecondary),
+                style: AppTypography.base.copyWith(
+                  fontSize: 10,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
           ),
@@ -410,7 +404,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
               SizedBox(height: 4),
               Text(
                 time,
-                style: AppTypography.base.copyWith(fontSize: 10, color: AppColors.textSecondary),
+                style: AppTypography.base.copyWith(
+                  fontSize: 10,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -446,7 +443,10 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
               SizedBox(height: 4),
               Text(
                 time,
-                style: AppTypography.base.copyWith(fontSize: 10, color: AppColors.textSecondary),
+                style: AppTypography.base.copyWith(
+                  fontSize: 10,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -575,11 +575,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                 style: AppTypography.bodySmall.copyWith(color: AppColors.grey),
               ),
               Spacer(),
-              Icon(
-                Icons.camera_alt_outlined,
-                color: AppColors.grey,
-                size: 20,
-              ),
+              Icon(Icons.camera_alt_outlined, color: AppColors.grey, size: 20),
             ],
           ),
         ),
@@ -605,10 +601,7 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                 hintText: 'Type a message...',
                 suffixIcon: IconButton(
                   onPressed: () {},
-                  icon: Icon(
-                    Icons.camera_alt_outlined,
-                    color: AppColors.grey,
-                  ),
+                  icon: Icon(Icons.camera_alt_outlined, color: AppColors.grey),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -688,7 +681,9 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                           ),
                           TextSpan(
                             text: '#RD-1205',
-                            style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                            style: AppTypography.base.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           TextSpan(
                             text:
@@ -766,7 +761,9 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                       children: [
                         TextSpan(
                           text: 'Resolution: ',
-                          style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                          style: AppTypography.base.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         TextSpan(text: 'Policy Violation - No Refund'),
                       ],
@@ -784,7 +781,9 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
                       children: [
                         TextSpan(
                           text: 'Admin Notes: ',
-                          style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                          style: AppTypography.base.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         TextSpan(
                           text:
@@ -803,6 +802,8 @@ class _TicketDetailScreenState extends State<TicketDetailScreen> {
   }
 }
 
-
-
-
+class Navigation {
+  static void pop(BuildContext context) {
+    Navigator.pop(context);
+  }
+}

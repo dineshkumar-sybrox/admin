@@ -13,6 +13,9 @@ class ComplaintsTab extends StatefulWidget {
 
 class _ComplaintsTabState extends State<ComplaintsTab> {
   int _selectedTicketIndex = 0;
+  String _selectedFilter = 'All';
+  String _searchQuery = '';
+  bool _showSearch = false;
 
   final List<Map<String, dynamic>> tickets = [
     {
@@ -40,6 +43,13 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final openTickets = tickets
+        .where((t) => t['status'] == 'In Progress')
+        .toList();
+    final closedTickets = tickets
+        .where((t) => t['status'] != 'In Progress')
+        .toList();
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,147 +60,191 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Sidebar Header
+              // 🔹 HEADER
               Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Support Tickets',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
+                    !_showSearch
+                        ? Text(
+                            'Support Tickets',
+                            style: AppTypography.base.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          )
+                        : Expanded(
+                            child: TextField(
+                              onChanged: (value) {
+                                setState(() {
+                                  _searchQuery = value.toLowerCase();
+                                });
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Search Ticket ID or Name...',
+                                hintStyle: AppTypography.base.copyWith(
+                                  color: AppColors.cFF9EA5AD,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: AppColors.cFF9EA5AD,
+                                  size: 18,
+                                ),
+                                filled: true,
+                                fillColor: AppColors.cFFF9FAFB,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: AppColors.cFFEFEFEF,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: AppColors.cFFEFEFEF,
+                                  ),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+
                     Row(
                       children: [
-                        IconButton(
-                          icon: Icon(
+                        // 🔽 FILTER
+                        PopupMenuButton<String>(
+                          onSelected: (value) {
+                            setState(() {
+                              _selectedFilter = value;
+                            });
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 'All',
+                              child: Text('All'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'In Progress',
+                              child: Text('In Progress'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'Resolved',
+                              child: Text('Resolved'),
+                            ),
+                            const PopupMenuItem(
+                              value: 'Closed',
+                              child: Text('Closed'),
+                            ),
+                          ],
+                          child: Icon(
                             Icons.filter_list,
-                            size: 20,
                             color: AppColors.textSecondary,
                           ),
-                          onPressed: () {},
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
                         ),
-                        SizedBox(width: 16),
+
+                        const SizedBox(width: 8),
+
+                        // 🔍 SEARCH TOGGLE
                         IconButton(
                           icon: Icon(
-                            Icons.search,
-                            size: 20,
+                            _showSearch ? Icons.close : Icons.search,
                             color: AppColors.textSecondary,
                           ),
-                          onPressed: () {},
-                          padding: EdgeInsets.zero,
-                          constraints: BoxConstraints(),
+                          onPressed: () {
+                            setState(() {
+                              _showSearch = !_showSearch;
+                              _searchQuery = '';
+                            });
+                          },
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
+
               Divider(height: 1, color: AppColors.divider),
 
-              // Tickets List
+              // 🔹 LIST
               Expanded(
-                child: ListView.separated(
-                  itemCount: tickets.length,
-                  separatorBuilder: (context, index) =>
-                      Divider(height: 1, color: AppColors.divider),
-                  itemBuilder: (context, index) {
-                    final ticket = tickets[index];
-                    final isSelected = index == _selectedTicketIndex;
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          _selectedTicketIndex = index;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? AppColors.transparent
-                              : Colors
-                                    .transparent, // Can use a subtle color if needed
-                          border: isSelected
-                              ? Border(
-                                  left: BorderSide(
-                                    color: AppColors.primary,
-                                    width: 4,
-                                  ),
-                                )
-                              : Border(
-                                  left: BorderSide(
-                                    color: AppColors.transparent,
-                                    width: 4,
-                                  ),
-                                ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  ticket['id'],
-                                  style: AppTypography.base.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                                _buildStatusBadge(ticket['status']),
-                              ],
+                child: Builder(
+                  builder: (context) {
+                    // 🔥 FILTER + SEARCH LOGIC
+                    List<Map<String, dynamic>> filteredTickets = tickets.where((
+                      ticket,
+                    ) {
+                      final title = ticket['title'].toString().toLowerCase();
+                      final id = ticket['id'].toString().toLowerCase();
+                      final rideId = ticket['rideId'].toString().toLowerCase();
+                      final status = ticket['status'].toString();
+
+                      final matchesSearch =
+                          title.contains(_searchQuery) ||
+                          id.contains(_searchQuery) ||
+                          rideId.contains(_searchQuery);
+
+                      if (_selectedFilter == 'All') {
+                        return matchesSearch;
+                      } else {
+                        return status == _selectedFilter && matchesSearch;
+                      }
+                    }).toList();
+
+                    // 🔹 SPLIT DATA
+                    final openTickets = filteredTickets
+                        .where((t) => t['status'] == 'In Progress')
+                        .toList();
+
+                    final closedTickets = filteredTickets
+                        .where((t) => t['status'] != 'In Progress')
+                        .toList();
+
+                    return ListView(
+                      children: [
+                        // 🔸 OPEN
+                        ...openTickets.asMap().entries.map((entry) {
+                          int index = entry.key;
+                          final ticket = entry.value;
+                          final isSelected = index == _selectedTicketIndex;
+
+                          return _buildTicketItem(ticket, index, isSelected);
+                        }),
+
+                        // 🔸 CLOSED HEADER
+                        if (closedTickets.isNotEmpty)
+                          Container(
+                            width: double.infinity,
+                            color: AppColors.cFFF3F4F6,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
                             ),
-                            SizedBox(height: 8),
-                            Text(
-                              ticket['title'],
+                            child: Text(
+                              'Closed Tickets',
                               style: AppTypography.base.copyWith(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textSecondary,
                               ),
                             ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.directions_car_outlined,
-                                  size: 14,
-                                  color: AppColors.textSecondary,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  ticket['rideId'],
-                                  style: AppTypography.base.copyWith(
-                                    fontSize: 12,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                                SizedBox(width: 12),
-                                Icon(
-                                  Icons.calendar_today_outlined,
-                                  size: 14,
-                                  color: AppColors.textSecondary,
-                                ),
-                                SizedBox(width: 4),
-                                Text(
-                                  ticket['date'],
-                                  style: AppTypography.base.copyWith(
-                                    fontSize: 12,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+
+                        // 🔸 CLOSED
+                        ...closedTickets.asMap().entries.map((entry) {
+                          int index = entry.key + openTickets.length;
+                          final ticket = entry.value;
+                          final isSelected = index == _selectedTicketIndex;
+
+                          return _buildTicketItem(ticket, index, isSelected);
+                        }),
+                      ],
                     );
                   },
                 ),
@@ -463,10 +517,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                   ],
                                 ),
                               ),
-                              Divider(
-                                height: 1,
-                                color: AppColors.divider,
-                              ),
+                              Divider(height: 1, color: AppColors.divider),
                               Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Row(
@@ -499,7 +550,7 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children:[
+                                      children: [
                                         Text(
                                           'ESTIMATED',
                                           style: AppTypography.base.copyWith(
@@ -599,6 +650,80 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
     );
   }
 
+  Widget _buildTicketItem(Map ticket, int index, bool isSelected) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _selectedTicketIndex = index;
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.cFFF9FAFB : AppColors.white,
+          border: Border(
+            left: BorderSide(
+              color: isSelected
+                  ? AppColors
+                        .cFF22C55E // green like image
+                  : Colors.transparent,
+              width: 4,
+            ),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ID + STATUS
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  ticket['id'],
+                  style: AppTypography.base.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                _buildStatusBadge(ticket['status']),
+              ],
+            ),
+
+            SizedBox(height: 6),
+
+            // TITLE
+            Text(
+              ticket['title'],
+              style: AppTypography.base.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+
+            SizedBox(height: 8),
+
+            // RIDE + DATE
+            Row(
+              children: [
+                Icon(Icons.directions_car_outlined, size: 14),
+                SizedBox(width: 4),
+                Text(ticket['rideId']),
+
+                SizedBox(width: 12),
+
+                Icon(Icons.calendar_today_outlined, size: 14),
+                SizedBox(width: 4),
+                Text(ticket['date']),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildStatusBadge(String status) {
     Color bgColor;
     Color textColor;
@@ -638,7 +763,3 @@ class _ComplaintsTabState extends State<ComplaintsTab> {
     );
   }
 }
-
-
-
-

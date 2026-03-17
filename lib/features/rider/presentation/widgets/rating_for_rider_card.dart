@@ -27,21 +27,11 @@ class RatingForRiderCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Rating for Rider',
-                        style: AppTypography.base.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
+                      Text('Rating for Rider', style: AppTypography.h3),
                       SizedBox(height: 4),
                       Text(
                         'Customer\'s feedback profile for all lifetime rides',
-                        style: AppTypography.base.copyWith(
-                          fontSize: 12,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: AppTypography.base.copyWith(),
                       ),
                     ],
                   ),
@@ -96,11 +86,11 @@ class RatingForRiderCard extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
+          width: 60,
           child: Text(
             label,
             style: AppTypography.base.copyWith(
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: AppColors.textSecondary,
             ),
@@ -125,7 +115,7 @@ class RatingForRiderCard extends StatelessWidget {
             count.toString(),
             textAlign: TextAlign.right,
             style: AppTypography.base.copyWith(
-              fontSize: 12,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -135,7 +125,3 @@ class RatingForRiderCard extends StatelessWidget {
     );
   }
 }
-
-
-
-

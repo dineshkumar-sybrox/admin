@@ -20,14 +20,14 @@ class LastRideSummary extends StatelessWidget {
           children: [
             Text(
               'Last Ride Summary',
-              style: AppTypography.base.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+              style: AppTypography.h3.copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 4),
             Text(
               'OCTOBER 28, 2023 AT 6:42 PM',
               style: AppTypography.base.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
+                // fontSize: 10,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
                 color: AppColors.textSecondary,
               ),
@@ -40,41 +40,54 @@ class LastRideSummary extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: AppColors.cFFFFD600,
-                        shape: BoxShape.circle,
-                      ), // Yellow dot
+                    // Align with PICKUP text
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Container(
+                        width: 6,
+                        height: 6,
+                        decoration: BoxDecoration(
+                          color: AppColors.cFFFFD600,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
                     ),
+
+                    // Line between
                     Container(
-                      height: 40,
                       width: 1,
+                      height: 50, // adjust based on spacing
                       color: AppColors.divider,
                       margin: EdgeInsets.symmetric(vertical: 4),
                     ),
+
+                    // Align with DROPOFF text
                     Container(
-                      width: 8,
-                      height: 8,
+                      width: 6,
+                      height: 6,
                       decoration: BoxDecoration(
                         color: AppColors.black,
-                        shape: BoxShape.rectangle,
-                      ), // Black square
+                        shape: BoxShape
+                            .circle, // 👈 use circle (image shows dot, not square)
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(width: 16),
+
+                SizedBox(width: 12),
+
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildLocation(
                         'PICKUP',
-                        'Prestige Tech Park, Outer Ring Rd',
+                        '100 feet road, vadapalani\nBus-stand, vadapalani - 108.',
                       ),
-                      SizedBox(height: 24),
-                      _buildLocation('DROPOFF', 'Indiranagar 100 Feet Road'),
+
+                      SizedBox(height: 20),
+
+                      _buildLocation('DROPOFF', 'VR Mall, koyumbedu'),
                     ],
                   ),
                 ),
@@ -96,7 +109,10 @@ class LastRideSummary extends StatelessWidget {
                 ),
                 child: Text(
                   'VIEW FULL DETAILS',
-                  style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                  style: AppTypography.base.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
               ),
             ),
@@ -114,7 +130,7 @@ class LastRideSummary extends StatelessWidget {
           label, // PICKUP / DROPOFF
           style: AppTypography.base.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 10,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.5,
           ),
@@ -122,12 +138,12 @@ class LastRideSummary extends StatelessWidget {
         SizedBox(height: 4),
         Text(
           address,
-          style: AppTypography.base.copyWith(fontWeight: FontWeight.bold, fontSize: 13),
+          style: AppTypography.base.copyWith(
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+          ),
         ),
       ],
     );
   }
 }
-
-
-

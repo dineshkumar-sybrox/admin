@@ -23,7 +23,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFFC2410C,
         'status': 'Pending',
         'statusColor': AppColors.cFFF97316,
-        'dateTime': '04 Nov 2025\n05:20 PM',
+        'dateTime': '04 Nov 2025 05:20 PM',
       },
       {
         'id': '#DOC-8798',
@@ -34,7 +34,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
         'statusColor': AppColors.cFFF97316,
-        'dateTime': '04 Nov 2025\n04:15 PM',
+        'dateTime': '04 Nov 2025 04:15 PM',
       },
       {
         'id': '#DOC-8797',
@@ -45,7 +45,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
         'statusColor': AppColors.cFFF97316,
-        'dateTime': '04 Nov 2025\n03:55 PM',
+        'dateTime': '04 Nov 2025 03:55 PM',
       },
       {
         'id': '#DOC-8796',
@@ -56,7 +56,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFF1D4ED8,
         'status': 'Pending',
         'statusColor': AppColors.cFFF97316,
-        'dateTime': '04 Nov 2025\n03:50 PM',
+        'dateTime': '04 Nov 2025 03:50 PM',
       },
       {
         'id': '#DOC-8795',
@@ -67,7 +67,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFFB91C1C,
         'status': 'Rejected',
         'statusColor': AppColors.cFFEF4444,
-        'dateTime': '04 Nov 2025\n03:45 PM',
+        'dateTime': '04 Nov 2025 03:45 PM',
       },
       {
         'id': '#DOC-8792',
@@ -78,7 +78,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFF15803D,
         'status': 'Approved',
         'statusColor': AppColors.cFF22C55E,
-        'dateTime': '04 Nov 2025\n02:10 PM',
+        'dateTime': '04 Nov 2025 02:10 PM',
       },
       {
         'id': '#DOC-8789',
@@ -89,7 +89,7 @@ class TotalDocumentsCubit extends Cubit<TotalDocumentsState> {
         'categoryTextColor': AppColors.cFF15803D,
         'status': 'Approved',
         'statusColor': AppColors.cFF22C55E,
-        'dateTime': '04 Nov 2025\n01:30 PM',
+        'dateTime': '04 Nov 2025 01:30 PM',
       },
     ];
 
