@@ -19,7 +19,7 @@ class TrustSafetyPanel extends StatelessWidget {
                 SizedBox(width: 8),
                 Text(
                   'Trust & Safety',
-                  style: AppTypography.base.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: AppTypography.h3.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

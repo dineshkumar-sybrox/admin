@@ -39,7 +39,7 @@ class TotalTicketsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildControlsRow(context, state),
-                      Divider(height: 1),
+                      // Divider(height: 1),
                       _buildDataTable(context, state.filteredTickets),
                       Divider(height: 1),
                       _buildPagination(state.filteredTickets.length),
@@ -105,42 +105,36 @@ class TotalTicketsScreen extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 4,
             child: TextField(
-              onChanged: (value) =>
-                  context.read<TotalTicketsCubit>().searchTickets(value),
+              onChanged: (v) =>
+                  context.read<TotalTicketsCubit>().searchTickets(v),
               decoration: InputDecoration(
-                hintText: 'Search by Ticket ID or Name...',
+                hintText: 'Search by name, email or phone...',
                 hintStyle: AppTypography.base.copyWith(
-                  color: AppColors.cFF9EA5AD,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
+                  color: AppColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.cFF9EA5AD,
-                  size: 18,
-                ),
+                prefixIcon: Icon(Icons.search, color: AppColors.textSecondary),
                 filled: true,
-                fillColor: AppColors.cFFF9FAFB,
+                fillColor: AppColors.cFFF1F5F9,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+                  borderSide: BorderSide.none,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: AppColors.cFFEFEFEF),
-                ),
+
                 contentPadding: EdgeInsets.symmetric(
+                  vertical: 0,
                   horizontal: 16,
-                  vertical: 12,
                 ),
               ),
             ),
           ),
+
           SizedBox(width: 24),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: _buildDropdown(
               'All Categories',
               state.categoryFilter,
@@ -157,7 +151,7 @@ class TotalTicketsScreen extends StatelessWidget {
           ),
           SizedBox(width: 16),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: _buildDropdown(
               'issue category',
               'issue category',
@@ -230,26 +224,33 @@ class TotalTicketsScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: DataTable(
-        showCheckboxColumn: false,
-        headingRowColor: WidgetStateProperty.all(
-          AppColors.cFFF4F6F9.withValues(alpha: 0.5),
-        ),
-        dataRowMaxHeight: 80,
-        dataRowMinHeight: 80,
-        horizontalMargin: 24,
-        columnSpacing: 40,
-        dividerThickness: 1,
+        headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
         headingTextStyle: AppTypography.base.copyWith(
-          fontSize: 11,
-          fontWeight: FontWeight.w800,
-          color: AppColors.cFF6F767E,
-          letterSpacing: 0.5,
+          color: AppColors.textSecondary,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1.0,
+        ),
+        dataTextStyle: AppTypography.base.copyWith(
+          color: AppColors.textPrimary,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        horizontalMargin: 24,
+        columnSpacing: 24,
+        headingRowHeight: 56,
+        dataRowMaxHeight: 72,
+        dataRowMinHeight: 72,
+        showCheckboxColumn: false,
+        border: const TableBorder(
+          horizontalInside: BorderSide(color: AppColors.cFFF3F4F6, width: 1),
         ),
         columns: const [
           DataColumn(label: Text('TICKET ID')),
-          DataColumn(label: Text('CUSTOMER/DRIVER')),
+          DataColumn(label: Text('RIDER/DRIVER')),
           DataColumn(label: Text('ISSUE CATEGORY')),
           DataColumn(label: Text('STATUS')),
+          DataColumn(label: Text('CREATED DATE & TIME')),
           DataColumn(label: Text('ACTIONS')),
         ],
         rows: tickets.map((ticket) {
@@ -260,6 +261,7 @@ class TotalTicketsScreen extends StatelessWidget {
             personType: ticket['personType'],
             category: ticket['category'],
             status: ticket['status'],
+            dateTime: ticket['dateTime'],
             statusColor: ticket['statusColor'],
           );
         }).toList(),
@@ -273,28 +275,30 @@ class TotalTicketsScreen extends StatelessWidget {
     required String personName,
     required String personType,
     required String category,
+    required String dateTime,
     required String status,
     required Color statusColor,
   }) {
     return DataRow(
-      onSelectChanged: (selected) {
-        if (selected != null && selected) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TicketDetailScreen(
-                ticketData: {
-                  'id': id,
-                  'personName': personName,
-                  'personType': personType,
-                  'category': category,
-                  'status': status,
-                },
-              ),
-            ),
-          );
-        }
-      },
+      // onSelectChanged: (selected) {
+      //   if (selected != null && selected) {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => TicketDetailScreen(
+      //           ticketData: {
+      //             'id': id,
+      //             'personName': personName,
+      //             'personType': personType,
+      //             'category': category,
+      //             'status': status,
+      //             'dateTime' : dateTime
+      //           },
+      //         ),
+      //       ),
+      //     );
+      //   }
+      // },
       cells: [
         DataCell(
           Text(
@@ -331,6 +335,7 @@ class TotalTicketsScreen extends StatelessWidget {
             ],
           ),
         ),
+
         DataCell(
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -375,9 +380,35 @@ class TotalTicketsScreen extends StatelessWidget {
           ),
         ),
         DataCell(
+          Text(
+            dateTime,
+            style: AppTypography.base.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+              color: AppColors.cFF6F767E,
+            ),
+          ),
+        ),
+        DataCell(
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.more_vert, color: AppColors.cFF6F767E),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TicketDetailScreen(
+                    ticketData: {
+                      'id': id,
+                      'personName': personName,
+                      'personType': personType,
+                      'category': category,
+                      'status': status,
+                      'dateTime': dateTime,
+                    },
+                  ),
+                ),
+              );
+            },
+            icon: Icon(Icons.message_rounded, color: AppColors.cFF6F767E),
           ),
         ),
       ],
@@ -467,16 +498,21 @@ class _TopStatCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.grey.shade200, width: 1),
-          boxShadow: isActive
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
-                  ),
-                ]
-              : null,
+          border: Border(
+            left: BorderSide(
+              color: isActive
+                  ? AppColors.primary
+                  : AppColors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(11),
@@ -484,10 +520,10 @@ class _TopStatCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: 3,
-                  color: isActive ? AppColors.primary : AppColors.transparent,
-                ),
+                // Container(
+                //   width: 3,
+                //   color: isActive ? AppColors.primary : AppColors.transparent,
+                // ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(24),
@@ -496,10 +532,8 @@ class _TopStatCard extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: AppTypography.bodySmall.copyWith(
-                            color: isActive
-                                ? AppColors.primary
-                                : AppColors.textSecondary,
+                          style: AppTypography.bodyRegular.copyWith(
+                            color: AppColors.textSecondary,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                           ),
@@ -513,7 +547,7 @@ class _TopStatCard extends StatelessWidget {
                               value,
                               style: AppTypography.h1.copyWith(
                                 fontWeight: FontWeight.w800,
-                                fontSize: 32,
+                                fontSize: 36,
                                 height: 1.0,
                               ),
                             ),
@@ -521,11 +555,11 @@ class _TopStatCard extends StatelessWidget {
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(trendIcon, size: 16, color: trendColor),
+                                Icon(trendIcon, size: 18, color: trendColor),
                                 SizedBox(width: 4),
                                 Text(
                                   trend,
-                                  style: AppTypography.bodySmall.copyWith(
+                                  style: AppTypography.bodyRegular.copyWith(
                                     color: trendColor,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -546,6 +580,3 @@ class _TopStatCard extends StatelessWidget {
     );
   }
 }
-
-
-

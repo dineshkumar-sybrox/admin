@@ -13,7 +13,7 @@ class ComplianceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -166,13 +166,13 @@ class _StatCard extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: AppTypography.bodySmall.copyWith(
+                            style: AppTypography.bodyLarge.copyWith(
                               color: AppColors.textSecondary,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.5,
                             ),
                           ),
-                          SizedBox(height: 16),
+                          SizedBox(height: 6),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
@@ -191,13 +191,13 @@ class _StatCard extends StatelessWidget {
                                   children: [
                                     Icon(
                                       trendIcon,
-                                      size: 16,
+                                      size: 18,
                                       color: trendColor,
                                     ),
                                     SizedBox(width: 4),
                                     Text(
                                       trend,
-                                      style: AppTypography.bodySmall.copyWith(
+                                      style: AppTypography.bodyRegular.copyWith(
                                         color: trendColor,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -266,66 +266,58 @@ class _SupportTicketsChartCardState extends State<_SupportTicketsChartCard> {
                   border: Border.all(color: AppColors.grey.shade300),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
+                child: PopupMenuButton<String>(
+                  offset: Offset(0, 40),
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.cFFEFEFEF),
+                    side: BorderSide(color: AppColors.cFFEFEFEF),
                   ),
-                  child: PopupMenuButton<String>(
-                    offset: Offset(0, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: BorderSide(color: AppColors.cFFEFEFEF),
-                    ),
-                    color: AppColors.white,
-                    elevation: 6,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          _selectedFilter,
-                          style: AppTypography.base.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.cFF1A1D1F,
-                          ),
+                  color: AppColors.white,
+                  elevation: 6,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _selectedFilter,
+                        style: AppTypography.base.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.cFF1A1D1F,
                         ),
-                        SizedBox(width: 32),
-                        Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 16,
-                          color: AppColors.cFF6F767E,
-                        ),
-                      ],
-                    ),
-                    onSelected: (val) {
-                      setState(() {
-                        _selectedFilter = val;
-                      });
-                    },
-                    itemBuilder: (context) => [
-                      _buildPopupItem('Hourly', _selectedFilter == 'Hourly'),
-                      _buildPopupItem('Today', _selectedFilter == 'Today'),
-                      _buildPopupItem(
-                        'Last Week',
-                        _selectedFilter == 'Last Week',
                       ),
-                      _buildPopupItem(
-                        'Last 30 Months',
-                        _selectedFilter == 'Last 30 Months',
-                      ),
-                      _buildPopupItem(
-                        'Last 6 Months',
-                        _selectedFilter == 'Last 6 Months',
-                      ),
-                      _buildPopupItem(
-                        'Last 1 Year',
-                        _selectedFilter == 'Last 1 Year',
+                      SizedBox(width: 32),
+                      Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 16,
+                        color: AppColors.cFF6F767E,
                       ),
                     ],
                   ),
+                  onSelected: (val) {
+                    setState(() {
+                      _selectedFilter = val;
+                    });
+                  },
+                  itemBuilder: (context) => [
+                    _buildPopupItem('Hourly', _selectedFilter == 'Hourly'),
+                    _buildPopupItem('Today', _selectedFilter == 'Today'),
+                    _buildPopupItem(
+                      'Last Week',
+                      _selectedFilter == 'Last Week',
+                    ),
+                    _buildPopupItem(
+                      'Last 30 Months',
+                      _selectedFilter == 'Last 30 Months',
+                    ),
+                    _buildPopupItem(
+                      'Last 6 Months',
+                      _selectedFilter == 'Last 6 Months',
+                    ),
+                    _buildPopupItem(
+                      'Last 1 Year',
+                      _selectedFilter == 'Last 1 Year',
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -535,6 +527,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -658,6 +651,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
+              
               children: badges
                   .map((b) => _buildStatusChip(b.name, b.isDone))
                   .toList(),
@@ -670,12 +664,12 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
 
   Widget _buildStatusChip(String label, bool isDone) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: isDone ? AppColors.cFFE8F5E9 : AppColors.cFFFFF8E1,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: isDone ? AppColors.green.shade200 : AppColors.amber.shade200,
+          color: isDone ? AppColors.green.shade300 : AppColors.amber.shade300,
         ),
       ),
       child: Row(

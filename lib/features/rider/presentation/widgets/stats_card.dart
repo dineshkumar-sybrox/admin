@@ -59,17 +59,17 @@ class StatsCard extends StatelessWidget {
             Text(
               title.toUpperCase(),
               style: AppTypography.base.copyWith(
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: AppColors.cFF8E9BAB,
+                color: AppColors.greyColour,
                 letterSpacing: 0.4,
               ),
             ),
             SizedBox(height: 10),
             Text(
               value,
-              style: AppTypography.base.copyWith(
-                fontSize: 22,
+              style: AppTypography.h3.copyWith(
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
                 color: title == 'Cancellation'
                     ? AppColors.error

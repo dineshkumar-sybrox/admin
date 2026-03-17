@@ -35,11 +35,7 @@ class _TransactionsListState extends State<TransactionsList> {
                   children: [
                     Text(
                       'Transactions',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: AppTypography.h3
                     ),
                     SizedBox(height: 4),
                     Text(

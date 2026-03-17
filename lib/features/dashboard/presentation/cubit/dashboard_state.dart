@@ -20,6 +20,7 @@ enum NavItem {
   incentiveDetail,
   zoneWisePricing,
   rateCard,
+  rateCardHistory,
 }
 
 class StatCard {

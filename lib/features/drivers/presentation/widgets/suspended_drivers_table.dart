@@ -1,3 +1,4 @@
+import 'package:admin/features/drivers/presentation/widgets/driver_suspension_details_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/core/theme/app_typography.dart';
 import 'package:admin/core/theme/app_colors.dart';
@@ -28,32 +29,32 @@ class SuspendedDriversTable extends StatelessWidget {
                 ),
                 child: DataTable(
                   headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
-                  headingTextStyle: AppTypography.base.copyWith(
-                    color: AppColors.textSecondary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.0,
-                  ),
-                  dataTextStyle: AppTypography.base.copyWith(
-                    color: AppColors.textPrimary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  horizontalMargin: 24,
-                  columnSpacing: 24,
-                  headingRowHeight: 56,
-                  dataRowMaxHeight: 72,
-                  dataRowMinHeight: 72,
-                  border: const TableBorder(
-                    horizontalInside: BorderSide(
-                      color: AppColors.cFFF3F4F6,
-                      width: 1,
-                    ),
-                  ),
+              headingTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0,
+              ),
+              dataTextStyle: AppTypography.base.copyWith(
+                color: AppColors.textPrimary,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              horizontalMargin: 24,
+              columnSpacing: 24,
+              headingRowHeight: 56,
+              dataRowMaxHeight: 72,
+              dataRowMinHeight: 72,
+              border: TableBorder(
+                horizontalInside: BorderSide(
+                  color: AppColors.cFFF3F4F6,
+                  width: 1,
+                ),
+              ),
                   columns: const [
                     DataColumn(label: Text('DRIVER ID')),
                     DataColumn(label: Text('DRIVER')),
-                    DataColumn(label: Text('LOCATION')),
+                    DataColumn(label: Text('VEHICLE TYPE')),
                     DataColumn(label: Text('SUSPENSION REASON')),
                     DataColumn(label: Text('DATE')),
                     DataColumn(label: Text('APPEAL STATUS')),
@@ -78,14 +79,7 @@ class SuspendedDriversTable extends StatelessWidget {
                             ),
                           ),
                         ),
-                        DataCell(
-                          Text(
-                            driver.city,
-                            style: AppTypography.base.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ),
+                        DataCell(_VehicleBadge(type: driver.vehicleType)),
                         DataCell(
                           _SuspensionReasonBadge(
                             reason: driver.suspensionReason ?? 'VIOLATION',
@@ -107,35 +101,44 @@ class SuspendedDriversTable extends StatelessWidget {
                         ),
                         DataCell(
                           Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              InkWell(
+                              GestureDetector(
                                 onTap: () {
-                                  // Action logic from branch
+                                  debugPrint("SuspensionDetailsDialog");
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => SuspensionDetailsDialog(
+                                      showActions: true,
+                                    ),
+                                  );
                                 },
-                                borderRadius: BorderRadius.circular(4),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
-                                    vertical: 8,
+                                child: Text(
+                                  'Activate',
+                                  style: AppTypography.base.copyWith(
+                                    color: AppColors.primary,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        'Activate',
-                                        style: AppTypography.base.copyWith(
-                                          color: AppColors.success,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Icon(
-                                        Icons.remove_red_eye_outlined,
-                                        color: AppColors.textSecondary,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 16),
+
+                              GestureDetector(
+                                onTap: () {
+                                  debugPrint("View clicked");
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => SuspensionDetailsDialog(
+                                      showActions: false,
+                                    ),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  color: AppColors.textSecondary,
+                                  size: 18,
                                 ),
                               ),
                             ],
@@ -150,6 +153,59 @@ class SuspendedDriversTable extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _VehicleBadge extends StatelessWidget {
+  final String type;
+
+  const _VehicleBadge({required this.type});
+
+  @override
+  Widget build(BuildContext context) {
+    Color bgColor;
+    Color textColor;
+
+    switch (type) {
+      case 'PREMIUM CAB':
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
+        break;
+      case 'AUTO':
+        bgColor = AppColors.cFFDBEAFE;
+        textColor = AppColors.cFF2563EB;
+        break;
+      case 'BIKE':
+        bgColor = AppColors.cFFD1FAE5;
+        textColor = AppColors.cFF059669;
+        break;
+      case 'XL CAB':
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
+        break;
+      case 'CAB':
+      default:
+        bgColor = AppColors.cFFFEF3C7;
+        textColor = AppColors.cFFD97706;
+        break;
+    }
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        type,
+        style: AppTypography.base.copyWith(
+          color: textColor,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        ),
+      ),
     );
   }
 }

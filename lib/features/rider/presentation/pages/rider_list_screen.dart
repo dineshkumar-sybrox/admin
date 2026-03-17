@@ -84,10 +84,18 @@ class _RiderScreenBodyState extends State<_RiderScreenBody> {
   }
 }
 
-class _SearchFilterBar extends StatelessWidget {
+class _SearchFilterBar extends StatefulWidget {
   final TextEditingController searchController;
 
   const _SearchFilterBar({required this.searchController});
+
+  @override
+  State<_SearchFilterBar> createState() => _SearchFilterBarState();
+}
+
+class _SearchFilterBarState extends State<_SearchFilterBar> {
+  String _selectedFilter = 'All Status';
+  TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -110,18 +118,14 @@ class _SearchFilterBar extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.textSecondary,
-                ),
+                prefixIcon: Icon(Icons.search, color: AppColors.textSecondary),
                 filled: true,
                 fillColor: AppColors.cFFF1F5F9,
                 border: OutlineInputBorder(
-                  
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                
+
                 contentPadding: EdgeInsets.symmetric(
                   vertical: 0,
                   horizontal: 16,
@@ -135,49 +139,61 @@ class _SearchFilterBar extends StatelessWidget {
               // Status Dropdown
               Container(
                 height: 44,
-                width: 140,
-                padding: EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   color: AppColors.cFFF1F5F9,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppColors.cFFE2E8F0),
+                  border: Border.all(color: AppColors.cFFEFEFEF),
                 ),
-                child: BlocBuilder<RiderCubit, RiderState>(
-                  buildWhen: (p, c) => p.statusFilter != c.statusFilter,
-                  builder: (context, state) {
-                    return DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: state.statusFilter,
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: AppColors.textSecondary,
-                          size: 20,
-                        ),
+                child: PopupMenuButton<String>(
+                  offset: Offset(0, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: AppColors.cFFEFEFEF),
+                  ),
+                  color: AppColors.white,
+                  elevation: 6,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _selectedFilter,
                         style: AppTypography.base.copyWith(
-                          color: AppColors.textSecondary,
-                          fontSize: 13,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
+                          color: AppColors.cFF1A1D1F,
                         ),
-                        items: ['All Status', 'Active', 'Inactive', 'Suspended']
-                            .map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            })
-                            .toList(),
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            context.read<RiderCubit>().setStatusFilter(
-                              newValue,
-                            );
-                          }
-                        },
                       ),
-                    );
+                      SizedBox(width: 32),
+                      Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        size: 16,
+                        color: AppColors.cFF6F767E,
+                      ),
+                    ],
+                  ),
+                  onSelected: (String newValue) {
+                    setState(() {
+                      _selectedFilter = newValue;
+                    });
+
+                    context.read<RiderCubit>().setStatusFilter(newValue);
                   },
+                  itemBuilder: (context) => [
+                    _buildPopupItem(
+                      'All Status',
+                      _selectedFilter == 'All Status',
+                    ),
+                    _buildPopupItem('Active', _selectedFilter == 'Active'),
+                    _buildPopupItem('Inactive', _selectedFilter == 'Inactive'),
+                    _buildPopupItem(
+                      'Suspended',
+                      _selectedFilter == 'Suspended',
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(width: 16),
 
               // Export Button
@@ -229,6 +245,86 @@ class _SearchFilterBar extends StatelessWidget {
       ),
     );
   }
+}
+
+// Widget _buildDropdown() {
+//     return Container(
+//       padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+//       decoration: BoxDecoration(
+//         color: AppColors.white,
+//         borderRadius: BorderRadius.circular(8),
+//         border: Border.all(color: AppColors.cFFEFEFEF),
+//       ),
+//       child: PopupMenuButton<String>(
+//         offset: Offset(0, 40),
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(8),
+//           side: BorderSide(color: AppColors.cFFEFEFEF),
+//         ),
+//         color: AppColors.white,
+//         elevation: 6,
+//         child: Row(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             Text(
+//               _selectedFilter,
+//               style: AppTypography.base.copyWith(
+//                 fontSize: 12,
+//                 fontWeight: FontWeight.w600,
+//                 color: AppColors.cFF1A1D1F,
+//               ),
+//             ),
+//             SizedBox(width: 32),
+//             Icon(
+//               Icons.keyboard_arrow_down_rounded,
+//               size: 16,
+//               color: AppColors.cFF6F767E,
+//             ),
+//           ],
+//         ),
+//         onSelected: (val) {
+//           setState(() {
+//             _selectedFilter = val;
+//           });
+//         },
+//         itemBuilder: (context) => [
+//           _buildPopupItem('All Status', _selectedFilter == 'All Status'),
+//           _buildPopupItem('Active', _selectedFilter == 'Active'),
+//           _buildPopupItem('Inactive', _selectedFilter == 'Inactive'),
+//           _buildPopupItem('Suspended', _selectedFilter == 'Suspended'),
+//         ],
+//       ),
+//     );
+//   }
+
+PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+  return PopupMenuItem<String>(
+    value: text,
+    height: 44,
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    child: Container(
+      color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              color: AppColors.cFF1A1D1F,
+            ),
+          ),
+          if (isSelected)
+            Icon(
+              Icons.check_circle_outline_rounded,
+              color: AppColors.cFF00A86B,
+              size: 18,
+            ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _Pagination extends StatelessWidget {
@@ -315,7 +411,3 @@ class _PageButton extends StatelessWidget {
     );
   }
 }
-
-
-
-

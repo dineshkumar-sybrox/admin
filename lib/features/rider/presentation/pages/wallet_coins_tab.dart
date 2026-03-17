@@ -1,3 +1,4 @@
+import 'package:admin/features/rider/presentation/widgets/adjust_wallet_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/core/theme/app_typography.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -22,7 +23,15 @@ class WalletCoinsTab extends StatelessWidget {
                   icon: Icons.account_balance_wallet_outlined,
                   iconColor: AppColors.cFF2F80ED,
                   iconBg: AppColors.cFFEAF2FD,
-                  onAdjust: () {},
+                  onAdjust: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AdjustWalletDialog(
+                        riderName: 'Rahul Sharma',
+                        currentBalance: '450',
+                      ),
+                    );
+                  },
                 ),
               ),
               SizedBox(width: 24),
@@ -42,71 +51,6 @@ class WalletCoinsTab extends StatelessWidget {
           SizedBox(height: 32),
 
           // Transaction Log Header
-          Row(
-            children: [
-              Text(
-                'Transaction Log',
-                style: AppTypography.base.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              Spacer(),
-
-              /// SEARCH FIELD
-              SizedBox(
-                width: 300,
-                height: 44, // 👈 FIXED HEIGHT
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search transactions...',
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 18,
-                      color: AppColors.textSecondary,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: AppColors.divider),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: AppColors.divider),
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 0,
-                      horizontal: 12,
-                    ),
-                  ),
-                ),
-              ),
-
-              SizedBox(width: 16),
-
-              /// EXPORT BUTTON
-              SizedBox(
-                height: 44, // 👈 SAME HEIGHT
-                child: OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.download, size: 18),
-                  label: Text('Export'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.textPrimary,
-                    side: BorderSide(color: AppColors.divider),
-                    backgroundColor: AppColors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
           SizedBox(height: 24),
 
           // Transaction Table
@@ -118,6 +62,93 @@ class WalletCoinsTab extends StatelessWidget {
             ),
             child: Column(
               children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Transaction History',
+                        style: AppTypography.h3
+                      ),
+                      Spacer(),
+
+                      /// SEARCH FIELD
+                      SizedBox(
+                        width: 380,
+                        height: 44,
+                        child: TextField(
+                          //controller: searchController,
+                          //onChanged: (v) => context.read<DriversManagementCubit>().search(v),
+                          decoration: InputDecoration(
+                            hintText: 'Search transactions...',
+                            hintStyle: AppTypography.base.copyWith(
+                              color: AppColors.textSecondary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: AppColors.textSecondary,
+                            ),
+                            filled: true,
+                            fillColor: AppColors.cFFF1F5F9,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none,
+                            ),
+
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      SizedBox(width: 16),
+
+                      /// EXPORT BUTTON
+                      SizedBox(
+                        height: 44, // 👈 SAME HEIGHT
+                        child: OutlinedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.filter_alt_outlined, size: 18),
+                          label: Text('Filters'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.textPrimary,
+                            side: BorderSide(color: AppColors.divider),
+                            backgroundColor: AppColors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(width: 16),
+
+                      /// EXPORT BUTTON
+                      SizedBox(
+                        height: 44, // 👈 SAME HEIGHT
+                        child: OutlinedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(Icons.picture_as_pdf, size: 18),
+                          label: Text('Export PDF'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.textPrimary,
+                            side: BorderSide(color: AppColors.divider),
+                            backgroundColor: AppColors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 _buildTableHeader(),
                 Divider(height: 1, color: AppColors.divider),
                 _TransactionRow(
@@ -168,10 +199,7 @@ class WalletCoinsTab extends StatelessWidget {
                 Divider(height: 1, color: AppColors.divider),
                 Container(
                   color: AppColors.divider.withValues(alpha: 0.4),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 12,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -204,7 +232,6 @@ class WalletCoinsTab extends StatelessWidget {
 
           SizedBox(height: 24),
 
-          // Pagination
         ],
       ),
     );
@@ -235,7 +262,7 @@ class WalletCoinsTab extends StatelessWidget {
         style: AppTypography.base.copyWith(
           color: AppColors.textSecondary,
           fontWeight: FontWeight.bold,
-          fontSize: 11,
+          fontSize: 13,
           letterSpacing: 0.5,
         ),
       ),
@@ -305,7 +332,7 @@ class _BalanceCard extends StatelessWidget {
                 Text(
                   title,
                   style: AppTypography.base.copyWith(
-                    fontSize: 11,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textSecondary,
                     letterSpacing: 0.5,
@@ -334,7 +361,7 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.success, // Functionally green
+              backgroundColor: AppColors.green, // Functionally green
               foregroundColor: AppColors.white,
               elevation: 0,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -439,7 +466,3 @@ class _TransactionRow extends StatelessWidget {
     );
   }
 }
-
-
-
-

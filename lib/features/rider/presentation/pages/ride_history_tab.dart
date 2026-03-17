@@ -45,10 +45,7 @@ class RideHistoryTab extends StatelessWidget {
                   foregroundColor: AppColors.textPrimary,
                   side: BorderSide(color: AppColors.divider),
                   backgroundColor: AppColors.white,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 18,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -63,10 +60,7 @@ class RideHistoryTab extends StatelessWidget {
                   foregroundColor: AppColors.textPrimary,
                   side: BorderSide(color: AppColors.divider),
                   backgroundColor: AppColors.white,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 18,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -91,10 +85,13 @@ class RideHistoryTab extends StatelessWidget {
                 _RideDataRow(
                   rideId: '#RD-10294',
                   dateTime: '28 Oct 2023\n06:42 PM',
+                  driverName: 'Rahul S.',
                   routeFrom: 'Prestige Tech Park',
                   routeTo: 'Indiranagar',
                   fare: '₹452.00',
                   coupon: 'SAVE50',
+                  cancelledBy: 'N/A',
+                  cancellationReason: 'N/A',
                   coins: '42',
                   tip: '₹20.00',
                   status: 'COMPLETED',
@@ -105,15 +102,57 @@ class RideHistoryTab extends StatelessWidget {
                   rideId: '#RD-09872',
                   dateTime: '18 Oct 2023\n08:05 AM',
                   routeFrom: 'Domlur',
+                  driverName: 'Anita K.',
                   routeTo: 'MG Road Metro',
                   fare: '₹184.00',
                   coupon: 'FIRST30',
                   coins: '12',
+                  cancelledBy: 'Rider',
                   tip: '₹5.00',
-                  status: 'COMPLETED',
+                  status: 'CANCELLED',
+                  cancellationReason: 'Changed plans',
                   isExpanded: false,
                 ),
                 // Add more rows as needed
+                Divider(height: 1, color: AppColors.divider),
+                Container(
+                  
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFF8FAFC,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12),
+                    ),  
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'SHOWING 1-10 OF 142 RIDES',
+                        style: AppTypography.base.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          _buildPageButton('<', false),
+                          SizedBox(width: 8),
+                          _buildPageButton('1', true),
+                          SizedBox(width: 8),
+                          _buildPageButton('2', false),
+                          SizedBox(width: 8),
+                          _buildPageButton('3', false),
+                          SizedBox(width: 8),
+                          _buildPageButton('>', false),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -121,50 +160,31 @@ class RideHistoryTab extends StatelessWidget {
           SizedBox(height: 24),
 
           // Pagination
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'SHOWING 1-10 OF 142 RIDES',
-                style: AppTypography.base.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                  letterSpacing: 0.5,
-                ),
-              ),
-              Row(
-                children: [
-                  _buildPageButton('<', false),
-                  SizedBox(width: 8),
-                  _buildPageButton('1', true),
-                  SizedBox(width: 8),
-                  _buildPageButton('2', false),
-                  SizedBox(width: 8),
-                  _buildPageButton('3', false),
-                  SizedBox(width: 8),
-                  _buildPageButton('>', false),
-                ],
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
   Widget _buildTableHeader() {
-    return Padding(
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: BoxDecoration(
+        color: AppColors.cFFF8FAFC,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
       child: Row(
         children: [
           _buildHeaderCell('RIDE ID', flex: 2),
           _buildHeaderCell('DATE & TIME', flex: 2),
+          _buildHeaderCell('DRIVER NAME', flex: 3),
           _buildHeaderCell('ROUTE', flex: 4),
           _buildHeaderCell('FARE', flex: 2),
-          _buildHeaderCell('COUPON', flex: 2),
+          _buildHeaderCell('CANCELLED BY', flex: 2),
           _buildHeaderCell('COINS', flex: 1),
-          _buildHeaderCell('TIP', flex: 1),
+          // _buildHeaderCell('TIP', flex: 1),
           _buildHeaderCell('STATUS', flex: 2),
         ],
       ),
@@ -179,7 +199,7 @@ class RideHistoryTab extends StatelessWidget {
         style: AppTypography.base.copyWith(
           color: AppColors.textSecondary,
           fontWeight: FontWeight.bold,
-          fontSize: 11,
+          fontSize: 12,
           letterSpacing: 0.5,
         ),
       ),
@@ -210,10 +230,13 @@ class RideHistoryTab extends StatelessWidget {
 class _RideDataRow extends StatefulWidget {
   final String rideId;
   final String dateTime;
+  final String driverName;
   final String routeFrom;
   final String routeTo;
   final String fare;
   final String coupon;
+  final String cancelledBy;
+  final String cancellationReason;
   final String coins;
   final String tip;
   final String status;
@@ -222,10 +245,13 @@ class _RideDataRow extends StatefulWidget {
   const _RideDataRow({
     required this.rideId,
     required this.dateTime,
+    required this.driverName,
     required this.routeFrom,
     required this.routeTo,
     required this.fare,
     required this.coupon,
+    required this.cancelledBy,
+    required this.cancellationReason,
     required this.coins,
     required this.tip,
     required this.status,
@@ -259,14 +285,29 @@ class _RideDataRowState extends State<_RideDataRow> {
                   flex: 2,
                   child: Text(
                     widget.rideId,
-                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(
                     widget.dateTime,
-                    style: AppTypography.base.copyWith(fontSize: 13, height: 1.4),
+                    style: AppTypography.base.copyWith(
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    widget.driverName,
+                    style: AppTypography.base.copyWith(
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -302,33 +343,41 @@ class _RideDataRowState extends State<_RideDataRow> {
                   flex: 2,
                   child: Text(
                     widget.fare,
-                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 2,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.cFFFFF7E6, // Light Orange
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        widget.coupon,
-                        style: AppTypography.base.copyWith(
-                          color: AppColors.cFFD97706,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                        ),
-                      ),
+                  child: Text(
+                    widget.cancelledBy,
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
+                // Expanded(
+                //   flex: 1,
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Container(
+                //       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //       decoration: BoxDecoration(
+                //         color: AppColors.cFFFFF7E6, // Light Orange
+                //         borderRadius: BorderRadius.circular(4),
+                //       ),
+                //       child: Text(
+                //         widget.coupon,
+                //         style: AppTypography.base.copyWith(
+                //           color: AppColors.cFFD97706,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 11,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   flex: 1,
                   child: Text(
@@ -339,13 +388,7 @@ class _RideDataRowState extends State<_RideDataRow> {
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    widget.tip,
-                    style: AppTypography.base.copyWith(color: AppColors.textSecondary),
-                  ),
-                ),
+
                 Expanded(
                   flex: 2,
                   child: Align(
@@ -356,13 +399,19 @@ class _RideDataRowState extends State<_RideDataRow> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.activeTagBg,
+                        color: widget.status == 'COMPLETED'
+                            ? AppColors.greenColour.withAlpha(40)
+                            : AppColors.red.withAlpha(40),
+
+                        // AppColors.activeTagBg,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         widget.status,
                         style: AppTypography.base.copyWith(
-                          color: AppColors.activeTagText,
+                          color: widget.status == 'COMPLETED'
+                              ? AppColors.greenColour
+                              : AppColors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
                         ),
@@ -377,9 +426,7 @@ class _RideDataRowState extends State<_RideDataRow> {
 
         if (isExpanded)
           Container(
-            color: Color(
-              0xFFFAFAFA,
-            ), // Very light grey bg for expanded area
+            color: Color(0xFFFAFAFA), // Very light grey bg for expanded area
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -398,36 +445,39 @@ class _RideDataRowState extends State<_RideDataRow> {
                             children: [
                               Icon(
                                 Icons.receipt_long,
-                                size: 16,
+                                size: 20,
                                 color: AppColors.textPrimary,
                               ),
                               SizedBox(width: 8),
                               Text(
                                 'DETAILED FARE AUDIT',
-                                style: AppTypography.base.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  letterSpacing: 0.5,
-                                ),
+                                style: AppTypography.h3,
                               ),
                             ],
                           ),
                           SizedBox(height: 24),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               _buildAuditItem('BASE FARE', '₹50.00'),
-                              SizedBox(width: 48),
-                              _buildAuditItem('DISTANCE (12.4 KM)', '₹248.00'),
-                              SizedBox(width: 48),
-                              _buildAuditItem('TIME (34 MINS)', '₹102.00'),
-                              SizedBox(width: 48),
+
+                              _buildAuditItem('DISTANCE (12.4 KM)', '2 KM'),
+
+                              _buildAuditItem('TIME (34 MINS)', '17 MIN'),
+                              _buildAuditItem('TIP', '₹17.00'),
+
                               _buildAuditItem(
                                 'SURGE (1.2X)',
                                 '+ ₹72.00',
                                 valueColor: AppColors.warning,
                               ),
-                              SizedBox(width: 48),
+                              _buildAuditItem(
+                                'COUPON',
+                                'SAVE50',
+                                valueColor: AppColors.warning,
+                              ),
+
                               _buildAuditItem(
                                 'DISCOUNTS',
                                 '- ₹40.00',
@@ -445,12 +495,19 @@ class _RideDataRowState extends State<_RideDataRow> {
                                 '₹384.20',
                                 isLarge: true,
                               ),
-                              SizedBox(width: 48),
+                              SizedBox(width: 15),
                               _buildAuditItem(
                                 'PLATFORM FEE',
                                 '₹67.80',
                                 isLarge: true,
                               ),
+                              SizedBox(width: 15),
+                              if (widget.cancelledBy != 'N/A')
+                                _buildAuditItem(
+                                  'CANCELLATION REASON',
+                                  widget.cancellationReason,
+                                  isLarge: true,
+                                ),
                               Spacer(),
                               TextButton(
                                 onPressed: () {},
@@ -489,7 +546,7 @@ class _RideDataRowState extends State<_RideDataRow> {
         Text(
           label,
           style: AppTypography.base.copyWith(
-            fontSize: 10,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
@@ -499,7 +556,7 @@ class _RideDataRowState extends State<_RideDataRow> {
         Text(
           value,
           style: AppTypography.base.copyWith(
-            fontSize: isLarge ? 16 : 14,
+            fontSize: isLarge ? 17 : 15,
             fontWeight: FontWeight.bold,
             color: valueColor ?? AppColors.textPrimary,
           ),
@@ -508,7 +565,3 @@ class _RideDataRowState extends State<_RideDataRow> {
     );
   }
 }
-
-
-
-

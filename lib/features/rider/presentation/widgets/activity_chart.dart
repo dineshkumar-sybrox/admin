@@ -29,8 +29,8 @@ class _ActivityTrendChartState extends State<ActivityTrendChart> {
                   children: [
                     Text(
                       '30-Day Activity Trend',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 16,
+                      style: AppTypography.h3.copyWith(
+                        //fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -38,8 +38,8 @@ class _ActivityTrendChartState extends State<ActivityTrendChart> {
                     Text(
                       'Daily ride frequency analysis',
                       style: AppTypography.base.copyWith(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
+                        // fontSize: 12,
+                        // color: AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -53,7 +53,7 @@ class _ActivityTrendChartState extends State<ActivityTrendChart> {
                   decoration: BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.circular(8),
-                    //border: Border.all(color: AppColors.cFFEFEFEF),
+                    border: Border.all(color: AppColors.cFFEFEFEF),
                   ),
                   child: PopupMenuButton<String>(
                     offset: Offset(0, 40),
@@ -95,8 +95,8 @@ class _ActivityTrendChartState extends State<ActivityTrendChart> {
                         _selectedFilter == 'Last Week',
                       ),
                       _buildPopupItem(
-                        'Last 30 Months',
-                        _selectedFilter == 'Last 30 Months',
+                        'Last 30 Days',
+                        _selectedFilter == 'Last 30 Days',
                       ),
                       _buildPopupItem(
                         'Last 6 Months',

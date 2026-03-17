@@ -17,52 +17,50 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Critical Feedback Logs',
-                      style: AppTypography.base.copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+          Container(
+            color: AppColors.cFFF1F5F9.withAlpha(100),
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Critical Feedback Logs',
+                        style: AppTypography.h3
                       ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Ratings 3-stars and below',
+                        style: AppTypography.base.copyWith(
+                          
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Ratings 3-stars and below',
+                    decoration: BoxDecoration(
+                      color: AppColors.cFFFEE2E2, // Light red bg
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      '9 TOTAL',
                       style: AppTypography.base.copyWith(
                         fontSize: 12,
-                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.error,
+                        letterSpacing: 0.5,
                       ),
                     ),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
                   ),
-                  decoration: BoxDecoration(
-                    color: AppColors.cFFFEE2E2, // Light red bg
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    '9 TOTAL',
-                    style: AppTypography.base.copyWith(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.error,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Divider(height: 1),
@@ -210,7 +208,7 @@ class CriticalFeedbackLogsCard extends StatelessWidget {
             ],
           ),
         ),
-        if (hasBottomDivider) Divider(height: 1),
+        if (hasBottomDivider) Divider(height: 1, color: AppColors.divider),
       ],
     );
   }

@@ -21,11 +21,8 @@ class CancellationReasonsCard extends StatelessWidget {
           children: [
             Text(
               'ATTRIBUTION: CANCELLATION REASONS',
-              style: AppTypography.base.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-                color: AppColors.textPrimary,
+              style: AppTypography.h3.copyWith(
+                
               ),
             ),
             SizedBox(height: 24),
@@ -54,7 +51,7 @@ class CancellationReasonsCard extends StatelessWidget {
             Text(
               reason,
               style: AppTypography.base.copyWith(
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textSecondary,
               ),
@@ -62,7 +59,7 @@ class CancellationReasonsCard extends StatelessWidget {
             Text(
               occurrence,
               style: AppTypography.base.copyWith(
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),

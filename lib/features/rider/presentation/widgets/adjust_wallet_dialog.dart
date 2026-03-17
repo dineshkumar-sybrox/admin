@@ -180,21 +180,15 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: AppColors.divider,
-                            ),
+                            borderSide: BorderSide(color: AppColors.divider),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: AppColors.divider,
-                            ),
+                            borderSide: BorderSide(color: AppColors.divider),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: AppColors.primary,
-                            ),
+                            borderSide: BorderSide(color: AppColors.primary),
                           ),
                         ),
                         keyboardType: TextInputType.number,
@@ -346,7 +340,11 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ),
                 child: Text(
                   'Confirm Adjustment',
-                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: AppTypography.base.copyWith(
+                    fontSize: 14,
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -359,7 +357,10 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
                 ),
                 child: Text(
                   'Cancel',
-                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: AppTypography.base.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -369,6 +370,3 @@ class _AdjustWalletDialogState extends State<AdjustWalletDialog> {
     );
   }
 }
-
-
-

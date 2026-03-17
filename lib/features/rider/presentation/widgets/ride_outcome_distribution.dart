@@ -21,7 +21,7 @@ class RideOutcomeDistribution extends StatelessWidget {
           children: [
             Text(
               'Ride Outcome Distribution',
-              style: AppTypography.base.copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+              style: AppTypography.h3.copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 24),
             Row(
@@ -143,8 +143,8 @@ class RideOutcomeDistribution extends StatelessWidget {
               child: Text(
                 label,
                 style: AppTypography.base.copyWith(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
                   letterSpacing: 0.5,
                 ),
@@ -152,7 +152,7 @@ class RideOutcomeDistribution extends StatelessWidget {
             ),
             Text(
               "$count RIDES",
-              style: AppTypography.base.copyWith(fontWeight: FontWeight.bold, fontSize: 12),
+              style: AppTypography.base.copyWith(fontWeight: FontWeight.bold, fontSize: 13),
             ),
           ],
         ),
