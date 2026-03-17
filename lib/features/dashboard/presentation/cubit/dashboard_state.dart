@@ -19,6 +19,7 @@ enum NavItem {
   incentiveHistory,
   incentiveDetail,
   zoneWisePricing,
+  rateCard,
 }
 
 class StatCard {
@@ -152,4 +153,3 @@ class DashboardState extends Equatable {
     isExportingReport,
   ];
 }
-

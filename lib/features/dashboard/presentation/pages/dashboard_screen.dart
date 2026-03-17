@@ -23,6 +23,7 @@ import '../../../../features/compliance/presentation/pages/total_tickets_screen.
 import '../../../../features/compliance/presentation/pages/compliance_score_details_screen.dart';
 import '../../../../features/drivers/presentation/pages/drivers_management_screen.dart';
 import '../../../pricing/presentation/pages/zone_wise_pricing_page.dart';
+import '../../../pricing/presentation/pages/rate_card_management_page.dart';
 
 class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
@@ -78,8 +79,10 @@ class DashboardScreen extends StatelessWidget {
         return 'Compliance Score Details';
       case NavItem.zoneWisePricing:
         return 'Zone-wise Pricing';
+      case NavItem.rateCard:
+        return 'Rate Card Management';
       default:
-        return 'Dashboard';
+        return 'Rate Card Management';
     }
   }
 
@@ -113,9 +116,11 @@ class DashboardScreen extends StatelessWidget {
       case NavItem.totalTickets:
         return TotalTicketsScreen();
       case NavItem.complianceScoreDetails:
-        return const ComplianceScoreDetailsScreen();
+        return ComplianceScoreDetailsScreen();
       case NavItem.zoneWisePricing:
-        return const ZoneWisePricingPage();
+        return ZoneWisePricingPage();
+      case NavItem.rateCard:
+        return const RateCardManagementPage();
       case NavItem.drivers:
         return DriversManagementScreen(initialTab: state.initialDriverTab);
       default:

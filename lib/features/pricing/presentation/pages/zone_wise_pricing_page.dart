@@ -162,8 +162,8 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
             const Row(
               children: [
                 Icon(Icons.local_offer_outlined, color: Color(0xFF00A86B)),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'Base Price Configuration',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),

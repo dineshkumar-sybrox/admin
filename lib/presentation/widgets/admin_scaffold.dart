@@ -69,7 +69,10 @@ class AdminScaffold extends StatelessWidget {
                 backgroundColor: AppColors.warning,
                 child: Text(
                   'AS',
-                  style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.white),
+                  style: AppTypography.base.copyWith(
+                    fontSize: 12,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
               SizedBox(width: 16),
@@ -133,7 +136,10 @@ class AdminScaffold extends StatelessWidget {
                   // backgroundImage: NetworkImage('...'),
                   child: Text(
                     'AS',
-                    style: AppTypography.base.copyWith(fontSize: 12, color: AppColors.white),
+                    style: AppTypography.base.copyWith(
+                      fontSize: 12,
+                      color: AppColors.white,
+                    ),
                   ),
                 ),
                 SizedBox(width: 8),
@@ -165,6 +171,3 @@ class AdminScaffold extends StatelessWidget {
     );
   }
 }
-
-
-

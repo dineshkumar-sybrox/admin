@@ -61,7 +61,7 @@ class _CancellationScreenState extends State<CancellationScreen> {
 
   Widget _buildTotalContent(bool isTablet) {
     if (isTablet) {
-      return const Column(
+      return Column(
         children: [
           ReasonsForCancellation(),
           SizedBox(height: 16),
@@ -71,7 +71,7 @@ class _CancellationScreenState extends State<CancellationScreen> {
         ],
       );
     }
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(

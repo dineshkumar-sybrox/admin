@@ -62,7 +62,7 @@ class Sidebar extends StatelessWidget {
               // Menu Items
               _buildMenuItem(
                 icon: Icons.grid_view,
-                label: 'Dashboard',
+                label: 'Rate Card Management',
                 isActive: state.selectedNav == NavItem.dashboard,
                 onTap: () {
                   context.read<DashboardCubit>().selectNav(NavItem.dashboard);
@@ -126,6 +126,15 @@ class Sidebar extends StatelessWidget {
                   context.read<DashboardCubit>().selectNav(
                     NavItem.zoneWisePricing,
                   );
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
+              ),
+              _buildMenuItem(
+                icon: Icons.credit_card_outlined,
+                label: 'Rate Card',
+                isActive: state.selectedNav == NavItem.rateCard,
+                onTap: () {
+                  context.read<DashboardCubit>().selectNav(NavItem.rateCard);
                   Navigator.popUntil(context, (route) => route.isFirst);
                 },
               ),
