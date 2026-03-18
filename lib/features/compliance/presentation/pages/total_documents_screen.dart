@@ -17,7 +17,7 @@ class TotalDocumentsScreen extends StatelessWidget {
       child: BlocBuilder<TotalDocumentsCubit, TotalDocumentsState>(
         builder: (context, state) {
           return SingleChildScrollView(
-            padding: EdgeInsets.all(32.0),
+            padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -39,7 +39,7 @@ class TotalDocumentsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _buildControlsRow(context, state),
-                      Divider(height: 1),
+                      // Divider(height: 1),
                       _buildDataTable(context, state.filteredDocuments),
                       Divider(height: 1),
                       _buildPagination(state.filteredDocuments.length),
@@ -249,48 +249,68 @@ class TotalDocumentsScreen extends StatelessWidget {
   ) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width - 64,
-        ),
-        child: DataTable(
-          headingRowColor: WidgetStateProperty.all(
-            AppColors.cFFF4F6F9.withValues(alpha: 0.5),
+      child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width > 1200
+                ? MediaQuery.of(context).size.width - 320
+                : 1000,
           ),
-          dataRowMaxHeight: 70,
-          dataRowMinHeight: 70,
-          horizontalMargin: 24,
-          columnSpacing: 24,
-          dividerThickness: 1,
-          headingTextStyle: AppTypography.base.copyWith(
-            fontSize: 11,
-            fontWeight: FontWeight.w800,
-            color: AppColors.cFF6F767E,
-            letterSpacing: 0.5,
+          child: DataTable(
+            headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+            headingTextStyle: AppTypography.base.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.0,
+            ),
+            dataTextStyle: AppTypography.base.copyWith(
+              color: AppColors.textPrimary,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+            horizontalMargin: 24,
+            columnSpacing: 24,
+            headingRowHeight: 56,
+            dataRowMaxHeight: 72,
+            dataRowMinHeight: 72,
+            border: TableBorder(
+              horizontalInside: BorderSide.none,
+            ),
+            columns: const [
+              DataColumn(label: Text('DOCUMENT ID')),
+              DataColumn(label: Text('DRIVER NAME')),
+              DataColumn(label: Text('DOCUMENTS')),
+              DataColumn(label: Text('CATEGORY')),
+              DataColumn(label: Text('STATUS')),
+              DataColumn(label: Text('CLOSED DATE & TIME')),
+              DataColumn(label: Text('ACTION')),
+            ],
+            rows: documents.isEmpty
+                ? [
+                    DataRow(
+                      cells: List.generate(
+                        7,
+                        (index) => DataCell(Text("No Data")),
+                      ),
+                    ),
+                  ]
+                : documents.map((doc) {
+                    return _buildDataRow(
+                      context: context,
+                      id: doc['id'] ?? '',
+                      driverName: doc['driverName'] ?? '',
+                      documents: doc['documents'] ?? '',
+                      category: doc['category'] ?? '',
+                      categoryColor: doc['categoryColor'] ?? Colors.grey,
+                      categoryTextColor:
+                          doc['categoryTextColor'] ?? Colors.black,
+                      status: doc['status'] ?? '',
+                      statusColor: doc['statusColor'] ?? Colors.grey,
+                      dateTime: doc['dateTime'] ?? '',
+                    );
+                  }).toList(),
           ),
-          columns: const [
-            DataColumn(label: Text('DOCUMENT ID')),
-            DataColumn(label: Text('DRIVER NAME')),
-            DataColumn(label: Text('DOCUMENTS')),
-            DataColumn(label: Text('CATEGORY')),
-            DataColumn(label: Text('STATUS')),
-            DataColumn(label: Text('CLOSED DATE & TIME')),
-            DataColumn(label: Text('ACTION')),
-          ],
-          rows: documents.map((doc) {
-            return _buildDataRow(
-              context: context,
-              id: doc['id'],
-              driverName: doc['driverName'],
-              documents: doc['documents'],
-              category: doc['category'],
-              categoryColor: doc['categoryColor'],
-              categoryTextColor: doc['categoryTextColor'],
-              status: doc['status'],
-              statusColor: doc['statusColor'],
-              dateTime: doc['dateTime'],
-            );
-          }).toList(),
         ),
       ),
     );
@@ -418,6 +438,7 @@ class TotalDocumentsScreen extends StatelessWidget {
                     driverName: driverName,
                     documentId: id,
                     initialIndex: initialIndex,
+                    category: category,
                   ),
                 ),
               );
@@ -524,15 +545,13 @@ class _TopStatCard extends StatelessWidget {
               width: 4, // Thickness of left border
             ),
           ),
-          boxShadow: isActive
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
-                  ),
-                ]
-              : null,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withValues(alpha: 0.05),
+              blurRadius: 8,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(11),
@@ -553,15 +572,13 @@ class _TopStatCard extends StatelessWidget {
                         Text(
                           title,
                           style: AppTypography.bodySmall.copyWith(
-                            color: isActive
-                                ? AppColors.primary
-                                : AppColors.textSecondary,
+                            color:  AppColors.textSecondary,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
-                            fontSize: 11,
+                            fontSize: 14,
                           ),
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: 10),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,

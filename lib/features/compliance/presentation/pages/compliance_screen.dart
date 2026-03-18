@@ -459,6 +459,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
               ],
             ),
           ),
+          Divider(height: 1, color: AppColors.divider),
           _buildDriverSubmission(
             name: 'Arun Kumar',
             id: 'D-4421',
@@ -651,7 +652,7 @@ class _RecentDocumentSubmissionsCard extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              
+
               children: badges
                   .map((b) => _buildStatusChip(b.name, b.isDone))
                   .toList(),
@@ -744,13 +745,19 @@ class _RecentSupportTicketsCard extends StatelessWidget {
             title: 'Amit Shah - Payment Failed',
             time: '3 mins ago',
           ),
-          Divider(height: 1),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
+            child: Divider(height: 1, color: AppColors.divider),
+          ),
           _buildTicketRow(
             id: '#TK-8819',
             title: 'Sonia G. - Route issue',
             time: '12 mins ago',
           ),
-          Divider(height: 1),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
+            child: Divider(height: 1, color: AppColors.divider),
+          ),
           _buildTicketRow(
             id: '#TK-8819',
             title: 'Yogesh S - Driver behavior',
@@ -794,15 +801,15 @@ class _RecentSupportTicketsCard extends StatelessWidget {
               children: [
                 Text(
                   id,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.black,
+                  style: AppTypography.bodyRegular.copyWith(
+                    color: AppColors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 4),
                 Text(
                   title,
-                  style: AppTypography.bodySmall.copyWith(
+                  style: AppTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.black87,
                   ),
@@ -963,7 +970,9 @@ class _GlobalDocumentStatusCard extends StatelessWidget {
         ),
         Text(
           pct,
-          style: AppTypography.bodyRegular.copyWith(fontWeight: FontWeight.bold),
+          style: AppTypography.bodyRegular.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

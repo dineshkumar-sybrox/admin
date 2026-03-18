@@ -3,6 +3,7 @@ import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/drivers_management_cubit.dart';
+import '../pages/rider_overview_page.dart';
 
 class NewDriversTable extends StatelessWidget {
   NewDriversTable({super.key});
@@ -69,7 +70,25 @@ class NewDriversTable extends StatelessWidget {
                     return DataRow(
                       cells: [
                         DataCell(Text(driver.id)),
-                        DataCell(Text(driver.name)),
+                        DataCell(
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RiderOverviewPage(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              driver.name,
+                              style: AppTypography.base.copyWith(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                         DataCell(_VehicleBadge(type: driver.vehicleType)),
                         DataCell(
                           Text(

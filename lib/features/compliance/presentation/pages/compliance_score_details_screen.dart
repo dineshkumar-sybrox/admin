@@ -1,5 +1,7 @@
+import 'package:admin/features/compliance/presentation/pages/document_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:universal_html/js.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -9,32 +11,35 @@ class ComplianceScoreDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(32.0),
-      child: Column(
-        children: [
-          const _ScoreOverviewCard(),
-          SizedBox(height: 32),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(flex: 12, child: _ComplianceBreakdownCard()),
-              SizedBox(width: 24),
-              Expanded(flex: 8, child: _RejectionReasonsCard()),
-            ],
-          ),
-          SizedBox(height: 32),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(flex: 12, child: _RegionalHeatmapCard()),
-              SizedBox(width: 24),
-              Expanded(flex: 8, child: _TopCitiesCard()),
-            ],
-          ),
-          SizedBox(height: 32),
-          const _RecentLogsCard(),
-        ],
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(32.0),
+        child: Column(
+          children: [
+            const _ScoreOverviewCard(),
+            SizedBox(height: 32),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 12, child: _ComplianceBreakdownCard()),
+                SizedBox(width: 24),
+                Expanded(flex: 8, child: _RejectionReasonsCard()),
+              ],
+            ),
+            SizedBox(height: 32),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(flex: 12, child: _RegionalHeatmapCard()),
+                SizedBox(width: 24),
+                Expanded(flex: 8, child: _TopCitiesCard()),
+              ],
+            ),
+            SizedBox(height: 32),
+            const _RecentLogsCard(),
+          ],
+        ),
       ),
     );
   }
@@ -53,9 +58,9 @@ class _ScoreOverviewCard extends StatelessWidget {
         border: Border.all(color: AppColors.grey.shade100),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.02),
-            blurRadius: 10,
-            offset: Offset(0, 4),
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -131,9 +136,7 @@ class _ScoreOverviewCard extends StatelessWidget {
                       color: AppColors.textSecondary,
                     ),
                     children: [
-                      TextSpan(
-                        text: 'Current compliance status is rated as ',
-                      ),
+                      TextSpan(text: 'Current compliance status is rated as '),
                       TextSpan(
                         text: 'HIGH',
                         style: AppTypography.base.copyWith(
@@ -231,6 +234,13 @@ class _ComplianceBreakdownCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,6 +319,13 @@ class _RejectionReasonsCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,11 +366,7 @@ class _RejectionReasonsCard extends StatelessWidget {
           SizedBox(height: 12),
           _buildLegendItem('Blurry Image', '15%', AppColors.cFFF59E0B),
           SizedBox(height: 12),
-          _buildLegendItem(
-            'Incorrect Document',
-            '10%',
-            AppColors.cFF64748B,
-          ),
+          _buildLegendItem('Incorrect Document', '10%', AppColors.cFF64748B),
         ],
       ),
     );
@@ -371,7 +384,7 @@ class _RejectionReasonsCard extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTypography.bodySmall.copyWith(
+            style: AppTypography.bodyRegular.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
@@ -379,7 +392,7 @@ class _RejectionReasonsCard extends StatelessWidget {
         ),
         Text(
           pct,
-          style: AppTypography.bodySmall.copyWith(
+          style: AppTypography.bodyRegular.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
@@ -400,6 +413,13 @@ class _RegionalHeatmapCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -415,7 +435,10 @@ class _RegionalHeatmapCard extends StatelessWidget {
                   'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop',
                 ),
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(AppColors.black12, BlendMode.darken),
+                colorFilter: ColorFilter.mode(
+                  AppColors.black12,
+                  BlendMode.darken,
+                ),
               ),
             ),
           ),
@@ -436,6 +459,13 @@ class _TopCitiesCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: Offset(0, 6),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -499,7 +529,7 @@ class _TopCitiesCard extends StatelessWidget {
           Text(
             rank,
             style: AppTypography.h2.copyWith(
-              color: AppColors.textSecondary.withValues(alpha: 0.3),
+              color: AppColors.textSecondary.withValues(alpha: 0.5),
               fontSize: 24,
             ),
           ),
@@ -510,14 +540,14 @@ class _TopCitiesCard extends StatelessWidget {
               children: [
                 Text(
                   city,
-                  style: AppTypography.bodySmall.copyWith(
+                  style: AppTypography.bodyLarge.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
                 ),
                 Text(
                   score,
-                  style: AppTypography.bodySmall.copyWith(fontSize: 11),
+                  style: AppTypography.bodyLarge.copyWith(fontSize: 11),
                 ),
               ],
             ),
@@ -527,18 +557,18 @@ class _TopCitiesCard extends StatelessWidget {
             children: [
               Text(
                 risk,
-                style: AppTypography.bodySmall.copyWith(
+                style: AppTypography.bodyRegular.copyWith(
                   fontWeight: FontWeight.bold,
                   color: riskColor,
-                  fontSize: 10,
+                  fontSize: 12,
                 ),
               ),
               SizedBox(height: 4),
               Row(
                 children: List.generate(4, (i) {
                   return Container(
-                    width: 6,
-                    height: 6,
+                    width: 10,
+                    height: 10,
                     margin: EdgeInsets.only(left: 2),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -609,7 +639,36 @@ class _RecentLogsCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Text('All Categories', style: AppTypography.bodySmall),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: AppColors.cFFF9FAFB,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColors.cFFEFEFEF),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            //value: selectedStatus,
+                            items: ["All", "Rejected", "Verified"]
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(
+                                      e,
+                                      style: AppTypography.bodySmall,
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              // selectedStatus = value!;
+                              // filterLogs();
+                            },
+                            icon: Icon(Icons.keyboard_arrow_down, size: 18),
+                          ),
+                        ),
+                      ),
                       SizedBox(width: 8),
                       Icon(Icons.keyboard_arrow_down, size: 18),
                     ],
@@ -632,12 +691,32 @@ class _RecentLogsCard extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width - 64,
+          minWidth: MediaQuery.of(context).size.width > 1200
+              ? MediaQuery.of(context).size.width - 320
+              : 1000,
         ),
         child: DataTable(
-          headingRowHeight: 60,
-          dataRowMaxHeight: 80,
-          dataRowMinHeight: 80,
+          headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+          headingTextStyle: AppTypography.base.copyWith(
+            color: AppColors.textSecondary,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+          ),
+          dataTextStyle: AppTypography.base.copyWith(
+            color: AppColors.textPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+          horizontalMargin: 24,
+          columnSpacing: 24,
+          headingRowHeight: 56,
+          dataRowMaxHeight: 72,
+          dataRowMinHeight: 72,
+          showCheckboxColumn: false,
+          border: const TableBorder(
+            horizontalInside: BorderSide(color: AppColors.cFFF3F4F6, width: 1),
+          ),
           columns: const [
             DataColumn(label: Text('DOCUMENT ID')),
             DataColumn(label: Text('DRIVER NAME')),
@@ -654,7 +733,7 @@ class _RecentLogsCard extends StatelessWidget {
               documents: 'DRIVING LICENSE',
               category: 'REJECTED',
               status: 'Rejected',
-              dateTime: '04 Nov 2025\n05:20 PM',
+              dateTime: '04 Nov 2025 05:20 PM',
             ),
             _buildDataRow(
               id: '#DOC-8798',
@@ -662,7 +741,7 @@ class _RecentLogsCard extends StatelessWidget {
               documents: 'ALL DOCUMENTS',
               category: 'VERIFIED',
               status: 'Approved',
-              dateTime: '04 Nov 2025\n04:15 PM',
+              dateTime: '04 Nov 2025 04:15 PM',
             ),
           ],
         ),
@@ -681,9 +760,17 @@ class _RecentLogsCard extends StatelessWidget {
     final bool isRejected = status == 'Rejected';
     return DataRow(
       cells: [
-        DataCell(Text(id, style: AppTypography.base.copyWith(fontWeight: FontWeight.bold))),
         DataCell(
-          Text(driverName, style: AppTypography.base.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            id,
+            style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataCell(
+          Text(
+            driverName,
+            style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+          ),
         ),
         DataCell(
           Text(
@@ -699,17 +786,13 @@ class _RecentLogsCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: isRejected
-                  ? AppColors.cFFFEF2F2
-                  : AppColors.cFFF0FDF4,
+              color: isRejected ? AppColors.cFFFEF2F2 : AppColors.cFFF0FDF4,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               category,
               style: AppTypography.base.copyWith(
-                color: isRejected
-                    ? AppColors.cFFB91C1C
-                    : AppColors.cFF15803D,
+                color: isRejected ? AppColors.cFFB91C1C : AppColors.cFF15803D,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
@@ -741,11 +824,49 @@ class _RecentLogsCard extends StatelessWidget {
         DataCell(
           Text(
             dateTime,
-            style: AppTypography.base.copyWith(color: AppColors.textSecondary, fontSize: 12),
+            style: AppTypography.base.copyWith(
+              color: AppColors.textSecondary,
+              fontSize: 12,
+            ),
           ),
         ),
         DataCell(
-          Icon(Icons.visibility_outlined, color: AppColors.textSecondary),
+          IconButton(
+            onPressed: () {
+              int initialIndex = 0;
+              final String docType = documents.toUpperCase();
+              if (docType.contains('DRIVING LICENSE')) {
+                initialIndex = 0;
+              } else if (docType.contains('VEHICLE RC')) {
+                initialIndex = 1;
+              } else if (docType.contains('PAN CARD')) {
+                initialIndex = 2;
+              } else if (docType.contains('AADHAR CARD')) {
+                initialIndex = 3;
+              } else if (docType.contains('BANK DETAILS')) {
+                initialIndex = 4;
+              } else if (docType.contains('IDENTITY VERIFICATION')) {
+                initialIndex = 5;
+              }
+
+              Navigator.push(
+                context as BuildContext,
+                MaterialPageRoute(
+                  builder: (context) => DocumentVerificationPage(
+                    driverName: driverName,
+                    documentId: id,
+                    initialIndex: initialIndex,
+                    category: category,
+                  ),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.visibility_outlined,
+              color: AppColors.cFF6F767E,
+              size: 20,
+            ),
+          ),
         ),
       ],
     );
@@ -819,7 +940,3 @@ class _RecentLogsCard extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -7,12 +7,14 @@ import '../../../../presentation/widgets/admin_scaffold.dart';
 class DocumentVerificationPage extends StatefulWidget {
   final String driverName;
   final String documentId;
+  final String category;
   final int initialIndex;
 
   DocumentVerificationPage({
     super.key,
     required this.driverName,
     required this.documentId,
+    required this.category,
     this.initialIndex = 0,
   });
 
@@ -30,6 +32,21 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     'Name Mismatch': false,
     'Incorrect Document Type': false,
   };
+
+  String get _statusToken =>
+      '${widget.documentId} ${widget.category}'.toUpperCase();
+  bool get _isRejected => _statusToken.contains('REJECTED');
+  bool get _isResend => _statusToken.contains('RESEND');
+  bool get _isVerified => _statusToken.contains('VERIFIED');
+
+  List<String> _displayRejectionReasons() {
+    final selected = _rejectionReasons.entries
+        .where((e) => e.value)
+        .map((e) => e.key)
+        .toList();
+    if (selected.isNotEmpty) return selected;
+    return ['Blurry Image / Unreadable'];
+  }
 
   @override
   void initState() {
@@ -122,23 +139,18 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       child: TabBar(
         controller: _tabController,
         isScrollable: true,
-        indicatorColor: Color(
-          0xFF22C55E,
-        ), // Green indicator for tabs in screenshot
-        indicatorWeight: 3,
-        labelColor: AppColors.black,
-        unselectedLabelColor: AppColors.cFF6F767E,
+        tabAlignment: TabAlignment.start,
+        labelColor: AppColors.primary,
+        unselectedLabelColor: AppColors.textSecondary,
         labelStyle: AppTypography.base.copyWith(
-          fontWeight: FontWeight.w700,
-          fontSize: 14,
-          fontFamily: 'Outfit',
-        ),
-        unselectedLabelStyle: AppTypography.base.copyWith(
           fontWeight: FontWeight.w600,
           fontSize: 14,
-          fontFamily: 'Outfit',
         ),
-        labelPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        indicatorColor: AppColors.primary,
+        indicatorSize: TabBarIndicatorSize.label, // 👈 Important
+        indicatorWeight: 3,
+        labelPadding: EdgeInsets.symmetric(horizontal: 16),
+        dividerColor: AppColors.transparent,
         tabs: const [
           Tab(text: 'Driving License'),
           Tab(text: 'Vehicle RC'),
@@ -159,17 +171,17 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         Expanded(
           flex: 7,
           child: Container(
-            color: AppColors.cFFF8F9FD,
+            color: AppColors.scaffoldBackground,
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(56),
+              padding: EdgeInsets.all(40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Identity Verification Summary',
                     style: AppTypography.base.copyWith(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w600,
                       color: AppColors.cFF1A1D1F,
                       letterSpacing: -0.5,
                     ),
@@ -214,7 +226,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           child: Container(
             color: AppColors.white,
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(40),
+              padding: EdgeInsets.all(20),
               child: _buildBankVerificationPanel(),
             ),
           ),
@@ -283,7 +295,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           child: Container(
             color: AppColors.white,
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(40),
+              padding: EdgeInsets.all(20),
               child: _buildIdentityVerificationPanel(),
             ),
           ),
@@ -293,10 +305,9 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   Widget _buildSourceBadge(String title, String label, Color bg, Color text) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 12,
-      runSpacing: 8,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
@@ -324,6 +335,37 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         ),
       ],
     );
+    // Wrap(
+    //   crossAxisAlignment: WrapCrossAlignment.center,
+    //   spacing: 12,
+    //   runSpacing: 8,
+    //   children: [
+    //     Text(
+    //       title,
+    //       style: AppTypography.base.copyWith(
+    //         fontSize: 14,
+    //         fontWeight: FontWeight.w900,
+    //         color: AppColors.cFF1A1D1F,
+    //         letterSpacing: 0.5,
+    //       ),
+    //     ),
+    //     Container(
+    //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+    //       decoration: BoxDecoration(
+    //         color: bg,
+    //         borderRadius: BorderRadius.circular(4),
+    //       ),
+    //       child: Text(
+    //         label,
+    //         style: AppTypography.base.copyWith(
+    //           color: text,
+    //           fontSize: 10,
+    //           fontWeight: FontWeight.w900,
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 
   Widget _buildIdentityPreviewBox({bool isCamera = false}) {
@@ -368,63 +410,82 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   Widget _buildIdentityVerificationPanel() {
+    final bool showActions = !(_isRejected || _isVerified);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Verify Document Details',
           style: AppTypography.base.copyWith(
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: FontWeight.w900,
             color: AppColors.cFF1A1D1F,
           ),
         ),
         SizedBox(height: 44),
         _buildSectionLabel('NAME'),
-        SizedBox(height: 12),
+        SizedBox(height: 16),
         _buildTextField('Vikram Seth'),
-        SizedBox(height: 32),
+        SizedBox(height: 16),
         _buildSectionLabel('AGE'),
-        SizedBox(height: 12),
+        SizedBox(height: 16),
         _buildTextField('24'),
-        SizedBox(height: 32),
+        SizedBox(height: 16),
         _buildSectionLabel('GENDER'),
-        SizedBox(height: 12),
+        SizedBox(height: 16),
         _buildTextField('Male'),
-        SizedBox(height: 32),
+        SizedBox(height: 16),
         _buildSectionLabel('IFSC CODE'),
-        SizedBox(height: 12),
+        SizedBox(height: 16),
         _buildTextField('HDFC0001245'),
-        SizedBox(height: 48),
-        _buildSectionLabel('EVALUATION NOTES'),
-        SizedBox(height: 12),
-        _buildTextArea('Enter your notes here...'),
-        SizedBox(height: 32),
-        Divider(height: 1),
-        SizedBox(height: 32),
-        _buildSectionLabel('REJECTION REASONS'),
-        SizedBox(height: 24),
-        ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
-        SizedBox(height: 40),
-        Row(
-          children: [
-            Expanded(
-              child: _buildActionBtn(
-                label: 'REJECT',
-                color: AppColors.cFFEF4444,
-                icon: Icons.cancel_outlined,
-              ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: _buildActionBtn(
-                label: 'APPROVE',
-                color: AppColors.cFF10B981,
-                icon: Icons.check_circle_outline,
-              ),
+        if (_isRejected) ...[
+          SizedBox(height: 12),
+          _buildRejectionReasonBox(),
+        ] else ...[
+          if (_isResend) ...[SizedBox(height: 12), buildResendStatusBox()],
+          if (!_isVerified) ...[
+            SizedBox(height: 16),
+            _buildSectionLabel('EVALUATION NOTES'),
+            SizedBox(height: 16),
+            _buildTextArea('Enter your notes here...'),
+            SizedBox(height: 16),
+            Divider(height: 1),
+            SizedBox(height: 16),
+            _buildSectionLabel('REJECTION REASONS'),
+            SizedBox(height: 24),
+            ..._rejectionReasons.keys.map(
+              (reason) => _buildCheckboxItem(reason),
             ),
           ],
-        ),
+          if (_isVerified) buildStatusTimeline(),
+
+          if (_isRejected) ...[
+            SizedBox(height: 24),
+            _buildRejectionReasonBox(),
+          ],
+          if (showActions) ...[
+            SizedBox(height: 40),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'REJECT',
+                    color: AppColors.cFFEF4444,
+                    icon: Icons.cancel_outlined,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'APPROVE',
+                    color: AppColors.cFF10B981,
+                    icon: Icons.check_circle_outline,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
       ],
     );
   }
@@ -465,9 +526,9 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 Text(
                   label,
                   style: AppTypography.base.copyWith(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.cFF6F767E,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textSecondary,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -476,8 +537,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                   name,
                   style: AppTypography.base.copyWith(
                     fontSize: 18,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.cFF1A1D1F,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.black,
                   ),
                 ),
               ],
@@ -527,6 +588,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
                 Icons.info_outline_rounded,
@@ -534,41 +597,39 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 size: 24,
               ),
               SizedBox(width: 12),
-              Text(
-                'Verification Guidelines',
-                style: AppTypography.base.copyWith(
-                  color: AppColors.cFF1E40AF,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 24),
-          ...[
-            'The Account Holder Name must exactly match the verified names above.',
-            'Small spelling variations may be accepted as per local compliance rules.',
-            'Ensure the IFSC Code matches the branch location if applicable.',
-          ].map(
-            (text) => Padding(
-              padding: EdgeInsets.only(bottom: 16),
-              child: Row(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Text(
-                      text,
-                      style: AppTypography.base.copyWith(
-                        color: AppColors.cFF3B82F6,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
+                  Text(
+                    'Verification Guidelines',
+                    style: AppTypography.base.copyWith(
+                      color: AppColors.cFF1E40AF,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  ...[
+                    'The Account Holder Name must exactly match the verified names above.',
+                    'Small spelling variations may be accepted as per local compliance rules.',
+                    'Ensure the IFSC Code matches the branch location if applicable.',
+                  ].map(
+                    (text) => Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: Text(
+                        text,
+                        style: AppTypography.base.copyWith(
+                          color: AppColors.cFF3B82F6,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.5,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
+            ],
           ),
         ],
       ),
@@ -621,14 +682,15 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
   }
 
   Widget _buildBankVerificationPanel() {
+    final bool showActions = !(_isRejected || _isVerified);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Verify Document Details',
           style: AppTypography.base.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.w900,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
             color: AppColors.cFF1A1D1F,
           ),
         ),
@@ -636,47 +698,289 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
         _buildSectionLabel('NAME'),
         SizedBox(height: 12),
         _buildTextField('Vikram Seth'),
-        SizedBox(height: 32),
+        SizedBox(height: 12),
         _buildSectionLabel('BANK NAME'),
         SizedBox(height: 12),
         _buildTextField('HDFC Bank'),
-        SizedBox(height: 32),
+        SizedBox(height: 12),
         _buildSectionLabel('ACCOUNT NUMBER'),
         SizedBox(height: 12),
         _buildTextField('50100422938104'),
-        SizedBox(height: 32),
+        SizedBox(height: 12),
         _buildSectionLabel('IFSC CODE'),
         SizedBox(height: 12),
         _buildTextField('HDFC0001245'),
-        SizedBox(height: 48),
-        _buildSectionLabel('EVALUATION NOTES'),
-        SizedBox(height: 12),
-        _buildTextArea('Enter your notes here...'),
-        SizedBox(height: 32),
-        Divider(height: 1),
-        SizedBox(height: 32),
-        _buildSectionLabel('REJECTION REASONS'),
-        SizedBox(height: 24),
-        ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
-        SizedBox(height: 40),
-        Row(
-          children: [
-            Expanded(
-              child: _buildActionBtn(
-                label: 'REJECT',
-                color: AppColors.cFFEF4444,
-                icon: Icons.cancel_outlined,
-              ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: _buildActionBtn(
-                label: 'APPROVE',
-                color: AppColors.cFF10B981,
-                icon: Icons.check_circle_outline,
-              ),
+        if (_isRejected) ...[
+          SizedBox(height: 12),
+          _buildRejectionReasonBox(),
+        ] else ...[
+          if (_isResend) ...[SizedBox(height: 12), buildResendStatusBox()],
+          SizedBox(height: 12),
+          if (!_isVerified) ...[
+            _buildSectionLabel('EVALUATION NOTES'),
+            SizedBox(height: 12),
+            _buildTextArea('Enter your notes here...'),
+            SizedBox(height: 16),
+            Divider(height: 1),
+            SizedBox(height: 16),
+            _buildSectionLabel('REJECTION REASONS'),
+            SizedBox(height: 24),
+            ..._rejectionReasons.keys.map(
+              (reason) => _buildCheckboxItem(reason),
             ),
           ],
+
+          if (_isVerified) buildStatusTimeline(),
+
+          // if (_isRejected || _isResend) ...[
+          //   SizedBox(height: 16),
+          //   _buildRejectionReasonBox(),
+          // ],
+          if (showActions) ...[
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'REJECT',
+                    color: AppColors.cFFEF4444,
+                    icon: Icons.cancel_outlined,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'APPROVE',
+                    color: AppColors.cFF10B981,
+                    icon: Icons.check_circle_outline,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ],
+    );
+  }
+
+  Widget buildStatusTimeline() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// HEADER
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "CURRENT STATUS",
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                  letterSpacing: 1.2,
+                  color: Colors.black87,
+                ),
+              ),
+
+              /// VERIFIED BADGE
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Color(0xFFD1FAE5),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  "VERIFIED",
+                  style: TextStyle(
+                    color: Color(0xFF10B981),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 20),
+
+          /// TIMELINE
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _timelineItem(
+                isActive: true,
+                title: "Document Verified",
+                subtitle: "Nov 23, 2025 · 02:45 PM",
+              ),
+
+              _timelineDivider(),
+
+              _timelineItem(
+                isActive: false,
+                title: "Document Uploaded",
+                subtitle: "Nov 22, 2025 · 11:30 AM by Vikram Seth",
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _timelineDivider() {
+    return Padding(
+      padding: EdgeInsets.only(left: 5),
+      child: Container(height: 30, width: 2, color: Color(0xFFE5E7EB)),
+    );
+  }
+
+  Widget buildResendStatusBox() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC), // light grey bg
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// HEADER
+          Text(
+            "PREVIOUS STATUS: RESEND",
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.2,
+              color: Color(0xFF1F2937),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          /// REASON TITLE
+          Text(
+            "Reason for Resend",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF111827),
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          /// REASON BOX
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFEF2F2),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFFCA5A5)),
+            ),
+            child: Text(
+              '"Blurry Image"',
+              style: TextStyle(
+                color: Color(0xFFDC2626),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          /// NOTES TITLE
+          Text(
+            "Previous Admin Notes",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF111827),
+            ),
+          ),
+
+          const SizedBox(height: 10),
+
+          /// NOTES TEXT
+          Text(
+            "The corners of the driving license are cut off in the frame and the address section is illegible due to camera flash reflection.",
+            style: TextStyle(
+              fontSize: 14,
+              height: 1.6,
+              color: Color(0xFF6B7280),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          /// DATE
+          Text(
+            "—Nov 20, 2025",
+            style: TextStyle(
+              fontSize: 13,
+              color: Color(0xFF6B7280),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _timelineItem({
+    required bool isActive,
+    required String title,
+    required String subtitle,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        /// DOT + LINE
+        Column(
+          children: [
+            Container(
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                color: isActive ? Color(0xFF10B981) : Color(0xFFCBD5E1),
+                shape: BoxShape.circle,
+              ),
+            ),
+            SizedBox(height: 4),
+          ],
+        ),
+
+        SizedBox(width: 12),
+
+        /// TEXT
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: isActive ? Colors.black : Colors.black54,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -722,7 +1026,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           child: Container(
             color: AppColors.white,
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(40),
+              padding: EdgeInsets.all(20),
               child: _buildVerificationPanel(
                 fieldLabel: fieldLabel,
                 fieldValue: fieldValue,
@@ -738,53 +1042,158 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
     required String fieldLabel,
     required String fieldValue,
   }) {
+    final bool showActions = !(_isRejected || _isVerified);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Verify Document Details',
           style: AppTypography.base.copyWith(
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: FontWeight.w900,
             color: AppColors.cFF1A1D1F,
           ),
         ),
-        SizedBox(height: 40),
+        SizedBox(height: 25),
         _buildSectionLabel(fieldLabel),
-        SizedBox(height: 12),
+
         _buildTextField(fieldValue),
-        SizedBox(height: 40),
-        SizedBox(height: 32),
-        _buildSectionLabel('EVALUATION NOTES'),
-        SizedBox(height: 12),
-        _buildTextArea('Enter your notes here...'),
-        SizedBox(height: 32),
-        Divider(height: 1),
-        SizedBox(height: 32),
-        _buildSectionLabel('REJECTION REASONS'),
-        SizedBox(height: 24),
-        ..._rejectionReasons.keys.map((reason) => _buildCheckboxItem(reason)),
-        SizedBox(height: 40),
-        Row(
-          children: [
-            Expanded(
-              child: _buildActionBtn(
-                label: 'REJECT',
-                color: AppColors.cFFEF4444,
-                icon: Icons.cancel_outlined,
-              ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: _buildActionBtn(
-                label: 'APPROVE',
-                color: AppColors.cFF10B981,
-                icon: Icons.check_circle_outline,
-              ),
+        if (_isRejected) ...[
+          SizedBox(height: 12),
+          _buildRejectionReasonBox(),
+        ] else ...[
+          if (_isResend) ...[SizedBox(height: 12), buildResendStatusBox()],
+          SizedBox(height: 12),
+          if (!_isVerified) ...[
+            _buildSectionLabel('EVALUATION NOTES'),
+            SizedBox(height: 12),
+            _buildTextArea('Enter your notes here...'),
+            SizedBox(height: 12),
+            Divider(height: 1, color: AppColors.divider),
+            SizedBox(height: 12),
+            _buildSectionLabel('REJECTION REASONS'),
+            SizedBox(height: 24),
+            ..._rejectionReasons.keys.map(
+              (reason) => _buildCheckboxItem(reason),
             ),
           ],
-        ),
+
+          if (_isVerified) buildStatusTimeline(),
+
+          // if (_isRejected || _isResend) ...[
+          //   SizedBox(height: 16),
+          //   _buildRejectionReasonBox(),
+          // ],
+          if (showActions) ...[
+            SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'REJECT',
+                    color: AppColors.cFFEF4444,
+                    icon: Icons.cancel_outlined,
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
+                  child: _buildActionBtn(
+                    label: 'APPROVE',
+                    color: AppColors.cFF10B981,
+                    icon: Icons.check_circle_outline,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
       ],
+    );
+  }
+
+  Widget _buildRejectionReasonBox() {
+    final reasons = _displayRejectionReasons();
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.cFFFFF7ED,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.cFFE0F2F1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// STATUS TITLE (UPPERCASE)
+          Text(
+            'CURRENT STATUS : REJECTED',
+            style: AppTypography.base.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: AppColors.red,
+              letterSpacing: 0.4,
+            ),
+          ),
+
+          SizedBox(height: 12),
+
+          /// REASONS LIST
+          ...reasons.map((reason) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// REASON TITLE
+                  Text(
+                    "REASON",
+                    style: AppTypography.base.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+
+                  /// REASON VALUE
+                  Text(
+                    "Document Expired",
+                    style: AppTypography.base.copyWith(
+                      fontSize: 13,
+                      color: AppColors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  /// ADMIN NOTE TITLE
+                  Text(
+                    "ADMIN NOTE",
+                    style: AppTypography.base.copyWith(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+
+                  /// ADMIN NOTE VALUE
+                  Text(
+                    'The document validity has expired. Kindly upload a valid and updated document.',
+                    style: AppTypography.base.copyWith(
+                      fontSize: 13,
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
+      ),
     );
   }
 
@@ -793,8 +1202,8 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       label,
       style: AppTypography.base.copyWith(
         fontSize: 12,
-        fontWeight: FontWeight.w900,
-        color: AppColors.cFF1A1D1F,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textSecondary,
         letterSpacing: 0.5,
       ),
     );
@@ -805,16 +1214,13 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       controller: TextEditingController(text: value),
       style: AppTypography.base.copyWith(
         fontWeight: FontWeight.w600,
-        fontSize: 16,
+        fontSize: 13,
         color: AppColors.cFF1A1D1F,
       ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.white,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 16,
-        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: AppColors.grey.shade200),
@@ -836,7 +1242,10 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
       maxLines: 6,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: AppTypography.base.copyWith(color: AppColors.cFF9A9FA5, fontSize: 14),
+        hintStyle: AppTypography.base.copyWith(
+          color: AppColors.cFF9A9FA5,
+          fontSize: 14,
+        ),
         filled: true,
         fillColor: AppColors.white,
         contentPadding: EdgeInsets.all(20),
@@ -871,9 +1280,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected
-                  ? AppColors.cFF22C55E
-                  : AppColors.grey.shade200,
+              color: isSelected ? AppColors.cFF22C55E : AppColors.grey.shade200,
               width: 1,
             ),
             borderRadius: BorderRadius.circular(10),
@@ -901,7 +1308,7 @@ class _DocumentVerificationPageState extends State<DocumentVerificationPage>
                 label,
                 style: AppTypography.base.copyWith(
                   fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w400,
                   color: isSelected ? AppColors.black : AppColors.cFF6F767E,
                 ),
               ),
@@ -1017,7 +1424,3 @@ class _DashPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
-
-
-

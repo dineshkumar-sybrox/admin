@@ -5,6 +5,7 @@ import 'package:admin/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/drivers_management_cubit.dart';
 import '../cubit/drivers_management_state.dart';
+import '../pages/rider_overview_page.dart';
 
 class SuspendedDriversTable extends StatelessWidget {
   SuspendedDriversTable({super.key});
@@ -72,10 +73,20 @@ class SuspendedDriversTable extends StatelessWidget {
                           ),
                         ),
                         DataCell(
-                          Text(
-                            driver.name,
-                            style: AppTypography.base.copyWith(
-                              fontWeight: FontWeight.bold,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RiderOverviewPage(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              driver.name,
+                              style: AppTypography.base.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

@@ -142,6 +142,7 @@ class AppColors {
   static const Color cFFDDE2E8 = Color(0xFFDDE2E8);
   static const Color cFFE0E0E0 = Color(0xFFE0E0E0);
   static const Color cFFE0F2F1 = Color(0xFFE0F2F1);
+  static const Color cFFE0F2F2 = Color.fromARGB(255, 137, 55, 238);
   static const Color cFFE11D48 = Color(0xFFE11D48);
   static const Color cFFE2E8F0 = Color(0xFFE2E8F0);
   static const Color cFFE3F2FD = Color(0xFFE3F2FD);
