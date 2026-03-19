@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/dashboard_cubit.dart';
 import '../cubit/dashboard_state.dart';
+import '../../../drivers/presentation/cubit/drivers_management_state.dart';
 
 class StatCardsRow extends StatelessWidget {
   StatCardsRow({super.key});
@@ -35,9 +36,9 @@ class StatCardsRow extends StatelessWidget {
                             e.key == 2 ||
                             e.key == 3,
                         onTap: e.key == 0
-                            ? () => context.read<DashboardCubit>().selectNav(
-                                NavItem.drivers,
-                              )
+                            ? () => context
+                                .read<DashboardCubit>()
+                                .selectDriversTab(DriverTab.total)
                             : e.key == 1
                             ? () => context.read<DashboardCubit>().selectNav(
                                 NavItem.rider,
@@ -68,9 +69,9 @@ class StatCardsRow extends StatelessWidget {
                       isClickable:
                           e.key == 0 || e.key == 1 || e.key == 2 || e.key == 3,
                       onTap: e.key == 0
-                          ? () => context.read<DashboardCubit>().selectNav(
-                              NavItem.drivers,
-                            )
+                          ? () => context
+                              .read<DashboardCubit>()
+                              .selectDriversTab(DriverTab.total)
                           : e.key == 1
                           ? () => context.read<DashboardCubit>().selectNav(
                               NavItem.rider,

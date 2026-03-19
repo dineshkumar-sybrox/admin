@@ -3,7 +3,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
 class MobilePreviewWidget extends StatelessWidget {
-  MobilePreviewWidget({super.key});
+  final int selectedTab;
+  MobilePreviewWidget({super.key, required this.selectedTab});
 
   @override
   Widget build(BuildContext context) {
@@ -34,39 +35,35 @@ class MobilePreviewWidget extends StatelessWidget {
             children: [
               // Status bar mock
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '9:41',
-                      style: AppTypography.base.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Row(
-                      children: const [
-                        Icon(Icons.signal_cellular_4_bar, size: 16),
-                        SizedBox(width: 4),
-                        Icon(Icons.wifi, size: 16),
-                        SizedBox(width: 4),
-                        Icon(Icons.battery_full, size: 16),
-                      ],
-                    ),
-                  ],
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                child: null,
               ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         '9:41',
+              //         style: AppTypography.base.copyWith(
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 14,
+              //         ),
+              //       ),
+              //       Row(
+              //         children: const [
+              //           Icon(Icons.signal_cellular_4_bar, size: 16),
+              //           SizedBox(width: 4),
+              //           Icon(Icons.wifi, size: 16),
+              //           SizedBox(width: 4),
+              //           Icon(Icons.battery_full, size: 16),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               // App Bar
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Row(
                   children: [
                     Icon(Icons.arrow_back_ios, size: 20),
@@ -94,43 +91,83 @@ class MobilePreviewWidget extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(20),
+                      if (selectedTab == 0) ...[
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              'Day',
+                              textAlign: TextAlign.center,
+                              style: AppTypography.base.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
+                        ),
+                        Expanded(
                           child: Text(
-                            'Day',
+                            'Week',
                             textAlign: TextAlign.center,
                             style: AppTypography.base.copyWith(
-                              color: AppColors.white,
+                              color: AppColors.grey,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Week',
-                          textAlign: TextAlign.center,
-                          style: AppTypography.base.copyWith(
-                            color: AppColors.grey,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Text(
+                            'Bonus',
+                            textAlign: TextAlign.center,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Bonus',
-                          textAlign: TextAlign.center,
-                          style: AppTypography.base.copyWith(
-                            color: AppColors.grey,
-                            fontWeight: FontWeight.bold,
+                      ] else ...[
+                        Expanded(
+                          child: Text(
+                            'Day',
+                            textAlign: TextAlign.center,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              'Week',
+                              textAlign: TextAlign.center,
+                              style: AppTypography.base.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'Bonus',
+                            textAlign: TextAlign.center,
+                            style: AppTypography.base.copyWith(
+                              color: AppColors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -138,40 +175,67 @@ class MobilePreviewWidget extends StatelessWidget {
               SizedBox(height: 24),
 
               // Date Selector (Horizontal Scroll)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    _buildDateItem('Tue', '10', false),
-                    _buildDateItem('Wed', '11', false),
-                    _buildDateItem('Thu', '12', true), // Active item
-                    _buildDateItem('Fri', '13', false),
-                    _buildDateItem('Sat', '14', false),
-                  ],
+              if (selectedTab == 0) ...[
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    children: [
+                      _buildDateItem('Tue', '10', false),
+                      _buildDateItem('Wed', '11', false),
+                      _buildDateItem('Thu', '12', true), // Active item
+                      _buildDateItem('Fri', '13', false),
+                      _buildDateItem('Sat', '14', false),
+                    ],
+                  ),
                 ),
-              ),
+              ] else ...[
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      _buildWeekItem('Tue', '1', '7', false),
+                      _buildWeekItem('Wed', '8', '14', false),
+                      _buildWeekItem('Thu', '15', '21', true), // Active item
+                      _buildWeekItem('Fri', '22', '29', false),
+                    ],
+                  ),
+                ),
+              ],
+
               SizedBox(height: 16),
 
               Expanded(
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Text(
-                          'MORNING SESSION • 08:00 AM - 12:00 PM',
-                          style: AppTypography.bodySmall.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.grey[600],
-                            letterSpacing: 1.0,
+                      if (selectedTab == 0) ...[
+                        Center(
+                          child: Text(
+                            'MORNING SESSION • 08:00 AM - 12:00 PM',
+                            style: AppTypography.bodySmall.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.grey[600],
+                              letterSpacing: 1.0,
+                            ),
                           ),
                         ),
-                      ),
+                      ] else ...[
+                        Center(
+                          child: Text(
+                            'WEEKLY SESSION',
+                            style: AppTypography.bodySmall.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.grey[600],
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        ),
+                      ],
+
                       SizedBox(height: 16),
 
                       // Active Quest Card
@@ -241,7 +305,9 @@ class MobilePreviewWidget extends StatelessWidget {
                                 Text(
                                   '2 of 3 rides completed',
                                   style: AppTypography.bodySmall.copyWith(
-                                    color: AppColors.white.withValues(alpha: 0.8),
+                                    color: AppColors.white.withValues(
+                                      alpha: 0.8,
+                                    ),
                                   ),
                                 ),
                                 Text(
@@ -329,6 +395,55 @@ class MobilePreviewWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildWeekItem(
+    String day,
+    String startdate,
+    String enddate,
+    bool isActive,
+  ) {
+    return Container(
+      margin: EdgeInsets.only(right: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isActive
+            ? AppColors.primary.withValues(alpha: 0.1)
+            : AppColors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        border: isActive ? Border.all(color: AppColors.primary) : null,
+      ),
+      child: Row(
+        children: [
+          Text(
+            day,
+            style: AppTypography.base.copyWith(
+              color: isActive ? AppColors.primary : AppColors.grey,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            startdate,
+            style: AppTypography.base.copyWith(
+              color: isActive ? AppColors.primary : AppColors.black,
+              // fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+          Text(" - "),
+          Text(
+            enddate,
+            style: AppTypography.base.copyWith(
+              color: isActive ? AppColors.primary : AppColors.black,
+              // fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildQuestNode(bool isActive, String label) {
     return Column(
       children: [
@@ -342,7 +457,13 @@ class MobilePreviewWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8),
-        Text(label, style: AppTypography.base.copyWith(color: AppColors.white, fontSize: 12)),
+        Text(
+          label,
+          style: AppTypography.base.copyWith(
+            color: AppColors.white,
+            fontSize: 12,
+          ),
+        ),
       ],
     );
   }
@@ -373,7 +494,9 @@ class MobilePreviewWidget extends StatelessWidget {
                   ),
                 ),
                 if (!isLast)
-                  Expanded(child: Container(width: 2, color: AppColors.grey[200])),
+                  Expanded(
+                    child: Container(width: 2, color: AppColors.grey[200]),
+                  ),
               ],
             ),
           ),
@@ -421,7 +544,9 @@ class MobilePreviewWidget extends StatelessWidget {
                           tier,
                           style: AppTypography.base.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: isUnlocked ? AppColors.black : AppColors.grey[600],
+                            color: isUnlocked
+                                ? AppColors.black
+                                : AppColors.grey[600],
                           ),
                         ),
                         SizedBox(height: 4),
@@ -453,7 +578,9 @@ class MobilePreviewWidget extends StatelessWidget {
                         style: AppTypography.base.copyWith(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
-                          color: isUnlocked ? AppColors.amber : AppColors.grey[400],
+                          color: isUnlocked
+                              ? AppColors.amber
+                              : AppColors.grey[400],
                           letterSpacing: 0.5,
                         ),
                       ),
@@ -468,7 +595,3 @@ class MobilePreviewWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -53,6 +53,7 @@ class IncentiveLaunchedDialog extends StatelessWidget {
             SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
+              height: 35,
               child: ElevatedButton(
                 onPressed: () {
                   context.read<DashboardCubit>().selectNav(
@@ -71,13 +72,18 @@ class IncentiveLaunchedDialog extends StatelessWidget {
                 ),
                 child: Text(
                   'Incentive Historical',
-                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: AppTypography.base.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.white,
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
+              height: 35,
               child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -92,7 +98,10 @@ class IncentiveLaunchedDialog extends StatelessWidget {
                 ),
                 child: Text(
                   'Go to Dashboard',
-                  style: AppTypography.base.copyWith(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: AppTypography.base.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -102,7 +111,3 @@ class IncentiveLaunchedDialog extends StatelessWidget {
     );
   }
 }
-
-
-
-

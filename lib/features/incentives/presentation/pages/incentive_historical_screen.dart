@@ -63,7 +63,7 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(width: 24),
-                  const _OngoingIncentiveCard(
+                  _OngoingIncentiveCard(
                     status: 'LIVE',
                     type: 'WEEKLY',
                     vehicle: 'BIKE/SCOOTER',
@@ -71,9 +71,14 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                     targetPercentage: 32,
                     participation: '856',
                     remaining: '12h 15m',
+                    onTap: () {
+                      context.read<DashboardCubit>().selectNav(
+                        NavItem.incentiveDetail,
+                      );
+                    },
                   ),
                   SizedBox(width: 24),
-                  const _OngoingIncentiveCard(
+                  _OngoingIncentiveCard(
                     status: 'LIVE',
                     type: 'BONAS',
                     vehicle: 'BIKE/SCOOTER',
@@ -81,6 +86,26 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                     targetPercentage: 60,
                     participation: '412',
                     remaining: '24h',
+                    onTap: () {
+                      context.read<DashboardCubit>().selectNav(
+                        NavItem.incentiveDetail,
+                      );
+                    },
+                  ),
+                  SizedBox(width: 24),
+                  _OngoingIncentiveCard(
+                    status: 'LIVE',
+                    type: 'BONAS',
+                    vehicle: 'CAB',
+                    title: 'Holiday Special Rider',
+                    targetPercentage: 45,
+                    participation: '275',
+                    remaining: '36h',
+                    onTap: () {
+                      context.read<DashboardCubit>().selectNav(
+                        NavItem.incentiveDetail,
+                      );
+                    },
                   ),
                 ],
               ),
@@ -105,28 +130,30 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Container(
-                      width: 300,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: AppColors.grey.shade300),
-                      ),
+                    SizedBox(
+                      width: 400,
+                      height: 40,
                       child: TextField(
+                        //controller: _searchController,
+                        onChanged: (value) {
+                          //context.read<TotalDocumentsCubit>().searchDocuments(value);
+                        },
                         decoration: InputDecoration(
                           hintText: 'Filter campaigns by name...',
-                          hintStyle: AppTypography.bodyRegular.copyWith(
-                            color: AppColors.textSecondary,
+                          hintStyle: AppTypography.base.copyWith(fontSize: 13),
+                          prefixIcon: const Icon(Icons.search, size: 18),
+                          filled: true,
+                          fillColor: AppColors.cFFF9FAFB,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: AppColors.cFFEFEFEF),
                           ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: AppColors.textSecondary,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: AppColors.cFFEFEFEF),
                           ),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0,
                           ),
                         ),
                       ),
@@ -134,24 +161,86 @@ class IncentiveHistoricalScreen extends StatelessWidget {
                     SizedBox(width: 16),
                     Container(
                       width: 48,
-                      height: 48,
+                      height: 40,
                       decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.cFFF9FAFB,
+                        borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.grey.shade300),
                       ),
-                      child: Icon(
-                        Icons.tune,
-                        color: AppColors.textPrimary,
-                      ),
+                      child: Icon(Icons.tune, color: AppColors.textPrimary),
                     ),
                   ],
                 ),
               ],
             ),
             SizedBox(height: 24),
-            const _IncentiveListTable(),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                border: Border.all(color: AppColors.grey.shade100),
+              ),
+              child: const _IncentiveListTable(),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.cFFF8FAFC,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'SHOWING 1-10 OF 142 RIDES',
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      _buildPageButton('<', false),
+                      SizedBox(width: 8),
+                      _buildPageButton('1', true),
+                      SizedBox(width: 8),
+                      _buildPageButton('2', false),
+                      SizedBox(width: 8),
+                      _buildPageButton('3', false),
+                      SizedBox(width: 8),
+                      _buildPageButton('>', false),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPageButton(String text, bool isActive) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: isActive ? AppColors.cFF00A86B : AppColors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.cFFE5E7EB),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: AppTypography.base.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 12,
+            color: isActive ? AppColors.white : AppColors.textSecondary,
+          ),
         ),
       ),
     );
@@ -215,10 +304,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.cFFE8F5E9,
                         borderRadius: BorderRadius.circular(4),
@@ -226,11 +312,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
-                            Icons.circle,
-                            color: AppColors.primary,
-                            size: 8,
-                          ),
+                          Icon(Icons.circle, color: AppColors.primary, size: 8),
                           SizedBox(width: 4),
                           Text(
                             status,
@@ -256,10 +338,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.cFFE8F5E9,
                     borderRadius: BorderRadius.circular(4),
@@ -278,7 +357,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
             SizedBox(height: 24),
             Text(
               title,
-              style: AppTypography.h4.copyWith(fontWeight: FontWeight.bold),
+              style: AppTypography.h3_5.copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 24),
             Row(
@@ -288,7 +367,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                   'TARGET COMPLETION',
                   style: AppTypography.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 10,
+                    fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -296,7 +375,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                   '$targetPercentage%',
                   style: AppTypography.bodySmall.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 11,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -351,7 +430,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                       style: AppTypography.bodySmall.copyWith(
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 10,
+                        fontSize: 11,
                       ),
                     ),
                     SizedBox(height: 4),
@@ -388,7 +467,7 @@ class _OngoingIncentiveCard extends StatelessWidget {
                       style: AppTypography.bodySmall.copyWith(
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 10,
+                        fontSize: 11,
                       ),
                     ),
                     SizedBox(height: 4),
@@ -424,194 +503,179 @@ class _IncentiveListTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.grey.shade200),
-      ),
-      child: Column(
-        children: [
-          // Table Header
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            decoration: BoxDecoration(
-              color: AppColors.cFFF9FAFB,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
-              ),
-              border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    'PROGRAM NAME',
-                    style: AppTypography.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    'TIMELINE SCHEDULE',
-                    style: AppTypography.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'TARGET VEHICLE',
-                    style: AppTypography.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'TOTAL INCENTIVE AMOUNT',
-                    style: AppTypography.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'STATUS',
-                    style: AppTypography.bodySmall.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.5,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                ),
-              ],
-            ),
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width > 1200
+              ? MediaQuery.of(context).size.width - 320
+              : 1000,
+        ),
+        child: DataTable(
+          showCheckboxColumn: false,
+          headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
+          headingTextStyle: AppTypography.base.copyWith(
+            color: AppColors.textSecondary,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
           ),
-          // Table Rows
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              _buildTableRow(
-                title: 'AfterNoon commute rush',
-                type: 'Daily',
-                date: 'Feb 27',
-                time: '06:00 AM - 11:00 PM',
-                vehicle: 'AUTO',
-                vehicleColor: AppColors.cFFE3F2FD,
-                vehicleTextColor: AppColors.blue.shade700,
-                amount: '450.00',
-                status: 'SCHEDULED',
-              ),
-              _buildTableRow(
-                title: 'Pongal Special Rush',
-                type: 'Bonus',
-                date: 'Mar 2 — Mar 9',
-                time: 'Full Week',
-                vehicle: 'CAB',
-                vehicleColor: AppColors.cFFFFF8E1,
-                vehicleTextColor: AppColors.amber.shade800,
-                amount: '5,200.00',
-                status: 'SCHEDULED',
-              ),
-              _buildTableRow(
-                title: 'weekly Rush',
-                type: 'Weekly',
-                date: 'Mar 2 — Mar 9',
-                time: 'Full Week',
-                vehicle: 'BIKE',
-                vehicleColor: AppColors.cFFE8F5E9,
-                vehicleTextColor: AppColors.primary,
-                amount: '1,500.00',
-                status: 'SCHEDULED',
-              ),
-            ],
+          dataTextStyle: AppTypography.base.copyWith(
+            color: AppColors.textPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
-          // Pagination Footer
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            decoration: BoxDecoration(
-              border: Border(top: BorderSide(color: AppColors.grey.shade200)),
+          horizontalMargin: 24,
+          columnSpacing: 24,
+          headingRowHeight: 56,
+          dataRowMaxHeight: 72,
+          dataRowMinHeight: 72,
+          columns: const [
+            DataColumn(label: Text('PROGRAM NAME')),
+            DataColumn(label: Text('TIMELINE SCHEDULE')),
+            DataColumn(label: Text('TARGET VEHICLE')),
+            DataColumn(label: Text('TOTAL INCENTIVE AMOUNT')),
+            DataColumn(label: Text('STATUS')),
+          ],
+          rows: [
+            _buildTableRow(
+              title: 'AfterNoon commute rush',
+              type: 'Daily',
+              date: 'Feb 27',
+              time: '06:00 AM - 11:00 PM',
+              vehicle: 'AUTO',
+              vehicleColor: AppColors.cFFE3F2FD,
+              vehicleTextColor: AppColors.blue.shade700,
+              amount: '450.00',
+              status: 'SCHEDULED',
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Displaying 1 of 12 scheduled programs',
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.chevron_left,
-                      size: 20,
-                      color: AppColors.grey.shade400,
-                    ),
-                    SizedBox(width: 16),
-                    Container(
-                      width: 28,
-                      height: 28,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '1',
-                          style: AppTypography.bodySmall.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      '2',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      '3',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Icon(Icons.chevron_right, size: 20),
-                  ],
-                ),
-              ],
+            _buildTableRow(
+              title: 'Pongal Special Rush',
+              type: 'Bonus',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'CAB',
+              vehicleColor: AppColors.cFFFFF8E1,
+              vehicleTextColor: AppColors.amber.shade800,
+              amount: '5,200.00',
+              status: 'SCHEDULED',
             ),
-          ),
-        ],
+            _buildTableRow(
+              title: 'weekly Rush',
+              type: 'Weekly',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'BIKE',
+              vehicleColor: AppColors.cFFE8F5E9,
+              vehicleTextColor: AppColors.primary,
+              amount: '1,500.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'AfterNoon commute rush',
+              type: 'Daily',
+              date: 'Feb 27',
+              time: '06:00 AM - 11:00 PM',
+              vehicle: 'AUTO',
+              vehicleColor: AppColors.cFFE3F2FD,
+              vehicleTextColor: AppColors.blue.shade700,
+              amount: '450.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'Pongal Special Rush',
+              type: 'Bonus',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'CAB',
+              vehicleColor: AppColors.cFFFFF8E1,
+              vehicleTextColor: AppColors.amber.shade800,
+              amount: '5,200.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'weekly Rush',
+              type: 'Weekly',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'BIKE',
+              vehicleColor: AppColors.cFFE8F5E9,
+              vehicleTextColor: AppColors.primary,
+              amount: '1,500.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'AfterNoon commute rush',
+              type: 'Daily',
+              date: 'Feb 27',
+              time: '06:00 AM - 11:00 PM',
+              vehicle: 'AUTO',
+              vehicleColor: AppColors.cFFE3F2FD,
+              vehicleTextColor: AppColors.blue.shade700,
+              amount: '450.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'Pongal Special Rush',
+              type: 'Bonus',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'CAB',
+              vehicleColor: AppColors.cFFFFF8E1,
+              vehicleTextColor: AppColors.amber.shade800,
+              amount: '5,200.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'weekly Rush',
+              type: 'Weekly',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'BIKE',
+              vehicleColor: AppColors.cFFE8F5E9,
+              vehicleTextColor: AppColors.primary,
+              amount: '1,500.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'AfterNoon commute rush',
+              type: 'Daily',
+              date: 'Feb 27',
+              time: '06:00 AM - 11:00 PM',
+              vehicle: 'AUTO',
+              vehicleColor: AppColors.cFFE3F2FD,
+              vehicleTextColor: AppColors.blue.shade700,
+              amount: '450.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'Pongal Special Rush',
+              type: 'Bonus',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'CAB',
+              vehicleColor: AppColors.cFFFFF8E1,
+              vehicleTextColor: AppColors.amber.shade800,
+              amount: '5,200.00',
+              status: 'SCHEDULED',
+            ),
+            _buildTableRow(
+              title: 'weekly Rush',
+              type: 'Weekly',
+              date: 'Mar 2 — Mar 9',
+              time: 'Full Week',
+              vehicle: 'BIKE',
+              vehicleColor: AppColors.cFFE8F5E9,
+              vehicleTextColor: AppColors.primary,
+              amount: '1,500.00',
+              status: 'SCHEDULED',
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildTableRow({
+  DataRow _buildTableRow({
     required String title,
     required String type,
     required String date,
@@ -622,132 +686,117 @@ class _IncentiveListTable extends StatelessWidget {
     required String amount,
     required String status,
   }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTypography.bodyRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '($type)',
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.cFFF9FAFB,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    Icons.calendar_today_outlined,
-                    size: 16,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-                SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      date,
-                      style: AppTypography.bodyRegular.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      time,
-                      style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: vehicleColor,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  vehicle,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: vehicleTextColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                  ),
+    return DataRow(
+      cells: [
+        DataCell(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: AppTypography.bodyRegular.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+              SizedBox(height: 4),
+              Text(
+                '($type)',
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 2,
+        ),
+
+        DataCell(
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.cFFF9FAFB,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.calendar_today_outlined,
+                  size: 16,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    date,
+                    style: AppTypography.bodyRegular.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    time,
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        DataCell(
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: vehicleColor,
+              borderRadius: BorderRadius.circular(4),
+            ),
             child: Text(
-              '₹$amount',
-              style: AppTypography.bodyRegular.copyWith(
+              vehicle,
+              style: AppTypography.bodySmall.copyWith(
+                color: vehicleTextColor,
                 fontWeight: FontWeight.bold,
+                fontSize: 10,
               ),
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.blue.shade200),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  status,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: AppColors.blue.shade700,
-                    fontWeight: FontWeight.bold,
-                  ),
+        ),
+
+        DataCell(
+          Text(
+            '₹$amount',
+            style: AppTypography.bodyRegular.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+
+        DataCell(
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.blue.shade200),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                status,
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.blue.shade700,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
-
-
-

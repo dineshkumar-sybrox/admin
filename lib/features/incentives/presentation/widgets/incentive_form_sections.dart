@@ -1,3 +1,4 @@
+import 'package:admin/features/incentives/presentation/widgets/incentive_launched_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -15,54 +16,71 @@ class QuestTypeSelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+        border: Border.all(color: AppColors.cFFF0F1F3),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text('Quest Type Selection', style: AppTypography.h3),
+              ],
+            ),
+            SizedBox(height: 16),
             Container(
-              width: 4,
-              height: 20,
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(2),
+                color: AppColors.cFFF9FAFB,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  _buildTab(
+                    index: 0,
+                    title: 'Daily',
+                    subtitle: 'Reset every 24h',
+                    isSelected: selectedTab == 0,
+                  ),
+                  _buildTab(
+                    index: 1,
+                    title: 'Weekly',
+                    subtitle: 'Monday to Sunday',
+                    isSelected: selectedTab == 1,
+                  ),
+                  _buildTab(
+                    index: 2,
+                    title: 'Bonus',
+                    subtitle: 'Special event quest',
+                    isSelected: selectedTab == 2,
+                  ),
+                ],
               ),
             ),
-            SizedBox(width: 8),
-            Text('Quest Type Selection', style: AppTypography.h3),
           ],
         ),
-        SizedBox(height: 16),
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: AppColors.cFFF9FAFB,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              _buildTab(
-                index: 0,
-                title: 'Daily',
-                subtitle: 'Reset every 24h',
-                isSelected: selectedTab == 0,
-              ),
-              _buildTab(
-                index: 1,
-                title: 'Weekly',
-                subtitle: 'Monday to Sunday',
-                isSelected: selectedTab == 1,
-              ),
-              _buildTab(
-                index: 2,
-                title: 'Bonus',
-                subtitle: 'Special event quest',
-                isSelected: selectedTab == 2,
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -94,7 +112,7 @@ class QuestTypeSelection extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTypography.bodyRegular.copyWith(
+                style: AppTypography.bodyLarge.copyWith(
                   fontWeight: FontWeight.bold,
                   color: isSelected
                       ? AppColors.primary
@@ -104,9 +122,9 @@ class QuestTypeSelection extends StatelessWidget {
               SizedBox(height: 4),
               Text(
                 subtitle,
-                style: AppTypography.bodySmall.copyWith(
+                style: AppTypography.bodyRegular.copyWith(
                   color: AppColors.textSecondary,
-                  fontSize: 10,
+                  fontSize: 12,
                 ),
               ),
             ],
@@ -144,7 +162,7 @@ class TargetConfiguration extends StatelessWidget {
         SizedBox(height: 16),
         Text(
           'Vehicle Categories',
-          style: AppTypography.bodySmall.copyWith(
+          style: AppTypography.bodyLarge.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -188,14 +206,17 @@ class CampaignSchedule extends StatelessWidget {
             Expanded(child: _buildInputField('To Date', '06/12 /2024')),
           ],
         ),
-        SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(child: _buildInputField('From Time', '08:00 AM')),
-            SizedBox(width: 16),
-            Expanded(child: _buildInputField('To Time', '12:00 PM')),
-          ],
-        ),
+
+        if (selectedTab == 0) ...[
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(child: _buildInputField('From Time', '08:00 AM')),
+              SizedBox(width: 16),
+              Expanded(child: _buildInputField('To Time', '12:00 PM')),
+            ],
+          ),
+        ],
       ],
     );
   }
@@ -206,7 +227,7 @@ class CampaignSchedule extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTypography.bodySmall.copyWith(
+          style: AppTypography.bodyLarge.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -249,7 +270,7 @@ class MilestoneRules extends StatelessWidget {
                   width: 4,
                   height: 20,
                   decoration: BoxDecoration(
-                    color: AppColors.amber,
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -262,7 +283,7 @@ class MilestoneRules extends StatelessWidget {
             ),
             ElevatedButton.icon(
               icon: Icon(Icons.add, size: 16),
-              label: Text('+ Add Milestone'),
+              label: Text('Add Milestone'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: AppColors.white,
@@ -284,7 +305,7 @@ class MilestoneRules extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
             color: AppColors.primary.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Text(
             'Total Ride Target: 12 Rides',
@@ -356,16 +377,15 @@ class MilestoneRules extends StatelessWidget {
                   children: [
                     Text(
                       'TIER LEVEL',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                      style: AppTypography.bodyRegular.copyWith(
+                        // fontSize: 10,
+                        fontWeight: FontWeight.w500,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    SizedBox(height: 4),
                     Text(
                       tier,
-                      style: AppTypography.bodyRegular.copyWith(
+                      style: AppTypography.bodyLarge.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -376,16 +396,15 @@ class MilestoneRules extends StatelessWidget {
                   children: [
                     Text(
                       'TARGET',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                      style: AppTypography.bodyRegular.copyWith(
+                        // fontSize: 10,
+                        fontWeight: FontWeight.w500,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    SizedBox(height: 4),
                     Text(
                       target,
-                      style: AppTypography.bodyRegular.copyWith(
+                      style: AppTypography.bodyLarge.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -396,16 +415,15 @@ class MilestoneRules extends StatelessWidget {
                   children: [
                     Text(
                       'REWARD (₹)',
-                      style: AppTypography.bodySmall.copyWith(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                      style: AppTypography.bodyRegular.copyWith(
+                        // fontSize: 10,
+                        fontWeight: FontWeight.w500,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    SizedBox(height: 4),
                     Text(
                       reward,
-                      style: AppTypography.bodyRegular.copyWith(
+                      style: AppTypography.bodyLarge.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.primary,
                       ),
@@ -425,8 +443,15 @@ class MilestoneRules extends StatelessWidget {
   }
 }
 
+// class CampaignSchedule extends StatelessWidget {
+//   final int selectedTab;
+
+//   CampaignSchedule({super.key, required this.selectedTab});
+
 class ProgramNameConfiguration extends StatelessWidget {
-  ProgramNameConfiguration({super.key});
+  final int selectedTab;
+
+  ProgramNameConfiguration({super.key, required this.selectedTab});
 
   @override
   Widget build(BuildContext context) {
@@ -450,7 +475,7 @@ class ProgramNameConfiguration extends StatelessWidget {
         SizedBox(height: 16),
         Text(
           'Name',
-          style: AppTypography.bodySmall.copyWith(
+          style: AppTypography.bodyLarge.copyWith(
             fontWeight: FontWeight.w600,
             color: AppColors.textSecondary,
           ),
@@ -464,7 +489,7 @@ class ProgramNameConfiguration extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            'Morning',
+           selectedTab == 0 ? 'Morning' : 'Weekly Rider',
             style: AppTypography.bodyRegular.copyWith(
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w500,
@@ -606,7 +631,9 @@ class _TargetVehicleDropdownState extends State<TargetVehicleDropdown> {
             Spacer(),
             Icon(
               icon,
-              color: isSelected ? AppColors.primary : AppColors.blueGrey.shade300,
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.blueGrey.shade300,
               size: 20,
             ),
           ],
@@ -625,6 +652,7 @@ class AddMilestoneDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         width: 600,
+        color: AppColors.white,
         padding: EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -632,16 +660,25 @@ class AddMilestoneDialog extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  width: 4,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Text('Add Milestone', style: AppTypography.h3),
+                  ],
                 ),
-                SizedBox(width: 8),
-                Text('Add Milestone', style: AppTypography.h3),
+                Spacer(),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(Icons.close, color: AppColors.grey, size: 20),
+                ),
               ],
             ),
             SizedBox(height: 24),
@@ -665,21 +702,28 @@ class AddMilestoneDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // showDialog(
+                    //   context: context,
+                    //   barrierDismissible:
+                    //       false,
+                    //   builder: (context) => IncentiveLaunchedDialog(),
+                    // );
+                  },
                   style: TextButton.styleFrom(
                     backgroundColor: AppColors.cFFF3F4F6,
                     foregroundColor: AppColors.black,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: Text(
                     'Add',
-                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 SizedBox(width: 16),
@@ -690,17 +734,17 @@ class AddMilestoneDialog extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.white,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: Text(
                     'Continue',
-                    style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+                    style: AppTypography.base.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    ),
                   ),
                 ),
               ],
@@ -746,10 +790,7 @@ class _MilestoneInputRow extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: AppColors.cFFF9FAFB,
                   borderRadius: BorderRadius.circular(8),
@@ -787,10 +828,7 @@ class _MilestoneInputRow extends StatelessWidget {
               SizedBox(height: 8),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: AppColors.cFFF9FAFB,
                   borderRadius: BorderRadius.circular(8),
@@ -822,10 +860,7 @@ class _MilestoneInputRow extends StatelessWidget {
               SizedBox(height: 8),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: AppColors.cFFF9FAFB,
                   borderRadius: BorderRadius.circular(8),
@@ -845,7 +880,3 @@ class _MilestoneInputRow extends StatelessWidget {
     );
   }
 }
-
-
-
-

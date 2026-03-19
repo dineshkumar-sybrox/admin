@@ -7,8 +7,27 @@ import '../cubit/total_documents_state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 
-class TotalDocumentsScreen extends StatelessWidget {
+class TotalDocumentsScreen extends StatefulWidget {
   TotalDocumentsScreen({super.key});
+
+  @override
+  State<TotalDocumentsScreen> createState() => _TotalDocumentsScreenState();
+}
+
+class _TotalDocumentsScreenState extends State<TotalDocumentsScreen> {
+  TextEditingController _searchController = TextEditingController();
+
+  String _selectedCategory = 'All Categories';
+
+  final List<String> items = [
+    'All Categories',
+    'DRIVING LICENSE',
+    'VEHICLE RC',
+    'PAN CARD',
+    'AADHAR CARD',
+    'BANK DETAILS',
+    'IDENTITY VERIFICATION',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -117,23 +136,18 @@ class TotalDocumentsScreen extends StatelessWidget {
       padding: EdgeInsets.all(24),
       child: Row(
         children: [
-          Expanded(
-            flex: 3,
+          SizedBox(
+            width: 400,
+            height: 40,
             child: TextField(
-              onChanged: (val) =>
-                  context.read<TotalDocumentsCubit>().searchDocuments(val),
+              controller: _searchController,
+              onChanged: (value) {
+                context.read<TotalDocumentsCubit>().searchDocuments(value);
+              },
               decoration: InputDecoration(
-                hintText: 'Search Ticket ID or Name...',
-                hintStyle: AppTypography.base.copyWith(
-                  color: AppColors.cFF9EA5AD,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.cFF9EA5AD,
-                  size: 18,
-                ),
+                hintText: 'Search Document ID or Driver Name...',
+                hintStyle: AppTypography.base.copyWith(fontSize: 13),
+                prefixIcon: const Icon(Icons.search, size: 18),
                 filled: true,
                 fillColor: AppColors.cFFF9FAFB,
                 border: OutlineInputBorder(
@@ -144,100 +158,245 @@ class TotalDocumentsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide(color: AppColors.cFFEFEFEF),
                 ),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
             ),
           ),
-          SizedBox(width: 24),
           Spacer(),
-          SizedBox(
-            width: 180,
-            child: _buildDropdown(
-              'All Categories',
-              state.categoryFilter,
-              (val) =>
-                  context.read<TotalDocumentsCubit>().filterByCategory(val!),
-              [
-                'All Categories',
-                'DRIVING LICENSE',
-                'VEHICLE RC',
-                'PAN CARD',
-                'AADHAR CARD',
-                'BANK DETAILS',
-                'IDENTITY VERIFICATION',
-              ],
-            ),
-          ),
-          SizedBox(width: 16),
+
+          const SizedBox(width: 16),
+
+          /// 📂 Category Dropdown (Popup)
           Container(
-            padding: EdgeInsets.all(12),
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: 14),
             decoration: BoxDecoration(
+              color: AppColors.cFFF9FAFB,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.cFFEFEFEF),
+            ),
+            child: PopupMenuButton<String>(
+              offset: const Offset(0, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(color: AppColors.cFFEFEFEF),
+              ),
               color: AppColors.white,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: AppColors.cFFEFEFEF),
-            ),
-            child: Icon(
-              Icons.calendar_today_outlined,
-              color: AppColors.cFF6F767E,
-              size: 20,
+              elevation: 6,
+              onSelected: (value) {
+                setState(() => _selectedCategory = value);
+
+                /// Optional: call bloc filter
+                context.read<TotalDocumentsCubit>().filterByCategory(value);
+              },
+              itemBuilder: (context) => [
+                _buildPopupItem(
+                  'All Categories',
+                  _selectedCategory == 'All Categories',
+                ),
+                _buildPopupItem(
+                  'DRIVING LICENSE',
+                  _selectedCategory == 'DRIVING LICENSE',
+                ),
+                _buildPopupItem(
+                  'VEHICLE RC',
+                  _selectedCategory == 'VEHICLE RC',
+                ),
+                _buildPopupItem('PAN CARD', _selectedCategory == 'PAN CARD'),
+                _buildPopupItem(
+                  'AADHAR CARD',
+                  _selectedCategory == 'AADHAR CARD',
+                ),
+                _buildPopupItem(
+                  'BANK DETAILS',
+                  _selectedCategory == 'BANK DETAILS',
+                ),
+                _buildPopupItem(
+                  'IDENTITY VERIFICATION',
+                  _selectedCategory == 'IDENTITY VERIFICATION',
+                ),
+              ],
+              child: Row(
+                children: [
+                  Text(
+                    _selectedCategory,
+                    style: AppTypography.base.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.cFF1A1D1F,
+                    ),
+                  ),
+                  const SizedBox(width: 32),
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    size: 16,
+                    color: AppColors.cFF6F767E,
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(width: 16),
+
+          const SizedBox(width: 16),
+
+          /// 📅 Calendar Button
           Container(
-            padding: EdgeInsets.all(12),
+            height: 40,
             decoration: BoxDecoration(
-              color: AppColors.cFFF4F6F9.withValues(alpha: 0.5),
+              color: AppColors.cFFF9FAFB,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.cFFEFEFEF),
             ),
-            child: Icon(
-              Icons.filter_list,
-              color: AppColors.cFF6F767E,
-              size: 20,
+            child: Center(
+              child: IconButton(
+                onPressed: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime(2100),
+                  );
+
+                  if (pickedDate != null) {
+                    /// handle date filter here
+                  }
+                },
+                icon: const Icon(Icons.calendar_today_outlined),
+              ),
             ),
           ),
+
+          const SizedBox(width: 16),
+
+          /// ⚙️ Filter Button
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.cFFF9FAFB,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.cFFEFEFEF),
+            ),
+            child: Center(
+              child: IconButton(
+                onPressed: () {
+                  /// Open advanced filter dialog
+                },
+                icon: const Icon(Icons.filter_list_rounded),
+              ),
+            ),
+          ),
+          // Expanded(
+          //   flex: 3,
+          //   child: TextField(
+          // onChanged: (val) =>
+          //     context.read<TotalDocumentsCubit>().searchDocuments(val),
+          //     decoration: InputDecoration(
+          //       hintText: 'Search Ticket ID or Name...',
+          //       hintStyle: AppTypography.base.copyWith(
+          //         color: AppColors.cFF9EA5AD,
+          //         fontSize: 13,
+          //         fontWeight: FontWeight.w500,
+          //       ),
+          //       prefixIcon: Icon(
+          //         Icons.search,
+          //         color: AppColors.cFF9EA5AD,
+          //         size: 18,
+          //       ),
+          //       filled: true,
+          //       fillColor: AppColors.cFFF9FAFB,
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(8),
+          //         borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+          //       ),
+          //       enabledBorder: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(8),
+          //         borderSide: BorderSide(color: AppColors.cFFEFEFEF),
+          //       ),
+          //       contentPadding: EdgeInsets.symmetric(
+          //         horizontal: 16,
+          //         vertical: 12,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(width: 24),
+          // Spacer(),
+          // SizedBox(
+          //   width: 180,
+          //   child: _buildDropdown(
+          //     'All Categories',
+          //     state.categoryFilter,
+          //     (val) =>
+          //         context.read<TotalDocumentsCubit>().filterByCategory(val!),
+          // [
+          //   'All Categories',
+          //   'DRIVING LICENSE',
+          //   'VEHICLE RC',
+          //   'PAN CARD',
+          //   'AADHAR CARD',
+          //   'BANK DETAILS',
+          //   'IDENTITY VERIFICATION',
+          // ],
+          //   ),
+          // ),
+          // SizedBox(width: 16),
+          // Container(
+          //   padding: EdgeInsets.all(12),
+          //   decoration: BoxDecoration(
+          //     color: AppColors.white,
+          //     borderRadius: BorderRadius.circular(8),
+          //     border: Border.all(color: AppColors.cFFEFEFEF),
+          //   ),
+          //   child: Icon(
+          //     Icons.calendar_today_outlined,
+          //     color: AppColors.cFF6F767E,
+          //     size: 20,
+          //   ),
+          // ),
+          // SizedBox(width: 16),
+          // Container(
+          //   padding: EdgeInsets.all(12),
+          //   decoration: BoxDecoration(
+          //     color: AppColors.cFFF4F6F9.withValues(alpha: 0.5),
+          //     borderRadius: BorderRadius.circular(8),
+          //     border: Border.all(color: AppColors.cFFEFEFEF),
+          //   ),
+          //   child: Icon(
+          //     Icons.filter_list,
+          //     color: AppColors.cFF6F767E,
+          //     size: 20,
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
-  Widget _buildDropdown(
-    String hint,
-    String? value,
-    void Function(String?)? onChanged,
-    List<String> items,
-  ) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-      decoration: BoxDecoration(
-        color: AppColors.cFFF9FAFB,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.cFFEFEFEF),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: items.contains(value) ? value : null,
-          isExpanded: true,
-          hint: Text(
-            hint,
-            style: AppTypography.base.copyWith(
-              color: AppColors.cFF6F767E,
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
+  PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+    return PopupMenuItem<String>(
+      value: text,
+      height: 44,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: AppTypography.base.copyWith(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: AppColors.cFF1A1D1F,
+              ),
             ),
-          ),
-          icon: Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: AppColors.cFF6F767E,
-            size: 20,
-          ),
-          items: items.map((String item) {
-            return DropdownMenuItem<String>(value: item, child: Text(item));
-          }).toList(),
-          onChanged: onChanged,
+            if (isSelected)
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.cFF00A86B,
+                size: 18,
+              ),
+          ],
         ),
       ),
     );
@@ -274,9 +433,7 @@ class TotalDocumentsScreen extends StatelessWidget {
             headingRowHeight: 56,
             dataRowMaxHeight: 72,
             dataRowMinHeight: 72,
-            border: TableBorder(
-              horizontalInside: BorderSide.none,
-            ),
+            border: TableBorder(horizontalInside: BorderSide.none),
             columns: const [
               DataColumn(label: Text('DOCUMENT ID')),
               DataColumn(label: Text('DRIVER NAME')),
@@ -286,30 +443,20 @@ class TotalDocumentsScreen extends StatelessWidget {
               DataColumn(label: Text('CLOSED DATE & TIME')),
               DataColumn(label: Text('ACTION')),
             ],
-            rows: documents.isEmpty
-                ? [
-                    DataRow(
-                      cells: List.generate(
-                        7,
-                        (index) => DataCell(Text("No Data")),
-                      ),
-                    ),
-                  ]
-                : documents.map((doc) {
-                    return _buildDataRow(
-                      context: context,
-                      id: doc['id'] ?? '',
-                      driverName: doc['driverName'] ?? '',
-                      documents: doc['documents'] ?? '',
-                      category: doc['category'] ?? '',
-                      categoryColor: doc['categoryColor'] ?? Colors.grey,
-                      categoryTextColor:
-                          doc['categoryTextColor'] ?? Colors.black,
-                      status: doc['status'] ?? '',
-                      statusColor: doc['statusColor'] ?? Colors.grey,
-                      dateTime: doc['dateTime'] ?? '',
-                    );
-                  }).toList(),
+            rows: documents.map((doc) {
+              return _buildDataRow(
+                context: context,
+                id: doc['id'] ?? '',
+                driverName: doc['driverName'] ?? '',
+                documents: doc['documents'] ?? '',
+                category: doc['category'] ?? '',
+                categoryColor: doc['categoryColor'] ?? Colors.grey,
+                categoryTextColor: doc['categoryTextColor'] ?? Colors.black,
+                status: doc['status'] ?? '',
+                statusColor: doc['statusColor'] ?? Colors.grey,
+                dateTime: doc['dateTime'] ?? '',
+              );
+            }).toList(),
           ),
         ),
       ),
@@ -572,7 +719,7 @@ class _TopStatCard extends StatelessWidget {
                         Text(
                           title,
                           style: AppTypography.bodySmall.copyWith(
-                            color:  AppColors.textSecondary,
+                            color: AppColors.textSecondary,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                             fontSize: 14,

@@ -32,13 +32,13 @@ class DashboardCubit extends Cubit<DashboardState> {
             isPositive: false,
           ),
           StatCard(
-            title: 'REVENUE TODAY',
+            title: 'TOTAL REVENUE',
             value: '₹1.2M',
             trend: '+12%',
             isPositive: true,
           ),
           StatCard(
-            title: 'CANCELLATION %',
+            title: 'TOTAL CANCELLATION',
             value: '4.2%',
             trend: '-0.5%',
             isPositive: true,

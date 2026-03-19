@@ -34,6 +34,12 @@ class AppTypography {
     fontFamily: AppFonts.saira,
     color: AppColors.textPrimary,
   );
+  static TextStyle get h3_5 => const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    fontFamily: AppFonts.saira,
+    color: AppColors.textPrimary,
+  );
 
   static TextStyle get h4 => const TextStyle(
     fontSize: 16,

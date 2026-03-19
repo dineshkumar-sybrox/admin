@@ -32,7 +32,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
               Expanded(
                 flex: 4,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(32.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -45,13 +45,55 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                         },
                       ),
                       SizedBox(height: 24),
-                      TargetConfiguration(selectedTab: _selectedTab),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.black.withValues(alpha: 0.03),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                          border: Border.all(color: AppColors.cFFF0F1F3),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              TargetConfiguration(selectedTab: _selectedTab),
+                              SizedBox(height: 24),
+                              ProgramNameConfiguration(
+                                selectedTab: _selectedTab,
+                              ),
+                              SizedBox(height: 24),
+                              CampaignSchedule(selectedTab: _selectedTab),
+                            ],
+                          ),
+                        ),
+                      ),
+
                       SizedBox(height: 24),
-                      ProgramNameConfiguration(),
-                      SizedBox(height: 24),
-                      CampaignSchedule(selectedTab: _selectedTab),
-                      SizedBox(height: 24),
-                      MilestoneRules(),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.black.withValues(alpha: 0.03),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                          border: Border.all(color: AppColors.cFFF0F1F3),
+                        ),
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: MilestoneRules(),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -74,7 +116,9 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                           ),
                         ),
                         SizedBox(height: 32),
-                        Expanded(child: MobilePreviewWidget()),
+                        Expanded(
+                          child: MobilePreviewWidget(selectedTab: _selectedTab),
+                        ),
                         SizedBox(height: 32),
                         Align(
                           alignment: Alignment.centerRight,
@@ -82,8 +126,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                             onPressed: () {
                               showDialog(
                                 context: context,
-                                builder: (context) =>
-                                    IncentiveLaunchedDialog(),
+                                builder: (context) => IncentiveLaunchedDialog(),
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -102,6 +145,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                               style: AppTypography.base.copyWith(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: AppColors.white,
                               ),
                             ),
                           ),
@@ -129,13 +173,53 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                   },
                 ),
                 SizedBox(height: 24),
-                TargetConfiguration(selectedTab: _selectedTab),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.black.withValues(alpha: 0.03),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                    border: Border.all(color: AppColors.cFFF0F1F3),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        TargetConfiguration(selectedTab: _selectedTab),
+                        SizedBox(height: 24),
+                        ProgramNameConfiguration(selectedTab: _selectedTab),
+                        SizedBox(height: 24),
+                        CampaignSchedule(selectedTab: _selectedTab),
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(height: 24),
-                ProgramNameConfiguration(),
-                SizedBox(height: 24),
-                CampaignSchedule(selectedTab: _selectedTab),
-                SizedBox(height: 24),
-                MilestoneRules(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.black.withValues(alpha: 0.03),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                    border: Border.all(color: AppColors.cFFF0F1F3),
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: MilestoneRules(),
+                  ),
+                ),
                 SizedBox(height: 48),
                 Text(
                   'Live mobile preview',
@@ -145,7 +229,7 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
                 SizedBox(
                   height:
                       800, // Fixed height for mobile preview mockup inside scroll
-                  child: MobilePreviewWidget(),
+                  child: MobilePreviewWidget(selectedTab: _selectedTab),
                 ),
                 SizedBox(height: 32),
                 SizedBox(
@@ -182,6 +266,3 @@ class _CreateIncentiveScreenState extends State<CreateIncentiveScreen> {
     );
   }
 }
-
-
-

@@ -1,7 +1,6 @@
 import 'package:admin/features/compliance/presentation/pages/document_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:universal_html/js.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -587,8 +586,57 @@ class _TopCitiesCard extends StatelessWidget {
   }
 }
 
-class _RecentLogsCard extends StatelessWidget {
+class _RecentLogsCard extends StatefulWidget {
   const _RecentLogsCard();
+
+  @override
+  State<_RecentLogsCard> createState() => _RecentLogsCardState();
+}
+
+class _RecentLogsCardState extends State<_RecentLogsCard> {
+  final TextEditingController _searchController = TextEditingController();
+  String _selectedCategory = 'All';
+
+  final List<_ComplianceLog> _allLogs = const [
+    _ComplianceLog(
+      id: '#DOC-8801',
+      driverName: 'Vikram Seth',
+      documents: 'DRIVING LICENSE',
+      category: 'REJECTED',
+      status: 'Rejected',
+      dateTime: '04 Nov 2025 05:20 PM',
+    ),
+    _ComplianceLog(
+      id: '#DOC-8798',
+      driverName: 'Anita Mehra',
+      documents: 'ALL DOCUMENTS',
+      category: 'VERIFIED',
+      status: 'Approved',
+      dateTime: '04 Nov 2025 04:15 PM',
+    ),
+    _ComplianceLog(
+      id: '#DOC-8798',
+      driverName: 'Mehra',
+      documents: 'AADHAR CARD',
+      category: 'RESEND',
+      status: 'Resend',
+      dateTime: '04 Nov 2025 04:15 PM',
+    ),
+    _ComplianceLog(
+      id: '#DOC-8798',
+      driverName: 'Mahesh',
+      documents: 'BANK DETAILS',
+      category: 'RESEND',
+      status: 'Resend',
+      dateTime: '04 Nov 2025 04:15 PM',
+    ),
+  ];
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -610,8 +658,10 @@ class _RecentLogsCard extends StatelessWidget {
                   width: 300,
                   height: 40,
                   child: TextField(
+                    controller: _searchController,
+                    onChanged: (_) => setState(() {}),
                     decoration: InputDecoration(
-                      hintText: 'Search Ticket ID or Name...',
+                      hintText: 'Search Document ID or Driver Name...',
                       hintStyle: AppTypography.base.copyWith(fontSize: 13),
                       prefixIcon: Icon(Icons.search, size: 18),
                       filled: true,
@@ -630,50 +680,121 @@ class _RecentLogsCard extends StatelessWidget {
                 ),
                 SizedBox(width: 16),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
                   height: 40,
+                  padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
                     color: AppColors.cFFF9FAFB,
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: AppColors.cFFEFEFEF),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: AppColors.cFFF9FAFB,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: AppColors.cFFEFEFEF),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            //value: selectedStatus,
-                            items: ["All", "Rejected", "Verified"]
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(
-                                      e,
-                                      style: AppTypography.bodySmall,
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (value) {
-                              // selectedStatus = value!;
-                              // filterLogs();
-                            },
-                            icon: Icon(Icons.keyboard_arrow_down, size: 18),
+                  child: PopupMenuButton<String>(
+                    offset: Offset(0, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: AppColors.cFFEFEFEF),
+                    ),
+                    color: AppColors.white,
+                    elevation: 6,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          _selectedCategory,
+                          style: AppTypography.base.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.cFF1A1D1F,
                           ),
                         ),
+                        SizedBox(width: 32),
+                        Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 16,
+                          color: AppColors.cFF6F767E,
+                        ),
+                      ],
                       ),
-                      SizedBox(width: 8),
-                      Icon(Icons.keyboard_arrow_down, size: 18),
+                      onSelected: (value) {
+                        setState(() => _selectedCategory = value);
+                      },
+                    itemBuilder: (context) => [
+                      _buildPopupItem('All', _selectedCategory == 'All'),
+                      _buildPopupItem(
+                        'Rejected',
+                        _selectedCategory == 'Rejected',
+                      ),
+                      _buildPopupItem(
+                        'Verified',
+                        _selectedCategory == 'Verified',
+                      ),
+                      _buildPopupItem(
+                        'Resend',
+                        _selectedCategory == 'RESEND',
+                      ),
                     ],
                   ),
                 ),
+                SizedBox(width: 16),
+                Container(
+                  height: 40,
+                  //padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFF9FAFB,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.cFFEFEFEF),
+                  ),
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.calendar_today_outlined),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Container(
+                  height: 40,
+                  //padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.cFFF9FAFB,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: AppColors.cFFEFEFEF),
+                  ),
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.filter_list_rounded),
+                    ),
+                  ),
+                ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 16),
+                //   height: 40,
+                //   decoration: BoxDecoration(
+                //     color: AppColors.cFFF9FAFB,
+                //     borderRadius: BorderRadius.circular(8),
+                //     border: Border.all(color: AppColors.cFFEFEFEF),
+                //   ),
+                //   child: DropdownButtonHideUnderline(
+                //     child: DropdownButton<String>(
+                //       value: _selectedCategory,
+                //       items: ["All", "Rejected", "Verified"]
+                //           .map(
+                //             (e) => DropdownMenuItem(
+                //               value: e,
+                //               child: Text(e, style: AppTypography.bodySmall),
+                //             ),
+                //           )
+                //           .toList(),
+                // onChanged: (value) {
+                //   if (value == null) {
+                //     return;
+                //   }
+                //   setState(() => _selectedCategory = value);
+                // },
+                //       icon: Icon(Icons.keyboard_arrow_down, size: 18),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -686,7 +807,49 @@ class _RecentLogsCard extends StatelessWidget {
     );
   }
 
+  PopupMenuItem<String> _buildPopupItem(String text, bool isSelected) {
+    return PopupMenuItem<String>(
+      value: text,
+      height: 44,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        color: isSelected ? AppColors.cFFF4FDF8 : AppColors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: AppTypography.base.copyWith(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: AppColors.cFF1A1D1F,
+              ),
+            ),
+            if (isSelected)
+              Icon(
+                Icons.check_circle_outline_rounded,
+                color: AppColors.cFF00A86B,
+                size: 18,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildLogsTable(BuildContext context) {
+    final String query = _searchController.text.trim().toLowerCase();
+    final String selected = _selectedCategory.toLowerCase();
+    final List<_ComplianceLog> filteredLogs = _allLogs.where((log) {
+      final bool matchesQuery =
+          query.isEmpty ||
+          log.id.toLowerCase().contains(query) ||
+          log.driverName.toLowerCase().contains(query);
+      final bool matchesCategory =
+          selected == 'all' || log.category.toLowerCase() == selected;
+      return matchesQuery && matchesCategory;
+    }).toList();
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: ConstrainedBox(
@@ -699,7 +862,7 @@ class _RecentLogsCard extends StatelessWidget {
           headingRowColor: WidgetStateProperty.all(AppColors.cFFF8FAFC),
           headingTextStyle: AppTypography.base.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 12,
+            fontSize: 13,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.0,
           ),
@@ -726,30 +889,26 @@ class _RecentLogsCard extends StatelessWidget {
             DataColumn(label: Text('CLOSED DATE & TIME')),
             DataColumn(label: Text('ACTION')),
           ],
-          rows: [
-            _buildDataRow(
-              id: '#DOC-8801',
-              driverName: 'Vikram Seth',
-              documents: 'DRIVING LICENSE',
-              category: 'REJECTED',
-              status: 'Rejected',
-              dateTime: '04 Nov 2025 05:20 PM',
-            ),
-            _buildDataRow(
-              id: '#DOC-8798',
-              driverName: 'Anita Mehra',
-              documents: 'ALL DOCUMENTS',
-              category: 'VERIFIED',
-              status: 'Approved',
-              dateTime: '04 Nov 2025 04:15 PM',
-            ),
-          ],
+          rows: filteredLogs
+              .map(
+                (log) => _buildDataRow(
+                  context,
+                  id: log.id,
+                  driverName: log.driverName,
+                  documents: log.documents,
+                  category: log.category,
+                  status: log.status,
+                  dateTime: log.dateTime,
+                ),
+              )
+              .toList(),
         ),
       ),
     );
   }
 
-  DataRow _buildDataRow({
+  DataRow _buildDataRow(
+    BuildContext context, {
     required String id,
     required String driverName,
     required String documents,
@@ -763,13 +922,15 @@ class _RecentLogsCard extends StatelessWidget {
         DataCell(
           Text(
             id,
-            style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+            style: AppTypography.base.copyWith(
+              fontSize: 13,
+              fontWeight: FontWeight.bold),
           ),
         ),
         DataCell(
           Text(
             driverName,
-            style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+            style: AppTypography.base.copyWith(fontSize: 13,fontWeight: FontWeight.bold),
           ),
         ),
         DataCell(
@@ -777,7 +938,7 @@ class _RecentLogsCard extends StatelessWidget {
             documents,
             style: AppTypography.base.copyWith(
               color: AppColors.textSecondary,
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -793,7 +954,7 @@ class _RecentLogsCard extends StatelessWidget {
               category,
               style: AppTypography.base.copyWith(
                 color: isRejected ? AppColors.cFFB91C1C : AppColors.cFF15803D,
-                fontSize: 10,
+                fontSize: 13,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -816,6 +977,7 @@ class _RecentLogsCard extends StatelessWidget {
                 style: AppTypography.base.copyWith(
                   color: isRejected ? AppColors.error : AppColors.primary,
                   fontWeight: FontWeight.bold,
+                  fontSize: 13,
                 ),
               ),
             ],
@@ -826,7 +988,7 @@ class _RecentLogsCard extends StatelessWidget {
             dateTime,
             style: AppTypography.base.copyWith(
               color: AppColors.textSecondary,
-              fontSize: 12,
+              fontSize: 13,
             ),
           ),
         ),
@@ -850,7 +1012,7 @@ class _RecentLogsCard extends StatelessWidget {
               }
 
               Navigator.push(
-                context as BuildContext,
+                context,
                 MaterialPageRoute(
                   builder: (context) => DocumentVerificationPage(
                     driverName: driverName,
@@ -939,4 +1101,22 @@ class _RecentLogsCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ComplianceLog {
+  final String id;
+  final String driverName;
+  final String documents;
+  final String category;
+  final String status;
+  final String dateTime;
+
+  const _ComplianceLog({
+    required this.id,
+    required this.driverName,
+    required this.documents,
+    required this.category,
+    required this.status,
+    required this.dateTime,
+  });
 }
