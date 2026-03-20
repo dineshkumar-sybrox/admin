@@ -1,3 +1,8 @@
+import 'package:admin/features/dashboard/presentation/widgets/revenue/revenue_transactions_table.dart';
+import 'package:admin/features/dashboard/presentation/widgets/revenue/today_transactions_table.dart';
+import 'package:admin/features/drivers/presentation/widgets/leaderboard_table.dart';
+import 'package:admin/features/drivers/presentation/cubit/drivers_management_cubit.dart';
+import 'package:admin/features/drivers/presentation/cubit/drivers_management_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/revenue/revenue_stat_cards.dart';
@@ -25,7 +30,21 @@ class RevenueTodayScreen extends StatelessWidget {
                   children: [
                     RevenueStatCards(),
                     SizedBox(height: 20),
-                    if (state.showOnlyTable) ...[
+                    if (state.showLeaderboard) ...[
+                      BlocProvider(
+                        create: (context) => DriversManagementCubit(
+                          initialTab: DriverTab.leaderboard,
+                        ),
+                        child: SizedBox(
+                          height: 560,
+                          child: Column(
+                            children: [
+                              LeaderboardTable(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ] else if (state.showOnlyTable) ...[
                       RevenueTransactionsTable(),
                     ] else if (isTablet)
                       Column(
@@ -34,7 +53,7 @@ class RevenueTodayScreen extends StatelessWidget {
                           SizedBox(height: 16),
                           TopEarningDrivers(),
                           SizedBox(height: 16),
-                          RevenueTransactionsTable(),
+                          TodayTransactionsTable(),
                           SizedBox(height: 16),
                           RevenueByRegion(),
                           SizedBox(height: 16),
@@ -51,7 +70,7 @@ class RevenueTodayScreen extends StatelessWidget {
                               children: [
                                 RevenueTrendChart(),
                                 SizedBox(height: 20),
-                                RevenueTransactionsTable(),
+                                TodayTransactionsTable(),
                               ],
                             ),
                           ),

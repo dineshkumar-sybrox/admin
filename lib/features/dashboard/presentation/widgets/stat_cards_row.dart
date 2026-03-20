@@ -155,11 +155,11 @@ class _StatCardState extends State<_StatCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  AnimatedContainer(
-                    duration: Duration(milliseconds: 200),
-                    width: _barWidth,
-                    color: _accent,
-                  ),
+                  // AnimatedContainer(
+                  //   duration: Duration(milliseconds: 200),
+                  //   width: _barWidth,
+                  //   color: _accent,
+                  // ),
 
                   Expanded(
                     child: Padding(

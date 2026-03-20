@@ -153,7 +153,14 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: borderColor, width: 1.0),
+            border: Border(
+            left: BorderSide(
+              color: widget.isSelected
+                  ? AppColors.primary
+                  : AppColors.transparent, // 👈 Hide when not selected
+              width: 4, // Thickness of left border
+            ),
+          ),
             boxShadow: [
               BoxShadow(
                 color: _isHovered && isClickable
@@ -172,8 +179,8 @@ class _CancellationStatCardState extends State<_CancellationStatCard> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (widget.isSelected)
-                    Container(width: 3, color: AppColors.primary),
+                  // if (widget.isSelected)
+                  //   Container(width: 3, color: AppColors.primary),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
