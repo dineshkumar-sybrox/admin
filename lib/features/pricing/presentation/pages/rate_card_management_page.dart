@@ -37,66 +37,82 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 24),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
               children: [
-                // Left side - Configuration
-                Expanded(
-                  flex: 14,
-                  child: Column(
-                    children: [
-                      _buildOperatingCitySection(),
-                      const SizedBox(height: 24),
-                      _buildDistanceFareSection(),
-                      const SizedBox(height: 24),
-                      _buildExtraFareSection(),
-                      const SizedBox(height: 24),
-                      _buildNightFareSection(),
-                      const SizedBox(height: 24),
-                      _buildTaxSection(),
-                    ],
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left side - Configuration
+                    Expanded(
+                      flex: 14,
+                      child: Column(
+                        children: [
+                          _buildOperatingCitySection(),
+
+                          const SizedBox(height: 24),
+                          _buildExtraFareSection(),
+                          const SizedBox(height: 24),
+                          _buildTaxSection(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 32),
+                    // Right side - Preview
+                    Expanded(
+                      flex: 9,
+                      child: Column(
+                        children: [
+                          _buildDescription(),
+                          const SizedBox(height: 24),
+                          _RateCardPreviewPanel(),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 32),
-                // Right side - Preview
-                const Expanded(flex: 9, child: _RateCardPreviewPanel()),
+                const SizedBox(height: 20),
+                Divider(color: AppColors.divider),
+                const SizedBox(height: 20),
+                _buildFooter(),
+                const SizedBox(height: 20),
               ],
             ),
           ),
         ),
 
         // Footer
-        _buildFooter(),
+        //_buildFooter(),
       ],
     );
   }
 
   Widget _buildTabs() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border(bottom: BorderSide(color: AppColors.grey.shade200)),
+      ),
       width: double.infinity,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.textSecondary,
-          indicatorColor: AppColors.primary,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorWeight: 3,
-          dividerColor: Colors.transparent,
-          labelStyle: AppTypography.base.copyWith(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-          unselectedLabelStyle: AppTypography.base.copyWith(fontSize: 14),
-          tabs: const [
-            Tab(text: 'Cab'),
-            Tab(text: 'Auto Rickshaw'),
-            Tab(text: 'Bike Taxi'),
-          ],
+      child: TabBar(
+        controller: _tabController,
+        isScrollable: true,
+        tabAlignment: TabAlignment.start,
+        labelColor: AppColors.primary,
+        unselectedLabelColor: AppColors.textSecondary,
+        labelStyle: AppTypography.base.copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
         ),
+        indicatorColor: AppColors.primary,
+        indicatorSize: TabBarIndicatorSize.label, // 👈 Important
+        indicatorWeight: 3,
+        labelPadding: EdgeInsets.symmetric(horizontal: 16),
+        dividerColor: AppColors.transparent,
+        tabs: const [
+          Tab(text: 'Cab'),
+          Tab(text: 'Auto Rickshaw'),
+          Tab(text: 'Bike Taxi'),
+        ],
       ),
     );
   }
@@ -108,26 +124,34 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
         children: [
           Text(
             'OPERATING CITY',
-            style: AppTypography.base.copyWith(
+            style: AppTypography.h4.copyWith(
+              fontWeight: FontWeight.w800,
               color: AppColors.textSecondary,
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
             ),
           ),
           const SizedBox(height: 12),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9FAFB),
+              color: const Color(0xFFF8FAFC),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFFEAECF0)),
+              border: Border.all(color: AppColors.grey.shade200),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: Offset(0, 3),
+                ),
+              ],
             ),
             child: Row(
               children: [
                 Text(
                   'Chennai, TN',
-                  style: AppTypography.base.copyWith(fontSize: 14),
+                  style: AppTypography.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF64748B),
+                  ),
                 ),
                 const Spacer(),
                 const Icon(
@@ -137,28 +161,16 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDistanceFareSection() {
-    return _buildSectionCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          const SizedBox(height: 30),
           Row(
             children: [
               const Icon(
                 Icons.location_on_outlined,
                 color: AppColors.primary,
-                size: 20,
+                size: 24,
               ),
               const SizedBox(width: 8),
-              Text(
-                'Distance Fare',
-                style: AppTypography.h3.copyWith(fontSize: 16),
-              ),
+              Text('Distance Fare', style: AppTypography.h3.copyWith()),
             ],
           ),
           const SizedBox(height: 16),
@@ -178,21 +190,23 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
                   children: [
                     Text(
                       'Distance Range (KM)',
-                      style: AppTypography.base.copyWith(
+                      style: AppTypography.bodyLarge.copyWith(
                         color: AppColors.textSecondary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
                         Expanded(child: _buildInputBox(value: '0')),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
                             'to',
-                            style: TextStyle(color: AppColors.textSecondary),
+                            style: AppTypography.bodyLarge.copyWith(
+                              color: AppColors.textSecondary,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                         Expanded(child: _buildInputBox(value: '999')),
@@ -215,15 +229,21 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.add_circle_outline_rounded,
                 color: AppColors.primary,
-                size: 20,
+                size: 24,
               ),
               const SizedBox(width: 8),
+              // const Icon(
+              //   Icons.add_circle_outline_rounded,
+              //   color: AppColors.primary,
+              //   size: 20,
+              // ),
+              // const SizedBox(width: 8),
               Text(
                 'Extra Fare Configuration',
-                style: AppTypography.h3.copyWith(fontSize: 16),
+                style: AppTypography.h3_5.copyWith(),
               ),
             ],
           ),
@@ -253,10 +273,9 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
             children: [
               Text(
                 'Cancellation Fare Range',
-                style: AppTypography.base.copyWith(
+                style: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textSecondary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 8),
@@ -265,11 +284,14 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
                   Expanded(
                     child: _buildInputBox(value: '10', prefix: '₹'),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       'to',
-                      style: TextStyle(color: AppColors.textSecondary),
+                      style: AppTypography.bodyLarge.copyWith(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -280,36 +302,30 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNightFareSection() {
-    return _buildSectionCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+          SizedBox(height: 16),
+          Divider(color: AppColors.divider),
+          SizedBox(height: 16),
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.nightlight_round_outlined,
                 color: AppColors.primary,
-                size: 20,
+                size: 24,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 12),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Night Fare Surcharge',
-                    style: AppTypography.h3.copyWith(fontSize: 16),
+                    style: AppTypography.h3_5.copyWith(),
                   ),
                   Text(
                     'Apply multiplier for late night rides',
-                    style: AppTypography.base.copyWith(
+                    style: AppTypography.h4.copyWith(
                       color: AppColors.textSecondary,
-                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
@@ -350,6 +366,71 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
     );
   }
 
+  // Widget _buildNightFareSection() {
+  //   return _buildSectionCard(
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Row(
+  //           children: [
+  //             const Icon(
+  //               Icons.nightlight_round_outlined,
+  //               color: AppColors.primary,
+  //               size: 20,
+  //             ),
+  //             const SizedBox(width: 8),
+  //             Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   'Night Fare Surcharge',
+  //                   style: AppTypography.h3.copyWith(fontSize: 16),
+  //                 ),
+  //                 Text(
+  //                   'Apply multiplier for late night rides',
+  //                   style: AppTypography.base.copyWith(
+  //                     color: AppColors.textSecondary,
+  //                     fontSize: 11,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             const Spacer(),
+  //             Switch(
+  //               value: _nightSurchargeEnabled,
+  //               onChanged: (val) =>
+  //                   setState(() => _nightSurchargeEnabled = val),
+  //               activeColor: Colors.white,
+  //               activeTrackColor: AppColors.primary,
+  //             ),
+  //           ],
+  //         ),
+  //         const SizedBox(height: 16),
+  //         Row(
+  //           children: [
+  //             Expanded(
+  //               flex: 3,
+  //               child: _buildInputField(
+  //                 label: 'ACTIVE TIME RANGE',
+  //                 value: '10:00 PM → 06:00 AM',
+  //               ),
+  //             ),
+  //             const SizedBox(width: 24),
+  //             Expanded(
+  //               flex: 2,
+  //               child: _buildInputField(
+  //                 label: 'MULTIPLIER PERCENTAGE',
+  //                 value: '30',
+  //                 suffix: '%',
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   Widget _buildTaxSection() {
     return _buildSectionCard(
       child: Column(
@@ -360,12 +441,12 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
               const Icon(
                 Icons.account_balance_outlined,
                 color: AppColors.primary,
-                size: 20,
+                size: 24,
               ),
               const SizedBox(width: 8),
               Text(
                 'Commission & Taxation',
-                style: AppTypography.h3.copyWith(fontSize: 16),
+                style: AppTypography.h3_5.copyWith(),
               ),
             ],
           ),
@@ -394,14 +475,51 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
     );
   }
 
+  Widget _buildDescription() {
+    return _buildSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Description', style: AppTypography.h3_5),
+          const SizedBox(height: 16),
+
+          Container(
+            width: double.infinity,
+            height: 100, // 👈 important for textarea look
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Color(0xFFF8FAFC), // 👈 light grey background
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.grey.shade200),
+            ),
+            child: Text(
+              "The com....",
+              style: AppTypography.bodyRegular.copyWith(
+                color: Colors.grey, // 👈 hint-like color
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildSectionCard({required Widget child}) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFF1F3F5)),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: child,
     );
@@ -418,10 +536,9 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
       children: [
         Text(
           label,
-          style: AppTypography.base.copyWith(
+          style: AppTypography.bodyLarge.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
         ),
         const SizedBox(height: 8),
@@ -439,38 +556,30 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFEAECF0)),
+        border: Border.all(color: AppColors.grey.shade200),
       ),
       child: Row(
         children: [
           if (prefix != null) ...[
             Text(
               prefix,
-              style: const TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 14,
-              ),
+              style: AppTypography.bodyRegular.copyWith(color: Colors.grey),
             ),
             const SizedBox(width: 8),
           ],
           Text(
             value,
-            style: AppTypography.base.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+            style: AppTypography.bodyRegular.copyWith(
+              fontWeight: FontWeight.w500,
             ),
           ),
           const Spacer(),
           if (suffix != null)
             Text(
               suffix,
-              style: const TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 14,
-              ),
+              style: AppTypography.bodyRegular.copyWith(color: Colors.grey),
             ),
         ],
       ),
@@ -478,48 +587,43 @@ class _RateCardManagementPageState extends State<RateCardManagementPage>
   }
 
   Widget _buildFooter() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          OutlinedButton(
-            onPressed: () {},
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              side: const BorderSide(color: Color(0xFFEAECF0)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Text(
-              'Reset Changes',
-              style: AppTypography.base.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: const BorderSide(color: AppColors.white),
             ),
           ),
-          const SizedBox(width: 16),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              elevation: 0,
-            ),
-            child: Text(
-              'Update Rate',
-              style: AppTypography.base.copyWith(fontWeight: FontWeight.bold),
+          child: Text(
+            'Reset Changes',
+            style: AppTypography.bodyRegular.copyWith(
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 16),
+        ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: AppColors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            elevation: 0,
+          ),
+          child: Text(
+            'Update Rate',
+            style: AppTypography.bodyRegular.copyWith(color: AppColors.white),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -531,13 +635,14 @@ class _RateCardPreviewPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade100),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -564,9 +669,8 @@ class _RateCardPreviewPanel extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'Simulated for a 5 KM ride at 11:30 PM',
-                  style: AppTypography.base.copyWith(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 11,
+                  style: AppTypography.bodyRegular.copyWith(
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -619,21 +723,18 @@ class _RateCardPreviewPanel extends StatelessWidget {
                 _buildFareRow('Platform Fee', '₹ 20.00'),
                 _buildFareRow('GST', '₹ 10.00'),
 
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Divider(color: Color(0xFFF1F3F5)),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Divider(color: AppColors.divider),
                 ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Estimated Total',
-                      style: AppTypography.h3.copyWith(fontSize: 18),
-                    ),
+                    Text('Estimated Total', style: AppTypography.h3.copyWith()),
                     Text(
                       '₹ 109.00',
-                      style: AppTypography.h2.copyWith(
+                      style: AppTypography.h3.copyWith(
                         color: AppColors.primary,
                         fontSize: 24,
                       ),
@@ -647,9 +748,9 @@ class _RateCardPreviewPanel extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFB),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFF1F3F5)),
+                    color: const Color(0xFFF8FAFC),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: AppColors.grey.shade200),
                   ),
                   child: Column(
                     children: [
@@ -657,15 +758,15 @@ class _RateCardPreviewPanel extends StatelessWidget {
                         children: [
                           const Icon(
                             Icons.info_outline,
-                            size: 14,
+                            size: 18,
                             color: AppColors.textSecondary,
                           ),
                           const SizedBox(width: 8),
                           Text(
                             'EARNING SPLIT',
-                            style: AppTypography.base.copyWith(
+                            style: AppTypography.bodyRegular.copyWith(
                               color: AppColors.textSecondary,
-                              fontSize: 10,
+                              
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.5,
                             ),
@@ -690,6 +791,7 @@ class _RateCardPreviewPanel extends StatelessWidget {
 
                 SizedBox(
                   width: double.infinity,
+                  height: 40,
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
@@ -723,17 +825,15 @@ class _RateCardPreviewPanel extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTypography.base.copyWith(
+            style: AppTypography.bodyLarge.copyWith(
               color: AppColors.textSecondary,
-              fontSize: 13,
             ),
           ),
           Text(
             value,
-            style: AppTypography.base.copyWith(
+            style: AppTypography.bodyLarge.copyWith(
               color: isGreen ? AppColors.primary : AppColors.textPrimary,
               fontWeight: FontWeight.bold,
-              fontSize: 13,
             ),
           ),
         ],
@@ -747,17 +847,15 @@ class _RateCardPreviewPanel extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTypography.base.copyWith(
+          style: AppTypography.bodyRegular.copyWith(
             color: AppColors.textSecondary,
-            fontSize: 12,
           ),
         ),
         Text(
           value,
-          style: AppTypography.base.copyWith(
+          style: AppTypography.bodyRegular.copyWith(
             color: isEarn ? AppColors.primary : AppColors.textPrimary,
             fontWeight: FontWeight.bold,
-            fontSize: 13,
           ),
         ),
       ],

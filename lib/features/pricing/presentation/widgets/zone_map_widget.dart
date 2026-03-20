@@ -11,7 +11,7 @@ class _ZoneMapWidgetState extends State<ZoneMapWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380,
+      height: 450,
       width: double.infinity,
       decoration: BoxDecoration(
         color: const Color(0xFFF9FAFB),

@@ -25,83 +25,90 @@ class LeaderboardTable extends StatelessWidget {
                       ? MediaQuery.of(context).size.width - 320
                       : 1000,
                 ),
-                child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(Colors.white),
-                  headingTextStyle: const TextStyle(
-                    color: Color(0xFF8E9BAB),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0xFFF3F4F6)
+                    )
                   ),
-                  dataTextStyle: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  horizontalMargin: 24,
-                  columnSpacing: 24,
-                  headingRowHeight: 56,
-                  dataRowMaxHeight: 72,
-                  dataRowMinHeight: 72,
-                  border: const TableBorder(
-                    horizontalInside: BorderSide(
-                      color: Color(0xFFF3F4F6),
-                      width: 1,
+                  child: DataTable(
+                    headingRowColor: WidgetStateProperty.all(Colors.white),
+                    headingTextStyle: const TextStyle(
+                      color: Color(0xFF8E9BAB),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
                     ),
+                    dataTextStyle: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    horizontalMargin: 24,
+                    columnSpacing: 24,
+                    headingRowHeight: 56,
+                    dataRowMaxHeight: 72,
+                    dataRowMinHeight: 72,
+                    border: const TableBorder(
+                      horizontalInside: BorderSide(
+                        color: Color(0xFFF3F4F6),
+                        width: 1,
+                      ),
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('RANK')),
+                      DataColumn(label: Text('DRIVER')),
+                      DataColumn(label: Text('TOTAL RIDES\n TODAY')),
+                      DataColumn(label: Text('ONLINE\n HOURS')),
+                      DataColumn(label: Text('ACCEPTANCE\n RATE')),
+                      DataColumn(label: Text('TOTAL\n EARNINGS (₹)')),
+                      DataColumn(label: Text('TREND (24H)')),
+                    ],
+                    rows: displayDrivers.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final driver = entry.value;
+                      final rank = index + 1;
+                  
+                      return DataRow(
+                        cells: [
+                          DataCell(_RankBadge(rank: rank)),
+                          DataCell(_DriverInfo(driver: driver)),
+                          DataCell(
+                            Text(
+                              '${driver.ridesToday ?? 0} Rides',
+                              style: const TextStyle(
+                                color: AppColors.textPrimary,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            Text(
+                              '${driver.onlineHours ?? 0} hrs',
+                              style: const TextStyle(
+                                color: Color(0xFF6F767E),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          DataCell(
+                            _AcceptanceRate(rate: driver.acceptanceRate ?? 0),
+                          ),
+                          DataCell(
+                            Text(
+                              '₹${(driver.earnings ?? 0).toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                color: Color(0xFF00A86B),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          DataCell(_TrendSparkline(data: driver.trendData ?? [])),
+                        ],
+                      );
+                    }).toList(),
                   ),
-                  columns: const [
-                    DataColumn(label: Text('RANK')),
-                    DataColumn(label: Text('DRIVER')),
-                    DataColumn(label: Text('TOTAL RIDES TODAY')),
-                    DataColumn(label: Text('ONLINE HOURS')),
-                    DataColumn(label: Text('ACCEPTANCE RATE')),
-                    DataColumn(label: Text('TOTAL EARNINGS (₹)')),
-                    DataColumn(label: Text('TREND (24H)')),
-                  ],
-                  rows: displayDrivers.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final driver = entry.value;
-                    final rank = index + 1;
-
-                    return DataRow(
-                      cells: [
-                        DataCell(_RankBadge(rank: rank)),
-                        DataCell(_DriverInfo(driver: driver)),
-                        DataCell(
-                          Text(
-                            '${driver.ridesToday ?? 0} Rides',
-                            style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            '${driver.onlineHours ?? 0} hrs',
-                            style: const TextStyle(
-                              color: Color(0xFF6F767E),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          _AcceptanceRate(rate: driver.acceptanceRate ?? 0),
-                        ),
-                        DataCell(
-                          Text(
-                            '₹${(driver.earnings ?? 0).toStringAsFixed(2)}',
-                            style: const TextStyle(
-                              color: Color(0xFF00A86B),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                        DataCell(_TrendSparkline(data: driver.trendData ?? [])),
-                      ],
-                    );
-                  }).toList(),
                 ),
               ),
             ),

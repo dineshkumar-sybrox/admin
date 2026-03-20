@@ -1,3 +1,5 @@
+import 'package:admin/core/theme/app_colors.dart';
+import 'package:admin/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import '../widgets/zone_map_widget.dart';
 
@@ -36,36 +38,29 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
               Expanded(child: _buildPlatformFee()),
             ],
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 20),
+          Divider(color: AppColors.divider),
+          const SizedBox(height: 20),
           _buildFooter(),
           const SizedBox(height: 20),
-          Center(
-            child: Text(
-              'Last audited by Admin on FEB 24, 2026 - 04:30 pm',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
-            ),
-          ),
         ],
       ),
     );
   }
 
   Widget _buildHeader() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Zone-wise Pricing',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF1A1C1E),
-          ),
-        ),
+        Text('Zone-wise Pricing', style: AppTypography.h3),
         SizedBox(height: 4),
         Text(
           'Configure base rates, taxes, and platform fees for specific operational zones.',
-          style: TextStyle(color: Color(0xFF5E6366), fontSize: 14),
+          style: AppTypography.bodyLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
+          //TextStyle(
+          // color: Color(0xFF5E6366), fontSize: 14),
         ),
       ],
     );
@@ -74,13 +69,14 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
   Widget _buildSelectLocation() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade100),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: AppColors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 3),
           ),
         ],
       ),
@@ -96,11 +92,10 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                   size: 20,
                 ),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'Select Location',
-                  style: TextStyle(
+                  style: AppTypography.h3_5.copyWith(
                     fontWeight: FontWeight.w800,
-                    fontSize: 18,
                     color: Color(0xFF1E293B),
                   ),
                 ),
@@ -150,22 +145,34 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
   }
 
   Widget _buildBasePriceConfiguration() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 0,
-      color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 Icon(Icons.local_offer_outlined, color: Color(0xFF00A86B)),
                 SizedBox(width: 8),
                 Text(
                   'Base Price Configuration',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: AppTypography.h3_5.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF1E293B),
+                  ),
                 ),
               ],
             ),
@@ -224,9 +231,17 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFFF8FAFC),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E8F0)),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -236,11 +251,15 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
               const SizedBox(width: 8),
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                style: AppTypography.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w600,
                   color: Color(0xFF64748B),
                 ),
+                // const TextStyle(
+                //   fontSize: 12,
+                // fontWeight: FontWeight.bold,
+                // color: Color(0xFF64748B),
+                // ),
               ),
               const Spacer(),
               Switch(
@@ -260,10 +279,19 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
   }
 
   Widget _buildGstConfiguration() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 0,
-      color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -276,9 +304,11 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                   color: Color(0xFF00A86B),
                 ),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'GST Configuration',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: AppTypography.h3_5.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const Spacer(),
                 _buildBadge(
@@ -298,9 +328,9 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                   onChanged: (v) => setState(() => gstApplyTotal = v!),
                   activeColor: const Color(0xFF00A86B),
                 ),
-                const Text(
+                Text(
                   'Apply to total fare (Base + Distance)',
-                  style: TextStyle(fontSize: 14),
+                  style: AppTypography.bodyRegular.copyWith(),
                 ),
               ],
             ),
@@ -311,10 +341,19 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
   }
 
   Widget _buildPlatformFee() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 0,
-      color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.grey.shade100),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -327,9 +366,11 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                   color: Color(0xFF00A86B),
                 ),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'Platform Fee',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: AppTypography.h3_5.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const Spacer(),
                 _buildBadge(
@@ -349,9 +390,9 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                   onChanged: (v) => setState(() => dynamicPlatformFee = v!),
                   activeColor: const Color(0xFF00A86B),
                 ),
-                const Text(
+                Text(
                   'Apply dynamically based on peak hours',
-                  style: TextStyle(fontSize: 14),
+                  style: AppTypography.bodyRegular.copyWith(),
                 ),
               ],
             ),
@@ -370,9 +411,8 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
       ),
       child: Text(
         text,
-        style: TextStyle(
+        style: AppTypography.bodySmall.copyWith(
           color: textColor,
-          fontSize: 10,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -390,11 +430,11 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+          style: AppTypography.bodyRegular.copyWith(color: Color(0xFF64748B)),
         ),
         const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
@@ -403,7 +443,10 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
           child: Row(
             children: [
               if (prefix != null) ...[
-                Text(prefix, style: const TextStyle(color: Colors.grey)),
+                Text(
+                  prefix,
+                  style: AppTypography.bodyRegular.copyWith(color: Colors.grey),
+                ),
                 const SizedBox(width: 8),
               ],
               Expanded(
@@ -413,15 +456,17 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
                     border: InputBorder.none,
                     isDense: true,
                   ),
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: AppTypography.bodyRegular.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
               if (suffix != null) ...[
                 const SizedBox(width: 8),
-                Text(suffix, style: const TextStyle(color: Colors.grey)),
+                Text(
+                  suffix,
+                  style: AppTypography.bodyRegular.copyWith(color: Colors.grey),
+                ),
               ],
             ],
           ),
@@ -432,38 +477,59 @@ class _ZoneWisePricingPageState extends State<ZoneWisePricingPage> {
 
   Widget _buildFooter() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextButton(
-          onPressed: () {},
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: const BorderSide(color: Color(0xFFE2E8F0)),
-            ),
-          ),
-          child: const Text(
-            'Reset Changes',
-            style: TextStyle(color: Color(0xFF1E293B)),
+        Text(
+          'Last audited by Admin on FEB 24, 2026 - 04:30 pm',
+          style: AppTypography.bodyRegular.copyWith(
+            color: AppColors.textSecondary,
           ),
         ),
-        const SizedBox(width: 16),
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF00A86B),
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+
+        Row(
+          children: [
+            TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: const BorderSide(color: Color(0xFFE2E8F0)),
+                ),
+              ),
+              child: Text(
+                'Reset Changes',
+                style: AppTypography.bodyRegular.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            elevation: 0,
-          ),
-          child: const Text(
-            'Update Pricing',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+            const SizedBox(width: 16),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF00A86B),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                elevation: 0,
+              ),
+              child: Text(
+                'Update Pricing',
+                style: AppTypography.bodyRegular.copyWith(
+                  color: AppColors.white
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
