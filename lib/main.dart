@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/theme/app_theme.dart';
 import 'features/dashboard/presentation/cubit/dashboard_cubit.dart';
-import 'features/dashboard/presentation/pages/dashboard_screen.dart';
+import 'features/auth/presentation/pages/signup_screen.dart';
 
 void main() {
   runApp(AdminApp());
@@ -19,9 +19,8 @@ class AdminApp extends StatelessWidget {
         title: 'GoAPP Admin',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        home: DashboardScreen(),
+        home: const SignupScreen(),
       ),
     );
   }
 }
-
